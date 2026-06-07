@@ -1,0 +1,15 @@
+# lowfat project config — nearest-ancestor file, anchors lowfat to this repo.
+# Format: https://github.com/zdk/lowfat/blob/main/docs/CONFIG.md
+
+level=full
+
+# --- intentionally left minimal ---
+# Bundled plugins (git/docker/grep/find/ls/tree) are active by default at level=full.
+#
+# `redact-secrets` is NOT enabled yet: per the migration plan it must be validated
+# against structured output (JSON/env) before going global, or it can corrupt
+# machine-readable results. Enable only after checking:
+#
+#   pipeline.* = redact-secrets
+#
+# `disable` (blacklist) and `filters` (whitelist) are mutually exclusive — do not set both.
