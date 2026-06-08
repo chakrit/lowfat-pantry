@@ -1,0 +1,8 @@
+[plugin]
+name = "gh-compact"
+version = "0.1.0"
+description = "Compact GitHub CLI (gh) list/view/run output for LLM contexts"
+category = "gh"
+commands = ["gh"]
+# Documentation only — selection happens inside filter.lf on the resource ($sub).
+subcommands = ["pr", "issue", "run", "release", "workflow", "repo", "api"]

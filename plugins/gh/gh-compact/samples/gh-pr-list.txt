@@ -1,0 +1,7 @@
+12	Fix login redirect loop	bug/login-redirect	OPEN	2026-06-01T09:12:33Z
+13	Add dark mode toggle	feat/dark-mode	OPEN	2026-06-02T14:01:10Z
+14	Bump deps to latest	chore/deps	DRAFT	2026-06-03T08:45:00Z
+15	Refactor auth middleware	refactor/auth	OPEN	2026-06-04T11:20:51Z
+16	Cache pantry index	feat/pantry-cache	OPEN	2026-06-05T17:33:02Z
+17	Fix flaky run-list test	bug/flaky-runlist	OPEN	2026-06-06T10:05:44Z
+18	Docs: filter DSL cookbook	docs/dsl-cookbook	OPEN	2026-06-07T13:50:19Z

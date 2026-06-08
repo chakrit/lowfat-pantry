@@ -1,0 +1,41 @@
+#!/usr/bin/env lowfat-filter
+# gh-compact — compact GitHub CLI output for LLM contexts.
+# env: $sub $level $exit $args
+#
+# gh's bloat: long list tables (`gh pr/issue/run list`) and verbose view/log
+# bodies. Piped (non-TTY), gh emits plain TSV for list commands. Two invariants:
+#   • `--json` output is machine-readable — pass it through byte-exact.
+#   • `--log` (CI logs) fails at the TAIL — tail, don't head.
+# On a non-zero exit (auth error, 404, no such run) preserve raw.
+
+# Resource subcommands: $sub is the resource (pr/issue/run/…); list/view/checks
+# live in $args. One rule covers them all, branching on flags then level.
+pr|issue|run|release|workflow|repo|gist|search|cache|label|project|ruleset|status:
+    if exit failed:
+        raw
+    elif --json:
+        raw
+    elif --log:
+        match level:
+            ultra: tail 40
+            lite:  tail 200
+            else:  tail 80
+    else:
+        match level:
+            ultra: head 20
+            lite:  head 200
+            else:  head 50
+
+# api — raw HTTP/JSON payloads; never prune structured output.
+api:
+    if exit failed:
+        raw
+    else:
+        head 100
+
+# Default (auth, config, alias, …) — short; cap lightly, raw on error.
+*:
+    if exit failed:
+        raw
+    else:
+        head 40

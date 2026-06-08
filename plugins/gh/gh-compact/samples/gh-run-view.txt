@@ -1,0 +1,14 @@
+X main CI · 7c3f1a2
+Triggered via push about 5 minutes ago
+
+JOBS
+✓ lint in 22s (ID 994201)
+✓ build in 1m18s (ID 994202)
+X test in 47s (ID 994203)
+✓ typecheck in 31s (ID 994204)
+
+ANNOTATIONS
+X tests/auth.test.ts#L42 — assertion failed: expected 200, got 401
+X process completed with exit code 1
+
+To see what failed, try: gh run view 994203 --log-failed

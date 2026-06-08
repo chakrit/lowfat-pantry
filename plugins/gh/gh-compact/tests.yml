@@ -1,0 +1,25 @@
+# Golden/invariant cases for gh-compact. Provisional format (smoke harness pending).
+# Samples are synthetic (no GitHub remote on this repo to capture from).
+command: gh
+synthetic: true
+cases:
+  - sample: samples/gh-pr-list.txt
+    sub: pr
+    args: "list"
+    exit: 0
+    levels: [lite, full, ultra]
+  - sample: samples/gh-run-view.txt
+    sub: run
+    args: "view 994203"
+    exit: 0
+    levels: [lite, full, ultra]
+  - sample: samples/gh-run-log.txt        # --log: failure at the tail → tail, not head
+    sub: run
+    args: "view 994203 --log"
+    exit: 0
+    levels: [lite, full, ultra]
+  - sample: samples/gh-pr-json.txt        # --json: must pass through byte-exact
+    sub: pr
+    args: "view 12 --json number,state,title"
+    exit: 0
+    levels: [lite, full, ultra]
