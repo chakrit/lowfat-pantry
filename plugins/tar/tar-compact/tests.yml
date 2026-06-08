@@ -1,0 +1,14 @@
+# Golden/invariant cases for tar-compact. Provisional (smoke harness pending).
+command: tar
+synthetic: true
+cases:
+  - sample: samples/tar-list.txt
+    sub: ""
+    args: "-tvf archive.tar"
+    exit: 0
+    levels: [lite, full, ultra]
+  - sample: samples/tar-error.txt
+    sub: ""
+    args: "-tvf missing.tar"
+    exit: 2
+    levels: [lite, full, ultra]

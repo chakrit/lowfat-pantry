@@ -1,0 +1,6 @@
+[plugin]
+name = "tar-compact"
+version = "0.1.0"
+description = "Compact verbose tar (-v) file listings for LLM contexts"
+category = "tar"
+commands = ["tar"]

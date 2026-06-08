@@ -1,0 +1,21 @@
+#!/usr/bin/env lowfat-filter
+# tar-compact — compact verbose tar output for LLM contexts.
+# env: $sub $level $exit $args
+#
+# `tar` is silent without -v and explodes with it: one line per archived/
+# extracted file. The signal is just "it worked + roughly what/how many"; the
+# bloat is the full file list. ultra shows the first entries + a total-count
+# footer; full/lite head-cap. tar writes errors to stderr (non-zero exit) — raw.
+
+*:
+    if exit failed:
+        raw
+    else:
+        match level:
+            ultra:
+                shell: |
+                    awk 'NR<=12{print} END{if(NR>12) print "... ("NR" entries total)"}'
+            lite:
+                head 200
+            else:
+                head 60
