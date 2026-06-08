@@ -1,7 +1,11 @@
-# lowfat-pantry — Distribution Design (proposed)
+# lowfat-pantry — Distribution Design
 
-Status: **proposed**, awaiting decision. Goal: a new machine/project gets the full pantry
-(plugins + filters + integrations) with zero per-project reconfiguration.
+Status: **decided** — this repo becomes a `lowfat` skill repo imported via `school.toml`;
+plugins ride the skill-import rail and a script in the skill symlinks them into the lowfat
+home (see `../decisions/2026-06-08-pantry-distribution.md`). The Option A/B/C analysis below
+is the reasoning that led there; B (symlink-into-home) is the realized mechanism, with the
+skill repo as its carrier. Goal: a new machine/project gets the full pantry with zero
+per-project reconfiguration.
 
 ## The governing constraint
 
