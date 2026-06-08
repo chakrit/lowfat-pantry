@@ -1,13 +1,14 @@
 # `/lowfat` Skill — Design
 
-Status: **draft**. The skill this repo (`chakrit/lowfat-pantry`) ships, imported into the
-PRODIGY9 school via `school.toml` `[[imports]]`. Derived from lowfat's own mechanics, not
-transposed from the author-written `rtk` skill (see
-`../decisions/2026-06-08-pantry-distribution.md`).
+Status: **draft**. The standalone Claude Code skill this repo (`chakrit/lowfat-pantry`)
+ships — usable by any Claude Code user; ACE users import it via `school.toml` `[[imports]]` as
+one install channel. Derived from lowfat's own mechanics, not transposed from the
+author-written `rtk` skill (see `../decisions/2026-06-08-pantry-distribution.md`).
 
 ## Repo-as-skill
 
-Imported like `kien-thai`/`visualise`; materializes at `school/skills/lowfat/`. Carries:
+A standard Claude Code skill repo. ACE users import it like `kien-thai`/`visualise` (it
+materializes at `school/skills/lowfat/`); non-ACE users install it directly. Carries:
 
     SKILL.md             the /lowfat skill (carries the sync logic as agent steps)
     plugins/<cat>/<p>/   pantry — lowfat.toml · filter.lf · samples/ · tests.yml
@@ -68,5 +69,5 @@ reconcile step (4b) is what makes this safe against silent content drift.
 ## Open
 
 - `update-config` integration for the user-scope hook entry (step 5).
-- Confirm import materialization places `plugins/` at `school/skills/lowfat/plugins/` as the
-  stable symlink source.
+- Sync resolves the skill's **own** install dir as the symlink source (works for any install
+  method); for ACE imports, confirm that resolves to `school/skills/lowfat/plugins/`.

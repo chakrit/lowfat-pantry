@@ -73,10 +73,12 @@ one layer down.
 
 ## Outcome
 
-**Option B's mechanism (symlink-into-home) was adopted — but carried by a `lowfat` skill repo
-rather than a bespoke `school/pantry/` dir or an `install` script.** Plugins ride the existing
-skill-import rail (materializing at `school/skills/lowfat/plugins/`), and the agent performs
-the symlink sync under SKILL.md steps. Full realized design:
+**Option B's mechanism (symlink-into-home) was adopted — but carried by a standalone Claude
+Code `lowfat` skill repo, usable by any Claude Code user, not just ACE.** ACE users receive it
+via the skill-import rail (plugins materialize at `school/skills/lowfat/plugins/`); non-ACE
+users install the skill directly. Either way the agent performs the symlink sync under
+SKILL.md steps, resolving the skill's own install dir as the source — so Option C's
+standalone reach is folded in without a separate installer. Full realized design:
 `../decisions/2026-06-08-pantry-distribution.md` and `lowfat-skill.md`.
 
 ## Open upstream ask (zdk/lowfat)

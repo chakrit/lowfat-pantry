@@ -322,7 +322,7 @@ configuration exercise. It requires:
 - maintenance as upstream command output changes
 - likely changes to lowfat core for missing runtime and configuration controls
 
-The recommended implementation goal is a reusable `lowfat-ace` plugin pack, expanded from
+The recommended implementation goal is a reusable `lowfat-pantry` plugin pack, expanded from
 measured usage. Attempting feature-for-feature RTK parity before deployment would create a
 large maintenance burden without proving that the unused command surface provides value.
 
