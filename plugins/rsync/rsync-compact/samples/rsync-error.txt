@@ -1,0 +1,2 @@
+rsync: [sender] change_dir "/missing" failed: No such file or directory (2)
+rsync error: some files/attrs were not transferred (code 23) at main.c(1338)

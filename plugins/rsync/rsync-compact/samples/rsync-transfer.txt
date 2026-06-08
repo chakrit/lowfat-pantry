@@ -1,0 +1,34 @@
+sending incremental file list
+src/checkout/file1.ts
+src/checkout/file2.ts
+src/checkout/file3.ts
+src/checkout/file4.ts
+src/checkout/file5.ts
+src/checkout/file6.ts
+src/checkout/file7.ts
+src/checkout/file8.ts
+src/checkout/file9.ts
+src/checkout/file10.ts
+src/checkout/file11.ts
+src/checkout/file12.ts
+src/checkout/file13.ts
+src/checkout/file14.ts
+src/checkout/file15.ts
+src/checkout/file16.ts
+src/checkout/file17.ts
+src/checkout/file18.ts
+src/checkout/file19.ts
+src/checkout/file20.ts
+src/checkout/file21.ts
+src/checkout/file22.ts
+src/checkout/file23.ts
+src/checkout/file24.ts
+src/checkout/file25.ts
+src/checkout/file26.ts
+src/checkout/file27.ts
+src/checkout/file28.ts
+src/checkout/file29.ts
+src/checkout/file30.ts
+
+sent 12,345 bytes  received 678 bytes  26,046.00 bytes/sec
+total size is 456,789  speedup is 35.10

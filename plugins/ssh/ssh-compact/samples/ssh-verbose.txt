@@ -1,0 +1,25 @@
+OpenSSH_9.0p1, LibreSSL 3.3.6
+debug1: step 1 some verbose handshake detail blah blah
+debug1: step 2 some verbose handshake detail blah blah
+debug1: step 3 some verbose handshake detail blah blah
+debug1: step 4 some verbose handshake detail blah blah
+debug1: step 5 some verbose handshake detail blah blah
+debug1: step 6 some verbose handshake detail blah blah
+debug1: step 7 some verbose handshake detail blah blah
+debug1: step 8 some verbose handshake detail blah blah
+debug1: step 9 some verbose handshake detail blah blah
+debug1: step 10 some verbose handshake detail blah blah
+debug1: step 11 some verbose handshake detail blah blah
+debug1: step 12 some verbose handshake detail blah blah
+debug1: step 13 some verbose handshake detail blah blah
+debug1: step 14 some verbose handshake detail blah blah
+debug1: step 15 some verbose handshake detail blah blah
+debug1: step 16 some verbose handshake detail blah blah
+debug1: step 17 some verbose handshake detail blah blah
+debug1: step 18 some verbose handshake detail blah blah
+debug1: step 19 some verbose handshake detail blah blah
+debug1: step 20 some verbose handshake detail blah blah
+debug1: Authentication succeeded (publickey).
+Welcome to Ubuntu 22.04.4 LTS
+Last login: Sun Jun  8 11:00:00 2026
+deploy@web1:~$ 

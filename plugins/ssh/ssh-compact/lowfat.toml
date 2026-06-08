@@ -1,0 +1,6 @@
+[plugin]
+name = "ssh-compact"
+version = "0.1.0"
+description = "Compact ssh -v debug output for LLM contexts"
+category = "ssh"
+commands = ["ssh"]

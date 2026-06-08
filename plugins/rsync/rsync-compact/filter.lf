@@ -1,0 +1,17 @@
+#!/usr/bin/env lowfat-filter
+# rsync-compact — compact rsync output for LLM contexts.
+# env: $sub $level $exit $args
+#
+# `rsync -v` lists every transferred file, then prints the stats block
+# (`sent … received … bytes/sec`, `total size … speedup …`) at the END. The
+# stats are the signal (did it work, how much moved); the file list is the
+# bloat. ultra tails to the stats (+ last files); errors pass raw.
+
+*:
+    if exit failed:
+        raw
+    else:
+        match level:
+            ultra: tail 15
+            lite:  head 200
+            else:  tail 50

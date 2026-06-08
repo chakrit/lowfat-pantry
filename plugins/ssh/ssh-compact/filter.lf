@@ -1,0 +1,30 @@
+#!/usr/bin/env lowfat-filter
+# ssh-compact — compact ssh output for LLM contexts.
+# env: $sub $level $exit $args
+#
+# `ssh -v/-vv/-vvv` floods stderr with `debug1:`/`debug2:`/`debug3:` lines; the
+# signal is the connection/auth result, banners, the remote command's output,
+# and any error. We drop the debug spam (always safe — it's line-prefixed) and
+# cap. A failed connection (non-zero exit) tails to the error.
+
+*:
+    if exit failed:
+        match level:
+            ultra:
+                drop /^debug[0-9]+: /
+                tail 30
+            lite:
+                tail 200
+            else:
+                drop /^debug[0-9]+: /
+                tail 80
+    else:
+        match level:
+            ultra:
+                drop /^debug[0-9]+: /
+                head 25
+            lite:
+                head 200
+            else:
+                drop /^debug[0-9]+: /
+                head 60

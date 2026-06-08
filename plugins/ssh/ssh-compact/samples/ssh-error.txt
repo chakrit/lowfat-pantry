@@ -1,0 +1,3 @@
+OpenSSH_9.0p1, LibreSSL 3.3.6
+debug1: Connecting to web9.prod port 22.
+ssh: connect to host web9.prod port 22: Connection timed out

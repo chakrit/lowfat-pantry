@@ -1,0 +1,6 @@
+[plugin]
+name = "rsync-compact"
+version = "0.1.0"
+description = "Compact rsync -v transfer output for LLM contexts"
+category = "rsync"
+commands = ["rsync"]

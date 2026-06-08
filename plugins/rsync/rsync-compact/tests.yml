@@ -1,0 +1,14 @@
+# Golden/invariant cases for rsync-compact. Provisional (smoke harness pending).
+command: rsync
+synthetic: true
+cases:
+  - sample: samples/rsync-transfer.txt
+    sub: ""
+    args: "-av src/ host:/dst/"
+    exit: 0
+    levels: [lite, full, ultra]
+  - sample: samples/rsync-error.txt
+    sub: ""
+    args: "-av /missing/ host:/dst/"
+    exit: 23
+    levels: [lite, full, ultra]
