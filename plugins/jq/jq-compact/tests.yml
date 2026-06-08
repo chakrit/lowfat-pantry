@@ -1,0 +1,18 @@
+command: jq
+synthetic: true
+cases:
+  - sample: samples/jq-array.txt
+    sub: ""
+    args: "."
+    exit: 0
+    levels: [lite, full, ultra]
+  - sample: samples/jq-raw.txt
+    sub: ""
+    args: "-r .name"
+    exit: 0
+    levels: [lite, full, ultra]
+  - sample: samples/jq-error.txt
+    sub: ""
+    args: "."
+    exit: 4
+    levels: [lite, full, ultra]

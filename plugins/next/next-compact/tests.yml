@@ -1,0 +1,18 @@
+command: next
+synthetic: true
+cases:
+  - sample: samples/next-build.txt
+    sub: build
+    args: ""
+    exit: 0
+    levels: [lite, full, ultra]
+  - sample: samples/next-build-warning.txt
+    sub: build
+    args: ""
+    exit: 0
+    levels: [lite, full, ultra]
+  - sample: samples/next-build-error.txt
+    sub: build
+    args: ""
+    exit: 1
+    levels: [lite, full, ultra]

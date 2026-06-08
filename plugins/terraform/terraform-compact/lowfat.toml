@@ -1,0 +1,8 @@
+[plugin]
+name = "terraform-compact"
+version = "0.1.0"
+description = "Compact Terraform plan/apply/init output while preserving errors and summaries"
+category = "terraform"
+commands = ["terraform"]
+# Documentation only - subcommand selection happens inside filter.lf.
+subcommands = ["plan", "apply", "init"]

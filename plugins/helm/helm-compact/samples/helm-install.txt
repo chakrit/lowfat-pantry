@@ -1,0 +1,22 @@
+NAME: api
+LAST DEPLOYED: Mon Jun  8 10:14:58 2026
+NAMESPACE: production
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+NOTES:
+1. Get the application URL by running these commands:
+  export POD_NAME=$(kubectl get pods --namespace production -l "app.kubernetes.io/name=api,app.kubernetes.io/instance=api" -o jsonpath="{.items[0].metadata.name}")
+  export CONTAINER_PORT=$(kubectl get pod --namespace production $POD_NAME -o jsonpath="{.spec.containers[0].ports[0].containerPort}")
+  kubectl --namespace production port-forward $POD_NAME 8080:$CONTAINER_PORT
+
+The chart also installed Prometheus rules, a service monitor, a PodDisruptionBudget, and
+network policy resources. Review values.yaml for the complete list of toggles.
+
+Common commands:
+  helm status api -n production
+  helm get values api -n production
+  helm rollback api 1 -n production
+  kubectl logs deploy/api -n production
+  kubectl describe ingress api -n production
+  kubectl get events -n production --sort-by=.lastTimestamp

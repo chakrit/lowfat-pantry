@@ -1,0 +1,41 @@
+Running 18 tests using 3 workers
+  ✓   1 [chromium] › tests/auth.spec.ts:8:5 › auth › signs in with password (1.2s)
+  ✓   2 [chromium] › tests/auth.spec.ts:22:5 › auth › rejects bad password (410ms)
+  ✘   3 [chromium] › tests/dashboard.spec.ts:10:5 › dashboard › loads summary cards (30.0s)
+  ✓   4 [chromium] › tests/projects.spec.ts:12:5 › projects › creates project (1.7s)
+  ✓   5 [firefox] › tests/auth.spec.ts:8:5 › auth › signs in with password (1.4s)
+  ✘   6 [firefox] › tests/dashboard.spec.ts:10:5 › dashboard › loads summary cards (30.0s)
+  ✓   7 [webkit] › tests/auth.spec.ts:8:5 › auth › signs in with password (1.6s)
+
+  1) [chromium] › tests/dashboard.spec.ts:10:5 › dashboard › loads summary cards ─────────────
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator: getByTestId('project-count')
+    Expected: "12"
+    Received: "0"
+    Timeout: 30000ms
+
+      12 |     await page.goto('/dashboard')
+      13 |     await expect(page.getByRole('heading', { name: 'Dashboard' })).toBeVisible()
+    > 14 |     await expect(page.getByTestId('project-count')).toHaveText('12')
+         |                                                     ^
+      15 |   })
+      16 | })
+
+    attachment #1: screenshot (image/png) ─────────────────────────────────────────────────────
+    test-results/dashboard-loads-summary-cards-chromium/test-failed-1.png
+
+  2) [firefox] › tests/dashboard.spec.ts:10:5 › dashboard › loads summary cards ───────────────
+
+    Error: expect(locator).toHaveText(expected) failed
+
+    Locator: getByTestId('project-count')
+    Expected: "12"
+    Received: "0"
+    Timeout: 30000ms
+
+  2 failed
+    [chromium] › tests/dashboard.spec.ts:10:5 › dashboard › loads summary cards
+    [firefox] › tests/dashboard.spec.ts:10:5 › dashboard › loads summary cards
+  16 passed (1.1m)

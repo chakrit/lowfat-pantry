@@ -1,0 +1,57 @@
+#!/usr/bin/env lowfat-filter
+# terraform-compact - preserve plan/apply signal, drop repetitive diffs/progress.
+# env: $sub $level $exit $args
+
+define compact-plan(limit):
+    shell: |
+        awk -v lim=$1 -v lvl=$level '
+          /^  # .* (will be|must be|has been|will be read during apply)/ { print; count++; next }
+          /^Plan: [0-9]+ to add, [0-9]+ to change, [0-9]+ to destroy\./ { print; next }
+          /^No changes\./ || /^Terraform will perform the following actions:/ { print; next }
+          lvl=="ultra" { next }
+          /^[[:space:]]*[~+-][[:space:]][[:alnum:]_"-]+[[:space:]]+=/ {
+            if (count < lim) { print; count++ }
+            next
+          }
+          /^Changes to Outputs:/ { print; next }
+        '
+
+plan:
+    if exit failed:
+        raw
+    else:
+        match level:
+            ultra: compact-plan 40
+            full:  compact-plan 90
+            lite:  compact-plan 180
+
+apply:
+    if exit failed:
+        raw
+    else:
+        match level:
+            ultra:
+                drop /Still (creating|modifying|destroying|reading)\.\.\. \[[0-9]+s elapsed\]/
+                keep /(Creating|Modifying|Destroying|Reading|Creation complete|Modifications complete|Destruction complete|Read complete|Apply complete! Resources:)/
+                tail 30
+            lite:
+                drop /Still (creating|modifying|destroying|reading)\.\.\. \[[0-9]+s elapsed\]/
+                tail 120
+            else:
+                drop /Still (creating|modifying|destroying|reading)\.\.\. \[[0-9]+s elapsed\]/
+                tail 60
+
+init:
+    if exit failed:
+        raw
+    else:
+        match level:
+            ultra: tail 20
+            lite:  tail 80
+            else:  tail 40
+
+*:
+    if exit failed:
+        raw
+    else:
+        head auto

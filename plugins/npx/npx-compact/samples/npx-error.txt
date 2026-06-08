@@ -1,0 +1,13 @@
+npm WARN exec The following package was not found and will be installed: typescript@5.5.2
+npm http fetch GET 200 https://registry.npmjs.org/typescript 136ms
+src/index.ts:11:19 - error TS2307: Cannot find module './missing' or its corresponding type declarations.
+
+11 import missing from './missing';
+                     ~~~~~~~~~~~
+
+src/index.ts:25:7 - error TS2322: Type 'string' is not assignable to type 'number'.
+
+25 const port: number = process.env.PORT || '3000';
+         ~~~~
+
+Found 2 errors in the same file, starting at: src/index.ts:11

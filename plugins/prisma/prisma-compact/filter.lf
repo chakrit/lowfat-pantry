@@ -1,0 +1,37 @@
+#!/usr/bin/env lowfat-filter
+# prisma-compact - strip banner/box art, keep migration and generation signal.
+# env: $sub $level $exit $args
+
+define strip-prisma-noise:
+    drop /^Prisma schema loaded from /
+    drop /^Datasource "/
+    drop /^┌/
+    drop /^│/
+    drop /^└/
+    drop /^╭/
+    drop /^╰/
+    drop /^│/
+    drop /^[- ]*Prisma/
+
+migrate|generate|db:
+    if exit failed:
+        raw
+    else:
+        match level:
+            ultra:
+                strip-prisma-noise
+                keep /(✔ Generated|Applying migration|Migration .* applied|Your database is now in sync|The following migration|Generated Prisma Client|Error:)/
+                head 35
+                or "prisma: ok"
+            lite:
+                strip-prisma-noise
+                head 120
+            else:
+                strip-prisma-noise
+                head 60
+
+*:
+    if exit failed:
+        raw
+    else:
+        head auto

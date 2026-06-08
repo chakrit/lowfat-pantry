@@ -1,0 +1,8 @@
+[plugin]
+name = "prisma-compact"
+version = "0.1.0"
+description = "Compact Prisma migrate/generate/db output while preserving migrations and errors"
+category = "prisma"
+commands = ["prisma"]
+# Documentation only - subcommand selection happens inside filter.lf.
+subcommands = ["migrate", "generate", "db"]

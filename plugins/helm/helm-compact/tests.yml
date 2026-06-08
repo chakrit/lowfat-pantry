@@ -1,0 +1,18 @@
+command: helm
+synthetic: true
+cases:
+  - sample: samples/helm-install.txt
+    sub: install
+    args: "api ./chart -n production"
+    exit: 0
+    levels: [lite, full, ultra]
+  - sample: samples/helm-list.txt
+    sub: list
+    args: "-A"
+    exit: 0
+    levels: [lite, full, ultra]
+  - sample: samples/helm-upgrade-error.txt
+    sub: upgrade
+    args: "api ./chart -n production --install"
+    exit: 1
+    levels: [lite, full, ultra]

@@ -1,0 +1,8 @@
+[plugin]
+name = "npx-compact"
+version = "0.1.0"
+description = "Compact npx wrapper chatter while leaving child tool output intact"
+category = "npx"
+commands = ["npx"]
+# Documentation only - npx package names vary.
+subcommands = []

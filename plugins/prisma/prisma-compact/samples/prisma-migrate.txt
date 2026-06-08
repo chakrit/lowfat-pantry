@@ -1,0 +1,21 @@
+Prisma schema loaded from prisma/schema.prisma
+Datasource "db": PostgreSQL database "app", schema "public" at "localhost:5432"
+
+Applying migration `20260608081100_create_users`
+Applying migration `20260608083412_add_projects`
+Applying migration `20260608090233_add_indexes`
+
+The following migration(s) have been applied:
+
+migrations/
+  └─ 20260608081100_create_users/
+    └─ migration.sql
+  └─ 20260608083412_add_projects/
+    └─ migration.sql
+  └─ 20260608090233_add_indexes/
+    └─ migration.sql
+
+Your database is now in sync with your schema.
+
+Running generate... (Use --skip-generate to skip the generators)
+✔ Generated Prisma Client (v5.15.0) to ./node_modules/@prisma/client in 101ms

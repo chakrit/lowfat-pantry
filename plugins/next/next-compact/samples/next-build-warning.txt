@@ -1,0 +1,20 @@
+   ▲ Next.js 15.3.2
+   - Environments: .env.local
+
+   Creating an optimized production build ...
+Warning: React Hook useEffect has a missing dependency: 'loadProjects'. Either include it or remove the dependency array.
+ ✓ Compiled successfully in 9.1s
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/12) ...
+   Generating static pages (12/12)
+   Finalizing page optimization ...
+
+Route (app)                                 Size  First Load JS
+┌ ○ /                                      184 B         108 kB
+├ ○ /dashboard                            2.8 kB        154 kB
+├ ○ /settings                             2.1 kB        151 kB
+└ ƒ /api/projects                         140 B         101 kB
++ First Load JS shared by all             101 kB
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand

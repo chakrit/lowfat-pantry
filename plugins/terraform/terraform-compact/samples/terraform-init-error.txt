@@ -1,0 +1,13 @@
+Initializing the backend...
+Initializing provider plugins...
+- Reusing previous version of hashicorp/aws from the dependency lock file
+- Finding latest version of hashicorp/random...
+- Installing hashicorp/random v3.6.2...
+- Installed hashicorp/random v3.6.2 (signed by HashiCorp)
+
+Error: Failed to query available provider packages
+
+Could not retrieve the list of available versions for provider hashicorp/aws:
+could not connect to registry.terraform.io: failed to request discovery
+document: Get "https://registry.terraform.io/.well-known/terraform.json":
+dial tcp: lookup registry.terraform.io: no such host

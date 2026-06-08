@@ -1,0 +1,41 @@
+#!/usr/bin/env lowfat-filter
+# jq-compact - keep full/lite JSON byte-exact; ultra summarizes large arrays.
+# env: $sub $level $exit $args
+
+define ultra-json-array(limit):
+    python: |
+        import json
+        import sys
+
+        raw = sys.stdin.read()
+        try:
+            value = json.loads(raw)
+        except Exception:
+            sys.stdout.write(raw)
+            raise SystemExit(0)
+
+        if isinstance(value, list) and len(value) > $1:
+            out = value[:$1] + [{"lowfat_truncated": "%d more elements" % (len(value) - $1)}]
+            sys.stdout.write(json.dumps(out, indent=2, ensure_ascii=False))
+            sys.stdout.write("\n")
+        else:
+            sys.stdout.write(raw)
+
+*:
+    if exit failed:
+        raw
+    elif -r:
+        match level:
+            ultra: head 30
+            lite:  head 120
+            else:  head 60
+    elif --raw-output:
+        match level:
+            ultra: head 30
+            lite:  head 120
+            else:  head 60
+    else:
+        match level:
+            ultra: ultra-json-array 12
+            full:  raw
+            lite:  raw

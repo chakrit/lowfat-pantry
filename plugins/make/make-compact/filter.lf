@@ -1,0 +1,15 @@
+#!/usr/bin/env lowfat-filter
+# make-compact - recipe output is arbitrary child-command output; tail only.
+# env: $sub $level $exit $args
+
+*:
+    if exit failed:
+        match level:
+            ultra: tail 80
+            lite:  tail 240
+            else:  tail 140
+    else:
+        match level:
+            ultra: tail 25
+            lite:  tail 120
+            else:  tail 60

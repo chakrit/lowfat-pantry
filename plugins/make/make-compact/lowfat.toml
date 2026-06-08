@@ -1,0 +1,8 @@
+[plugin]
+name = "make-compact"
+version = "0.1.0"
+description = "Tail make output without keyword-filtering recipe or compiler logs"
+category = "make"
+commands = ["make", "gmake"]
+# Documentation only - make targets are not stable subcommands.
+subcommands = []

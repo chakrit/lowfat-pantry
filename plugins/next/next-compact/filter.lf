@@ -1,0 +1,34 @@
+#!/usr/bin/env lowfat-filter
+# next-compact - keep build warnings/errors and summaries; trim route table at ultra.
+# env: $sub $level $exit $args
+
+define drop-next-banner:
+    drop /^   ▲ Next\.js /
+    drop /^   - /
+    drop /^   Creating an optimized production build/
+    drop /^   Collecting page data/
+    drop /^   Generating static pages /
+    drop /^   Finalizing page optimization/
+    drop /^   Collecting build traces/
+
+build:
+    if exit failed:
+        raw
+    else:
+        match level:
+            ultra:
+                drop-next-banner
+                keep /(Compiled successfully|Failed to compile|Warning:|Error:|[0-9]+ warnings?)/
+                head 45
+            lite:
+                drop-next-banner
+                head 140
+            else:
+                drop-next-banner
+                head 90
+
+*:
+    if exit failed:
+        raw
+    else:
+        head auto

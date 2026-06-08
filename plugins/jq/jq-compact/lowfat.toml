@@ -1,0 +1,8 @@
+[plugin]
+name = "jq-compact"
+version = "0.1.0"
+description = "Preserve jq JSON output byte-exact except for safe ultra summaries of huge arrays"
+category = "jq"
+commands = ["jq"]
+# Documentation only - jq filters are passed as args, not subcommands.
+subcommands = []

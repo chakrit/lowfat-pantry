@@ -1,0 +1,8 @@
+[plugin]
+name = "playwright-compact"
+version = "0.1.0"
+description = "Compact Playwright test output, preserving failures and run summaries"
+category = "playwright"
+commands = ["playwright"]
+# Documentation only - subcommand selection happens inside filter.lf.
+subcommands = ["test"]

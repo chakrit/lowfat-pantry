@@ -1,0 +1,18 @@
+command: npx
+synthetic: true
+cases:
+  - sample: samples/npx-eslint.txt
+    sub: ""
+    args: "eslint src"
+    exit: 0
+    levels: [lite, full, ultra]
+  - sample: samples/npx-create.txt
+    sub: ""
+    args: "create-vite demo"
+    exit: 0
+    levels: [lite, full, ultra]
+  - sample: samples/npx-error.txt
+    sub: ""
+    args: "tsc --noEmit"
+    exit: 2
+    levels: [lite, full, ultra]

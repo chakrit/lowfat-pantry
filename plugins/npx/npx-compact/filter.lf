@@ -1,0 +1,27 @@
+#!/usr/bin/env lowfat-filter
+# npx-compact - drop npm fetch chatter, then cap conservatively.
+# env: $sub $level $exit $args
+
+define drop-npm-fetch:
+    drop /^Need to install the following packages:/
+    drop /^Ok to proceed\?/
+    drop /^[@[:alnum:]_\/.-]+@[0-9][^[:space:]]*$/
+    drop /^npm (WARN|notice)/
+    drop /^npm http fetch /
+    drop /^added [0-9]+ packages/
+    drop /^audited [0-9]+ packages/
+
+*:
+    if exit failed:
+        raw
+    else:
+        match level:
+            ultra:
+                drop-npm-fetch
+                head 40
+            lite:
+                drop-npm-fetch
+                head 160
+            else:
+                drop-npm-fetch
+                head 80

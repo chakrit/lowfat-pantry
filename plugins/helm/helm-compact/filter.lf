@@ -1,0 +1,50 @@
+#!/usr/bin/env lowfat-filter
+# helm-compact - preserve release metadata and cap bulky notes/tables.
+# env: $sub $level $exit $args
+
+define helm-summary(limit):
+    shell: |
+        awk -v lim=$1 -v lvl=$level '
+          /^NAME:/ || /^LAST DEPLOYED:/ || /^NAMESPACE:/ || /^STATUS:/ || /^REVISION:/ || /^TEST SUITE:/ { print; next }
+          /^NOTES:/ { print; in_notes=1; notes=0; next }
+          in_notes {
+            if (lvl == "ultra") { next }
+            if (notes < lim) { print; notes++ }
+            next
+          }
+          NF && seen < lim { print; seen++ }
+        '
+
+define helm-table(limit):
+    shell: |
+        awk -v lim=$1 '
+          NR==1 { gsub(/[[:space:]][[:space:]]+/, " "); print; next }
+          NF {
+            gsub(/[[:space:]][[:space:]]+/, " ")
+            if (++rows <= lim) print
+          }
+        '
+
+install|upgrade|status:
+    if exit failed:
+        raw
+    else:
+        match level:
+            ultra: helm-summary 8
+            full:  helm-summary 35
+            lite:  helm-summary 80
+
+list:
+    if exit failed:
+        raw
+    else:
+        match level:
+            ultra: helm-table 12
+            full:  helm-table 30
+            lite:  helm-table 60
+
+*:
+    if exit failed:
+        raw
+    else:
+        head auto

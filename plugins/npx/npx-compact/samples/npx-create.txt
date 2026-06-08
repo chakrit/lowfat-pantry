@@ -1,0 +1,13 @@
+Need to install the following packages:
+create-vite@5.5.0
+Ok to proceed? (y) y
+npm WARN deprecated inflight@1.0.6: This module is not supported, and leaks memory.
+npm http fetch GET 200 https://registry.npmjs.org/create-vite 86ms
+npm http fetch GET 200 https://registry.npmjs.org/vite 101ms
+Scaffolding project in /work/demo...
+
+Done. Now run:
+
+  cd demo
+  npm install
+  npm run dev

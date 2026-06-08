@@ -1,0 +1,13 @@
+command: make
+synthetic: true
+cases:
+  - sample: samples/make-success.txt
+    sub: ""
+    args: "release"
+    exit: 0
+    levels: [lite, full, ultra]
+  - sample: samples/make-failure.txt
+    sub: ""
+    args: "release"
+    exit: 2
+    levels: [lite, full, ultra]

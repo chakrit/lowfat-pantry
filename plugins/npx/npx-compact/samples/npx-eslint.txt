@@ -1,0 +1,14 @@
+npm WARN exec The following package was not found and will be installed: eslint@9.4.0
+npm http fetch GET 200 https://registry.npmjs.org/eslint 121ms
+npm http fetch GET 200 https://registry.npmjs.org/@eslint%2fjs 48ms
+npm http fetch GET 200 https://registry.npmjs.org/globals 42ms
+added 88 packages, and audited 89 packages in 3s
+
+/work/app/src/api.ts
+  12:7   warning  'payload' is assigned a value but never used  @typescript-eslint/no-unused-vars
+  44:13  warning  Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any
+
+/work/app/src/server.ts
+  28:5   warning  Promises must be awaited or handled            @typescript-eslint/no-floating-promises
+
+✖ 3 problems (0 errors, 3 warnings)

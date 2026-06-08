@@ -1,0 +1,8 @@
+[plugin]
+name = "next-compact"
+version = "0.1.0"
+description = "Compact Next.js build output while preserving warnings, errors, and summaries"
+category = "next"
+commands = ["next"]
+# Documentation only - subcommand selection happens inside filter.lf.
+subcommands = ["build"]

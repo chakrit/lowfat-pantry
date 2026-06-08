@@ -1,0 +1,19 @@
+aws_instance.web[0]: Creating...
+aws_instance.web[0]: Still creating... [10s elapsed]
+aws_instance.web[0]: Still creating... [20s elapsed]
+aws_instance.web[0]: Still creating... [30s elapsed]
+aws_instance.web[0]: Creation complete after 34s [id=i-0abc123]
+aws_instance.web[1]: Creating...
+aws_instance.web[1]: Still creating... [10s elapsed]
+aws_instance.web[1]: Still creating... [20s elapsed]
+aws_instance.web[1]: Still creating... [30s elapsed]
+aws_instance.web[1]: Creation complete after 38s [id=i-0def456]
+aws_security_group.web: Modifying... [id=sg-123456]
+aws_security_group.web: Still modifying... [10s elapsed]
+aws_security_group.web: Still modifying... [20s elapsed]
+aws_security_group.web: Modifications complete after 22s [id=sg-123456]
+aws_s3_bucket.logs: Destroying... [id=old-logs]
+aws_s3_bucket.logs: Still destroying... [10s elapsed]
+aws_s3_bucket.logs: Destruction complete after 13s
+
+Apply complete! Resources: 2 added, 1 changed, 1 destroyed.

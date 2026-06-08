@@ -1,0 +1,34 @@
+   ▲ Next.js 15.3.2
+   - Environments: .env.local, .env.production
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 8.0s
+   Linting and checking validity of types ...
+   Collecting page data ...
+   Generating static pages (0/18) ...
+   Generating static pages (6/18) ...
+   Generating static pages (12/18) ...
+   Generating static pages (18/18)
+   Finalizing page optimization ...
+   Collecting build traces ...
+
+Route (app)                                 Size  First Load JS
+┌ ○ /                                      184 B         108 kB
+├ ○ /_not-found                            984 B         101 kB
+├ ƒ /api/health                            140 B         101 kB
+├ ƒ /api/users                             140 B         101 kB
+├ ○ /dashboard                            2.8 kB        154 kB
+├ ○ /dashboard/activity                   3.1 kB        158 kB
+├ ○ /dashboard/settings                   2.2 kB        151 kB
+├ ƒ /projects/[id]                        5.4 kB        188 kB
+├ ○ /projects/new                         3.7 kB        162 kB
+├ ○ /reports                              4.0 kB        173 kB
+├ ○ /reports/export                       2.9 kB        150 kB
+└ ○ /status                               1.1 kB        112 kB
++ First Load JS shared by all             101 kB
+  ├ chunks/4bd1b696-64f10a.js            53.2 kB
+  ├ chunks/517-3f1ab2.js                 45.9 kB
+  └ other shared chunks (total)          1.84 kB
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand

@@ -1,0 +1,36 @@
+#!/usr/bin/env lowfat-filter
+# playwright-compact - keep failing specs, diagnostics, and summary.
+# env: $sub $level $exit $args
+
+test:
+    if exit failed:
+        match level:
+            ultra:
+                drop /^[[:space:]]*[✓·.][[:space:]]/
+                drop /^[[:space:]]*[0-9]+ passed /
+                tail 100
+            lite:
+                drop /^[[:space:]]*[✓·.][[:space:]]/
+                tail 240
+            else:
+                drop /^[[:space:]]*[✓·.][[:space:]]/
+                tail 160
+    else:
+        match level:
+            ultra:
+                drop /^[[:space:]]*[✓·.][[:space:]]/
+                keep /(Running [0-9]+ tests|[0-9]+ passed|[0-9]+ failed|[0-9]+ flaky|[0-9]+ skipped)/
+                tail 20
+                or "playwright: passed"
+            lite:
+                drop /^[[:space:]]*[✓·.][[:space:]]/
+                tail 120
+            else:
+                drop /^[[:space:]]*[✓·.][[:space:]]/
+                tail 60
+
+*:
+    if exit failed:
+        raw
+    else:
+        head auto

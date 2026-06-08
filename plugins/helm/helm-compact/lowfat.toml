@@ -1,0 +1,8 @@
+[plugin]
+name = "helm-compact"
+version = "0.1.0"
+description = "Compact Helm install/upgrade/list/status output, preserving release status and errors"
+category = "helm"
+commands = ["helm"]
+# Documentation only - subcommand selection happens inside filter.lf.
+subcommands = ["install", "upgrade", "list", "status"]
