@@ -8,7 +8,15 @@ author-written `rtk` skill (see `../decisions/2026-06-08-pantry-distribution.md`
 ## Repo-as-skill
 
 A standard Claude Code skill repo. ACE users import it like `kien-thai`/`visualise` (it
-materializes at `school/skills/lowfat/`); non-ACE users install it directly. Carries:
+materializes at `school/skills/lowfat/`); non-ACE users install it via their own skill
+tooling. Carries:
+
+**Non-goal:** getting the skill *onto* a machine. That's the skill-manager's job (ACE import,
+a skill installer, or a manual clone — the user's pick), not this repo's. The repo's only
+install-adjacent responsibility is runtime self-location — resolving its own dir as the
+symlink source — already covered below.
+
+Layout:
 
     SKILL.md             the /lowfat skill (carries the sync logic as agent steps)
     plugins/<cat>/<p>/   pantry — lowfat.toml · filter.lf · samples/ · tests.yml
