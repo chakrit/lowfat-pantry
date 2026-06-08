@@ -490,3 +490,39 @@ build, ultra:  keep /^(Successfully|ERROR)/  tail 3  else "docker build: ok"
 - Subprocess ops run with a **scrubbed env** (allowlist only) — don't rely on
   arbitrary inherited env vars inside `shell:`/`python:` (see security.rs in the
   internals doc).
+
+## Authoring pitfalls (from building the pantry)
+
+Practical anti-patterns that cost real debugging time while building the 39
+pantry plugins — distinct from the parser/engine gotchas above:
+
+1. **Alternation is `|`, not comma.** `build|check|clippy:` means "build OR check
+   OR clippy". A comma is `sub, level` (`logs, ultra:`), so `build, check:` parses
+   as sub=`build`, level=`check` → error (`check` isn't a level).
+2. **A body is EITHER a flat pipeline OR a cascade — never a flat op then a
+   `match`/`if`.** `drop-progress` *then* `match level:` fails to parse. Push the
+   shared flat op INTO each arm (macros-in-arms is fine, as `cargo`/`git` do).
+3. **`raw` on failure defeats compaction when the failure IS the bloat.** A naive
+   `if exit failed: raw` is right for grep/find (short errors) but WRONG for noisy
+   builds (mvn/gradle/tsc): a failed build is exactly when you want `[ERROR]`
+   extracted from hundreds of transfer/progress lines. Run the extraction on
+   failure too, with `or-shell: tail`/`head` as the over-prune fallback.
+4. **`or-shell:` runs against the RAW input, not the pruned stream.** It's
+   over-prune *recovery* (fires when your pipeline emptied the stream), not a
+   post-transform. Use it to fall back to a raw head/tail when a keyword `keep`
+   matched nothing (e.g. a crash with none of your expected markers).
+5. **Never keyword-filter passthrough output.** For `<tool> run`/`exec`/bare
+   `prettier <file>`/`cargo run`, the body is the program's own stdout or
+   formatted code — keyword-filtering it hides results or corrupts code. Select
+   those subcommands separately and only head/tail-cap them.
+6. **Guard structured output through byte-exact.** JSON/env/formatted output must
+   not be lossily capped. Branch on the flag (`if --json: raw`, `elif -F json:
+   raw`, `elif -o json:`) — `--output json` matches `--output`, and flag+value
+   `-o yaml` matches only that value, so you can prune YAML while passing JSON.
+7. **Exit-code granularity is binary in guards.** You only get `exit ok|failed`,
+   not specific codes. If 1 and 2 mean different things (eslint: 1=problems,
+   2=crash), prefer a robust non-keyword approach (drop-blanks + head) so a crash
+   is never silently dropped to "clean".
+8. **Samples must be byte-faithful.** No inline `# synthetic:` annotations — they
+   leak into filtered output and distort line counts. Record synthetic-ness in
+   `tests.yml` (`synthetic: true`).
