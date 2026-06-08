@@ -48,11 +48,22 @@ cases:
 Author against `docs/spec/lowfat-filter-dsl.md`. Validate purely (no global state, no
 trust, no install) with the standalone filter runner:
 
-    scripts/validate.sh                 # all plugins
+    scripts/validate.sh                 # all plugins (happy-path: assumes exit 0)
     scripts/validate.sh plugins/rg      # one plugin
 
 which wraps `lowfat filter <filter.lf> --sub … --level … < sample` and reports
 line-reduction per (sample × level).
+
+For error-path correctness, use the `tests.yml`-aware validator, which honors each
+case's real `exit` code (so failure samples are tested as failures) and flags
+over-prune (`EMPTY`) and non-compacting (`NOSHR`) cases:
+
+    ./scripts/validate.py               # all plugins (run as executable)
+    ./scripts/validate.py plugins/mvn   # one plugin
+
+Run it as an executable (`./scripts/validate.py`) so its `env python3` shebang finds
+the real interpreter — invoking `python3 scripts/validate.py` can hit a shell-function
+shadow in some dev environments.
 
 ## Design principles (vs RTK)
 

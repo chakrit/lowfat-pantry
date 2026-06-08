@@ -2,16 +2,19 @@
 command: diff
 synthetic: true
 cases:
-  - sample: samples/diff-unified.txt
+  - sample: samples/diff-unified.txt        # files differ → exit 1
     sub: ""
     args: "-u old.txt new.txt"
+    exit: 1
     levels: [lite, full, ultra]
-  - sample: samples/diff-context-heavy.txt
+  - sample: samples/diff-context-heavy.txt   # files differ → exit 1
     sub: ""
     args: "-u before.py after.py"
+    exit: 1
     levels: [lite, full, ultra]
-  - sample: samples/diff-error.txt
+  - sample: samples/diff-error.txt           # missing file → exit 2 (filter cats raw)
     sub: ""
     args: "-u missing.txt new.txt"
+    exit: 2
     levels: [lite, full, ultra]
 
