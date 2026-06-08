@@ -1,0 +1,15 @@
+# Golden/invariant cases for eslint-compact. Provisional format (smoke harness pending).
+# Samples are synthetic (no ESLint project in this repo to capture from).
+command: eslint
+synthetic: true
+cases:
+  - sample: samples/eslint-problems.txt
+    sub: ""
+    args: "."
+    exit: 1
+    levels: [lite, full, ultra]
+  - sample: samples/eslint-clean.txt      # no problems: empty output, exit 0 → "eslint: clean"
+    sub: ""
+    args: "."
+    exit: 0
+    levels: [lite, full, ultra]

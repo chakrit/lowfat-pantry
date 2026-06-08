@@ -1,0 +1,35 @@
+#!/usr/bin/env lowfat-filter
+# eslint-compact — compact ESLint stylish output for LLM contexts.
+# env: $sub $level $exit $args
+#
+# ESLint exit: 0 = clean (no output), 1 = lint problems, 2 = config crash.
+# Guards only see ok/failed (not 1-vs-2), so we never keyword-filter — a crash
+# message would be dropped and silently look "clean". Instead we just drop blank
+# separator lines and head-cap: the bloat is the *number* of problems across
+# files, and stylish output is already one line per problem. The `✖ N problems`
+# summary survives unless the list is enormous. Empty input (exit 0) → "clean".
+#
+# Pass `--format json`/`-f json` straight through — machine-readable.
+
+define dense:
+    drop /^[[:space:]]*$/
+
+*:
+    if --format json:
+        raw
+    elif -f json:
+        raw
+    else:
+        match level:
+            ultra:
+                dense
+                head 25
+                or "eslint: clean"
+            lite:
+                dense
+                head 200
+                or "eslint: clean"
+            else:
+                dense
+                head 60
+                or "eslint: clean"

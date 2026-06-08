@@ -1,0 +1,6 @@
+[plugin]
+name = "eslint-compact"
+version = "0.1.0"
+description = "Compact ESLint (stylish) output for LLM contexts"
+category = "eslint"
+commands = ["eslint"]
