@@ -23,8 +23,10 @@ ones of the same name.
     <command>-<subcommand>.txt            level-agnostic raw capture
 
 Prefer **real** captured output (`<cmd> … > sample.txt 2>&1`); synthesize only when the
-tool/environment isn't available here. Mark synthetic samples with a leading
-`# synthetic:` comment line.
+tool/environment isn't available here. Sample files must be **byte-faithful** to real
+command output — no inline annotations (they would leak into filtered output and distort
+line counts). Mark a sample as synthesized in `tests.yml` with `synthetic: true` on the
+case.
 
 ## tests.yml (provisional)
 

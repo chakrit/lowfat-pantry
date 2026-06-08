@@ -1,0 +1,8 @@
+[plugin]
+name = "cargo-compact"
+version = "0.1.0"
+description = "Compact cargo build/test/check/clippy output for LLM contexts"
+category = "cargo"
+commands = ["cargo"]
+# Documentation only — subcommand selection happens inside filter.lf.
+subcommands = ["build", "check", "clippy", "test", "bench", "run"]
