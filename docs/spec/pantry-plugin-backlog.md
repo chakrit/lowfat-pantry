@@ -10,6 +10,26 @@ Legend:
 - **bundled** — lowfat `v0.6.8` already ships a plugin; work is *enhance/verify*, not build.
 - **build** — no lowfat coverage; net-new plugin.
 - **fold** — likely collapses into another plugin rather than standing alone.
+- ✅ **built** — net-new plugin now exists under `plugins/` (this session).
+
+## Built this session (33 community plugins)
+
+VCS/CI: `rg` `gh` `glab` · Rust: `cargo` · TS/JS: `tsc` `eslint` `prettier` `npm` `pnpm`
+`yarn` · Python: `pytest` `ruff` `mypy` `black` `pip` · Go: `go` `golangci-lint` · .NET:
+`dotnet` · Infra/data: `kubectl` `helm` `terraform` `psql` `aws` `env` · Build/misc: `make`
+`npx` `jq` `json` `curl` `diff` `prisma` `next` `playwright`.
+
+In-flight (codex batch D): `mvn` `gradlew` `docker-compose` `systemctl` `journalctl` `wget`.
+
+Note on the "fold" calls: lowfat has **no RTK-style command router** — it intercepts real
+binaries by name. So `eslint`/`prettier`/`pytest`/`vitest` are built as their own plugins
+(not folded into abstract `lint`/`format`/`test`). The generic `lint`/`format`/`test`/`smart`/
+`summary`/`deps`/`err` entries below are **deprioritized**: nothing invokes a bare `lint`
+binary, so they'd never fire. Build them only if a wrapper convention emerges.
+
+Remaining real-binary candidates worth building later: `log` (generic, needs a real command),
+`read`, `wc`, `gt` (Graphite), `wget`✅(in D), plus enhancement passes on the bundled
+`git`/`docker`.
 
 ## Tier 0 — Universal, every session, high bloat
 
