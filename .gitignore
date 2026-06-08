@@ -22,3 +22,6 @@ Thumbs.db
 .opencode/skills
 ace.local.toml
 # end ACE
+
+# session-local scheduler state
+.claude/scheduled_tasks.json
