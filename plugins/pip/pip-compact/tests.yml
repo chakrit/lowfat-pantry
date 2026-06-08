@@ -1,0 +1,20 @@
+# Golden/invariant cases for pip-compact. Provisional (smoke harness pending).
+# Samples are synthetic.
+command: pip
+synthetic: true
+cases:
+  - sample: samples/pip-install.txt
+    sub: install
+    args: "install requests"
+    exit: 0
+    levels: [lite, full, ultra]
+  - sample: samples/pip-install-error.txt
+    sub: install
+    args: "install nonexistent-package-xyz"
+    exit: 1
+    levels: [lite, full, ultra]
+  - sample: samples/pip-list.txt
+    sub: list
+    args: "list"
+    exit: 0
+    levels: [lite, full, ultra]

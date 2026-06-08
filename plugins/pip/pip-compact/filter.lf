@@ -1,0 +1,37 @@
+#!/usr/bin/env lowfat-filter
+# pip-compact — compact pip install/list output for LLM contexts.
+# env: $sub $level $exit $args
+#
+# The bloat is the per-dependency resolver chatter: `Collecting`, indented
+# `Downloading`/`Using cached`, `Requirement already satisfied`. The signal is
+# `Successfully installed …`, `Installing collected packages: …`, and any
+# `ERROR`/build failure. `pip list`/`freeze` are `name version` tables — keep
+# rows, cap by level. On failure, keep the error (tail, where pip prints it).
+
+define drop-progress:
+    drop /^(Collecting |[[:space:]]+Downloading |[[:space:]]+Using cached |Requirement already satisfied|[[:space:]]+Preparing |[[:space:]]+Getting |[[:space:]]+Building wheel|[[:space:]]+Created wheel|[[:space:]]+Stored in directory|[[:space:]]+Attempting uninstall)/
+
+*:
+    if exit failed:
+        match level:
+            ultra:
+                keep /(ERROR|error:|Could not|No matching distribution|Successfully|Installing collected)/
+                head 30
+                or-shell: tail -30
+            lite:
+                head 200
+            else:
+                head 80
+    else:
+        match level:
+            ultra:
+                drop-progress
+                keep /(Successfully |Installing collected|^Package[[:space:]]|^[A-Za-z0-9._-]+[[:space:]]+[0-9])/
+                head 20
+                or "pip: ok"
+            lite:
+                drop-progress
+                head 200
+            else:
+                drop-progress
+                head 60

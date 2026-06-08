@@ -1,0 +1,3 @@
+Collecting nonexistent-package-xyz
+ERROR: Could not find a version that satisfies the requirement nonexistent-package-xyz (from versions: none)
+ERROR: No matching distribution found for nonexistent-package-xyz

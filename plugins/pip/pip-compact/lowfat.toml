@@ -1,0 +1,6 @@
+[plugin]
+name = "pip-compact"
+version = "0.1.0"
+description = "Compact pip install/list output for LLM contexts (auto-detects uv-style noise)"
+category = "pip"
+commands = ["pip", "pip3"]

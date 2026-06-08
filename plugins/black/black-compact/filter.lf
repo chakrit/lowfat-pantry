@@ -1,0 +1,32 @@
+#!/usr/bin/env lowfat-filter
+# black-compact — compact Black (Python formatter) output for LLM contexts.
+# env: $sub $level $exit $args
+#
+# Black writes status to stderr: `reformatted <file>` / `would reformat <file>`
+# per file, a celebratory/sad emoji line, and a `N files reformatted, M left
+# unchanged` summary. exit 0 = nothing to do (or reformatted), exit 1 = --check
+# found files needing formatting, exit 123 = internal/parse error. The bloat is
+# the per-file list; the signal is which files + the summary. ultra keeps just
+# those; `or-shell: head` guards against hiding a parse error.
+
+*:
+    if exit failed:
+        match level:
+            ultra:
+                keep /^(would reformat|reformatted|error:|cannot |[0-9]+ files? )/
+                head 30
+                or-shell: head -30
+            lite:
+                head 200
+            else:
+                head 80
+    else:
+        match level:
+            ultra:
+                keep /^(reformatted|[0-9]+ files? )/
+                head 20
+                or "black: all files already formatted"
+            lite:
+                head 200
+            else:
+                head 60

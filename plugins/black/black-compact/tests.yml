@@ -1,0 +1,20 @@
+# Golden/invariant cases for black-compact. Provisional (smoke harness pending).
+# Samples are synthetic (no Python project in this repo to capture from).
+command: black
+synthetic: true
+cases:
+  - sample: samples/black-reformat.txt
+    sub: ""
+    args: "."
+    exit: 0
+    levels: [lite, full, ultra]
+  - sample: samples/black-check.txt
+    sub: ""
+    args: "--check ."
+    exit: 1
+    levels: [lite, full, ultra]
+  - sample: samples/black-clean.txt
+    sub: ""
+    args: "."
+    exit: 0
+    levels: [lite, full, ultra]

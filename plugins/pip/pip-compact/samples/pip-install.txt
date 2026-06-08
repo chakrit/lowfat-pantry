@@ -1,0 +1,10 @@
+Collecting requests
+  Downloading requests-2.32.3-py3-none-any.whl (64 kB)
+Collecting charset-normalizer<4,>=2
+  Downloading charset_normalizer-3.3.2-py3-none-any.whl (121 kB)
+Collecting urllib3<3,>=1.21.1
+  Downloading urllib3-2.2.2-py3-none-any.whl (121 kB)
+Collecting certifi>=2017.4.17
+  Using cached certifi-2024.7.4-py3-none-any.whl (162 kB)
+Installing collected packages: urllib3, charset-normalizer, certifi, requests
+Successfully installed certifi-2024.7.4 charset-normalizer-3.3.2 requests-2.32.3 urllib3-2.2.2
