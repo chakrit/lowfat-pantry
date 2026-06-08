@@ -1,0 +1,65 @@
+#!/usr/bin/env lowfat-filter
+# go-compact - keep Go diagnostics and test failures while dropping routine test noise.
+# env: $sub $level $exit $args
+
+build:
+    if exit failed:
+        raw
+    else:
+        match level:
+            ultra: head 20
+            full:  head 40
+            lite:  head 80
+
+test:
+    if exit failed:
+        match level:
+            ultra:
+                keep /^(--- FAIL|FAIL|panic:|[[:space:]]+panic|[[:space:]]+.+\.go:[0-9]+:|[[:space:]]+Error Trace:|[[:space:]]+Error:|ok[[:space:]]|[?][[:space:]]|# )/
+                head 40
+                or-shell: awk 'NF' | tail -40
+            full:
+                drop /^=== RUN /
+                drop /^--- PASS: /
+                drop /^PASS$/
+                head 120
+            lite:
+                drop /^=== RUN /
+                drop /^--- PASS: /
+                head 220
+    else:
+        match level:
+            ultra:
+                keep /^(ok[[:space:]]|PASS$|FAIL$|# )/
+                head 25
+                or "go test: ok"
+            full:
+                drop /^=== RUN /
+                drop /^--- PASS: /
+                head 60
+            lite:
+                drop /^=== RUN /
+                head 120
+
+vet:
+    if exit failed:
+        raw
+    else:
+        keep /^(.+\.go:[0-9]+:[0-9]+:|# )/
+        head auto
+        or "go vet: ok"
+
+mod:
+    if exit failed:
+        raw
+    else:
+        match level:
+            ultra: head 15
+            full:  head 30
+            lite:  head 60
+
+*:
+    if exit failed:
+        raw
+    else:
+        head auto

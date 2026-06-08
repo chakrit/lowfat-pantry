@@ -1,0 +1,8 @@
+[plugin]
+name = "json-compact"
+version = "0.1.0"
+description = "Compact JSON pretty-printer output without corrupting normal JSON streams"
+category = "json"
+commands = ["json"]
+# Documentation only - subcommand selection happens inside filter.lf.
+subcommands = ["pretty", "compact"]

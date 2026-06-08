@@ -1,0 +1,16 @@
+                 List of relations
+ Schema |          Name           | Type  | Owner
+--------+-------------------------+-------+--------
+ public | audit_events            | table | app
+ public | carts                   | table | app
+ public | catalog_items           | table | app
+ public | coupons                 | table | app
+ public | customers               | table | app
+ public | inventory_reservations  | table | app
+ public | order_items             | table | app
+ public | orders                  | table | app
+ public | payments                | table | app
+ public | refunds                 | table | app
+ public | shipments               | table | app
+ public | users                   | table | app
+(12 rows)

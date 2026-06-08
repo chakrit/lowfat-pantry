@@ -1,0 +1,18 @@
+{
+  "service": "checkout",
+  "version": "1.8.4",
+  "regions": [
+    "us-east-1",
+    "us-west-2",
+    "eu-west-1"
+  ],
+  "features": {
+    "tax": true,
+    "coupons": true,
+    "giftCards": false
+  },
+  "limits": {
+    "requestsPerMinute": 1200,
+    "maxCartItems": 99
+  }
+}

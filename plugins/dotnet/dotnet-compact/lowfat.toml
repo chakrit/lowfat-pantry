@@ -1,0 +1,8 @@
+[plugin]
+name = "dotnet-compact"
+version = "0.1.0"
+description = "Compact dotnet build/test output while preserving MSBuild diagnostics"
+category = "dotnet"
+commands = ["dotnet"]
+# Documentation only - subcommand selection happens inside filter.lf.
+subcommands = ["build", "test"]

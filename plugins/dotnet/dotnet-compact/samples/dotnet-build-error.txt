@@ -1,0 +1,15 @@
+MSBuild version 17.10.4+10fbfbf2e for .NET
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  Core -> /repo/src/Core/bin/Debug/net8.0/Core.dll
+/repo/src/Web/Controllers/OrdersController.cs(38,17): error CS0103: The name 'orderTotal' does not exist in the current context [/repo/src/Web/Web.csproj]
+/repo/src/Web/Controllers/OrdersController.cs(39,24): warning CS8604: Possible null reference argument for parameter 'source'. [/repo/src/Web/Web.csproj]
+
+Build FAILED.
+
+/repo/src/Web/Controllers/OrdersController.cs(39,24): warning CS8604: Possible null reference argument for parameter 'source'. [/repo/src/Web/Web.csproj]
+/repo/src/Web/Controllers/OrdersController.cs(38,17): error CS0103: The name 'orderTotal' does not exist in the current context [/repo/src/Web/Web.csproj]
+    1 Warning(s)
+    1 Error(s)
+
+Time Elapsed 00:00:02.35

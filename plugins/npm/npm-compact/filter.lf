@@ -1,0 +1,37 @@
+#!/usr/bin/env lowfat-filter
+# npm-compact - drop install progress, keep summaries, warnings, audit, and raw failures.
+# env: $sub $level $exit $args
+
+define compact-npm-install(limit):
+    drop /^npm notice /
+    drop /^npm http /
+    drop /^npm timing /
+    drop /^npm verb /
+    drop /^npm sill /
+    keep /^(added [0-9]+ packages|removed [0-9]+ packages|changed [0-9]+ packages|audited [0-9]+ packages|[0-9]+ packages are looking for funding|found [0-9]+ vulnerabilities|[0-9]+ .+ vulnerabilities|[0-9]+ vulnerabilities|npm warn|npm error|npm ERR!)/
+    shell: head -$1
+    or-shell: awk 'NF' | tail -$1
+
+install|i|ci:
+    if exit failed:
+        raw
+    else:
+        match level:
+            ultra: compact-npm-install 15
+            full:  compact-npm-install 30
+            lite:  compact-npm-install 60
+
+run|test:
+    if exit failed:
+        raw
+    else:
+        match level:
+            ultra: head 30
+            full:  head 80
+            lite:  head 160
+
+*:
+    if exit failed:
+        raw
+    else:
+        head auto

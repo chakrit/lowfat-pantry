@@ -1,0 +1,23 @@
++----+---------------------+----------+---------+
+| id | email               | status   | total   |
++----+---------------------+----------+---------+
+|  1 | user01@example.com  | paid     |  42.10  |
+|  2 | user02@example.com  | paid     |  18.99  |
+|  3 | user03@example.com  | pending  |  27.50  |
+|  4 | user04@example.com  | paid     |  99.00  |
+|  5 | user05@example.com  | failed   |  13.25  |
+|  6 | user06@example.com  | paid     |  64.40  |
+|  7 | user07@example.com  | refunded |  20.00  |
+|  8 | user08@example.com  | paid     |  12.00  |
+|  9 | user09@example.com  | pending  |  75.10  |
+| 10 | user10@example.com  | paid     |  33.30  |
+| 11 | user11@example.com  | paid     |  44.44  |
+| 12 | user12@example.com  | failed   |   9.99  |
+| 13 | user13@example.com  | paid     |  51.20  |
+| 14 | user14@example.com  | paid     |  82.00  |
+| 15 | user15@example.com  | pending  |  17.00  |
+| 16 | user16@example.com  | paid     |  29.95  |
+| 17 | user17@example.com  | paid     |  40.00  |
+| 18 | user18@example.com  | refunded |  10.00  |
++----+---------------------+----------+---------+
+(18 rows)

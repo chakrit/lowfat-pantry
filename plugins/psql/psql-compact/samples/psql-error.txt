@@ -1,0 +1,4 @@
+ERROR:  column "totl" does not exist
+LINE 1: select id, totl from orders;
+                   ^
+HINT:  Perhaps you meant to reference the column "orders.total".

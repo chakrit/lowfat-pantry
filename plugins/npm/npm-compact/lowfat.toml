@@ -1,0 +1,8 @@
+[plugin]
+name = "npm-compact"
+version = "0.1.0"
+description = "Compact npm install/run/test output while preserving warnings and errors"
+category = "npm"
+commands = ["npm"]
+# Documentation only - subcommand selection happens inside filter.lf.
+subcommands = ["install", "i", "ci", "run", "test"]

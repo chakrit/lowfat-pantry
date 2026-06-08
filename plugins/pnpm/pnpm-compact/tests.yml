@@ -1,0 +1,19 @@
+# Golden/invariant cases for pnpm-compact. Provisional format (smoke harness pending).
+command: pnpm
+synthetic: true
+cases:
+  - sample: samples/pnpm-install.txt
+    sub: install
+    args: ""
+    exit: 0
+    levels: [lite, full, ultra]
+  - sample: samples/pnpm-test.txt
+    sub: test
+    args: ""
+    exit: 0
+    levels: [lite, full, ultra]
+  - sample: samples/pnpm-error.txt
+    sub: install
+    args: ""
+    exit: 1
+    levels: [lite, full, ultra]

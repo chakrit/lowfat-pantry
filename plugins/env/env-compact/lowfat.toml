@@ -1,0 +1,8 @@
+[plugin]
+name = "env-compact"
+version = "0.1.0"
+description = "Mask and compact env/printenv KEY=value dumps"
+category = "env"
+commands = ["env", "printenv"]
+# Documentation only - env and printenv have no subcommands.
+subcommands = []

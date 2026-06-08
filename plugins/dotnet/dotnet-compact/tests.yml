@@ -1,0 +1,19 @@
+# Golden/invariant cases for dotnet-compact. Provisional format (smoke harness pending).
+command: dotnet
+synthetic: true
+cases:
+  - sample: samples/dotnet-build-warning.txt
+    sub: build
+    args: ""
+    exit: 0
+    levels: [lite, full, ultra]
+  - sample: samples/dotnet-test-fail.txt
+    sub: test
+    args: ""
+    exit: 1
+    levels: [lite, full, ultra]
+  - sample: samples/dotnet-build-error.txt
+    sub: build
+    args: ""
+    exit: 1
+    levels: [lite, full, ultra]

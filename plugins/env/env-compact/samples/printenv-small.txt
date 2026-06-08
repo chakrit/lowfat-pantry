@@ -1,0 +1,10 @@
+TERM_PROGRAM=Apple_Terminal
+SHELL=/bin/zsh
+TERM=xterm-256color
+USER=dev
+LOGNAME=dev
+HOME=/Users/dev
+PATH=/usr/local/bin:/usr/bin:/bin
+PASSWORD=hunter2
+TOKEN=secret-token
+PROJECT=lowfat-pantry

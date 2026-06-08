@@ -1,0 +1,27 @@
+#!/usr/bin/env lowfat-filter
+# dotnet-compact - strip restore/project chatter, keep compiler and test summaries.
+# env: $sub $level $exit $args
+
+define compact-dotnet(limit):
+    drop /^[[:space:]]*Determining projects to restore\.\.\.$/
+    drop /^[[:space:]]*Restored .+ in [0-9.]+/
+    drop /^[[:space:]]*All projects are up-to-date for restore\.$/
+    drop /^[[:space:]]*[^[:space:]].+ -> .+$/
+    keep /(error CS[0-9]+|warning CS[0-9]+|Build succeeded\.|Build FAILED\.|Passed!|Failed![[:space:]]+-|Total tests:|Failed:[[:space:]]+[0-9]+|Passed:[[:space:]]+[0-9]+|Skipped:[[:space:]]+[0-9]+|Test Run Failed|Test Run Successful)/
+    shell: head -$1
+    or-shell: awk 'NF' | head -$1
+
+build|test:
+    if exit failed:
+        raw
+    else:
+        match level:
+            ultra: compact-dotnet 18
+            full:  compact-dotnet 35
+            lite:  compact-dotnet 70
+
+*:
+    if exit failed:
+        raw
+    else:
+        head auto

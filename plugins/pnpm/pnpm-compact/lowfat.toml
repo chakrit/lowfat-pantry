@@ -1,0 +1,8 @@
+[plugin]
+name = "pnpm-compact"
+version = "0.1.0"
+description = "Compact pnpm install/run/test output while preserving warnings and errors"
+category = "pnpm"
+commands = ["pnpm"]
+# Documentation only - subcommand selection happens inside filter.lf.
+subcommands = ["install", "i", "run", "test"]

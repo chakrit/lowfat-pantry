@@ -1,0 +1,17 @@
+MSBuild version 17.10.4+10fbfbf2e for .NET
+  Determining projects to restore...
+  Restored /repo/src/Web/Web.csproj (in 412 ms).
+  Restored /repo/src/Core/Core.csproj (in 398 ms).
+  Core -> /repo/src/Core/bin/Debug/net8.0/Core.dll
+/repo/src/Web/Controllers/OrdersController.cs(47,23): warning CS8602: Dereference of a possibly null reference. [/repo/src/Web/Web.csproj]
+/repo/src/Web/Program.cs(12,1): warning CS8321: The local function 'ConfigureLegacy' is declared but never used [/repo/src/Web/Web.csproj]
+  Web -> /repo/src/Web/bin/Debug/net8.0/Web.dll
+
+Build succeeded.
+
+/repo/src/Web/Controllers/OrdersController.cs(47,23): warning CS8602: Dereference of a possibly null reference. [/repo/src/Web/Web.csproj]
+/repo/src/Web/Program.cs(12,1): warning CS8321: The local function 'ConfigureLegacy' is declared but never used [/repo/src/Web/Web.csproj]
+    2 Warning(s)
+    0 Error(s)
+
+Time Elapsed 00:00:04.81

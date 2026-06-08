@@ -1,0 +1,13 @@
+
+> api@0.8.0 test /repo/api
+> vitest run
+
+ RUN  v1.6.0 /repo/api
+
+ ✓ src/routes/orders.test.ts (14 tests) 64ms
+ ✓ src/routes/users.test.ts (11 tests) 49ms
+ ✓ src/services/pricing.test.ts (21 tests) 83ms
+
+ Test Files  3 passed (3)
+      Tests  46 passed (46)
+   Duration  1.86s

@@ -1,0 +1,29 @@
+#!/usr/bin/env lowfat-filter
+# env-compact - mask secret-looking values before sorting or capping.
+# env: $sub $level $exit $args
+
+define mask-env(limit):
+    python: |
+        import re
+        import sys
+
+        # Over-masking is safe; leaking is not — keep the net wide (bare "key"
+        # catches SIGNING_KEY/SSH_KEY/etc). Only "pwd" is dropped: it false-matched
+        # PWD/OLDPWD (cwd paths). "passwd"/"password" still cover real password keys.
+        secret_key = re.compile(r"(secret|token|key|password|passwd|api|auth|cred|private)", re.I)
+        credential_uri = re.compile(r"://[^/\s:@]+:[^/\s@]+@")
+        lines = []
+        for line in sys.stdin.read().splitlines():
+            if "=" in line:
+                key, value = line.split("=", 1)
+                if secret_key.search(key) or credential_uri.search(value):
+                    line = key + "=***"
+            lines.append(line)
+        for line in sorted(lines)[:$1]:
+            print(line)
+
+*:
+    match level:
+        ultra: mask-env 20
+        full:  mask-env 40
+        lite:  mask-env 80

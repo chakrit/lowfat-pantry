@@ -1,0 +1,38 @@
+#!/usr/bin/env lowfat-filter
+# aws-compact - byte-preserve JSON/default output; compact table/text only.
+# env: $sub $level $exit $args
+
+define compact-aws-table(limit):
+    shell: |
+        awk -v lim=$1 '
+          /^-+$/ { next }
+          /^[|][+-]+[|]$/ { next }
+          /^[+][-+]+[+]$/ { next }
+          /^\|/ {
+            gsub(/^\|[[:space:]]*/, "")
+            gsub(/[[:space:]]*\|[[:space:]]*/, " ")
+            gsub(/[[:space:]]+$/, "")
+            if (rows < lim) { print; rows++ }
+            next
+          }
+          NF {
+            gsub(/[[:space:]][[:space:]]+/, " ")
+            if (rows < lim) { print; rows++ }
+          }
+        '
+
+*:
+    if exit failed:
+        raw
+    elif --output table:
+        match level:
+            ultra: compact-aws-table 15
+            full:  compact-aws-table 30
+            lite:  compact-aws-table 60
+    elif --output text:
+        match level:
+            ultra: compact-aws-table 20
+            full:  compact-aws-table 40
+            lite:  compact-aws-table 80
+    else:
+        raw

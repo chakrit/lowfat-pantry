@@ -1,0 +1,8 @@
+[plugin]
+name = "go-compact"
+version = "0.1.0"
+description = "Compact go build/test/vet/mod output for LLM contexts"
+category = "go"
+commands = ["go"]
+# Documentation only - subcommand selection happens inside filter.lf.
+subcommands = ["build", "test", "vet", "mod"]

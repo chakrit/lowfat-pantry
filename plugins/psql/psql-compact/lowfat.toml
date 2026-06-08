@@ -1,0 +1,8 @@
+[plugin]
+name = "psql-compact"
+version = "0.1.0"
+description = "Compact psql table and listing output while preserving SQL errors"
+category = "psql"
+commands = ["psql"]
+# Documentation only - psql meta-commands and SQL are parsed in filter.lf output only.
+subcommands = []

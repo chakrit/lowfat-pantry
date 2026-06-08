@@ -1,0 +1,8 @@
+[plugin]
+name = "aws-compact"
+version = "0.1.0"
+description = "Compact AWS CLI text/table output while preserving JSON and errors"
+category = "aws"
+commands = ["aws"]
+# Documentation only - AWS service names are selected inside filter.lf only as a catch-all.
+subcommands = ["s3", "ec2", "lambda", "cloudformation", "logs", "sts"]

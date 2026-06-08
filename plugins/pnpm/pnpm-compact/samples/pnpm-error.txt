@@ -1,0 +1,8 @@
+ERR_PNPM_PEER_DEP_ISSUES Unmet peer dependencies
+
+.
++- legacy-widget 2.3.1
+  +- peer react@"^18.0.0": found 19.0.0
+
+hint: If you don't want pnpm to fail on peer dependency issues, set strict-peer-dependencies=false
+ERR_PNPM_ABORTED_REMOVE_MODULES_DIR_NO_TTY Aborted removal of modules directory due to no TTY

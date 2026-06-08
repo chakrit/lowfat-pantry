@@ -1,0 +1,14 @@
+# Golden/invariant cases for json-compact. Provisional format (smoke harness pending).
+command: json
+synthetic: true
+cases:
+  - sample: samples/json-array.txt
+    sub: pretty
+    args: ""
+    exit: 0
+    levels: [lite, full, ultra]
+  - sample: samples/json-object.txt
+    sub: compact
+    args: ""
+    exit: 0
+    levels: [lite, full, ultra]

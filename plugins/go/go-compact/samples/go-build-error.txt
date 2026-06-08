@@ -1,0 +1,3 @@
+# example.com/shop/cmd/api
+cmd/api/main.go:18:2: undefined: startServer
+internal/orders/handler.go:74:15: cannot use id (variable of type string) as int value in argument to loadOrder

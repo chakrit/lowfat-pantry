@@ -1,0 +1,40 @@
+#!/usr/bin/env lowfat-filter
+# json-compact - preserve JSON byte-exact at full/lite; summarize huge arrays at ultra.
+# env: $sub $level $exit $args
+
+define ultra-json(limit):
+    python: |
+        import json
+        import sys
+
+        raw = sys.stdin.read()
+        try:
+            value = json.loads(raw)
+        except Exception:
+            sys.stdout.write(raw)
+            raise SystemExit(0)
+
+        if isinstance(value, list) and len(value) > $1:
+            out = value[:$1] + ["... (%d more)" % (len(value) - $1)]
+            sys.stdout.write(json.dumps(out, indent=2, ensure_ascii=False))
+            sys.stdout.write("\n")
+        else:
+            sys.stdout.write(raw)
+
+pretty|compact:
+    if exit failed:
+        raw
+    else:
+        match level:
+            ultra: ultra-json 12
+            full:  raw
+            lite:  raw
+
+*:
+    if exit failed:
+        raw
+    else:
+        match level:
+            ultra: ultra-json 12
+            full:  raw
+            lite:  raw

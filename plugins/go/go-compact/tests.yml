@@ -1,0 +1,19 @@
+# Golden/invariant cases for go-compact. Provisional format (smoke harness pending).
+command: go
+synthetic: true
+cases:
+  - sample: samples/go-test-fail.txt
+    sub: test
+    args: "./..."
+    exit: 1
+    levels: [lite, full, ultra]
+  - sample: samples/go-build-error.txt
+    sub: build
+    args: "./cmd/api"
+    exit: 1
+    levels: [lite, full, ultra]
+  - sample: samples/go-mod-download.txt
+    sub: mod
+    args: "download"
+    exit: 0
+    levels: [lite, full, ultra]

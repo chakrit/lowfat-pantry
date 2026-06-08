@@ -1,0 +1,34 @@
+#!/usr/bin/env lowfat-filter
+# pnpm-compact - keep pnpm summaries and diagnostics, trim progress.
+# env: $sub $level $exit $args
+
+define compact-pnpm-install(limit):
+    drop /^Progress: /
+    drop /^Resolving: /
+    keep /^(WARN|ERR_PNPM|Packages:[[:space:]]|Done in |dependencies:|devDependencies:|[[:space:]]*[+][[:space:]])/
+    shell: head -$1
+    or-shell: awk 'NF' | tail -$1
+
+install|i:
+    if exit failed:
+        raw
+    else:
+        match level:
+            ultra: compact-pnpm-install 18
+            full:  compact-pnpm-install 35
+            lite:  compact-pnpm-install 70
+
+run|test:
+    if exit failed:
+        raw
+    else:
+        match level:
+            ultra: head 30
+            full:  head 80
+            lite:  head 160
+
+*:
+    if exit failed:
+        raw
+    else:
+        head auto

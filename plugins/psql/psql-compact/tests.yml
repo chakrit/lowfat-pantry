@@ -1,0 +1,19 @@
+# Golden/invariant cases for psql-compact. Provisional format (smoke harness pending).
+command: psql
+synthetic: true
+cases:
+  - sample: samples/psql-select.txt
+    sub: ""
+    args: "-c \"select * from orders\""
+    exit: 0
+    levels: [lite, full, ultra]
+  - sample: samples/psql-dt.txt
+    sub: ""
+    args: "-c \"\\dt\""
+    exit: 0
+    levels: [lite, full, ultra]
+  - sample: samples/psql-error.txt
+    sub: ""
+    args: "-c \"select id, totl from orders\""
+    exit: 1
+    levels: [lite, full, ultra]

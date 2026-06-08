@@ -1,0 +1,19 @@
+# Golden/invariant cases for aws-compact. Provisional format (smoke harness pending).
+command: aws
+synthetic: true
+cases:
+  - sample: samples/aws-json.txt
+    sub: s3
+    args: "s3api list-buckets"
+    exit: 0
+    levels: [lite, full, ultra]
+  - sample: samples/aws-table.txt
+    sub: s3
+    args: "s3api list-buckets --output table"
+    exit: 0
+    levels: [lite, full, ultra]
+  - sample: samples/aws-error.txt
+    sub: s3
+    args: "s3api list-buckets"
+    exit: 254
+    levels: [lite, full, ultra]

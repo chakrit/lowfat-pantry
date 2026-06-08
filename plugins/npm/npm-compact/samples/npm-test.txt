@@ -1,0 +1,15 @@
+
+> web@1.4.0 test
+> vitest run
+
+ RUN  v1.6.0 /repo/web
+
+ ✓ src/cart.test.ts (12 tests) 38ms
+ ✓ src/catalog.test.ts (9 tests) 22ms
+ ✓ src/checkout.test.ts (18 tests) 41ms
+ ✓ src/profile.test.ts (6 tests) 18ms
+
+ Test Files  4 passed (4)
+      Tests  45 passed (45)
+   Start at  10:12:09
+   Duration  1.42s (transform 222ms, setup 148ms, collect 390ms, tests 119ms, environment 1.02s, prepare 408ms)

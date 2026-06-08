@@ -1,0 +1,32 @@
+#!/usr/bin/env lowfat-filter
+# psql-compact - remove ASCII table borders and cap rows; never hide SQL errors.
+# env: $sub $level $exit $args
+
+define compact-psql(limit):
+    shell: |
+        awk -v lim=$1 '
+          /^[+][-+]+[+]$/ { next }
+          /^\([0-9]+ rows?\)$/ { summary=$0; next }
+          /^\|/ {
+            gsub(/^\|[[:space:]]*/, "")
+            gsub(/[[:space:]]*\|[[:space:]]*/, " ")
+            gsub(/[[:space:]]+$/, "")
+            if (rows < lim) { print; rows++ }
+            next
+          }
+          /^[[:space:]]*[-][-+[:space:]]+$/ { next }
+          NF {
+            gsub(/[[:space:]][[:space:]]+/, " ")
+            if (rows < lim) { print; rows++ }
+          }
+          END { if (summary) print summary }
+        '
+
+*:
+    if exit failed:
+        raw
+    else:
+        match level:
+            ultra: compact-psql 15
+            full:  compact-psql 30
+            lite:  compact-psql 60
