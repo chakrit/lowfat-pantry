@@ -1,0 +1,20 @@
+# Golden/invariant cases for prettier-compact. Provisional format (smoke harness pending).
+# Samples are synthetic (no Prettier project in this repo to capture from).
+command: prettier
+synthetic: true
+cases:
+  - sample: samples/prettier-check-issues.txt
+    sub: ""
+    args: "--check ."
+    exit: 1
+    levels: [lite, full, ultra]
+  - sample: samples/prettier-check-clean.txt
+    sub: ""
+    args: "--check ."
+    exit: 0
+    levels: [lite, full, ultra]
+  - sample: samples/prettier-write.txt        # --write: tail (last files + summary)
+    sub: ""
+    args: "--write ."
+    exit: 0
+    levels: [lite, full, ultra]

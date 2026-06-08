@@ -1,0 +1,25 @@
+#!/usr/bin/env lowfat-filter
+# golangci-lint-compact — compact golangci-lint findings for LLM contexts.
+# env: $sub $level $exit $args
+#
+# Default text output prints, per finding, a `file:line:col: message (linter)`
+# line followed by the offending source line and a `^` caret — 3 lines each.
+# The signal is the message lines; the source/caret are the bloat at ultra.
+# exit: 0 = clean, 1 = issues found, other = config/run error.
+# On a config error the keep-filter would empty the stream, so `or-shell: head`
+# falls back to the raw head — the error is never hidden.
+
+*:
+    if exit ok:
+        head 3
+        or "golangci-lint: clean"
+    else:
+        match level:
+            ultra:
+                keep /^[^[:space:]].*:[0-9]+:[0-9]+: .*\([a-z0-9_-]+\)$/
+                head 30
+                or-shell: head -30
+            lite:
+                head 200
+            else:
+                head 80

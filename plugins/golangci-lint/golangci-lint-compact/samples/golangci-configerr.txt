@@ -1,0 +1,2 @@
+Error: can't load config: unsupported version of the configuration: ""
+Failed executing command with error: can't load config

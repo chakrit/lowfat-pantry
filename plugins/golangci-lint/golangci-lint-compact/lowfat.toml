@@ -1,0 +1,6 @@
+[plugin]
+name = "golangci-lint-compact"
+version = "0.1.0"
+description = "Compact golangci-lint findings for LLM contexts"
+category = "golangci-lint"
+commands = ["golangci-lint"]

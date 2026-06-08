@@ -1,0 +1,5 @@
+Checking formatting...
+[warn] src/checkout/api.ts
+[warn] src/checkout/config.ts
+[warn] src/checkout/models.ts
+[warn] Code style issues found in 3 files. Run Prettier with --write to fix.

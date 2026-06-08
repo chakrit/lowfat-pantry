@@ -1,0 +1,6 @@
+[plugin]
+name = "prettier-compact"
+version = "0.1.0"
+description = "Compact Prettier --check/--write status output for LLM contexts"
+category = "prettier"
+commands = ["prettier"]

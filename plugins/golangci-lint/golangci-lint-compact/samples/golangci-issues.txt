@@ -1,0 +1,12 @@
+internal/handler.go:42:2: ineffectual assignment to err (ineffassign)
+	err := db.Save(ctx, order)
+	^
+internal/handler.go:88:1: cyclomatic complexity 18 of func `Handle` is high (gocyclo)
+func Handle(w http.ResponseWriter, r *http.Request) {
+^
+internal/db.go:15:6: exported type `Store` should have comment or be unexported (revive)
+type Store struct {
+     ^
+internal/db.go:51:2: SA4006: this value of `rows` is never used (staticcheck)
+	rows, err := q.Query(ctx)
+	^

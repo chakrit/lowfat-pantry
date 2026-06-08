@@ -1,0 +1,34 @@
+#!/usr/bin/env lowfat-filter
+# prettier-compact — compact Prettier status output for LLM contexts.
+# env: $sub $level $exit $args
+#
+# CRITICAL: bare `prettier <file>` prints the *formatted file content* to
+# stdout — that must pass through untouched (capping it would corrupt code).
+# Only `--check`/`-c` and `--write`/`-w` produce status output worth compacting.
+# So we pass raw by default and only compact when a status flag is present.
+#
+#   --check : `[warn] <file>` per unformatted file + a summary; exit 1 if any.
+#   --write : `<file> <Nms>` per file; the bloat is one line per file.
+# On a non-zero exit we keep raw — the `[warn]` list or a parse error must show.
+
+*:
+    if exit failed:
+        raw
+    elif --check:
+        head 40
+        or "prettier: all files formatted"
+    elif -c:
+        head 40
+        or "prettier: all files formatted"
+    elif --write:
+        match level:
+            ultra: tail 6
+            lite:  tail 200
+            else:  tail 40
+    elif -w:
+        match level:
+            ultra: tail 6
+            lite:  tail 200
+            else:  tail 40
+    else:
+        raw
