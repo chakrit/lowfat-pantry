@@ -1,0 +1,7 @@
+[plugin]
+name = "deno-compact"
+version = "0.1.0"
+description = "Compact Deno test/check/lint/run output for LLM contexts"
+category = "deno"
+commands = ["deno"]
+subcommands = ["test", "check", "lint", "run", "task", "bench"]

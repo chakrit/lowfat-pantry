@@ -1,0 +1,30 @@
+running 4 tests from ./cart_test.ts
+test adds items to cart ... ok (2ms)
+test removes items ... ok (1ms)
+test computes subtotal ... ok (2ms)
+test applies coupon to total ... FAILED (3ms)
+
+ ERRORS 
+
+applies coupon to total => ./cart_test.ts:42:6
+error: AssertionError: Values are not equal.
+
+
+    [Diff] Actual / Expected
+
+
+-   1299
++   1499
+
+  at assertEquals (https://deno.land/std/assert/mod.ts:200:9)
+  at file:///app/cart_test.ts:43:3
+
+ FAILURES 
+
+applies coupon to total => ./cart_test.ts:42:6
+
+failures:
+
+	applies coupon to total
+
+test result: FAILED. 3 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out (8ms)

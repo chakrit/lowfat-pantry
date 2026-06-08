@@ -1,0 +1,56 @@
+#!/usr/bin/env lowfat-filter
+# deno-compact — compact Deno output for LLM contexts.
+# env: $sub $level $exit $args
+#
+# test: keep `FAILED`, the `failures:` block, `test result:` summary, and
+# assertion/error lines; drop the per-test `... ok` passing noise. check/lint:
+# keep the diagnostics (errors with file:line). run/task: the body is the
+# program's own output — never keyword-filter; cap, tail on failure.
+
+# ── test / bench — keep failures + result, drop passing noise ─────────────
+test|bench:
+    match level:
+        ultra:
+            keep /(FAILED|error:|AssertionError|^failures:|^test result:|panic|^running [0-9]+ test)/
+            head 30
+            or "deno test: ok"
+        lite:
+            drop /\.\.\. ok/
+            head 200
+        else:
+            drop /\.\.\. ok/
+            head 60
+
+# ── check / lint — diagnostics; cap, raw-tail fallback ────────────────────
+check|lint:
+    if exit failed:
+        match level:
+            ultra:
+                head 40
+                or-shell: tail -40
+            lite:
+                head 200
+            else:
+                head 80
+    else:
+        head 5
+        or "deno: no issues"
+
+# ── run / task / eval — program output; never keyword-filter ──────────────
+run|task|eval|repl|serve:
+    if exit failed:
+        match level:
+            ultra: tail 40
+            lite:  tail 200
+            else:  tail 80
+    else:
+        match level:
+            ultra: head 25
+            lite:  head 200
+            else:  head 60
+
+*:
+    if exit failed:
+        raw
+    else:
+        head 40
