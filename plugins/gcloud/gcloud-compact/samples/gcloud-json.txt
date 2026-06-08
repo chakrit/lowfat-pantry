@@ -1,0 +1,5 @@
+{
+  "name": "web-01",
+  "status": "RUNNING",
+  "machineType": "e2-medium"
+}

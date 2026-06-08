@@ -1,0 +1,6 @@
+[plugin]
+name = "gcloud-compact"
+version = "0.1.0"
+description = "Compact gcloud CLI output for LLM contexts (JSON/YAML pass through byte-exact)"
+category = "gcloud"
+commands = ["gcloud"]

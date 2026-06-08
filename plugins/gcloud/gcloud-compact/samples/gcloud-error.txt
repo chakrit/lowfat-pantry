@@ -1,0 +1,2 @@
+ERROR: (gcloud.compute.instances.describe) Could not fetch resource:
+ - The resource 'projects/p/zones/us-central1-a/instances/nope' was not found

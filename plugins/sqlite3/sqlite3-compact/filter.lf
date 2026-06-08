@@ -1,0 +1,17 @@
+#!/usr/bin/env lowfat-filter
+# sqlite3-compact — compact sqlite3 output for LLM contexts.
+# env: $sub $level $exit $args
+#
+# Default sqlite3 output is pipe-delimited rows (already compact) or, with
+# `.mode column/box`, an aligned table. The bloat is row count on big SELECTs;
+# the signal is the rows + any `Error:` (a SQL/syntax error). On non-zero exit
+# (or an Error line on a bad query) preserve raw so the error always shows.
+
+*:
+    if exit failed:
+        raw
+    else:
+        match level:
+            ultra: head 25
+            lite:  head 200
+            else:  head 60

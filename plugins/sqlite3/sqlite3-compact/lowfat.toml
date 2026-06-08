@@ -1,0 +1,6 @@
+[plugin]
+name = "sqlite3-compact"
+version = "0.1.0"
+description = "Compact sqlite3 query output for LLM contexts"
+category = "sqlite3"
+commands = ["sqlite3"]

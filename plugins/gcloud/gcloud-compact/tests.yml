@@ -1,0 +1,19 @@
+# Golden/invariant cases for gcloud-compact. Provisional (smoke harness pending).
+command: gcloud
+synthetic: true
+cases:
+  - sample: samples/gcloud-list.txt
+    sub: compute
+    args: "compute instances list"
+    exit: 0
+    levels: [lite, full, ultra]
+  - sample: samples/gcloud-json.txt
+    sub: compute
+    args: "compute instances describe web-01 --format json"
+    exit: 0
+    levels: [lite, full, ultra]
+  - sample: samples/gcloud-error.txt
+    sub: compute
+    args: "compute instances describe nope"
+    exit: 1
+    levels: [lite, full, ultra]
