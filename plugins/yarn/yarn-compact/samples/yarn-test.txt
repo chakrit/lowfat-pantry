@@ -1,0 +1,13 @@
+yarn run v1.22.22
+$ vitest run
+ RUN  v1.6.0
+
+ ✓ src/cart.test.ts (4 tests) 18ms
+ ✓ src/api.test.ts (7 tests) 42ms
+ ❯ src/checkout.test.ts (3 tests | 1 failed) 51ms
+   × applies coupon to total
+     → expected 1299 to be 1499
+
+ Test Files  1 failed | 2 passed (3)
+      Tests  1 failed | 13 passed (14)
+error Command failed with exit code 1.

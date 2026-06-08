@@ -1,0 +1,7 @@
+[plugin]
+name = "yarn-compact"
+version = "0.1.0"
+description = "Compact Yarn install/run/test output for LLM contexts"
+category = "yarn"
+commands = ["yarn"]
+subcommands = ["install", "add", "run", "test", "build"]

@@ -1,0 +1,59 @@
+#!/usr/bin/env lowfat-filter
+# yarn-compact — compact Yarn output for LLM contexts.
+# env: $sub $level $exit $args
+#
+# install/add: the bloat is the `[n/4] Resolving/Fetching/Linking…` step lines
+# and per-package chatter; the signal is warnings, errors, `success Saved
+# lockfile`, and `Done in Xs`. run/test/build: the body is the invoked script's
+# own output — we must NOT keyword-filter it (would hide results), only drop the
+# `$ <cmd>` echo line and cap; on failure we tail (errors land at the end).
+
+define drop-steps:
+    drop /^\[[0-9]+\/[0-9]+\] /
+    drop /^(\$ |info |verbose )/
+
+# ── install / dependency mutation ─────────────────────────────────────────
+install|add|remove|upgrade|why|dedupe:
+    if exit failed:
+        match level:
+            ultra: tail 30
+            lite:  head 200
+            else:  tail 60
+    else:
+        match level:
+            ultra:
+                drop-steps
+                keep /^(warning|error|success|Done in|➤|✓|✘)/
+                head 20
+                or "yarn: ok"
+            lite:
+                drop-steps
+                head 200
+            else:
+                drop-steps
+                head 60
+
+# ── run / test / build / exec — script output; never keyword-filter ───────
+run|test|build|exec|dlx|node:
+    if exit failed:
+        match level:
+            ultra: tail 40
+            lite:  tail 200
+            else:  tail 80
+    else:
+        match level:
+            ultra:
+                drop-steps
+                head 25
+            lite:
+                drop-steps
+                head 200
+            else:
+                drop-steps
+                head 60
+
+*:
+    if exit failed:
+        raw
+    else:
+        head 40
