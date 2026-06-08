@@ -1,0 +1,44 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ----------------------< com.example:checkout-api >----------------------
+[INFO] Building checkout-api 1.4.2
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/surefire-api/3.2.5/surefire-api-3.2.5.jar
+Progress (1): 13/171 kB
+Progress (1): 62/171 kB
+Progress (1): 171 kB
+[INFO] Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/surefire-api/3.2.5/surefire-api-3.2.5.jar (171 kB at 390 kB/s)
+[INFO] --- maven-resources-plugin:3.3.1:resources (default-resources) @ checkout-api ---
+[INFO] Copying 3 resources from src/main/resources to target/classes
+[INFO] --- maven-compiler-plugin:3.11.0:compile (default-compile) @ checkout-api ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] --- maven-surefire-plugin:3.2.5:test (default-test) @ checkout-api ---
+[INFO] Running com.example.checkout.CartServiceTest
+[ERROR] Tests run: 18, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 1.352 s <<< FAILURE! -- in com.example.checkout.CartServiceTest
+[ERROR] com.example.checkout.CartServiceTest.rejectsExpiredCoupon -- Time elapsed: 0.036 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <COUPON_EXPIRED> but was: <OK>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertEquals.failNotEqual(AssertEquals.java:197)
+	at org.junit.jupiter.api.AssertEquals.assertEquals(AssertEquals.java:182)
+	at com.example.checkout.CartServiceTest.rejectsExpiredCoupon(CartServiceTest.java:88)
+[INFO] Running com.example.checkout.DiscountPolicyTest
+Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.212 s -- in com.example.checkout.DiscountPolicyTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[ERROR] Failures:
+[ERROR]   CartServiceTest.rejectsExpiredCoupon:88 expected: <COUPON_EXPIRED> but was: <OK>
+[INFO] 
+[ERROR] Tests run: 27, Failures: 1, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  5.831 s
+[INFO] Finished at: 2026-06-08T20:18:45+07:00
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:3.2.5:test (default-test) on project checkout-api: There are test failures.
+[ERROR] 
+[ERROR] Please refer to /workspace/checkout-api/target/surefire-reports for the individual test results.
+[ERROR] -> [Help 1]
+

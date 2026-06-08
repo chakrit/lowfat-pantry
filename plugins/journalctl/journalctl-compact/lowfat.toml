@@ -1,0 +1,8 @@
+[plugin]
+name = "journalctl-compact"
+version = "0.1.0"
+description = "Tail journalctl log streams while preserving JSON output"
+category = "journalctl"
+commands = ["journalctl"]
+subcommands = ["-u", "--unit", "-f", "--follow"]
+

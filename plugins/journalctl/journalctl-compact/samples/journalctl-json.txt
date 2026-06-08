@@ -1,0 +1,4 @@
+{"__REALTIME_TIMESTAMP":"1812473880000000","_SYSTEMD_UNIT":"checkout-api.service","PRIORITY":"6","MESSAGE":"booting checkout-api build=7f3a91c env=prod"}
+{"__REALTIME_TIMESTAMP":"1812473881000000","_SYSTEMD_UNIT":"checkout-api.service","PRIORITY":"6","MESSAGE":"connected to postgres primary"}
+{"__REALTIME_TIMESTAMP":"1812473882000000","_SYSTEMD_UNIT":"checkout-api.service","PRIORITY":"3","MESSAGE":"payment gateway timeout provider=stripe request_id=req_123"}
+

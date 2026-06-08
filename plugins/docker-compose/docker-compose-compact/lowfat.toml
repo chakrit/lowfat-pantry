@@ -1,0 +1,8 @@
+[plugin]
+name = "docker-compose-compact"
+version = "0.1.0"
+description = "Compact docker-compose up/logs/ps/build output for LLM contexts"
+category = "docker-compose"
+commands = ["docker-compose"]
+subcommands = ["up", "logs", "ps", "build"]
+

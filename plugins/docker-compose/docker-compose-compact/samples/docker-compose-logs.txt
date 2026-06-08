@@ -1,0 +1,81 @@
+api_1    | 2026-06-08T12:00:00Z boot config loaded
+api_1    | 2026-06-08T12:00:01Z connected to postgres
+api_1    | 2026-06-08T12:00:02Z connected to redis
+api_1    | 2026-06-08T12:00:03Z GET /health 200 3ms
+api_1    | 2026-06-08T12:00:04Z GET /products 200 20ms
+api_1    | 2026-06-08T12:00:05Z GET /products/sku-1 200 11ms
+api_1    | 2026-06-08T12:00:06Z GET /products/sku-2 200 12ms
+api_1    | 2026-06-08T12:00:07Z GET /products/sku-3 200 13ms
+api_1    | 2026-06-08T12:00:08Z GET /products/sku-4 200 10ms
+api_1    | 2026-06-08T12:00:09Z GET /products/sku-5 200 9ms
+api_1    | 2026-06-08T12:00:10Z GET /cart 200 17ms
+api_1    | 2026-06-08T12:00:11Z GET /cart 200 16ms
+api_1    | 2026-06-08T12:00:12Z POST /cart/items 201 31ms
+api_1    | 2026-06-08T12:00:13Z GET /cart 200 14ms
+api_1    | 2026-06-08T12:00:14Z POST /checkout 500 44ms
+api_1    | 2026-06-08T12:00:14Z Error: payment gateway timeout
+api_1    | 2026-06-08T12:00:15Z retrying payment intent pi_123
+api_1    | 2026-06-08T12:00:16Z POST /checkout 200 61ms
+worker_1 | 2026-06-08T12:00:17Z processed job send-receipt in 9ms
+api_1    | 2026-06-08T12:00:18Z GET /orders/1001 200 12ms
+api_1    | 2026-06-08T12:00:19Z GET /health 200 2ms
+api_1    | 2026-06-08T12:00:20Z GET /metrics 200 7ms
+api_1    | 2026-06-08T12:00:21Z GET /products 200 16ms
+api_1    | 2026-06-08T12:00:22Z GET /products/sku-6 200 11ms
+api_1    | 2026-06-08T12:00:23Z GET /products/sku-7 200 12ms
+api_1    | 2026-06-08T12:00:24Z GET /products/sku-8 200 13ms
+api_1    | 2026-06-08T12:00:25Z GET /cart 200 10ms
+api_1    | 2026-06-08T12:00:26Z POST /cart/items 201 28ms
+api_1    | 2026-06-08T12:00:27Z GET /cart 200 8ms
+api_1    | 2026-06-08T12:00:28Z POST /checkout 200 57ms
+worker_1 | 2026-06-08T12:00:29Z processed job send-receipt in 8ms
+api_1    | 2026-06-08T12:00:30Z GET /orders/1003 200 12ms
+api_1    | 2026-06-08T12:00:31Z GET /health 200 2ms
+api_1    | 2026-06-08T12:00:32Z GET /metrics 200 7ms
+api_1    | 2026-06-08T12:00:33Z GET /products 200 16ms
+api_1    | 2026-06-08T12:00:34Z GET /products/sku-9 200 11ms
+api_1    | 2026-06-08T12:00:35Z GET /products/sku-10 200 12ms
+api_1    | 2026-06-08T12:00:36Z GET /cart 200 9ms
+api_1    | 2026-06-08T12:00:37Z POST /cart/items 201 30ms
+api_1    | 2026-06-08T12:00:38Z GET /cart 200 8ms
+api_1    | 2026-06-08T12:00:39Z POST /checkout 200 55ms
+worker_1 | 2026-06-08T12:00:40Z processed job send-receipt in 9ms
+api_1    | 2026-06-08T12:00:41Z GET /orders/1004 200 12ms
+api_1    | 2026-06-08T12:00:42Z GET /health 200 2ms
+api_1    | 2026-06-08T12:00:43Z GET /metrics 200 7ms
+api_1    | 2026-06-08T12:00:44Z GET /products 200 15ms
+api_1    | 2026-06-08T12:00:45Z GET /products/sku-11 200 11ms
+api_1    | 2026-06-08T12:00:46Z GET /products/sku-12 200 12ms
+api_1    | 2026-06-08T12:00:47Z GET /cart 200 9ms
+api_1    | 2026-06-08T12:00:48Z POST /cart/items 201 29ms
+api_1    | 2026-06-08T12:00:49Z GET /cart 200 8ms
+api_1    | 2026-06-08T12:00:50Z POST /checkout 200 56ms
+worker_1 | 2026-06-08T12:00:51Z processed job send-receipt in 8ms
+api_1    | 2026-06-08T12:00:52Z GET /orders/1005 200 12ms
+api_1    | 2026-06-08T12:00:53Z GET /health 200 2ms
+api_1    | 2026-06-08T12:00:54Z GET /metrics 200 7ms
+api_1    | 2026-06-08T12:00:55Z GET /products 200 16ms
+api_1    | 2026-06-08T12:00:56Z GET /products/sku-13 200 11ms
+api_1    | 2026-06-08T12:00:57Z GET /products/sku-14 200 12ms
+api_1    | 2026-06-08T12:00:58Z GET /cart 200 9ms
+api_1    | 2026-06-08T12:00:59Z POST /cart/items 201 30ms
+api_1    | 2026-06-08T12:01:00Z GET /cart 200 8ms
+api_1    | 2026-06-08T12:01:01Z POST /checkout 200 57ms
+worker_1 | 2026-06-08T12:01:02Z processed job send-receipt in 8ms
+api_1    | 2026-06-08T12:01:03Z GET /orders/1006 200 12ms
+api_1    | 2026-06-08T12:01:04Z GET /health 200 2ms
+api_1    | 2026-06-08T12:01:05Z GET /metrics 200 7ms
+api_1    | 2026-06-08T12:01:06Z GET /products 200 16ms
+api_1    | 2026-06-08T12:01:07Z GET /products/sku-15 200 11ms
+api_1    | 2026-06-08T12:01:08Z GET /products/sku-16 200 12ms
+api_1    | 2026-06-08T12:01:09Z GET /cart 200 9ms
+api_1    | 2026-06-08T12:01:10Z POST /cart/items 201 30ms
+api_1    | 2026-06-08T12:01:11Z GET /cart 200 8ms
+api_1    | 2026-06-08T12:01:12Z POST /checkout 200 57ms
+worker_1 | 2026-06-08T12:01:13Z processed job send-receipt in 8ms
+api_1    | 2026-06-08T12:01:14Z GET /orders/1007 200 12ms
+api_1    | 2026-06-08T12:01:15Z GET /health 200 2ms
+api_1    | 2026-06-08T12:01:16Z GET /metrics 200 7ms
+api_1    | 2026-06-08T12:01:17Z POST /checkout 500 43ms
+api_1    | 2026-06-08T12:01:17Z error: inventory reservation failed sku=sku-16
+worker_1 | 2026-06-08T12:01:18Z exited with code 1

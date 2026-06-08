@@ -1,0 +1,4 @@
+Hint: You are currently not seeing messages from other users and the system.
+      Users in groups 'adm', 'systemd-journal' can see all messages.
+No journal files were opened due to insufficient permissions.
+

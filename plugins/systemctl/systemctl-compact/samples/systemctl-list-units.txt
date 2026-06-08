@@ -1,0 +1,23 @@
+  UNIT                            LOAD   ACTIVE SUB     DESCRIPTION
+  cron.service                    loaded active running Regular background program processing daemon
+  dbus.service                    loaded active running D-Bus System Message Bus
+  docker.service                  loaded active running Docker Application Container Engine
+  getty@tty1.service              loaded active running Getty on tty1
+  nginx.service                   loaded active running A high performance web server and a reverse proxy server
+  postgresql.service              loaded active running PostgreSQL RDBMS
+  redis-server.service            loaded active running Advanced key-value store
+  ssh.service                     loaded active running OpenBSD Secure Shell server
+  systemd-journald.service        loaded active running Journal Service
+  systemd-logind.service          loaded active running User Login Management
+  systemd-networkd.service        loaded active running Network Configuration
+  systemd-resolved.service        loaded active running Network Name Resolution
+  timers.target                   loaded active active  Timers
+  basic.target                    loaded active active  Basic System
+  multi-user.target               loaded active active  Multi-User System
+  sockets.target                  loaded active active  Socket Units
+
+LOAD   = Reflects whether the unit definition was properly loaded.
+ACTIVE = The high-level unit activation state.
+SUB    = The low-level unit activation state.
+16 loaded units listed. Pass --all to see loaded but inactive units, too.
+

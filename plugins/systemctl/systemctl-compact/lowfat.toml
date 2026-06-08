@@ -1,0 +1,8 @@
+[plugin]
+name = "systemctl-compact"
+version = "0.1.0"
+description = "Compact systemctl status/list-units/is-active output for LLM contexts"
+category = "systemctl"
+commands = ["systemctl"]
+subcommands = ["status", "list-units", "is-active", "is-enabled"]
+

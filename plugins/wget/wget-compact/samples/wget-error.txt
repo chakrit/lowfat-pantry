@@ -1,0 +1,4 @@
+--2026-06-08 12:42:29--  https://downloads.example.invalid/app.tar.gz
+Resolving downloads.example.invalid (downloads.example.invalid)... failed: Name or service not known.
+wget: unable to resolve host address 'downloads.example.invalid'
+

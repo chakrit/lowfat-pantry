@@ -1,0 +1,51 @@
+#!/usr/bin/env lowfat-filter
+# gradlew-compact - drop task/download progress while keeping Gradle failures.
+# env: $sub $level $exit $args
+
+define drop-gradle-noise:
+    drop /^> Task :[[:alnum:]_.:-]+( UP-TO-DATE| NO-SOURCE| FROM-CACHE| SKIPPED)?$/
+    drop /^Download(ing)? /
+    drop /^Downloaded /
+    drop /^Starting a Gradle Daemon/
+
+define compact-gradle-failure(limit):
+    shell: |
+        awk -v lim=$1 '
+          /^FAILURE:/ { in_fail=1 }
+          /^\* What went wrong:/ { in_fail=1 }
+          /^\* Try:/ { in_fail=1 }
+          /^\* Exception is:/ { in_fail=1 }
+          /^BUILD FAILED/ { print; n++; next }
+          /^[0-9]+ actionable tasks:/ { print; n++; next }
+          /FAILED$/ { print; n++; next }
+          /(^|[[:space:]])(FAILED|Error|error|Exception|AssertionError)/ { print; n++; next }
+          in_fail && NF { print; n++ }
+          n>=lim { exit }
+        '
+
+*:
+    if exit failed:
+        match level:
+            ultra:
+                compact-gradle-failure 50
+                or-shell: cat
+            lite:
+                compact-gradle-failure 180
+                or-shell: cat
+            else:
+                compact-gradle-failure 90
+                or-shell: cat
+    else:
+        match level:
+            ultra:
+                drop-gradle-noise
+                keep /^(BUILD (SUCCESSFUL|FAILED)|FAILURE:|\* What went wrong:|[0-9]+ actionable tasks:|.*FAILED$|.*Test failed|.*AssertionError)/
+                tail 35
+                or "gradle: ok"
+            lite:
+                drop-gradle-noise
+                tail 200
+            else:
+                drop-gradle-noise
+                tail 80
+

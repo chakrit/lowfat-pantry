@@ -1,0 +1,61 @@
+#!/usr/bin/env lowfat-filter
+# systemctl-compact - keep unit state and cap journal tails.
+# env: $sub $level $exit $args
+
+define compact-status(limit):
+    shell: |
+        awk -v lim=$1 '
+          NR == 1 { print; next }
+          /^[[:space:]]+Loaded:/ { print; next }
+          /^[[:space:]]+Active:/ { print; next }
+          /^[[:space:]]+Main PID:/ { print; next }
+          /^[[:space:]]+Tasks:/ && lim > 10 { print; next }
+          /^[[:space:]]+Memory:/ && lim > 10 { print; next }
+          /^[[:space:]]+CPU:/ && lim > 10 { print; next }
+          /^[[:space:]]+CGroup:/ && lim > 10 { print; next }
+          /^[[:space:]]*[A-Z][a-z][a-z] [ 0-9][0-9] / {
+            if (logs < lim) { print; logs++ }
+            next
+          }
+        '
+
+define compact-units(limit):
+    shell: |
+        awk -v lim=$1 '
+          /^  UNIT[[:space:]]+LOAD[[:space:]]+ACTIVE/ { gsub(/[[:space:]][[:space:]]+/, " "); print; next }
+          /^[[:space:]]*[[:alnum:]_.@-]+\.(service|socket|timer|target|mount|device)[[:space:]]/ {
+            if (rows < lim) { gsub(/[[:space:]][[:space:]]+/, " "); print; rows++ }
+            next
+          }
+          /loaded units listed/ { print; next }
+        '
+
+status:
+    if exit failed:
+        raw
+    else:
+        match level:
+            ultra: compact-status 0
+            full:  compact-status 5
+            lite:  compact-status 20
+
+list-units:
+    if exit failed:
+        raw
+    else:
+        match level:
+            ultra: compact-units 15
+            full:  compact-units 35
+            lite:  compact-units 80
+
+is-active|is-enabled:
+    if exit failed:
+        raw
+    else:
+        head 1
+
+*:
+    if exit failed:
+        raw
+    else:
+        head auto

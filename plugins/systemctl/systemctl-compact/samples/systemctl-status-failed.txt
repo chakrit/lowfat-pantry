@@ -1,0 +1,13 @@
+× checkout-worker.service - Checkout queue worker
+     Loaded: loaded (/etc/systemd/system/checkout-worker.service; enabled; preset: enabled)
+     Active: failed (Result: exit-code) since Mon 2026-06-08 12:01:17 +07; 3min ago
+   Duration: 842ms
+    Process: 1911 ExecStart=/usr/local/bin/checkout-worker (code=exited, status=2)
+   Main PID: 1911 (code=exited, status=2)
+        CPU: 211ms
+
+Jun 08 12:01:16 host systemd[1]: Started checkout-worker.service - Checkout queue worker.
+Jun 08 12:01:17 host checkout-worker[1911]: Error: missing PAYMENT_SECRET
+Jun 08 12:01:17 host systemd[1]: checkout-worker.service: Main process exited, code=exited, status=2/INVALIDARGUMENT
+Jun 08 12:01:17 host systemd[1]: checkout-worker.service: Failed with result 'exit-code'.
+

@@ -1,0 +1,22 @@
+Pulling db       ... 
+Pulling redis    ... 
+redis: Pulling from library/redis
+db: Pulling from library/postgres
+redis           Pull complete
+db              Pull complete
+Creating network "shop_default" with the default driver
+Creating volume "shop_pgdata" with default driver
+Creating shop_db_1    ... 
+Creating shop_redis_1 ... 
+Creating shop_api_1   ... 
+Creating shop_db_1    ... done
+Creating shop_redis_1 ... done
+Creating shop_api_1   ... done
+Attaching to shop_db_1, shop_redis_1, shop_api_1
+db_1     | PostgreSQL Database directory appears to contain a database; Skipping initialization
+redis_1  | 1:C 08 Jun 2026 12:04:10.123 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+api_1    | Listening on http://0.0.0.0:8080
+api_1    | GET /health 200 4ms
+api_1    | GET /products 200 18ms
+api_1    | worker queue depth=0
+

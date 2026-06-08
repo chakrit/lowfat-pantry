@@ -1,0 +1,7 @@
+      Name                     Command               State                     Ports
+--------------------------------------------------------------------------------------------------------
+shop_api_1          docker-entrypoint.sh node s ...   Up       0.0.0.0:8080->8080/tcp,:::8080->8080/tcp
+shop_db_1           docker-entrypoint.sh postgres     Up       0.0.0.0:5432->5432/tcp,:::5432->5432/tcp
+shop_redis_1        docker-entrypoint.sh redis ...    Up       6379/tcp
+shop_worker_1       docker-entrypoint.sh node w ...   Exit 1
+

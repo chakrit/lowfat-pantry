@@ -1,0 +1,8 @@
+[plugin]
+name = "wget-compact"
+version = "0.1.0"
+description = "Compact wget transfer output while preserving connection, HTTP, saved, and error lines"
+category = "wget"
+commands = ["wget"]
+subcommands = ["download", "--spider"]
+

@@ -1,0 +1,23 @@
+Downloading https://repo.maven.apache.org/maven2/org/springframework/boot/spring-boot-gradle-plugin/3.3.0/spring-boot-gradle-plugin-3.3.0.pom
+Downloaded https://repo.maven.apache.org/maven2/org/springframework/boot/spring-boot-gradle-plugin/3.3.0/spring-boot-gradle-plugin-3.3.0.pom
+Downloading https://repo.maven.apache.org/maven2/org/springframework/boot/spring-boot-loader-tools/3.3.0/spring-boot-loader-tools-3.3.0.jar
+Downloaded https://repo.maven.apache.org/maven2/org/springframework/boot/spring-boot-loader-tools/3.3.0/spring-boot-loader-tools-3.3.0.jar
+> Task :bootBuildInfo
+> Task :compileJava
+Note: /workspace/api/src/main/java/com/example/api/LegacyController.java uses unchecked or unsafe operations.
+Note: Recompile with -Xlint:unchecked for details.
+> Task :processResources
+> Task :classes
+> Task :resolveMainClassName
+> Task :bootJar
+> Task :assemble
+> Task :compileTestJava NO-SOURCE
+> Task :processTestResources NO-SOURCE
+> Task :testClasses UP-TO-DATE
+> Task :test NO-SOURCE
+> Task :check UP-TO-DATE
+> Task :build
+
+BUILD SUCCESSFUL in 24s
+6 actionable tasks: 6 executed
+

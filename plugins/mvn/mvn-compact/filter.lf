@@ -1,0 +1,28 @@
+#!/usr/bin/env lowfat-filter
+# mvn-compact - drop Maven transfer/plugin noise while preserving build signal.
+# env: $sub $level $exit $args
+
+define drop-maven-noise:
+    drop /^\[INFO\] (Downloading|Downloaded) /
+    drop /^\[INFO\][[:space:]]+-+$/
+    drop /^\[INFO\] --- /
+    drop /^\[INFO\][[:space:]]+[0-9]+\/[0-9]+[[:space:]]/
+    drop /^Progress \([0-9]+\): /
+
+# A failed Maven build is exactly when extraction matters most (the [ERROR]
+# buried in hundreds of transfer/plugin lines), so we DON'T raw on failure —
+# the same keep/extract runs regardless of exit. `or-shell: tail` is the
+# over-prune fallback when nothing matched (a crash with no [ERROR] markers).
+*:
+    match level:
+        ultra:
+            keep /^(\[ERROR\]|\[WARNING\]|Tests run: [0-9]+,|(\[INFO\] )?BUILD (SUCCESS|FAILURE)|\[INFO\] Reactor Summary|\[INFO\] [[:alnum:]._-]+[[:space:]]+\.+[[:space:]]+(SUCCESS|FAILURE))/
+            tail 40
+            or-shell: tail -40
+        lite:
+            drop-maven-noise
+            tail 200
+        else:
+            drop-maven-noise
+            tail 80
+

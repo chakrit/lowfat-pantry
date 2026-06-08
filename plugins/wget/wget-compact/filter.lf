@@ -1,0 +1,27 @@
+#!/usr/bin/env lowfat-filter
+# wget-compact - strip progress bars/dots and keep transfer result.
+# env: $sub $level $exit $args
+
+define drop-wget-progress:
+    drop /^[[:space:]]*[0-9]+K[[:space:]]+[\.\+]+[[:space:]]+[0-9]+%/
+    drop /^[[:space:]]*[0-9]+[[:space:]]+[\. ]+[0-9]+%/
+    drop /^[[:space:]]*[0-9]+%[[:space:]]/
+    drop /^[[:space:]]*[-0-9.,]+[KMG]?[[:space:]]+[-0-9.,]+[KMG]?\/s/
+    drop /^[[:space:]]*$/
+
+*:
+    if exit failed:
+        raw
+    else:
+        match level:
+            ultra:
+                drop-wget-progress
+                keep /^(--[0-9-]+|Resolving |Connecting to |HTTP request sent|Length: |Saving to:|[0-9-]+ [0-9:]+:[0-9:]+ .* saved|ERROR|Error|wget:)/
+                tail 25
+            lite:
+                drop-wget-progress
+                tail 120
+            else:
+                drop-wget-progress
+                tail 60
+

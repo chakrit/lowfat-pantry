@@ -1,0 +1,8 @@
+[plugin]
+name = "gradlew-compact"
+version = "0.1.0"
+description = "Compact Gradle and Gradle wrapper build/test output for LLM contexts"
+category = "gradlew"
+commands = ["gradlew", "gradle", "./gradlew"]
+subcommands = ["build", "test", "check", "assemble", "bootRun"]
+

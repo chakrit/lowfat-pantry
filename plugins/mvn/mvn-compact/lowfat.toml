@@ -1,0 +1,9 @@
+[plugin]
+name = "mvn-compact"
+version = "0.1.0"
+description = "Compact Maven build/test output for LLM contexts"
+category = "mvn"
+commands = ["mvn"]
+# Documentation only - subcommand selection happens inside filter.lf.
+subcommands = ["test", "package", "install", "verify", "clean"]
+

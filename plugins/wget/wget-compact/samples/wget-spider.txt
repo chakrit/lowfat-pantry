@@ -1,0 +1,9 @@
+Spider mode enabled. Check if remote file exists.
+--2026-06-08 12:40:11--  https://example.com/health
+Resolving example.com (example.com)... 93.184.216.34
+Connecting to example.com (example.com)|93.184.216.34|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 2 [text/plain]
+Remote file exists and could contain further links,
+but recursion is disabled -- not retrieving.
+

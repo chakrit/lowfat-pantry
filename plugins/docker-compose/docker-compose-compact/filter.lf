@@ -1,0 +1,71 @@
+#!/usr/bin/env lowfat-filter
+# docker-compose-compact - compact legacy docker-compose output.
+# env: $sub $level $exit $args
+
+define drop-compose-spam:
+    drop /^$/
+    drop /[[:space:]]+(Creating|Created|Starting|Started|Pulling|Pulled|Waiting|Recreating|Recreated)([[:space:]]|$)/
+    drop /[[:space:]]+Pull complete$/
+    drop /^Creating /
+    drop /^Starting /
+    drop /^Pulling /
+    drop /^Waiting /
+
+define compact-ps(limit):
+    shell: |
+        awk -v lim=$1 '
+          /^Name[[:space:]]+Command/ { gsub(/[[:space:]][[:space:]]+/, " "); print; next }
+          /^[-]+/ { next }
+          NF && rows < lim { gsub(/[[:space:]][[:space:]]+/, " "); print; rows++ }
+        '
+
+up|build:
+    if exit failed:
+        raw
+    else:
+        match level:
+            ultra:
+                drop-compose-spam
+                keep /(error|Error|ERROR|exited with code|Successfully|Built|Building|Recreating|Attaching to)/
+                tail 30
+                or "docker-compose: ok"
+            lite:
+                drop-compose-spam
+                tail 200
+            else:
+                drop-compose-spam
+                tail 80
+
+logs, ultra:
+    if exit failed:
+        raw
+    else:
+        tail 20
+
+logs, full:
+    if exit failed:
+        raw
+    else:
+        tail 60
+
+logs:
+    if exit failed:
+        raw
+    else:
+        tail 200
+
+ps:
+    if exit failed:
+        raw
+    else:
+        match level:
+            ultra: compact-ps 12
+            full:  compact-ps 30
+            lite:  compact-ps 60
+
+*:
+    if exit failed:
+        raw
+    else:
+        drop-compose-spam
+        head auto
