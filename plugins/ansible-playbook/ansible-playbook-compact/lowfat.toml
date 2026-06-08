@@ -1,0 +1,6 @@
+[plugin]
+name = "ansible-playbook-compact"
+version = "0.1.0"
+description = "Compact ansible-playbook run output for LLM contexts"
+category = "ansible-playbook"
+commands = ["ansible-playbook"]

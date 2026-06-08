@@ -1,0 +1,18 @@
+
+PLAY [Deploy checkout service] *************************************************
+
+TASK [Gathering Facts] ********************************************************
+ok: [web1.prod]
+ok: [web2.prod]
+
+TASK [common : Install base packages] *****************************************
+ok: [web1.prod]
+changed: [web2.prod]
+
+TASK [app : Template config file] *********************************************
+changed: [web1.prod]
+changed: [web2.prod]
+
+PLAY RECAP ********************************************************************
+web1.prod                  : ok=3    changed=2    unreachable=0    failed=0    skipped=0
+web2.prod                  : ok=3    changed=2    unreachable=0    failed=0    skipped=0

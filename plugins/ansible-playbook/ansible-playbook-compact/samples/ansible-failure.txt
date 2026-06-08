@@ -1,0 +1,26 @@
+
+PLAY [Deploy checkout service] *************************************************
+
+TASK [Gathering Facts] ********************************************************
+ok: [web1.prod]
+ok: [web2.prod]
+ok: [web3.prod]
+
+TASK [common : Install base packages] *****************************************
+ok: [web1.prod]
+ok: [web2.prod]
+changed: [web3.prod]
+
+TASK [app : Template config file] *********************************************
+changed: [web1.prod]
+ok: [web2.prod]
+fatal: [web3.prod]: FAILED! => {"changed": false, "msg": "Destination directory /etc/app does not exist"}
+
+TASK [app : Restart service] **************************************************
+changed: [web1.prod]
+ok: [web2.prod]
+
+PLAY RECAP ********************************************************************
+web1.prod                  : ok=4    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+web2.prod                  : ok=4    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+web3.prod                  : ok=2    changed=1    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0

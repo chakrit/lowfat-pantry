@@ -1,0 +1,38 @@
+#!/usr/bin/env lowfat-filter
+# ansible-playbook-compact — compact Ansible run output for LLM contexts.
+# env: $sub $level $exit $args
+#
+# The bloat is per-host `ok:`/`skipping:` chatter and the `TASK [..] ****` banner
+# rules across dozens of tasks × hosts. The signal is `changed:` results,
+# `fatal:`/`...FAILED!` lines, and the `PLAY RECAP` block with its
+# `host : ok=N changed=M failed=K` tallies — always the anchor. A failed run
+# (exit != 0) tails to the recap; `or-shell: tail` guards over-prune.
+
+define drop-ok-noise:
+    drop /^(ok: |skipping: |included: )/
+
+*:
+    if exit failed:
+        match level:
+            ultra:
+                keep /^(fatal:|.*FAILED!|.*=> \{|PLAY RECAP|[A-Za-z0-9._-]+[[:space:]]+: ok=[0-9]|ERROR!|unreachable:)/
+                tail 40
+                or-shell: tail -40
+            lite:
+                drop-ok-noise
+                tail 200
+            else:
+                drop-ok-noise
+                tail 100
+    else:
+        match level:
+            ultra:
+                keep /^(changed:|fatal:|PLAY RECAP|[A-Za-z0-9._-]+[[:space:]]+: ok=[0-9])/
+                tail 30
+                or "ansible: ok (no changes)"
+            lite:
+                drop-ok-noise
+                head 200
+            else:
+                drop-ok-noise
+                head 100
