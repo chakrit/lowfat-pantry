@@ -1,0 +1,6 @@
+[plugin]
+name = "tsc-compact"
+version = "0.1.0"
+description = "Compact TypeScript compiler (tsc) diagnostics for LLM contexts"
+category = "tsc"
+commands = ["tsc"]

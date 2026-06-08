@@ -1,0 +1,15 @@
+# Golden/invariant cases for tsc-compact. Provisional format (smoke harness pending).
+# Samples are synthetic (no TS project in this repo to capture from).
+command: tsc
+synthetic: true
+cases:
+  - sample: samples/tsc-errors.txt
+    sub: ""
+    args: "--noEmit"
+    exit: 2
+    levels: [lite, full, ultra]
+  - sample: samples/tsc-clean.txt        # clean --noEmit: empty output, exit 0 → "tsc: no errors"
+    sub: ""
+    args: "--noEmit"
+    exit: 0
+    levels: [lite, full, ultra]

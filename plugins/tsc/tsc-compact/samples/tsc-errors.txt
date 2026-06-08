@@ -1,0 +1,26 @@
+src/checkout/api.ts:41:5 - error TS2322: Type 'string' is not assignable to type 'number'.
+
+41     timeout: "30",
+       ~~~~~~~
+
+  src/checkout/types.ts:8:3
+    8   timeout: number;
+        ~~~~~~~
+    The expected type comes from property 'timeout' which is declared here on type 'ClientOptions'.
+
+src/checkout/cart.ts:88:12 - error TS18047: 'user' is possibly 'null'.
+
+88     return user.id;
+              ~~~~
+
+src/checkout/config.ts:29:3 - error TS2554: Expected 1 arguments, but got 0.
+
+29   loadSettings();
+     ~~~~~~~~~~~~~
+
+Found 3 errors in 3 files.
+
+Errors  Files
+     1  src/checkout/api.ts:41
+     1  src/checkout/cart.ts:88
+     1  src/checkout/config.ts:29

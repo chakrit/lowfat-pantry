@@ -1,0 +1,25 @@
+#!/usr/bin/env lowfat-filter
+# tsc-compact — compact TypeScript compiler diagnostics for LLM contexts.
+# env: $sub $level $exit $args
+#
+# tsc has no subcommands; it exits 0 on success (often with NO output under
+# --noEmit) and non-zero when type errors exist. The bloat is the pretty
+# code-frame: each `error TSxxxx` is followed by a blank line, the offending
+# source line, and a `~~~~` underline. The signal is the `path:line:col - error
+# TSxxxx: message` lines, the `Found N errors` summary, and the per-file
+# `Errors  Files` table (tsc --pretty). At ultra we keep just those.
+
+*:
+    if exit failed:
+        match level:
+            ultra:
+                keep /(error TS[0-9]+|^Found [0-9]+ error|^Errors  Files|^[[:space:]]*[0-9]+[[:space:]]+[^[:space:]])/
+                head 40
+                or-shell: grep -E 'error TS[0-9]+' | head -40
+            lite:
+                head 200
+            else:
+                head 80
+    else:
+        head 10
+        or "tsc: no errors"
