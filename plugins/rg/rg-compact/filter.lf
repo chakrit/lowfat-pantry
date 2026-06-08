@@ -1,0 +1,24 @@
+#!/usr/bin/env lowfat-filter
+# rg-compact — compact ripgrep output for LLM contexts.
+# env: $sub $level $exit $args
+#
+# ripgrep exit codes (same family as grep):
+#   0 → matches found     (typical signal)
+#   1 → no matches        (empty output; not a real failure)
+#   2 → actual error      (bad regex, unreadable path — preserve stderr)
+# `if exit failed` covers both 1 and 2: `raw` is empty for 1 (filled by `or`)
+# and carries the error text for 2.
+#
+# Piped under lowfat (non-TTY), ripgrep defaults to --no-heading, emitting one
+# `path:line:text` match per line. Recursive match lists are the bloat we cap;
+# tighter than grep since rg searches whole trees by default.
+
+*:
+    if exit failed:
+        raw
+        or "rg: no matches"
+    else:
+        match level:
+            ultra: head 20
+            lite:  head 200
+            else:  head 60

@@ -1,0 +1,19 @@
+# Golden/invariant cases for rg-compact. Provisional format (smoke harness pending).
+command: rg
+cases:
+  - sample: samples/rg-search-full.txt    # path:text matches, many files
+    sub: ""
+    args: ""
+    levels: [lite, full, ultra]
+  - sample: samples/rg-numbered-full.txt   # path:line:text (-n)
+    sub: ""
+    args: "-n"
+    levels: [lite, full, ultra]
+  - sample: samples/rg-count-full.txt      # path:N (--count), already compact
+    sub: ""
+    args: "--count"
+    levels: [lite, full, ultra]
+  - sample: samples/rg-files-full.txt      # path list (-l)
+    sub: ""
+    args: "-l"
+    levels: [lite, full, ultra]

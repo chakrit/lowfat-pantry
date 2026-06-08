@@ -1,0 +1,10 @@
+./CLAUDE.md
+./templates/lowfat
+./scripts/validate.sh
+./docs/notes/lowfat-internals.md
+./docs/notes/2026-06-07-lowfat-rtk-migration.md
+./docs/decisions/2026-06-08-pantry-distribution.md
+./plugins/README.md
+./docs/spec/pantry-distribution.md
+./docs/spec/pantry-plugin-backlog.md
+./docs/spec/lowfat-skill.md

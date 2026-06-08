@@ -1,0 +1,36 @@
+docs/spec/pantry-plugin-backlog.md:3:Source: RTK `0.42.0` command surface (`rtk --help`), sorted into pantry plugin
+docs/spec/pantry-plugin-backlog.md:10:- **bundled** — lowfat `v0.6.8` already ships a plugin; work is *enhance/verify*, not build.
+docs/spec/pantry-plugin-backlog.md:11:- **build** — no lowfat coverage; net-new plugin.
+docs/spec/pantry-plugin-backlog.md:12:- **fold** — likely collapses into another plugin rather than standing alone.
+docs/spec/pantry-plugin-backlog.md:85:## Not pantry plugins — RTK meta/infra (lowfat-native or N/A)
+docs/spec/pantry-plugin-backlog.md:96:- `trust`/`untrust`/`verify` → lowfat `trusted.toml` (per-plugin name, **not** content
+docs/spec/pantry-distribution.md:4:plugins ride the skill-import rail and the **agent** symlinks them into the lowfat home under
+docs/spec/pantry-distribution.md:13:lowfat resolves a **single** plugin/config home, override semantics, no additive path
+docs/spec/pantry-distribution.md:20:External plugins live under `<home>/plugins/<category>/<plugin>/`. Trust state
+docs/spec/pantry-distribution.md:23:Consequence: you cannot *add* a plugin directory to a search path. You either take over the
+docs/spec/pantry-distribution.md:30:| lowfat plugins   | per-machine/user       | (nothing yet — this is the gap)             |
+docs/spec/pantry-distribution.md:41:sync, plugins at `school/skills/lowfat/plugins/` — lives in the decision entry and
+docs/spec/pantry-distribution.md:47:ACE exports `LOWFAT_HOME=<school-clone>/pantry`. Every project inherits all pantry plugins,
+docs/spec/pantry-distribution.md:51:- **−** Takes over the *entire* home. A user's personal/non-school plugins must live inside
+docs/spec/pantry-distribution.md:56:Keep the home personal (`~/.config/lowfat`). Symlink each pantry plugin from the school
+docs/spec/pantry-distribution.md:57:clone into `~/.config/lowfat/plugins/`. This is exactly what ACE already does for skills,
+docs/spec/pantry-distribution.md:60:- **+** Personal plugins coexist as real dirs alongside symlinked pantry ones. Trust file
+docs/spec/pantry-distribution.md:61:  stays personal. Edits to a pantry plugin go to the school clone (same property as skills).
+docs/spec/pantry-distribution.md:63:- **−** Needs a sync step to create/refresh symlinks. ACE doesn't know about plugins yet, so
+docs/spec/pantry-distribution.md:64:  either a small `pantry install` script owns it now, or ACE grows a plugin-symlink feature
+docs/spec/pantry-distribution.md:69:`chakrit/lowfat-pantry` repo + `make install` populating `~/.config/lowfat/plugins/`.
+docs/spec/pantry-distribution.md:78:via the skill-import rail (plugins materialize at `school/skills/lowfat/plugins/`); non-ACE
+docs/spec/pantry-distribution.md:86:An additive `LOWFAT_PLUGIN_PATH` (colon-separated extra plugin search dirs, layered over the
+docs/spec/pantry-distribution.md:88:`<school-clone>/pantry/plugins` and done, with the personal home untouched. Worth filing;
+docs/spec/pantry-distribution.md:93:lowfat trusts plugins by **name**, not content hash. A distributed pantry that ships
+docs/spec/pantry-distribution.md:95:pantry plugin once trusts all future mutations of it. Pin pantry plugin versions and review
+docs/spec/lowfat-skill.md:22:    plugins/<cat>/<p>/   pantry — lowfat.toml · filter.lf · samples/ · tests.yml
+docs/spec/lowfat-skill.md:27:instructions — the scope and reconcile steps are judgment calls (which plugins fit this
+docs/spec/lowfat-skill.md:28:project, whether a changed plugin is okay to re-trust) that benefit from context a script
+docs/spec/lowfat-skill.md:49:     `~/.config/lowfat/plugins/`. Classify **added** (new in repo), **removed** (gone from
+docs/spec/lowfat-skill.md:51:     each. `AskUserQuestion`. Also the **name-based-trust drift guard**: a *changed* plugin
+docs/spec/lowfat-skill.md:55:   - **d. Trust** — prompt the **user** to run `lowfat plugin trust <plugin>` for new/changed
+docs/spec/lowfat-skill.md:56:     plugins. Agent never self-trusts, even first-party pantry content.
+docs/spec/lowfat-skill.md:63:6. **Standalone invocation** (already set up) → terse status: lowfat active, N pantry plugins
+docs/spec/lowfat-skill.md:74:user runs `lowfat plugin trust`. Holds even though pantry plugins are first-party — the
+docs/spec/lowfat-skill.md:81:  method); for ACE imports, confirm that resolves to `school/skills/lowfat/plugins/`.

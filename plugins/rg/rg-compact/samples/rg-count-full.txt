@@ -1,0 +1,10 @@
+docs/notes/lowfat-internals.md:71
+docs/notes/README.md:7
+docs/notes/2026-06-07-lowfat-rtk-migration.md:20
+docs/README.md:4
+docs/decisions/2026-06-08-pantry-distribution.md:26
+docs/decisions/README.md:15
+docs/spec/README.md:5
+docs/spec/pantry-distribution.md:34
+docs/spec/pantry-plugin-backlog.md:5
+docs/spec/lowfat-skill.md:28

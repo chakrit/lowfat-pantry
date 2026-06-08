@@ -1,0 +1,6 @@
+[plugin]
+name = "rg-compact"
+version = "0.1.0"
+description = "Compact ripgrep output for LLM contexts (recursive matches explode quickly)"
+category = "rg"
+commands = ["rg"]

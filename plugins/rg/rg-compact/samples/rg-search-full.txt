@@ -1,0 +1,139 @@
+docs/notes/lowfat-internals.md:# lowfat internals (v0.6.8)
+docs/notes/lowfat-internals.md:Engineer-facing reference for what the `lowfat` tool *is*, derived from the
+docs/notes/lowfat-internals.md:(`lowfat`, `lowfat-core`, `lowfat-plugin`, `lowfat-runner`).
+docs/notes/lowfat-internals.md:`lowfat` is a token-aware command-output filter for LLM coding environments.
+docs/notes/lowfat-internals.md:It wraps a shell command (`lowfat git status`), runs the real binary, captures
+docs/notes/lowfat-internals.md:- **`lowfat-core`** — the engine, no I/O orchestration. Owns the `.lf` DSL
+docs/notes/lowfat-internals.md:  parser+executor (`lf.rs`), intensity `Level` (`level.rs`), `.lowfat` config
+docs/notes/lowfat-internals.md:- **`lowfat-plugin`** — the plugin model. Owns the `lowfat.toml` manifest
+docs/notes/lowfat-internals.md:- **`lowfat-runner`** — execution glue. `HybridRunner::load` turns a discovered
+docs/notes/lowfat-internals.md:- **`lowfat`** (the CLI) — `clap` surface (`main.rs`), the filter run path
+docs/notes/lowfat-internals.md:`lowfat.toml` (or legacy `init.toml`) — every field:
+docs/notes/lowfat-internals.md:2. `$XDG_CONFIG_HOME/lowfat` — if `XDG_CONFIG_HOME` is set (used even if the
+docs/notes/lowfat-internals.md:3. `~/.config/lowfat` — only if that directory **already exists**.
+docs/notes/lowfat-internals.md:4. `~/.lowfat` — fallback otherwise.
+docs/notes/lowfat-internals.md:So the real answer to "`~/.lowfat` vs `~/.config/lowfat`?" is **both are real,
+docs/notes/lowfat-internals.md:pre-existing `~/.config/lowfat/`, plugins live at
+docs/notes/lowfat-internals.md:`~/.lowfat/plugins/<category>/<name>/`. If `~/.config/lowfat/` exists (or
+docs/notes/lowfat-internals.md:`XDG_CONFIG_HOME` is set), it's `~/.config/lowfat/plugins/...`. When both
+docs/notes/lowfat-internals.md:`~/.config/lowfat/` and `~/.lowfat/` exist, XDG wins and a one-shot stderr
+docs/notes/lowfat-internals.md:The doc comments in `discovery.rs:8` and `embedded.rs:7` hardcode `~/.lowfat/`;
+docs/notes/lowfat-internals.md:those are simplifications — `config.rs` is authoritative. Note also `~/.lowfat`
+docs/notes/lowfat-internals.md:`.lowfat` pipeline config discovered by walking up from cwd (`config.rs:166-177`).
+docs/notes/lowfat-internals.md:Data dir is separate: `$LOWFAT_DATA` > `$XDG_DATA_HOME/lowfat` >
+docs/notes/lowfat-internals.md:`~/.local/share/lowfat` (`config.rs:41-48`) — that's where the SQLite DB and
+docs/notes/lowfat-internals.md:Disk layout: `plugin_dir/<category>/<plugin-name>/lowfat.toml` (or `init.toml`).
+docs/notes/lowfat-internals.md:`security.rs:115-122`). `lowfat plugin trust <name>` appends the name;
+docs/notes/lowfat-internals.md:`$LOWFAT_LEVEL` > `.lowfat` `level=` line > default (`config.rs:52,116-121`).
+docs/notes/lowfat-internals.md:1. `RunfConfig::resolve()` — load `.lowfat` config, level, plugin/data dirs,
+docs/notes/lowfat-internals.md:(`run.rs:227-263`) picks, in order: a `.lowfat` conditional pipeline → the
+docs/notes/lowfat-internals.md:Conditional pipelines (`.lowfat` `pipeline.<cmd>.<cond>`) select by result:
+docs/notes/lowfat-internals.md:`<home>/redact.conf` < project `redact.conf` beside `.lowfat`
+docs/notes/lowfat-internals.md:- **`lowfat hook`** — a PreToolUse hook (`commands/hook.rs`). Reads the hook
+docs/notes/lowfat-internals.md:- **`lowfat shell-init <shell>`** — prints an `eval`-able init script
+docs/notes/lowfat-internals.md:  `$LOWFAT_ENABLE==1`, it queries `lowfat filters --commands` and defines a
+docs/notes/lowfat-internals.md:  `lowfat git …`. Supports bash/zsh (POSIX) and fish.
+docs/notes/lowfat-internals.md:shared by the hook, the `lowfat rewrite` CLI, and the OpenCode plugin. It
+docs/notes/lowfat-internals.md:returns `Some("lowfat <cmd>")` iff a builtin, a discovered plugin, a
+docs/notes/lowfat-internals.md:(pass through) otherwise. It refuses to double-wrap (`lowfat`/`lf` prefixes).
+docs/notes/lowfat-internals.md:`lowfat opencode install|uninstall` manages an OpenCode plugin at
+docs/notes/lowfat-internals.md:`~/.config/opencode/plugins/lowfat.ts` (`main.rs:216-221`).
+docs/notes/lowfat-internals.md:- a `TrackRecord` (original vs lowfat command, raw/filtered text, exec time,
+docs/notes/lowfat-internals.md:- **`rewrite <cmd…>`** — print the lowfat-wrapped form (or the command
+docs/notes/lowfat-internals.md:- Bare `lowfat <cmd> <args…>` (no subcommand) is the filter run path
+docs/notes/2026-06-07-lowfat-rtk-migration.md:- lowfat: <https://github.com/zdk/lowfat>
+docs/notes/2026-06-07-lowfat-rtk-migration.md:- lowfat `v0.6.8`, released 2026-06-05
+docs/notes/2026-06-07-lowfat-rtk-migration.md:plugin distribution, potentially with lowfat core contributions. The practical target
+docs/notes/2026-06-07-lowfat-rtk-migration.md:Do not remove RTK before the required lowfat plugins have been built, benchmarked, and
+docs/notes/2026-06-07-lowfat-rtk-migration.md:The most immediate lowfat coverage gap for this school is `rg`. The engineering
+docs/notes/2026-06-07-lowfat-rtk-migration.md:instructions explicitly prefer `rg`, while lowfat's bundled grep plugin claims only the
+docs/notes/2026-06-07-lowfat-rtk-migration.md:| Capability            | RTK                                        | lowfat                                     |
+docs/notes/2026-06-07-lowfat-rtk-migration.md:| Project configuration | `.rtk/filters.toml`                        | nearest ancestor `.lowfat`                 |
+docs/notes/2026-06-07-lowfat-rtk-migration.md:### Project `.lowfat`
+docs/notes/2026-06-07-lowfat-rtk-migration.md:Lowfat walks upward from the current directory and uses the nearest `.lowfat` file.
+docs/notes/2026-06-07-lowfat-rtk-migration.md:| `XDG_CONFIG_HOME` | Select `$XDG_CONFIG_HOME/lowfat` as configuration home   |
+docs/notes/2026-06-07-lowfat-rtk-migration.md:~/.lowfat/plugins/<category>/<plugin>/
+docs/notes/2026-06-07-lowfat-rtk-migration.md:lowfat.toml
+docs/notes/2026-06-07-lowfat-rtk-migration.md:lowfat plugin doctor
+docs/notes/2026-06-07-lowfat-rtk-migration.md:lowfat plugin bench <plugin>
+docs/notes/2026-06-07-lowfat-rtk-migration.md:lowfat filter --explain <filter.lf> --sub=<subcommand> --level=<level>
+docs/notes/2026-06-07-lowfat-rtk-migration.md:The following require plugins, lowfat core changes, or separate integration work:
+docs/notes/2026-06-07-lowfat-rtk-migration.md:Project `.lowfat` pipelines are not trust-gated. Pipelines can reference plugins, so
+docs/notes/2026-06-07-lowfat-rtk-migration.md:The lowfat replacement skill should cover:
+docs/notes/2026-06-07-lowfat-rtk-migration.md:- project `.lowfat` detection
+docs/notes/2026-06-07-lowfat-rtk-migration.md:1. Install lowfat without removing RTK.
+docs/notes/2026-06-07-lowfat-rtk-migration.md:2. Start with direct `lowfat <command>` usage.
+docs/notes/2026-06-07-lowfat-rtk-migration.md:3. Add a project `.lowfat` using `level=full`.
+docs/notes/2026-06-07-lowfat-rtk-migration.md:9. Run lowfat and RTK side by side on actual ACE sessions.
+docs/notes/2026-06-07-lowfat-rtk-migration.md:10. Compare `lowfat stats/history` against `rtk gain/discover`.
+docs/notes/2026-06-07-lowfat-rtk-migration.md:- benchmarks at all three lowfat levels
+docs/notes/2026-06-07-lowfat-rtk-migration.md:- likely changes to lowfat core for missing runtime and configuration controls
+docs/notes/2026-06-07-lowfat-rtk-migration.md:The recommended implementation goal is a reusable `lowfat-pantry` plugin pack, expanded from
+docs/notes/2026-06-07-lowfat-rtk-migration.md:- lowfat README: <https://github.com/zdk/lowfat/blob/main/README.md>
+docs/notes/2026-06-07-lowfat-rtk-migration.md:- lowfat configuration: <https://github.com/zdk/lowfat/blob/main/docs/CONFIG.md>
+docs/notes/2026-06-07-lowfat-rtk-migration.md:- lowfat plugin system: <https://github.com/zdk/lowfat/blob/main/docs/PLUGINS.md>
+docs/decisions/2026-06-08-pantry-distribution.md:# Pantry Distribution: a `lowfat` Skill Repo via ACE Imports
+docs/decisions/2026-06-08-pantry-distribution.md:This repo becomes a **standalone Claude Code `lowfat` skill repo** (`chakrit/lowfat-pantry`),
+docs/decisions/2026-06-08-pantry-distribution.md:- `SKILL.md` — the `/lowfat` setup/operation skill, carrying the sync as agent steps
+docs/decisions/2026-06-08-pantry-distribution.md:- `plugins/<category>/<plugin>/` — the pantry (lowfat.toml, filter.lf, samples/, tests.yml)
+docs/decisions/2026-06-08-pantry-distribution.md:- a `.lowfat` template — seed project settings
+docs/decisions/2026-06-08-pantry-distribution.md:The sync (symlink the materialized `plugins/*` into `~/.config/lowfat/plugins/`, surface
+docs/decisions/2026-06-08-pantry-distribution.md:`lowfat plugin trust`) is performed by the **agent under SKILL.md instructions**, not a
+docs/decisions/2026-06-08-pantry-distribution.md:- **Single override-only home.** lowfat resolves one plugin/config home, no additive
+docs/decisions/2026-06-08-pantry-distribution.md:  `school/skills/lowfat/plugins/`. The sync resolves the skill's **own** install location as
+docs/decisions/2026-06-08-pantry-distribution.md:  scopes the out-of-tree authorization (`~/.config/lowfat`) to the sync; trust stays
+docs/decisions/2026-06-08-pantry-distribution.md:  user-run — the reconcile step is the checkpoint for lowfat's **name-based (not hash-based)
+docs/decisions/2026-06-08-pantry-distribution.md:The `rtk` skill is author-written, not an authoritative blueprint. The `lowfat` skill is
+docs/decisions/2026-06-08-pantry-distribution.md:**derived from lowfat's own mechanics** (shell-init eval, project `.lowfat`, plugin-home
+docs/decisions/2026-06-08-pantry-distribution.md:global env or self-trusts). Dropped: the CLAUDE.md→RTK.md block-relocation dance (lowfat
+docs/decisions/2026-06-08-pantry-distribution.md:injects no block — it's `shell-init` + `.lowfat`), and the fixed 7-step arc.
+docs/decisions/2026-06-08-pantry-distribution.md:  `/lowfat`; repo likely `chakrit/lowfat-pantry`).
+docs/decisions/2026-06-08-pantry-distribution.md:- File the upstream ask to zdk/lowfat for an additive `LOWFAT_PLUGIN_PATH`. If accepted, the
+docs/decisions/2026-06-08-pantry-distribution.md:  symlink step disappears (point it at `school/skills/lowfat/plugins`), personal home
+docs/spec/pantry-distribution.md:# lowfat-pantry — Distribution Design
+docs/spec/pantry-distribution.md:Status: **decided** — this repo becomes a `lowfat` skill repo imported via `school.toml`;
+docs/spec/pantry-distribution.md:plugins ride the skill-import rail and the **agent** symlinks them into the lowfat home under
+docs/spec/pantry-distribution.md:the ruling and `lowfat-skill.md` for the skill design. The Option A/B/C analysis below is the
+docs/spec/pantry-distribution.md:lowfat resolves a **single** plugin/config home, override semantics, no additive path
+docs/spec/pantry-distribution.md:    $LOWFAT_HOME  →  $XDG_CONFIG_HOME/lowfat  →  ~/.config/lowfat
+docs/spec/pantry-distribution.md:| lowfat plugins   | per-machine/user       | (nothing yet — this is the gap)             |
+docs/spec/pantry-distribution.md:| `.lowfat` config | per-project            | committed in each repo (done for this repo) |
+docs/spec/pantry-distribution.md:sync, plugins at `school/skills/lowfat/plugins/` — lives in the decision entry and
+docs/spec/pantry-distribution.md:`lowfat-skill.md`. Below, the `<school-clone>/pantry` and `pantry install` references are the
+docs/spec/pantry-distribution.md:  the school tree or be abandoned. Hostile to anyone with their own lowfat setup.
+docs/spec/pantry-distribution.md:Keep the home personal (`~/.config/lowfat`). Symlink each pantry plugin from the school
+docs/spec/pantry-distribution.md:clone into `~/.config/lowfat/plugins/`. This is exactly what ACE already does for skills,
+docs/spec/pantry-distribution.md:`chakrit/lowfat-pantry` repo + `make install` populating `~/.config/lowfat/plugins/`.
+docs/spec/pantry-distribution.md:Code `lowfat` skill repo, usable by any Claude Code user, not just ACE.** ACE users receive it
+docs/spec/pantry-distribution.md:via the skill-import rail (plugins materialize at `school/skills/lowfat/plugins/`); non-ACE
+docs/spec/pantry-distribution.md:`../decisions/2026-06-08-pantry-distribution.md` and `lowfat-skill.md`.
+docs/spec/pantry-distribution.md:## Open upstream ask (zdk/lowfat)
+docs/spec/pantry-distribution.md:lowfat trusts plugins by **name**, not content hash. A distributed pantry that ships
+docs/spec/lowfat-skill.md:# `/lowfat` Skill — Design
+docs/spec/lowfat-skill.md:Status: **draft**. The standalone Claude Code skill this repo (`chakrit/lowfat-pantry`)
+docs/spec/lowfat-skill.md:one install channel. Derived from lowfat's own mechanics, not transposed from the
+docs/spec/lowfat-skill.md:materializes at `school/skills/lowfat/`); non-ACE users install it via their own skill
+docs/spec/lowfat-skill.md:    SKILL.md             the /lowfat skill (carries the sync logic as agent steps)
+docs/spec/lowfat-skill.md:    plugins/<cat>/<p>/   pantry — lowfat.toml · filter.lf · samples/ · tests.yml
+docs/spec/lowfat-skill.md:    templates/lowfat     seed project config (NO dot — it's a template, not active config)
+docs/spec/lowfat-skill.md:1. **Detect state** (parallel): `which lowfat` · `.lowfat` present · integration hook wired
+docs/spec/lowfat-skill.md:2. **Install if absent** — user-run (`cargo install lowfat` / brew). Agent never installs
+docs/spec/lowfat-skill.md:3. **Seed `.lowfat`** from `templates/lowfat`: level + enabled filters per toolchain signals
+docs/spec/lowfat-skill.md:     `~/.config/lowfat/plugins/`. Classify **added** (new in repo), **removed** (gone from
+docs/spec/lowfat-skill.md:     that's already trusted is re-surfaced here, since lowfat won't re-prompt on content
+docs/spec/lowfat-skill.md:   - **d. Trust** — prompt the **user** to run `lowfat plugin trust <plugin>` for new/changed
+docs/spec/lowfat-skill.md:5. **Wire integration** *(opt-in, default off)* — register lowfat's PreToolUse hook at
+docs/spec/lowfat-skill.md:6. **Standalone invocation** (already set up) → terse status: lowfat active, N pantry plugins
+docs/spec/lowfat-skill.md:   synced, `/lowfat` to re-sync.
+docs/spec/lowfat-skill.md:> relocation (lowfat injects no block).
+docs/spec/lowfat-skill.md:user runs `lowfat plugin trust`. Holds even though pantry plugins are first-party — the
+docs/spec/lowfat-skill.md:  method); for ACE imports, confirm that resolves to `school/skills/lowfat/plugins/`.
+docs/spec/pantry-plugin-backlog.md:# lowfat-pantry — Plugin Backlog
+docs/spec/pantry-plugin-backlog.md:- **bundled** — lowfat `v0.6.8` already ships a plugin; work is *enhance/verify*, not build.
+docs/spec/pantry-plugin-backlog.md:- **build** — no lowfat coverage; net-new plugin.
+docs/spec/pantry-plugin-backlog.md:| `rg`    | build    | School prefers ripgrep; lowfat grep claims only `grep`. P0 gap.       |
+docs/spec/pantry-plugin-backlog.md:## Not pantry plugins — RTK meta/infra (lowfat-native or N/A)
+docs/spec/pantry-plugin-backlog.md:- `trust`/`untrust`/`verify` → lowfat `trusted.toml` (per-plugin name, **not** content
+docs/spec/pantry-plugin-backlog.md:- `gain`/`discover`/`session`/`cc-economics` → lowfat `stats`/`history` (analytics parity
+docs/spec/pantry-plugin-backlog.md:- `hook`/`hook-audit`/`rewrite`/`init` → lowfat shell/agent integration setup.
+docs/spec/pantry-plugin-backlog.md:- `run`/`proxy`/`pipe` → lowfat passthrough + `lowfat pipe` equivalents.
