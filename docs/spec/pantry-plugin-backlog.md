@@ -12,14 +12,14 @@ Legend:
 - **fold** — likely collapses into another plugin rather than standing alone.
 - ✅ **built** — net-new plugin now exists under `plugins/` (this session).
 
-## Built this session (33 community plugins)
+## Built (47 community plugins)
 
 VCS/CI: `rg` `gh` `glab` · Rust: `cargo` · TS/JS: `tsc` `eslint` `prettier` `npm` `pnpm`
-`yarn` · Python: `pytest` `ruff` `mypy` `black` `pip` · Go: `go` `golangci-lint` · .NET:
-`dotnet` · Infra/data: `kubectl` `helm` `terraform` `psql` `aws` `env` · Build/misc: `make`
-`npx` `jq` `json` `curl` `diff` `prisma` `next` `playwright`.
-
-In-flight (codex batch D): `mvn` `gradlew` `docker-compose` `systemctl` `journalctl` `wget`.
+`yarn` `bun` · Python: `pytest` `ruff` `mypy` `black` `pip` · Go: `go` `golangci-lint` ·
+.NET: `dotnet` · JVM: `mvn` `gradlew` · Infra/ops: `kubectl` `helm` `terraform`
+`ansible-playbook` `systemctl` `journalctl` `docker-compose` `ssh` `rsync` · Cloud/data:
+`aws` `gcloud` `psql` `sqlite3` `env` · Runtimes/build: `make` `npx` `deno` · Net/data:
+`curl` `wget` `jq` `json` `tar` · Toolchain: `diff` `prisma` `next` `playwright`.
 
 Note on the "fold" calls: lowfat has **no RTK-style command router** — it intercepts real
 binaries by name. So `eslint`/`prettier`/`pytest`/`vitest` are built as their own plugins
@@ -27,9 +27,11 @@ binaries by name. So `eslint`/`prettier`/`pytest`/`vitest` are built as their ow
 `summary`/`deps`/`err` entries below are **deprioritized**: nothing invokes a bare `lint`
 binary, so they'd never fire. Build them only if a wrapper convention emerges.
 
-Remaining real-binary candidates worth building later: `log` (generic, needs a real command),
-`read`, `wc`, `gt` (Graphite), `wget`✅(in D), plus enhancement passes on the bundled
-`git`/`docker`.
+Remaining candidates (lower value / lower format-confidence — synthetic samples risk drifting
+from real output): `log`/`read`/`wc` (need a real intercepted command), `gt` (Graphite, niche
+for a trunk-based solo workflow), deploy CLIs `vercel`/`wrangler`/`flyctl`/`netlify`, `az`,
+`redis-cli`, `pulumi`. Plus enhancement passes on the bundled `git`/`docker`. Build these only
+with **real captured samples** so the filters match actual output.
 
 ## Tier 0 — Universal, every session, high bloat
 
