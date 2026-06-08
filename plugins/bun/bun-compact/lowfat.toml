@@ -1,0 +1,7 @@
+[plugin]
+name = "bun-compact"
+version = "0.1.0"
+description = "Compact Bun install/test/run output for LLM contexts"
+category = "bun"
+commands = ["bun", "bunx"]
+subcommands = ["install", "add", "remove", "test", "run", "build", "x"]

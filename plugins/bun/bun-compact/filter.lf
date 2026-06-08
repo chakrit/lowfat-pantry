@@ -1,0 +1,58 @@
+#!/usr/bin/env lowfat-filter
+# bun-compact — compact Bun output for LLM contexts.
+# env: $sub $level $exit $args
+#
+# install/add: the bloat is the per-package `+ pkg@ver` list; the signal is the
+# `N packages installed` summary + warnings/errors. test: keep failing specs
+# (`✗`/`(fail)`) + the pass/fail tallies + `Ran N tests`, drop the `✓` passing
+# lines at ultra. run/build/x: the body is the program's own output — never
+# keyword-filter it; cap, and tail on failure (errors land at the end).
+
+# ── install / dependency mutation ─────────────────────────────────────────
+install|add|remove|update|pm|link|unlink:
+    if exit failed:
+        match level:
+            ultra: tail 30
+            lite:  tail 200
+            else:  tail 60
+    else:
+        match level:
+            ultra:
+                keep /(packages installed|Saved lockfile|error|warn|panic|^bun (install|add|remove))/
+                tail 20
+                or "bun: ok"
+            lite:
+                head 200
+            else:
+                head 60
+
+# ── test — keep failures + tallies, drop passing specs ────────────────────
+test:
+    match level:
+        ultra:
+            keep /(✗|✘|✕|\(fail\)|error:|panic|[0-9]+ (pass|fail|error|skip)|Ran [0-9]+ test|\.test\.|^bun test)/
+            tail 30
+            or-shell: tail -30
+        lite:
+            head 200
+        else:
+            head 80
+
+# ── run / build / x — program output; never keyword-filter ────────────────
+run|build|x|exec:
+    if exit failed:
+        match level:
+            ultra: tail 40
+            lite:  tail 200
+            else:  tail 80
+    else:
+        match level:
+            ultra: head 25
+            lite:  head 200
+            else:  head 60
+
+*:
+    if exit failed:
+        raw
+    else:
+        head 40

@@ -1,0 +1,17 @@
+bun test v1.1.18 (8f3a2b1c)
+
+src/cart.test.ts:
+✓ adds items to cart [0.42ms]
+✓ removes items [0.31ms]
+✓ computes subtotal [0.55ms]
+
+src/checkout.test.ts:
+✓ charges the card [1.10ms]
+✗ applies coupon to total [1.25ms]
+  error: expected 1299 to be 1499
+      at src/checkout.test.ts:42:18
+
+ 5 pass
+ 1 fail
+ 1 expect() calls
+Ran 6 tests across 2 files. [38.00ms]
