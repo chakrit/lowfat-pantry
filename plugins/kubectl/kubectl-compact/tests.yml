@@ -1,0 +1,21 @@
+# Golden/invariant cases for kubectl-compact. Provisional format (smoke harness pending).
+command: kubectl
+synthetic: true
+cases:
+  - sample: samples/kubectl-get-pods.txt
+    sub: get
+    args: "pods -A"
+    levels: [lite, full, ultra]
+  - sample: samples/kubectl-describe-pod.txt
+    sub: describe
+    args: "pod checkout-7d9b8f6f6f-2kq9x"
+    levels: [lite, full, ultra]
+  - sample: samples/kubectl-logs.txt
+    sub: logs
+    args: "deploy/api --tail=200"
+    levels: [lite, full, ultra]
+  - sample: samples/kubectl-apply-rollout.txt
+    sub: apply
+    args: "-f k8s/"
+    levels: [lite, full, ultra]
+

@@ -1,0 +1,30 @@
+#!/usr/bin/env lowfat-filter
+# curl-compact — remove progress meters, keep HTTP exchange and capped body.
+# env: $sub $level $exit $args
+
+define compact-curl(limit):
+    shell: |
+        awk -v lim=$1 '
+          {
+            gsub(/\r/, "")
+          }
+          /^[[:space:]]*%[[:space:]]*Total/ { next }
+          /^[[:space:]]*[0-9]+[[:space:]]+[0-9]+[[:space:]]+[0-9]+[[:space:]]+[0-9]+[[:space:]]+[0-9]+/ { next }
+          /^(\*|>|<|HTTP\/|[[:alnum:]-]+:)/ {
+            if (n < lim) { print; n++ }
+            next
+          }
+          NF {
+            if (n < lim) { print; n++ }
+          }
+        '
+
+*:
+    if exit failed:
+        raw
+    else:
+        match level:
+            ultra: compact-curl 18
+            full:  compact-curl 36
+            lite:  compact-curl 72
+

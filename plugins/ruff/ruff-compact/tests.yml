@@ -1,0 +1,17 @@
+# Golden/invariant cases for ruff-compact. Provisional format (smoke harness pending).
+command: ruff
+synthetic: true
+cases:
+  - sample: samples/ruff-findings.txt
+    sub: check
+    args: "."
+    levels: [lite, full, ultra]
+  - sample: samples/ruff-clean.txt
+    sub: check
+    args: "."
+    levels: [lite, full, ultra]
+  - sample: samples/ruff-error.txt
+    sub: check
+    args: "--config missing.toml ."
+    levels: [lite, full, ultra]
+

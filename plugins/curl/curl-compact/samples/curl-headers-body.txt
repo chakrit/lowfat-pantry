@@ -1,0 +1,27 @@
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100  1240  100  1240    0     0   4021      0 --:--:-- --:--:-- --:--:--  4021
+HTTP/1.1 200 OK
+Date: Mon, 08 Jun 2026 01:21:02 GMT
+Content-Type: text/html; charset=utf-8
+Content-Length: 1240
+Cache-Control: max-age=60
+ETag: "b78f-1900e4ad"
+
+<!doctype html>
+<html>
+<head><title>Example</title></head>
+<body>
+<h1>Example service</h1>
+<p>Build 2026.06.08 is serving traffic.</p>
+<p>Region ap-southeast-1, cell blue.</p>
+<p>Line 1 of a verbose diagnostic body.</p>
+<p>Line 2 of a verbose diagnostic body.</p>
+<p>Line 3 of a verbose diagnostic body.</p>
+<p>Line 4 of a verbose diagnostic body.</p>
+<p>Line 5 of a verbose diagnostic body.</p>
+<p>Line 6 of a verbose diagnostic body.</p>
+<p>Line 7 of a verbose diagnostic body.</p>
+</body>
+</html>
+

@@ -1,0 +1,22 @@
+#!/usr/bin/env lowfat-filter
+# diff-compact — preserve hunk headers and changed lines; exit 1 is meaningful output.
+# env: $sub $level $exit $args
+
+define compact-diff(limit):
+    shell: |
+        if [ "$exit" = "2" ]; then
+          cat
+          exit 0
+        fi
+        awk -v lim=$1 -v lvl=$level '
+          /^(--- |\+\+\+ |@@ )/ { if (n < lim) { print; n++ }; next }
+          /^[+-]/ { if (n < lim) { print; n++ }; next }
+          lvl != "ultra" && NF && ctx < 6 { print; ctx++; next }
+        '
+
+*:
+    match level:
+        ultra: compact-diff 20
+        full:  compact-diff 45
+        lite:  compact-diff 90
+

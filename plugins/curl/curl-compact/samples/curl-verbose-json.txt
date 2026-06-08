@@ -1,0 +1,33 @@
+* Host api.example.test:443 was resolved.
+* IPv6: (none)
+* IPv4: 203.0.113.42
+*   Trying 203.0.113.42:443...
+* Connected to api.example.test (203.0.113.42) port 443
+* ALPN: curl offers h2,http/1.1
+* SSL connection using TLSv1.3 / TLS_AES_256_GCM_SHA384
+> GET /v1/users?page=1 HTTP/2
+> Host: api.example.test
+> user-agent: curl/8.7.1
+> accept: */*
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100   658  100   658    0     0   2193      0 --:--:-- --:--:-- --:--:--  2193
+< HTTP/2 200
+< date: Mon, 08 Jun 2026 01:20:11 GMT
+< content-type: application/json
+< cache-control: no-store
+< x-request-id: req_8b74a0
+{
+  "data": [
+    {"id": "usr_001", "email": "ada@example.test", "role": "admin"},
+    {"id": "usr_002", "email": "grace@example.test", "role": "member"},
+    {"id": "usr_003", "email": "linus@example.test", "role": "member"},
+    {"id": "usr_004", "email": "margaret@example.test", "role": "member"},
+    {"id": "usr_005", "email": "barbara@example.test", "role": "viewer"},
+    {"id": "usr_006", "email": "katherine@example.test", "role": "viewer"}
+  ],
+  "page": 1,
+  "next": "/v1/users?page=2"
+}
+* Connection #0 to host api.example.test left intact
+

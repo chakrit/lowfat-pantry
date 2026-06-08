@@ -1,0 +1,4 @@
+* Could not resolve host: missing.example.test
+* Closing connection
+curl: (6) Could not resolve host: missing.example.test
+

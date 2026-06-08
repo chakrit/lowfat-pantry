@@ -1,0 +1,14 @@
+namespace/shop unchanged
+configmap/checkout-config configured
+secret/checkout-env unchanged
+service/checkout unchanged
+deployment.apps/checkout configured
+horizontalpodautoscaler.autoscaling/checkout unchanged
+serviceaccount/checkout unchanged
+role.rbac.authorization.k8s.io/checkout-reader unchanged
+rolebinding.rbac.authorization.k8s.io/checkout-reader unchanged
+Waiting for deployment "checkout" rollout to finish: 1 old replicas are pending termination...
+Waiting for deployment "checkout" rollout to finish: 1 of 3 updated replicas are available...
+Waiting for deployment "checkout" rollout to finish: 2 of 3 updated replicas are available...
+deployment "checkout" successfully rolled out
+

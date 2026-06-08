@@ -1,0 +1,33 @@
+--- old.txt	2026-06-08 01:00:00
++++ new.txt	2026-06-08 01:10:00
+@@ -1,12 +1,13 @@
+ title = "checkout"
+ owner = "payments"
+-replicas = 2
++replicas = 3
+ timeout_ms = 750
+ retry = 2
+-feature_gate = "legacy"
++feature_gate = "adaptive"
+ region = "ap-southeast-1"
+ cell = "blue"
+ log_level = "info"
++max_inflight = 120
+ cache_ttl = 60
+ queue = "orders"
+@@ -25,12 +26,14 @@
+ [database]
+ host = "checkout-db"
+ port = 5432
+-pool_size = 10
++pool_size = 20
+ connect_timeout_ms = 200
+ idle_timeout_ms = 30000
+ sslmode = "require"
+ [payments]
+-endpoint = "https://payments.internal/v1"
++endpoint = "https://payments.internal/v2"
++circuit_breaker = true
+ timeout_ms = 1000
+ retries = 3
+

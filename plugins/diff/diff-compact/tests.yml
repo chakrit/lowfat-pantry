@@ -1,0 +1,17 @@
+# Golden/invariant cases for diff-compact. Provisional format (smoke harness pending).
+command: diff
+synthetic: true
+cases:
+  - sample: samples/diff-unified.txt
+    sub: ""
+    args: "-u old.txt new.txt"
+    levels: [lite, full, ultra]
+  - sample: samples/diff-context-heavy.txt
+    sub: ""
+    args: "-u before.py after.py"
+    levels: [lite, full, ultra]
+  - sample: samples/diff-error.txt
+    sub: ""
+    args: "-u missing.txt new.txt"
+    levels: [lite, full, ultra]
+

@@ -1,0 +1,8 @@
+[plugin]
+name = "ruff-compact"
+version = "0.1.0"
+description = "Compact ruff default lint findings and clean output"
+category = "ruff"
+commands = ["ruff"]
+subcommands = ["check"]
+

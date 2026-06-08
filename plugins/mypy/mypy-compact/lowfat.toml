@@ -1,0 +1,7 @@
+[plugin]
+name = "mypy-compact"
+version = "0.1.0"
+description = "Compact mypy errors, notes, and final summary"
+category = "mypy"
+commands = ["mypy"]
+

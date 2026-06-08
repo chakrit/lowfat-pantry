@@ -1,0 +1,44 @@
+--- before.py	2026-06-08 01:00:00
++++ after.py	2026-06-08 01:10:00
+@@ -1,34 +1,37 @@
+ import logging
+ import os
+ import time
+ from dataclasses import dataclass
+ from typing import Iterable
+ 
+ logger = logging.getLogger(__name__)
+ 
+ @dataclass
+ class RetryPolicy:
+     attempts: int
+     delay_ms: int
+ 
+ def load_policy() -> RetryPolicy:
+     attempts = int(os.getenv("PAYMENT_ATTEMPTS", "3"))
+-    delay_ms = int(os.getenv("PAYMENT_DELAY_MS", "100"))
++    delay_ms = int(os.getenv("PAYMENT_DELAY_MS", "250"))
+     return RetryPolicy(attempts=attempts, delay_ms=delay_ms)
+ 
+ def charge(client, order_id: str, amount: int) -> dict:
+     policy = load_policy()
+     last_error = None
+     for attempt in range(1, policy.attempts + 1):
+         try:
+-            return client.charge(order_id=order_id, amount=amount)
++            response = client.charge(order_id=order_id, amount=amount)
++            logger.info("payment authorized", extra={"order_id": order_id, "attempt": attempt})
++            return response
+         except TimeoutError as exc:
+             last_error = exc
+             logger.warning("payment timeout", extra={"order_id": order_id, "attempt": attempt})
+             time.sleep(policy.delay_ms / 1000)
+-    raise last_error
++    raise RuntimeError(f"payment failed after {policy.attempts} attempts") from last_error
+ 
+ def summarize(items: Iterable[dict]) -> int:
+     total = 0
+     for item in items:
+         total += item["amount"]
+     return total
+

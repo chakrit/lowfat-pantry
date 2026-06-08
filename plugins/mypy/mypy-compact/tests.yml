@@ -1,0 +1,17 @@
+# Golden/invariant cases for mypy-compact. Provisional format (smoke harness pending).
+command: mypy
+synthetic: true
+cases:
+  - sample: samples/mypy-errors.txt
+    sub: ""
+    args: "src tests"
+    levels: [lite, full, ultra]
+  - sample: samples/mypy-clean.txt
+    sub: ""
+    args: "src"
+    levels: [lite, full, ultra]
+  - sample: samples/mypy-error-exit.txt
+    sub: ""
+    args: "--config-file missing.ini src"
+    levels: [lite, full, ultra]
+

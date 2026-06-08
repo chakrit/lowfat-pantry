@@ -1,0 +1,7 @@
+[plugin]
+name = "curl-compact"
+version = "0.1.0"
+description = "Compact curl verbose/header/progress output while preserving response signal"
+category = "curl"
+commands = ["curl"]
+

@@ -1,0 +1,7 @@
+[plugin]
+name = "pytest-compact"
+version = "0.1.0"
+description = "Compact pytest output to failures/errors and final summary"
+category = "pytest"
+commands = ["pytest"]
+

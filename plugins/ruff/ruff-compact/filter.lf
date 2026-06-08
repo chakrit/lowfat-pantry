@@ -1,0 +1,32 @@
+#!/usr/bin/env lowfat-filter
+# ruff-compact — keep default text findings, cap long lint lists, report clean runs.
+# env: $sub $level $exit $args
+
+define compact-ruff(limit):
+    shell: |
+        awk -v lim=$1 -v ex=$exit '
+          { raw[NR]=$0 }
+          /^[^:]+:[0-9]+:[0-9]+: [A-Z][A-Z0-9]+ / {
+            findings++
+            if (shown < lim) { out[++outn]=$0; shown++ }
+            next
+          }
+          /^(Found [0-9]+ error|All checks passed)/ { summary=$0; next }
+          END {
+            if (findings) {
+              for (i=1; i<=outn; i++) print out[i]
+              if (summary) print summary
+            } else if (ex == "0") {
+              print "ruff: clean"
+            } else {
+              for (i=1; i<=NR; i++) print raw[i]
+            }
+          }
+        '
+
+*:
+    match level:
+        ultra: compact-ruff 15
+        full:  compact-ruff 35
+        lite:  compact-ruff 70
+

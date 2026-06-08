@@ -1,0 +1,37 @@
+#!/usr/bin/env lowfat-filter
+# mypy-compact — keep type errors, keep notes except at ultra, report clean runs.
+# env: $sub $level $exit $args
+
+define compact-mypy(limit):
+    shell: |
+        awk -v lim=$1 -v lvl=$level -v ex=$exit '
+          { raw[NR]=$0 }
+          /^[^:]+:[0-9]+: error: / {
+            errors++
+            if (shown < lim) { out[++outn]=$0; shown++ }
+            next
+          }
+          lvl != "ultra" && /^[^:]+:[0-9]+: note: / {
+            if (shown < lim) { out[++outn]=$0; shown++ }
+            next
+          }
+          /^Found [0-9]+ errors? in / { summary=$0; next }
+          /^Success: no issues found/ { clean=1; next }
+          END {
+            if (errors) {
+              for (i=1; i<=outn; i++) print out[i]
+              if (summary) print summary
+            } else if (ex == "0" || clean) {
+              print "mypy: clean"
+            } else {
+              for (i=1; i<=NR; i++) print raw[i]
+            }
+          }
+        '
+
+*:
+    match level:
+        ultra: compact-mypy 15
+        full:  compact-mypy 35
+        lite:  compact-mypy 70
+

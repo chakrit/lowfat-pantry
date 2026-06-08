@@ -1,0 +1,7 @@
+[plugin]
+name = "diff-compact"
+version = "0.1.0"
+description = "Compact unified diff output while treating exit 1 as differences, not failure"
+category = "diff"
+commands = ["diff"]
+

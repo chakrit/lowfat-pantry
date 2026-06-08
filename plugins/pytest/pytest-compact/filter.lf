@@ -1,0 +1,59 @@
+#!/usr/bin/env lowfat-filter
+# pytest-compact — drop progress/pass noise, keep failure sections and summary.
+# env: $sub $level $exit $args
+
+define compact-pytest(limit):
+    python: |
+        import os
+        import re
+        import sys
+
+        limit = $1
+        level = os.environ.get("level", "full")
+        exit_code = os.environ.get("exit", "0")
+        lines = sys.stdin.read().splitlines()
+
+        if exit_code == "0":
+            for line in lines:
+                m = re.search(r"\d+ passed", line)
+                if m:
+                    print(f"pytest: {m.group(0)}")
+                    break
+            else:
+                print("pytest: passed")
+            raise SystemExit(0)
+
+        out = []
+        in_section = False
+        in_summary = False
+        for line in lines:
+            if re.match(r"=+ (FAILURES|ERRORS) =+", line):
+                in_section = True
+                in_summary = False
+                out.append(line)
+                continue
+            if re.match(r"=+ short test summary info =+", line):
+                in_section = False
+                in_summary = True
+                out.append(line)
+                continue
+            if re.match(r"=+ .* (failed|error|errors).* =+", line):
+                out.append(line)
+                continue
+            if in_summary and (line.startswith("FAILED ") or line.startswith("ERROR ")):
+                out.append(line)
+                continue
+            if level == "ultra":
+                if line.startswith("_____") or line.startswith("FAILED ") or line.startswith("ERROR ") or line.startswith("E   "):
+                    out.append(line)
+            elif in_section:
+                out.append(line)
+
+        for line in out[:limit + 8]:
+            print(line)
+
+*:
+    match level:
+        ultra: compact-pytest 18
+        full:  compact-pytest 45
+        lite:  compact-pytest 90

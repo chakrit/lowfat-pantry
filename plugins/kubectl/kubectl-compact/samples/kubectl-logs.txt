@@ -1,0 +1,33 @@
+2026-06-08T01:12:01.104Z INFO  boot config loaded profile=prod region=ap-southeast-1
+2026-06-08T01:12:01.220Z INFO  boot listening addr=0.0.0.0:8080
+2026-06-08T01:12:02.018Z INFO  http request method=GET path=/healthz status=200 latency_ms=3
+2026-06-08T01:12:03.117Z INFO  http request method=GET path=/readyz status=503 latency_ms=8
+2026-06-08T01:12:04.026Z WARN  db pool wait exceeded threshold_ms=250 wait_ms=401
+2026-06-08T01:12:05.030Z INFO  job tick name=expire-carts scanned=184 expired=2
+2026-06-08T01:12:06.031Z INFO  http request method=POST path=/checkout status=500 latency_ms=911
+2026-06-08T01:12:06.032Z ERROR payment authorization failed order=ord_1011 cause="gateway timeout"
+2026-06-08T01:12:07.033Z INFO  retrying payment authorization order=ord_1011 attempt=2
+2026-06-08T01:12:08.034Z ERROR payment authorization failed order=ord_1011 cause="gateway timeout"
+2026-06-08T01:12:09.035Z INFO  retrying payment authorization order=ord_1011 attempt=3
+2026-06-08T01:12:10.036Z ERROR payment authorization failed order=ord_1011 cause="gateway timeout"
+2026-06-08T01:12:11.037Z WARN  circuit breaker open dependency=payments duration_s=30
+2026-06-08T01:12:12.038Z INFO  http request method=GET path=/metrics status=200 latency_ms=5
+2026-06-08T01:12:13.039Z INFO  http request method=GET path=/healthz status=200 latency_ms=2
+2026-06-08T01:12:14.040Z INFO  http request method=GET path=/readyz status=503 latency_ms=7
+2026-06-08T01:12:15.041Z INFO  worker queue depth queue=orders depth=913
+2026-06-08T01:12:16.042Z INFO  worker queue depth queue=orders depth=944
+2026-06-08T01:12:17.043Z INFO  worker queue depth queue=orders depth=981
+2026-06-08T01:12:18.044Z WARN  db pool wait exceeded threshold_ms=250 wait_ms=522
+2026-06-08T01:12:19.045Z ERROR request failed id=req_27d route=/checkout status=500 error="payment dependency unavailable"
+2026-06-08T01:12:20.046Z INFO  http request method=POST path=/checkout status=503 latency_ms=44
+2026-06-08T01:12:21.047Z INFO  http request method=GET path=/healthz status=200 latency_ms=2
+2026-06-08T01:12:22.048Z INFO  http request method=GET path=/readyz status=503 latency_ms=6
+2026-06-08T01:12:23.049Z INFO  circuit breaker half-open dependency=payments
+2026-06-08T01:12:24.050Z INFO  payment authorization succeeded order=ord_1012 latency_ms=233
+2026-06-08T01:12:25.051Z INFO  circuit breaker closed dependency=payments
+2026-06-08T01:12:26.052Z INFO  http request method=POST path=/checkout status=200 latency_ms=321
+2026-06-08T01:12:27.053Z INFO  http request method=GET path=/metrics status=200 latency_ms=4
+2026-06-08T01:12:28.054Z INFO  http request method=GET path=/readyz status=200 latency_ms=5
+2026-06-08T01:12:29.055Z INFO  job tick name=expire-carts scanned=191 expired=3
+2026-06-08T01:12:30.056Z INFO  http request method=GET path=/healthz status=200 latency_ms=2
+

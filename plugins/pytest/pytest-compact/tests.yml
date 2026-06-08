@@ -1,0 +1,17 @@
+# Golden/invariant cases for pytest-compact. Provisional format (smoke harness pending).
+command: pytest
+synthetic: true
+cases:
+  - sample: samples/pytest-fail.txt
+    sub: ""
+    args: "tests/"
+    levels: [lite, full, ultra]
+  - sample: samples/pytest-pass.txt
+    sub: ""
+    args: "tests/"
+    levels: [lite, full, ultra]
+  - sample: samples/pytest-error.txt
+    sub: ""
+    args: "tests/test_config.py"
+    levels: [lite, full, ultra]
+

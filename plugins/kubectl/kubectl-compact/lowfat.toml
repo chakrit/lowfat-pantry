@@ -1,0 +1,8 @@
+[plugin]
+name = "kubectl-compact"
+version = "0.1.0"
+description = "Compact kubectl get/describe/logs/apply/rollout output for LLM contexts"
+category = "kubectl"
+commands = ["kubectl"]
+subcommands = ["get", "describe", "logs", "apply", "rollout"]
+
