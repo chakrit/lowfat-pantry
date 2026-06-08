@@ -1,0 +1,7 @@
+Showing 5 open merge requests on chakrit/shop (page 1)
+
+!214	Fix checkout 503 on gateway timeout	(bug/checkout-503) → (main)
+!215	Add pantry cache layer	(feat/pantry-cache) → (main)
+!216	Bump golangci-lint to 1.59	(chore/lint-bump) → (main)
+!217	Refactor payment client	(refactor/payments) → (main)
+!218	Docs: lowfat filter cookbook	(docs/cookbook) → (main)

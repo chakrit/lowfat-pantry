@@ -1,0 +1,8 @@
+[plugin]
+name = "glab-compact"
+version = "0.1.0"
+description = "Compact GitLab CLI (glab) list/view/ci output for LLM contexts"
+category = "glab"
+commands = ["glab"]
+# Documentation only — selection happens inside filter.lf on the resource ($sub).
+subcommands = ["mr", "issue", "ci", "release", "repo", "pipeline", "api"]

@@ -1,0 +1,39 @@
+#!/usr/bin/env lowfat-filter
+# glab-compact — compact GitLab CLI output for LLM contexts.
+# env: $sub $level $exit $args
+#
+# Sibling of gh-compact: glab's resource is $sub (mr/issue/ci/pipeline/…), with
+# list/view/etc in $args. Same invariants:
+#   • `-F json` / `--output json` is machine-readable — pass through byte-exact.
+#   • CI trace/logs (`glab ci trace`) fail at the TAIL — tail, don't head.
+# On a non-zero exit (auth, 404, no pipeline) preserve raw.
+
+mr|issue|ci|pipeline|release|repo|snippet|cluster|variable|label|incident:
+    if exit failed:
+        raw
+    elif -F json:
+        raw
+    elif --output json:
+        raw
+    elif --trace:
+        match level:
+            ultra: tail 40
+            lite:  tail 200
+            else:  tail 80
+    else:
+        match level:
+            ultra: head 20
+            lite:  head 200
+            else:  head 50
+
+api:
+    if exit failed:
+        raw
+    else:
+        head 100
+
+*:
+    if exit failed:
+        raw
+    else:
+        head 40
