@@ -1,11 +1,12 @@
 # lowfat-pantry — Distribution Design
 
 Status: **decided** — this repo becomes a `lowfat` skill repo imported via `school.toml`;
-plugins ride the skill-import rail and a script in the skill symlinks them into the lowfat
-home (see `../decisions/2026-06-08-pantry-distribution.md`). The Option A/B/C analysis below
-is the reasoning that led there; B (symlink-into-home) is the realized mechanism, with the
-skill repo as its carrier. Goal: a new machine/project gets the full pantry with zero
-per-project reconfiguration.
+plugins ride the skill-import rail and the **agent** symlinks them into the lowfat home under
+SKILL.md instructions (no script). See `../decisions/2026-06-08-pantry-distribution.md` for
+the ruling and `lowfat-skill.md` for the skill design. The Option A/B/C analysis below is the
+reasoning that led there; B (symlink-into-home) is the realized mechanism, with the skill
+repo as its carrier. Goal: a new machine/project gets the full pantry with zero per-project
+reconfiguration.
 
 ## The governing constraint
 
@@ -34,7 +35,12 @@ whole home (`LOWFAT_HOME`) or you populate the existing home.
 The school clone is already the per-machine, shared-across-projects artifact. Plugins are
 per-machine. They belong on the same rail.
 
-## Options
+## Options (analysis)
+
+The reasoning snapshot that led to the decision. The *realized* design — skill repo, agent
+sync, plugins at `school/skills/lowfat/plugins/` — lives in the decision entry and
+`lowfat-skill.md`. Below, the `<school-clone>/pantry` and `pantry install` references are the
+original framing, since superseded.
 
 ### A — `LOWFAT_HOME` → school clone (ACE sets the env)
 
@@ -65,19 +71,13 @@ one layer down.
 - **+** Portable beyond the school; usable by non-ACE users.
 - **−** Loses the "school clone = everything" property; another thing to keep in sync.
 
-## Recommendation
+## Outcome
 
-**Option B.** It reuses the school's proven skill-symlink distribution at the plugin layer,
-lets personal and pantry plugins coexist, and keeps trust state where it belongs. Ship a
-small idempotent `pantry install` (symlink sync) now; propose a plugin-aware feature to ACE
-later so it's managed exactly like skills.
-
-Repo layout under that model:
-
-    <school-clone>/pantry/
-      plugins/<category>/<plugin>/   # lowfat.toml, filter.lf, samples/, tests.yml
-      install                        # idempotent symlink sync into ~/.config/lowfat/plugins
-      .lowfat.template               # starter project config repos can copy
+**Option B's mechanism (symlink-into-home) was adopted — but carried by a `lowfat` skill repo
+rather than a bespoke `school/pantry/` dir or an `install` script.** Plugins ride the existing
+skill-import rail (materializing at `school/skills/lowfat/plugins/`), and the agent performs
+the symlink sync under SKILL.md steps. Full realized design:
+`../decisions/2026-06-08-pantry-distribution.md` and `lowfat-skill.md`.
 
 ## Open upstream ask (zdk/lowfat)
 
@@ -91,4 +91,4 @@ until then, B is the clean path.
 lowfat trusts plugins by **name**, not content hash. A distributed pantry that ships
 executable `.lf`/shell/Python must treat `trusted.toml` as security-relevant: trusting a
 pantry plugin once trusts all future mutations of it. Pin pantry plugin versions and review
-trust grants as part of the install step, not silently.
+trust grants as part of the sync's reconcile step, not silently.
