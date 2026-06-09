@@ -11,11 +11,14 @@ when ready. Run `ace config` or `ace paths` to debug configuration issues.
 
 ## What this repo is
 
-This repo is becoming **`chakrit/lowfat-pantry`** — a standalone Claude Code `/lowfat` skill
-plus a pantry of lowfat plugins/filters, replacing RTK as the command-output token compactor.
-Source of truth: `docs/spec/lowfat-skill.md` (skill design),
-`docs/decisions/` (distribution + design rulings), `docs/spec/pantry-plugin-backlog.md`
-(plugin backlog). Session resume breadcrumb: `.tasks.md`.
+This repo is **`chakrit/lowfat-pantry`** — a standalone Claude Code `/lowfat` skill plus a
+pantry of lowfat plugins/filters, replacing RTK as the command-output token compactor.
+`SKILL.md` (the `/lowfat` entrypoint) and **47 community plugins** under `plugins/` are
+built. Source of truth: `SKILL.md` + `docs/spec/lowfat-skill.md` (skill design),
+`docs/spec/lowfat-filter-dsl.md` (`.lf` authoring spec — read before editing any filter),
+`docs/notes/lowfat-internals.md` (how lowfat works), `docs/decisions/` (rulings),
+`docs/spec/pantry-plugin-backlog.md` (what's built + what's left). Validate filters with
+`./scripts/validate.py` (run as executable). Session resume breadcrumb: `.tasks.md`.
 
 ## Durable artifacts
 
