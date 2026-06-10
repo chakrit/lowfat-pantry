@@ -1,0 +1,15 @@
+#!/usr/bin/env lowfat-filter
+# wrangler — strip the boilerplate wrapped around every invocation (version
+# banner, telemetry notice, log-path footer, doc tips); the payload itself is
+# already terse. Boilerplate is stripped on failure too — esbuild ERROR blocks
+# are the signal and survive untouched.
+
+*:
+    drop /^ ⛅️ wrangler /
+    drop /^─+$/
+    drop /Cloudflare collects anonymous telemetry/
+    drop /^🪵/
+    drop /^(📖|📣)/
+    drop /^https:\/\/developers\.cloudflare\.com/
+    drop /^$/
+    head auto

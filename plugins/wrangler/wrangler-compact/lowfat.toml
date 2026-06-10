@@ -1,0 +1,8 @@
+[plugin]
+name = "wrangler-compact"
+version = "0.1.0"
+description = "Strip wrangler's per-invocation banner/telemetry/footer boilerplate"
+category = "wrangler"
+commands = ["wrangler"]
+# Documentation only - boilerplate is uniform across subcommands; filter.lf uses one rule.
+subcommands = []

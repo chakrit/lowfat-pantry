@@ -1,0 +1,16 @@
+
+ ⛅️ wrangler 4.99.0
+───────────────────
+
+[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mBuild failed with 1 error:[0m
+
+  [31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mExpected identifier but found end of file[0m
+  
+      src/router.ts:7:0:
+  [37m      7 │ [32m[37m
+          ╵ [32m^[0m
+  
+  
+
+
+🪵  Logs were written to "/root/.config/.wrangler/logs/wrangler-2026-06-10_00-12-08_157.log"
