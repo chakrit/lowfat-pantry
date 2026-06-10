@@ -39,6 +39,7 @@ and never corrupts machine-readable output (JSON/env/formatted code pass through
 This repo is a Claude Code skill. Install it however you manage skills:
 
 - **ACE** — import via `school.toml` `[[imports]]`; it materializes at `school/skills/lowfat/`.
+- **skills.sh** — the regular skills installer also works: `npx skills add chakrit/lowfat-pantry`.
 - **Manual** — clone it where your skill tooling looks, or point Claude Code at it.
 
 Then run **`/lowfat`** in a project. The skill detects/installs lowfat (user-run), seeds a
