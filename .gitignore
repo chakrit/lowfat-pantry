@@ -25,3 +25,6 @@ ace.local.toml
 
 # session-local scheduler state
 .claude/scheduled_tasks.*
+
+# ace-connect control-mode inbox
+.inbox.log
