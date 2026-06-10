@@ -1,0 +1,7 @@
+IsActive    Name               Profile
+----------  -----------------  ---------
+True        AzureCloud         latest
+False       AzureChinaCloud    latest
+False       AzureUSGovernment  latest
+False       AzureGermanCloud   latest
+False       AzureBleuCloud     latest

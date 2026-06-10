@@ -1,0 +1,8 @@
+[plugin]
+name = "az-compact"
+version = "0.1.0"
+description = "Compact az --help and table output; JSON and errors pass through intact"
+category = "az"
+commands = ["az"]
+# Documentation only - az output shape is flag-driven; filter.lf uses one rule.
+subcommands = []

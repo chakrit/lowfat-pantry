@@ -1,0 +1,32 @@
+#!/usr/bin/env lowfat-filter
+# az — output shape is decided by flags, not subcommands: default success
+# output is JSON (must pass byte-exact), errors are terse ERROR: one-liners,
+# and the real bloat is --help (1k+ lines for `az vm create --help`). Help
+# keeps section headers + flag-name lines (4-space indent) and the Examples
+# tail, dropping the column-wrapped description text (8+-space indent).
+
+define compact-help:
+    split /^Examples/
+    pre:
+        keep /^([A-Z]|    [^ ])/
+        head auto
+    post:
+        head auto
+
+*:
+    if --help:
+        compact-help
+    elif -h:
+        compact-help
+    elif exit failed:
+        raw
+    elif -o table:
+        head auto
+    elif --output table:
+        head auto
+    elif -o tsv:
+        head auto
+    elif --output tsv:
+        head auto
+    else:
+        raw
