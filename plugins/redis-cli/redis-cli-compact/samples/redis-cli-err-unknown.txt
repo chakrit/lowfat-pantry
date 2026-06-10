@@ -1,0 +1,2 @@
+ERR unknown command 'GETT', with args beginning with: 'foo' 
+

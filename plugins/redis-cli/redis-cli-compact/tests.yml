@@ -1,0 +1,54 @@
+# Golden/invariant cases for redis-cli-compact. Provisional format (smoke harness
+# pending). All samples real-captured from redis:7-alpine (redis_version 7.4.9).
+command: redis-cli
+cases:
+  - sample: samples/redis-cli-info.txt
+    sub: info
+    args: ""
+    exit: 0
+    levels: [lite, full, ultra]
+  - sample: samples/redis-cli-info.txt
+    sub: INFO
+    args: ""
+    exit: 0
+    levels: [full]
+  - sample: samples/redis-cli-scan.txt
+    sub: "--scan"
+    args: "--scan"
+    exit: 0
+    levels: [lite, full, ultra]
+  - sample: samples/redis-cli-keys.txt
+    sub: keys
+    args: "keys user:*"
+    exit: 0
+    levels: [lite, full, ultra]
+  - sample: samples/redis-cli-slowlog.txt
+    sub: slowlog
+    args: "slowlog get 10"
+    exit: 0
+    levels: [full, ultra]
+  - sample: samples/redis-cli-memory-stats.txt
+    sub: memory
+    args: "memory stats"
+    exit: 0
+    levels: [full, ultra]
+  - sample: samples/redis-cli-client-list.txt
+    sub: client
+    args: "client list"
+    exit: 0
+    levels: [full]
+  - sample: samples/redis-cli-get.txt
+    sub: get
+    args: "get user:1:profile"
+    exit: 0
+    levels: [full, ultra]
+  - sample: samples/redis-cli-err-unknown.txt
+    sub: gett
+    args: "gett foo"
+    exit: 0
+    levels: [full, ultra]
+  - sample: samples/redis-cli-err-conn.txt
+    sub: "-p"
+    args: "-p 9999 ping"
+    exit: 1
+    levels: [full, ultra]

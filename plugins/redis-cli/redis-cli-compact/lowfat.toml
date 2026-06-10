@@ -1,0 +1,8 @@
+[plugin]
+name = "redis-cli-compact"
+version = "0.1.0"
+description = "Compact redis-cli INFO and listing output while preserving errors"
+category = "redis-cli"
+commands = ["redis-cli"]
+# Documentation only - redis commands are case-insensitive; filter.lf matches both.
+subcommands = ["info", "keys", "scan", "slowlog", "memory", "client"]
