@@ -13,5 +13,5 @@
     else:
         match level:
             ultra: tail 15
-            lite:  head 200
+            lite:  tail 200
             else:  tail 50

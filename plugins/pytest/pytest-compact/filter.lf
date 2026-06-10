@@ -43,6 +43,8 @@ define compact-pytest(limit):
             if in_summary and (line.startswith("FAILED ") or line.startswith("ERROR ")):
                 out.append(line)
                 continue
+            # ultra: only failure headers and assertion (E) lines;
+            # full/lite: the entire FAILURES/ERRORS section body
             if level == "ultra":
                 if line.startswith("_____") or line.startswith("FAILED ") or line.startswith("ERROR ") or line.startswith("E   "):
                     out.append(line)

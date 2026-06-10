@@ -28,13 +28,13 @@ define compact-gradle-failure(limit):
         match level:
             ultra:
                 compact-gradle-failure 50
-                or-shell: cat
+                or-shell: tail -50
             lite:
                 compact-gradle-failure 180
-                or-shell: cat
+                or-shell: tail -180
             else:
                 compact-gradle-failure 90
-                or-shell: cat
+                or-shell: tail -90
     else:
         match level:
             ultra:

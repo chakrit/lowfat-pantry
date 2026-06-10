@@ -8,6 +8,8 @@ define compact-npm-install(limit):
     drop /^npm timing /
     drop /^npm verb /
     drop /^npm sill /
+    # keep: package-count summaries (added/removed/changed/audited), funding +
+    # vulnerability totals, and every npm warn/error line
     keep /^(added [0-9]+ packages|removed [0-9]+ packages|changed [0-9]+ packages|audited [0-9]+ packages|[0-9]+ packages are looking for funding|found [0-9]+ vulnerabilities|[0-9]+ .+ vulnerabilities|[0-9]+ vulnerabilities|npm warn|npm error|npm ERR!)/
     shell: head -$1
     or-shell: awk 'NF' | tail -$1

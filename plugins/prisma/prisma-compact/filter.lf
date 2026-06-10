@@ -10,7 +10,6 @@ define strip-prisma-noise:
     drop /^└/
     drop /^╭/
     drop /^╰/
-    drop /^│/
     drop /^[- ]*Prisma/
 
 migrate|generate|db:
@@ -20,6 +19,8 @@ migrate|generate|db:
         match level:
             ultra:
                 strip-prisma-noise
+                # keep: migration progress/apply confirmations, client-generation
+                # success markers, and Error: lines
                 keep /(✔ Generated|Applying migration|Migration .* applied|Your database is now in sync|The following migration|Generated Prisma Client|Error:)/
                 head 35
                 or "prisma: ok"

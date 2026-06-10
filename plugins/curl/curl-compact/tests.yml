@@ -13,5 +13,6 @@ cases:
   - sample: samples/curl-error.txt
     sub: ""
     args: "-v https://missing.example.test/"
+    exit: 6
     levels: [lite, full, ultra]
 

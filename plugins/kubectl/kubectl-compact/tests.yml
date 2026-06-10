@@ -19,3 +19,10 @@ cases:
     args: "-f k8s/"
     levels: [lite, full, ultra]
 
+  # real capture (bitnami/kubectl, no cluster): connection-refused failure path
+  - sample: samples/kubectl-get-noserver.txt
+    sub: get
+    args: "pods"
+    exit: 1
+    synthetic: false
+    levels: [full, ultra]

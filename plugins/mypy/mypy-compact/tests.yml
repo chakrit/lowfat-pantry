@@ -5,6 +5,7 @@ cases:
   - sample: samples/mypy-errors.txt
     sub: ""
     args: "src tests"
+    exit: 1
     levels: [lite, full, ultra]
   - sample: samples/mypy-clean.txt
     sub: ""
@@ -13,5 +14,6 @@ cases:
   - sample: samples/mypy-error-exit.txt
     sub: ""
     args: "--config-file missing.ini src"
+    exit: 2
     levels: [lite, full, ultra]
 

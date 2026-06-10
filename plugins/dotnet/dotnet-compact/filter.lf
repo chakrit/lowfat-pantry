@@ -7,18 +7,21 @@ define compact-dotnet(limit):
     drop /^[[:space:]]*Restored .+ in [0-9.]+/
     drop /^[[:space:]]*All projects are up-to-date for restore\.$/
     drop /^[[:space:]]*[^[:space:]].+ -> .+$/
-    keep /(error CS[0-9]+|warning CS[0-9]+|Build succeeded\.|Build FAILED\.|Passed!|Failed![[:space:]]+-|Total tests:|Failed:[[:space:]]+[0-9]+|Passed:[[:space:]]+[0-9]+|Skipped:[[:space:]]+[0-9]+|Test Run Failed|Test Run Successful)/
+    # keep: compiler diagnostics, build verdicts, vstest failure details (test
+    # name + Error Message:/Stack Trace: blocks, incl. their 3+-space-indented
+    # bodies), and run summaries (one-line "Failed!  -" and multi-line formats)
+    keep /(error CS[0-9]+|warning CS[0-9]+|Build succeeded\.|Build FAILED\.|Passed!|Failed!|Total tests:|(Passed|Failed|Skipped):[[:space:]]+[0-9]+|Test Run (Failed|Successful)|^[[:space:]]+(Failed [A-Za-z_]|Error Message:|Stack Trace:|at )|^[[:space:]]{3}[^[:space:]])/
     shell: head -$1
     or-shell: awk 'NF' | head -$1
 
+# Extraction runs on failure too — a failed build is restore chatter + error
+# CS lines, exactly what the keep-list pulls out; the macro's or-shell guards
+# a crash with none of the expected markers.
 build|test:
-    if exit failed:
-        raw
-    else:
-        match level:
-            ultra: compact-dotnet 18
-            full:  compact-dotnet 35
-            lite:  compact-dotnet 70
+    match level:
+        ultra: compact-dotnet 18
+        full:  compact-dotnet 35
+        lite:  compact-dotnet 70
 
 *:
     if exit failed:

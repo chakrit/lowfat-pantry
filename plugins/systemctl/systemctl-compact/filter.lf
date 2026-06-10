@@ -2,6 +2,9 @@
 # systemctl-compact - keep unit state and cap journal tails.
 # env: $sub $level $exit $args
 
+# limit = max journal lines to keep; 0 means identity lines only (header,
+# Loaded, Active, Main PID). Resource lines (Tasks/Memory/CPU/CGroup) appear
+# from limit > 10 up.
 define compact-status(limit):
     shell: |
         awk -v lim=$1 '

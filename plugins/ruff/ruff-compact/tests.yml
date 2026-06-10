@@ -5,6 +5,7 @@ cases:
   - sample: samples/ruff-findings.txt
     sub: check
     args: "."
+    exit: 1
     levels: [lite, full, ultra]
   - sample: samples/ruff-clean.txt
     sub: check
@@ -13,5 +14,6 @@ cases:
   - sample: samples/ruff-error.txt
     sub: check
     args: "--config missing.toml ."
+    exit: 2
     levels: [lite, full, ultra]
 

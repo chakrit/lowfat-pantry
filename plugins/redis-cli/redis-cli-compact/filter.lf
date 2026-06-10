@@ -17,9 +17,13 @@ info|INFO:
     if exit failed:
         raw
     elif level ultra:
+        # keep: identity (version/mode/uptime) + load (clients/ops) + memory +
+        # hit-rate + role + per-db key counts
         keep /^(redis_version|redis_mode|uptime_in_days|connected_clients|used_memory_human|used_memory_peak_human|mem_fragmentation_ratio|instantaneous_ops_per_sec|keyspace_hits|keyspace_misses|evicted_keys|role:|db[0-9]+:)/
         or-shell: head -15
     else:
+        # ultra's keep-list plus: section headers (# ), persistence (rdb_*),
+        # replication, eviction/expiry, and connection totals
         keep /^(# |redis_version|redis_mode|os:|uptime_in_days|connected_clients|blocked_clients|maxmemory_human|used_memory_human|used_memory_peak_human|mem_fragmentation_ratio|total_connections_received|total_commands_processed|instantaneous_ops_per_sec|expired_keys|evicted_keys|keyspace_hits|keyspace_misses|rejected_connections|role:|connected_slaves|master_repl_offset|rdb_last_save_time|rdb_changes_since_last_save|loading:|db[0-9]+:)/
         or-shell: head -30
 

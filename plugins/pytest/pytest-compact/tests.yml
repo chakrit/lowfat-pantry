@@ -5,13 +5,16 @@ cases:
   - sample: samples/pytest-fail.txt
     sub: ""
     args: "tests/"
+    exit: 1
     levels: [lite, full, ultra]
   - sample: samples/pytest-pass.txt
     sub: ""
     args: "tests/"
+    exit: 0
     levels: [lite, full, ultra]
   - sample: samples/pytest-error.txt
     sub: ""
     args: "tests/test_config.py"
+    exit: 2
     levels: [lite, full, ultra]
 
