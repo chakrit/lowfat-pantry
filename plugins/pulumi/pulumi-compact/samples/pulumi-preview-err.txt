@@ -1,0 +1,15 @@
+Previewing update (dev):
+
+    pulumi:pulumi:Stack payments-infra-dev running [31mError[0m: error resolving type of resource hostName: unable to find resource type "random:RandomBogus" in resource provider "random"
+    pulumi:pulumi:Stack payments-infra-dev running   on Pulumi.yaml line 66:
+    pulumi:pulumi:Stack payments-infra-dev running   66:     type: [1;4mrandom:RandomBogus[0m
+    pulumi:pulumi:Stack payments-infra-dev  3 messages
+Diagnostics:
+  pulumi:pulumi:Stack (payments-infra-dev):
+    [31mError[0m: error resolving type of resource hostName: unable to find resource type "random:RandomBogus" in resource provider "random"
+      on Pulumi.yaml line 66:
+      66:     type: [1;4mrandom:RandomBogus[0m
+
+Resources:
+    1 unchanged
+

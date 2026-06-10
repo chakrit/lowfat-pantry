@@ -1,0 +1,119 @@
+Previewing update (dev):
+
+ +  random:index:RandomUuid svcToken2 create 
+ +  random:index:RandomUuid svcToken1 create 
+ +  random:index:RandomUuid svcToken3 create 
+ +  random:index:RandomUuid svcToken4 create 
+ +  random:index:RandomUuid svcToken6 create 
+ +  random:index:RandomUuid svcToken5 create 
+ +  random:index:RandomUuid svcToken7 create 
+ +  random:index:RandomUuid svcToken8 create 
+ +  random:index:RandomUuid svcToken9 create 
+ +  random:index:RandomUuid svcToken10 create 
+ +  random:index:RandomUuid svcToken11 create 
+ +  random:index:RandomUuid svcToken12 create 
+ +  random:index:RandomUuid svcToken13 create 
+ +  random:index:RandomUuid svcToken14 create 
+ +  random:index:RandomUuid svcToken15 create 
+ +  random:index:RandomUuid svcToken16 create 
+ +  random:index:RandomUuid svcToken17 create 
+ +  random:index:RandomUuid svcToken18 create 
+ +  random:index:RandomUuid svcToken19 create 
+ +  random:index:RandomUuid svcToken20 create 
+ +  random:index:RandomUuid svcToken21 create 
+ +  random:index:RandomUuid svcToken22 create 
+ +  random:index:RandomUuid svcToken23 create 
+ +  random:index:RandomUuid svcToken24 create 
+ +  random:index:RandomUuid svcToken25 create 
+ +  random:index:RandomUuid svcToken26 create 
+ +  random:index:RandomUuid svcToken27 create 
+ +  random:index:RandomUuid svcToken28 create 
+ ++ random:index:RandomPassword dbPassword create replacement [diff: ~length]
+ +- random:index:RandomPassword dbPassword replace [diff: ~length]
+ -  random:index:RandomUuid apiToken delete 
+ -- random:index:RandomPassword dbPassword delete original [diff: ~length]
+    pulumi:pulumi:Stack payments-infra-dev  
+Resources:
+    + 28 to create
+    - 1 to delete
+    +-1 to replace
+    30 changes. 2 unchanged
+
+Updating (dev):
+
+ +  random:index:RandomUuid svcToken2 creating (0s) 
+ +  random:index:RandomUuid svcToken1 creating (0s) 
+ +  random:index:RandomUuid svcToken3 creating (0s) 
+ +  random:index:RandomUuid svcToken4 creating (0s) 
+ +  random:index:RandomUuid svcToken5 creating (0s) 
+ +  random:index:RandomUuid svcToken2 created (0.00s) 
+ +  random:index:RandomUuid svcToken6 creating (0s) 
+ +  random:index:RandomUuid svcToken7 creating (0s) 
+ +  random:index:RandomUuid svcToken8 creating (0s) 
+ +  random:index:RandomUuid svcToken1 created (0.00s) 
+ +  random:index:RandomUuid svcToken9 creating (0s) 
+ +  random:index:RandomUuid svcToken10 creating (0s) 
+ +  random:index:RandomUuid svcToken11 creating (0s) 
+ +  random:index:RandomUuid svcToken12 creating (0s) 
+ +  random:index:RandomUuid svcToken3 created (0.00s) 
+ +  random:index:RandomUuid svcToken13 creating (0s) 
+ +  random:index:RandomUuid svcToken4 created (0.00s) 
+ +  random:index:RandomUuid svcToken14 creating (0s) 
+ +  random:index:RandomUuid svcToken15 creating (0s) 
+ +  random:index:RandomUuid svcToken16 creating (0s) 
+ +  random:index:RandomUuid svcToken17 creating (0s) 
+ +  random:index:RandomUuid svcToken18 creating (0s) 
+ +  random:index:RandomUuid svcToken19 creating (0s) 
+ +  random:index:RandomUuid svcToken22 creating (0s) 
+ +  random:index:RandomUuid svcToken5 created (0.01s) 
+ +  random:index:RandomUuid svcToken20 creating (0s) 
+ +  random:index:RandomUuid svcToken21 creating (0s) 
+ +  random:index:RandomUuid svcToken23 creating (0s) 
+ +  random:index:RandomUuid svcToken25 creating (0s) 
+ +  random:index:RandomUuid svcToken6 created (0.01s) 
+ +  random:index:RandomUuid svcToken24 creating (0s) 
+ +  random:index:RandomUuid svcToken7 created (0.01s) 
+ +  random:index:RandomUuid svcToken8 created (0.01s) 
+ +  random:index:RandomUuid svcToken26 creating (0s) 
+ +  random:index:RandomUuid svcToken9 created (0.01s) 
+ +  random:index:RandomUuid svcToken10 created (0.01s) 
+ +  random:index:RandomUuid svcToken11 created (0.01s) 
+ +  random:index:RandomUuid svcToken12 created (0.01s) 
+ +  random:index:RandomUuid svcToken27 creating (0s) 
+ +  random:index:RandomUuid svcToken13 created (0.01s) 
+ +  random:index:RandomUuid svcToken28 creating (0s) 
+ +  random:index:RandomUuid svcToken14 created (0.02s) 
+ +  random:index:RandomUuid svcToken15 created (0.02s) 
+ +  random:index:RandomUuid svcToken16 created (0.02s) 
+ +  random:index:RandomUuid svcToken17 created (0.02s) 
+ +  random:index:RandomUuid svcToken18 created (0.02s) 
+ +  random:index:RandomUuid svcToken19 created (0.02s) 
+ +  random:index:RandomUuid svcToken22 created (0.02s) 
+ ++ random:index:RandomPassword dbPassword creating replacement (0s) [diff: ~length]
+ +  random:index:RandomUuid svcToken20 created (0.03s) 
+ +  random:index:RandomUuid svcToken21 created (0.03s) 
+ +  random:index:RandomUuid svcToken23 created (0.03s) 
+ +  random:index:RandomUuid svcToken25 created (0.03s) 
+ +  random:index:RandomUuid svcToken24 created (0.03s) 
+ +  random:index:RandomUuid svcToken26 created (0.04s) 
+ +  random:index:RandomUuid svcToken27 created (0.04s) 
+ +  random:index:RandomUuid svcToken28 created (0.04s) 
+ ++ random:index:RandomPassword dbPassword created replacement (0.12s) [diff: ~length]
+ +- random:index:RandomPassword dbPassword replacing (0s) [diff: ~length]
+ +- random:index:RandomPassword dbPassword replaced (0.00s) [diff: ~length]
+ -  random:index:RandomUuid apiToken deleting (0s) 
+ -- random:index:RandomPassword dbPassword deleting original (0s) [diff: ~length]
+ -  random:index:RandomUuid apiToken deleted (0.00s) 
+ -- random:index:RandomPassword dbPassword deleted original (0.00s) [diff: ~length]
+    pulumi:pulumi:Stack payments-infra-dev  
+Outputs:
+    host: "api-quality-raptor"
+
+Resources:
+    + 28 created
+    - 1 deleted
+    +-1 replaced
+    30 changes. 2 unchanged
+
+Duration: 1s
+

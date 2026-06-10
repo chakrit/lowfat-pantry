@@ -1,0 +1,22 @@
+Previewing update (dev):
+  pulumi:pulumi:Stack: (same)
+    [urn=urn:pulumi:dev::payments-infra::pulumi:pulumi:Stack::payments-infra-dev]
+    +-random:index/randomPassword:RandomPassword: (replace)
+        [id=none]
+        [urn=urn:pulumi:dev::payments-infra::random:index/randomPassword:RandomPassword::dbPassword]
+        bcryptHash: [secret]
+      ~ id        : "none" => [unknown]
+      ~ length    : 32 => 40
+        lower     : true
+        minLower  : 0
+        minNumeric: 0
+        minSpecial: 0
+        minUpper  : 0
+        number    : true
+        numeric   : true
+        result    : [secret]
+        special   : true
+        upper     : true
+Resources:
+    +-1 to replace
+    30 unchanged

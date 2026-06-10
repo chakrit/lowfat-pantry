@@ -1,0 +1,3 @@
+Current stack outputs (1):
+    OUTPUT  VALUE
+    host    api-quality-raptor

@@ -1,0 +1,19 @@
+Previewing update (dev):
+@ previewing update....
+Downloading plugin random-4.21.0: starting
+@ previewing update.....
+Downloading plugin random-4.21.0: done
+Installing plugin random-4.21.0: starting
+Installing plugin random-4.21.0: done
+
+ +  pulumi:pulumi:Stack payments-infra-dev create 
+ +  random:index:RandomUuid apiToken create 
+ +  random:index:RandomPassword dbPassword create 
+ +  random:index:RandomPet hostName create 
+ +  pulumi:pulumi:Stack payments-infra-dev create 
+Outputs:
+    host: [unknown]
+
+Resources:
+    + 4 to create
+

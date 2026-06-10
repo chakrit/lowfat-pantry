@@ -1,0 +1,110 @@
+Previewing destroy (dev):
+
+ -  random:index:RandomUuid svcToken4 delete 
+ -  random:index:RandomUuid svcToken2 delete 
+ -  random:index:RandomUuid svcToken14 delete 
+ -  random:index:RandomUuid svcToken15 delete 
+ -  random:index:RandomUuid svcToken21 delete 
+ -  random:index:RandomUuid svcToken22 delete 
+ -  random:index:RandomUuid svcToken1 delete 
+ -  random:index:RandomUuid svcToken3 delete 
+ -  random:index:RandomUuid svcToken5 delete 
+ -  random:index:RandomUuid svcToken12 delete 
+ -  random:index:RandomUuid svcToken16 delete 
+ -  random:index:RandomUuid svcToken20 delete 
+ -  random:index:RandomUuid svcToken24 delete 
+ -  random:index:RandomUuid svcToken6 delete 
+ -  random:index:RandomUuid svcToken28 delete 
+ -  random:index:RandomUuid svcToken17 delete 
+ -  random:index:RandomUuid svcToken19 delete 
+ -  random:index:RandomUuid svcToken8 delete 
+ -  random:index:RandomUuid svcToken18 delete 
+ -  random:index:RandomUuid svcToken23 delete 
+ -  random:index:RandomPet hostName delete 
+ -  random:index:RandomUuid svcToken11 delete 
+ -  random:index:RandomPassword dbPassword delete 
+ -  random:index:RandomUuid svcToken13 delete 
+ -  random:index:RandomUuid svcToken25 delete 
+ -  random:index:RandomUuid svcToken7 delete 
+ -  random:index:RandomUuid svcToken27 delete 
+ -  random:index:RandomUuid svcToken10 delete 
+ -  random:index:RandomUuid svcToken26 delete 
+ -  random:index:RandomUuid svcToken9 delete 
+ -  pulumi:pulumi:Stack payments-infra-dev delete 
+ -  pulumi:pulumi:Stack payments-infra-dev delete 
+    pulumi:pulumi:Stack payments-infra-dev  
+Resources:
+    - 31 to delete
+
+Destroying (dev):
+
+ -  random:index:RandomUuid svcToken21 deleting (0s) 
+ -  random:index:RandomUuid svcToken25 deleting (0s) 
+ -  random:index:RandomUuid svcToken11 deleting (0s) 
+ -  random:index:RandomPet hostName deleting (0s) 
+ -  random:index:RandomUuid svcToken3 deleting (0s) 
+ -  random:index:RandomUuid svcToken13 deleting (0s) 
+ -  random:index:RandomPassword dbPassword deleting (0s) 
+ -  random:index:RandomUuid svcToken7 deleting (0s) 
+ -  random:index:RandomUuid svcToken12 deleting (0s) 
+ -  random:index:RandomUuid svcToken15 deleting (0s) 
+ -  random:index:RandomUuid svcToken17 deleting (0s) 
+ -  random:index:RandomUuid svcToken18 deleting (0s) 
+ -  random:index:RandomUuid svcToken1 deleting (0s) 
+ -  random:index:RandomUuid svcToken4 deleting (0s) 
+ -  random:index:RandomUuid svcToken5 deleting (0s) 
+ -  random:index:RandomUuid svcToken16 deleting (0s) 
+ -  random:index:RandomUuid svcToken19 deleting (0s) 
+ -  random:index:RandomUuid svcToken20 deleting (0s) 
+ -  random:index:RandomUuid svcToken22 deleting (0s) 
+ -  random:index:RandomUuid svcToken24 deleting (0s) 
+ -  random:index:RandomUuid svcToken10 deleting (0s) 
+ -  random:index:RandomUuid svcToken8 deleting (0s) 
+ -  random:index:RandomUuid svcToken9 deleting (0s) 
+ -  random:index:RandomUuid svcToken14 deleting (0s) 
+ -  random:index:RandomUuid svcToken21 deleted (0.00s) 
+ -  random:index:RandomUuid svcToken11 deleted (0.01s) 
+ -  random:index:RandomUuid svcToken25 deleted (0.01s) 
+ -  random:index:RandomPet hostName deleted (0.01s) 
+ -  random:index:RandomUuid svcToken3 deleted (0.01s) 
+ -  random:index:RandomUuid svcToken13 deleted (0.01s) 
+ -  random:index:RandomPassword dbPassword deleted (0.02s) 
+ -  random:index:RandomUuid svcToken7 deleted (0.02s) 
+ -  random:index:RandomUuid svcToken12 deleted (0.02s) 
+ -  random:index:RandomUuid svcToken15 deleted (0.02s) 
+ -  random:index:RandomUuid svcToken17 deleted (0.02s) 
+ -  random:index:RandomUuid svcToken18 deleted (0.02s) 
+ -  random:index:RandomUuid svcToken1 deleted (0.03s) 
+ -  random:index:RandomUuid svcToken4 deleted (0.03s) 
+ -  random:index:RandomUuid svcToken5 deleted (0.03s) 
+ -  random:index:RandomUuid svcToken16 deleted (0.04s) 
+ -  random:index:RandomUuid svcToken19 deleted (0.04s) 
+ -  random:index:RandomUuid svcToken20 deleted (0.04s) 
+ -  random:index:RandomUuid svcToken22 deleted (0.04s) 
+ -  random:index:RandomUuid svcToken24 deleted (0.04s) 
+ -  random:index:RandomUuid svcToken10 deleted (0.05s) 
+ -  random:index:RandomUuid svcToken8 deleted (0.05s) 
+ -  random:index:RandomUuid svcToken9 deleted (0.05s) 
+ -  random:index:RandomUuid svcToken14 deleted (0.06s) 
+ -  random:index:RandomUuid svcToken23 deleting (0s) 
+ -  random:index:RandomUuid svcToken28 deleting (0s) 
+ -  random:index:RandomUuid svcToken2 deleting (0s) 
+ -  random:index:RandomUuid svcToken26 deleting (0s) 
+ -  random:index:RandomUuid svcToken27 deleting (0s) 
+ -  random:index:RandomUuid svcToken6 deleting (0s) 
+ -  random:index:RandomUuid svcToken23 deleted (0.04s) 
+ -  random:index:RandomUuid svcToken28 deleted (0.04s) 
+ -  random:index:RandomUuid svcToken2 deleted (0.04s) 
+ -  random:index:RandomUuid svcToken26 deleted (0.03s) 
+ -  random:index:RandomUuid svcToken27 deleted (0.03s) 
+ -  random:index:RandomUuid svcToken6 deleted (0.03s) 
+ -  pulumi:pulumi:Stack payments-infra-dev deleting (0s) 
+ -  pulumi:pulumi:Stack payments-infra-dev deleted (0.00s) 
+    pulumi:pulumi:Stack payments-infra-dev  
+Resources:
+    - 31 deleted
+
+Duration: 1s
+
+The resources in the stack have been deleted, but the history and configuration associated with the stack are still maintained. 
+If you want to remove the stack completely, run `pulumi stack rm dev`.

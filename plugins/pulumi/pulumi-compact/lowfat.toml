@@ -1,0 +1,7 @@
+[plugin]
+name = "pulumi-compact"
+version = "0.1.0"
+description = "Compact pulumi deploy progress while preserving outputs, counts, and diagnostics"
+category = "pulumi"
+commands = ["pulumi"]
+subcommands = ["up", "preview", "destroy", "refresh", "stack"]

@@ -1,0 +1,17 @@
+Current stack is dev:
+    Managed by 721e94d688f2
+    Last updated: now (2026-06-10 00:08:21.473707977 +0000 UTC)
+    Pulumi version used: v3.245.0
+Current stack resources (5):
+    TYPE                                           NAME
+    pulumi:pulumi:Stack                            payments-infra-dev
+    ├─ random:index/randomUuid:RandomUuid          apiToken
+    ├─ random:index/randomPet:RandomPet            hostName
+    ├─ random:index/randomPassword:RandomPassword  dbPassword
+    └─ pulumi:providers:random                     default
+
+Current stack outputs (1):
+    OUTPUT  VALUE
+    host    api-quality-raptor
+
+Use `pulumi stack select` to change stack; `pulumi stack ls` lists known ones
