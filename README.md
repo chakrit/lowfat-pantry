@@ -1,6 +1,6 @@
 # lowfat-pantry
 
-A standalone Claude Code **`/lowfat` skill** plus a **pantry of [lowfat](https://github.com/zdk/lowfat)
+A standalone **`/lowfat` agent skill** plus a **pantry of [lowfat](https://github.com/zdk/lowfat)
 filter plugins** — the token-aware command-output compactor that replaces RTK.
 
 lowfat wraps a shell command, runs the real binary, and pipes its output through a `.lf`
@@ -36,11 +36,12 @@ and never corrupts machine-readable output (JSON/env/formatted code pass through
 
 ## Install
 
-This repo is a Claude Code skill. Install it however you manage skills:
+This repo is an agent skill (Claude Code, or any skills-compatible agent). Install it
+however you manage skills:
 
 - **ACE** — import via `school.toml` `[[imports]]`; it materializes at `school/skills/lowfat/`.
 - **skills.sh** — the regular skills installer also works: `npx skills add chakrit/lowfat-pantry`.
-- **Manual** — clone it where your skill tooling looks, or point Claude Code at it.
+- **Manual** — clone it where your skill tooling looks, or point your agent at it.
 
 Then run **`/lowfat`** in a project. The skill detects/installs lowfat (user-run), seeds a
 `.lowfat` config tuned to your toolchain, and syncs the pantry plugins you choose into your

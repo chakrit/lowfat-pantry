@@ -1,13 +1,13 @@
 # `/lowfat` Skill — Design
 
-Status: **draft**. The standalone Claude Code skill this repo (`chakrit/lowfat-pantry`)
-ships — usable by any Claude Code user; ACE users import it via `school.toml` `[[imports]]` as
-one install channel. Derived from lowfat's own mechanics, not transposed from the
+Status: **draft**. The standalone agent skill this repo (`chakrit/lowfat-pantry`)
+ships — usable from any skills-compatible agent (Claude Code being the primary target);
+ACE users import it via `school.toml` `[[imports]]` as one install channel. Derived from lowfat's own mechanics, not transposed from the
 author-written `rtk` skill (see `../decisions/2026-06-08-pantry-distribution.md`).
 
 ## Repo-as-skill
 
-A standard Claude Code skill repo. ACE users import it like `kien-thai`/`visualise` (it
+A standard agent-skill repo. ACE users import it like `kien-thai`/`visualise` (it
 materializes at `school/skills/lowfat/`); non-ACE users install it via their own skill
 tooling. Carries:
 

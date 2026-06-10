@@ -4,7 +4,7 @@ description: >-
   Set up and sync the lowfat command-output compactor and its plugin pantry for
   a project. Use when the user wants to install/configure lowfat, enable token
   savings on shell command output, add or refresh pantry filter plugins, or wire
-  the transparent Claude Code rewrite hook. Triggers: "set up lowfat", "/lowfat",
+  the agent's transparent command-rewrite hook. Triggers: "set up lowfat", "/lowfat",
   "sync the pantry", "compact my command output", "reduce token usage from bash".
 ---
 
@@ -44,8 +44,9 @@ mechanics exactly; improvise only the judgment.
 
 - `which lowfat` (+ `lowfat --version`) — is the binary present?
 - `.lowfat` present at/above the project root? (`lowfat info` reports the active config)
-- Integration hook wired? Check user-scope `~/.claude/settings.json` for a lowfat
-  `PreToolUse` hook entry.
+- Integration hook wired? Check the agent's user-scope hook config for a lowfat
+  command-rewrite entry (Claude Code: a `PreToolUse` hook in `~/.claude/settings.json`;
+  other agents: their equivalent pre-command hook).
 - Pantry sync status — diff the pantry source against `<home>/plugins/` (see step 4).
 
 ## 2. Install if absent — USER-RUN
@@ -100,10 +101,12 @@ the reconcile in (b) is what keeps this safe against silent drift.
 
 ## 5. Wire transparent rewrite — opt-in, default OFF
 
-Offer (don't force) to register lowfat's `PreToolUse` hook at user scope
-(`~/.claude/settings.json`) so command output is compacted machine-wide without manual
-prefixing. Use `lowfat hook` / `lowfat shell-init` for the exact entry, and the
-`update-config` skill to write it. Sequence this LAST, after coverage exists.
+Offer (don't force) to register lowfat's command-rewrite hook with the agent at user
+scope so command output is compacted machine-wide without manual prefixing. Use
+`lowfat hook` / `lowfat shell-init` for the exact entry. On Claude Code that's a
+`PreToolUse` hook in `~/.claude/settings.json` (write it with the `update-config` skill
+if available); other agents use their equivalent pre-command hook. Sequence this LAST,
+after coverage exists.
 
 ## 6. Report
 
