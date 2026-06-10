@@ -1,6 +1,6 @@
 # lowfat-pantry
 
-A standalone **`/lowfat` agent skill** plus a **pantry of [lowfat](https://github.com/zdk/lowfat)
+A standalone **`/lowfat-pantry` agent skill** plus a **pantry of [lowfat](https://github.com/zdk/lowfat)
 filter plugins** — the token-aware command-output compactor that replaces RTK.
 
 lowfat wraps a shell command, runs the real binary, and pipes its output through a `.lf`
@@ -10,7 +10,7 @@ the community plugins that teach it how to compact each tool.
 
 ## What's here
 
-    SKILL.md                     the /lowfat skill (setup + pantry sync as agent steps)
+    SKILL.md                     the /lowfat-pantry skill (setup + pantry sync as agent steps)
     plugins/<category>/<name>/   a pantry plugin: lowfat.toml · filter.lf · samples/ · tests.yml
     templates/lowfat             seed project config (copied to .lowfat)
     scripts/validate.sh          validate filters purely via `lowfat filter`
@@ -37,11 +37,11 @@ and never corrupts machine-readable output (JSON/env/formatted code pass through
 This repo is an agent skill (Claude Code, or any skills-compatible agent). Install it
 however you manage skills:
 
-- **ACE** — import via `school.toml` `[[imports]]`; it materializes at `school/skills/lowfat/`.
+- **ACE** — import via `school.toml` `[[imports]]`; it materializes at `school/skills/lowfat-pantry/`.
 - **skills.sh** — the regular skills installer also works: `npx skills add chakrit/lowfat-pantry`.
 - **Manual** — clone it where your skill tooling looks, or point your agent at it.
 
-Then run **`/lowfat`** in a project. The skill detects/installs lowfat (user-run), seeds a
+Then run **`/lowfat-pantry`** in a project. The skill detects/installs lowfat (user-run), seeds a
 `.lowfat` config tuned to your toolchain, and syncs the pantry plugins you choose into your
 lowfat home (`<LOWFAT_HOME>/plugins/`). lowfat itself: `cargo install lowfat`.
 

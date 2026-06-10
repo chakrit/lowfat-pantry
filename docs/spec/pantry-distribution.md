@@ -38,7 +38,7 @@ per-machine. They belong on the same rail.
 ## Options (analysis)
 
 The reasoning snapshot that led to the decision. The *realized* design — skill repo, agent
-sync, plugins at `school/skills/lowfat/plugins/` — lives in the decision entry and
+sync, plugins at `school/skills/lowfat-pantry/plugins/` — lives in the decision entry and
 `lowfat-skill.md`. Below, the `<school-clone>/pantry` and `pantry install` references are the
 original framing, since superseded.
 
@@ -75,7 +75,7 @@ one layer down.
 
 **Option B's mechanism (symlink-into-home) was adopted — but carried by a standalone Claude
 Code `lowfat` skill repo, usable by any Claude Code user, not just ACE.** ACE users receive it
-via the skill-import rail (plugins materialize at `school/skills/lowfat/plugins/`); non-ACE
+via the skill-import rail (plugins materialize at `school/skills/lowfat-pantry/plugins/`); non-ACE
 users install the skill directly. Either way the agent performs the symlink sync under
 SKILL.md steps, resolving the skill's own install dir as the source — so Option C's
 standalone reach is folded in without a separate installer. Full realized design:

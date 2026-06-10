@@ -1,4 +1,4 @@
-# `/lowfat` Skill — Design
+# `/lowfat-pantry` Skill — Design
 
 Status: **draft**. The standalone agent skill this repo (`chakrit/lowfat-pantry`)
 ships — usable from any skills-compatible agent (Claude Code being the primary target);
@@ -8,7 +8,7 @@ author-written `rtk` skill (see `../decisions/2026-06-08-pantry-distribution.md`
 ## Repo-as-skill
 
 A standard agent-skill repo. ACE users import it like any other skill repo (it
-materializes at `school/skills/lowfat/`); non-ACE users install it via their own skill
+materializes at `school/skills/lowfat-pantry/`); non-ACE users install it via their own skill
 tooling. Carries:
 
 **Non-goal:** getting the skill *onto* a machine. That's the skill-manager's job (ACE import,
@@ -18,7 +18,7 @@ symlink source — already covered below.
 
 Layout:
 
-    SKILL.md             the /lowfat skill (carries the sync logic as agent steps)
+    SKILL.md             the /lowfat-pantry skill (carries the sync logic as agent steps)
     plugins/<cat>/<p>/   pantry — lowfat.toml · filter.lf · samples/ · tests.yml
     templates/lowfat     seed project config (NO dot — it's a template, not active config)
     docs/                durable docs
@@ -61,7 +61,7 @@ file/dir) so the agent improvises only the judgment, not the operations.
    transparent rewriting last (after coverage exists); the skill offers it, doesn't force it.
 
 6. **Standalone invocation** (already set up) → terse status: lowfat active, N pantry plugins
-   synced, `/lowfat` to re-sync.
+   synced, `/lowfat-pantry` to re-sync.
 
 > Dropped vs the rtk skill: the "backfill in-flight commands to prefixed form" step. rtk
 > needs it because it requires manual `rtk ` prefixing; once step 5's hook rewrites
@@ -78,4 +78,4 @@ reconcile step (4b) is what makes this safe against silent content drift.
 
 - `update-config` integration for the user-scope hook entry (step 5).
 - Sync resolves the skill's **own** install dir as the symlink source (works for any install
-  method); for ACE imports, confirm that resolves to `school/skills/lowfat/plugins/`.
+  method); for ACE imports, confirm that resolves to `school/skills/lowfat-pantry/plugins/`.

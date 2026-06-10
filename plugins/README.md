@@ -1,7 +1,7 @@
 # Pantry — lowfat plugins
 
 Community `.lf` filter plugins for [lowfat](https://github.com/zdk/lowfat), the
-token-aware command-output compactor. The `/lowfat` skill symlinks selected plugins from
+token-aware command-output compactor. The `/lowfat-pantry` skill symlinks selected plugins from
 here into the resolved lowfat home (`<LOWFAT_HOME>/plugins/<category>/<name>/`, default
 `~/.config/lowfat/plugins/` — `~/.lowfat/plugins/` when `$LOWFAT_HOME=~/.lowfat`).
 
