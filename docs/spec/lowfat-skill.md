@@ -7,7 +7,7 @@ author-written `rtk` skill (see `../decisions/2026-06-08-pantry-distribution.md`
 
 ## Repo-as-skill
 
-A standard agent-skill repo. ACE users import it like `kien-thai`/`visualise` (it
+A standard agent-skill repo. ACE users import it like any other skill repo (it
 materializes at `school/skills/lowfat/`); non-ACE users install it via their own skill
 tooling. Carries:
 

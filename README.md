@@ -18,20 +18,18 @@ the community plugins that teach it how to compact each tool.
 
 ## Plugins
 
-Community filters beyond lowfat's six bundled ones (git, docker, grep, find, ls, tree):
+**51 community filters** beyond lowfat's six bundled ones (git, docker, grep, find, ls,
+tree) — the full audited list with per-plugin notes and gotchas lives in
+**[`plugins/CATALOG.md`](plugins/CATALOG.md)**. A taste:
 
-| Area        | Plugins                                                        |
-| ----------- | ------------------------------------------------------------- |
-| VCS / CI    | `rg` `gh` `glab`                                              |
-| Rust        | `cargo`                                                       |
-| TS / JS     | `tsc` `eslint` `prettier` `npm` `pnpm` `yarn`                 |
-| Python      | `pytest` `ruff` `mypy` `black` `pip`                          |
-| Go          | `go` `golangci-lint`                                          |
-| .NET        | `dotnet`                                                      |
-| Infra / data| `kubectl` `helm` `terraform` `psql` `aws` `env`              |
-| Build / misc| `make` `npx` `jq` `json` `curl` `diff` `prisma` `next` `playwright` |
+- `cargo` `tsc` `pytest` `go` `mvn` `dotnet` — build/test: keep diagnostics + verdicts,
+  drop progress chatter.
+- `kubectl` `terraform` `pulumi` `ansible-playbook` — infra: verdict-anchored (recaps and
+  summaries sit at the END of the stream).
+- `gh` `aws` `az` `jq` — structured-output aware: `--json` and friends pass byte-exact.
+- `env` — masks secret-looking values before anything else sees them.
 
-Every plugin degrades across all three levels, preserves errors on non-zero exit (`raw`),
+Every plugin degrades across all three levels, preserves errors on non-zero exit,
 and never corrupts machine-readable output (JSON/env/formatted code pass through byte-exact).
 
 ## Install
