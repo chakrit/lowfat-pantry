@@ -12,14 +12,15 @@ Legend:
 - **fold** — likely collapses into another plugin rather than standing alone.
 - ✅ **built** — net-new plugin now exists under `plugins/` (this session).
 
-## Built (47 community plugins)
+## Built (51 community plugins)
 
 VCS/CI: `rg` `gh` `glab` · Rust: `cargo` · TS/JS: `tsc` `eslint` `prettier` `npm` `pnpm`
 `yarn` `bun` · Python: `pytest` `ruff` `mypy` `black` `pip` · Go: `go` `golangci-lint` ·
 .NET: `dotnet` · JVM: `mvn` `gradlew` · Infra/ops: `kubectl` `helm` `terraform`
 `ansible-playbook` `systemctl` `journalctl` `docker-compose` `ssh` `rsync` · Cloud/data:
 `aws` `gcloud` `psql` `sqlite3` `env` · Runtimes/build: `make` `npx` `deno` · Net/data:
-`curl` `wget` `jq` `json` `tar` · Toolchain: `diff` `prisma` `next` `playwright`.
+`curl` `wget` `jq` `json` `tar` · Toolchain: `diff` `prisma` `next` `playwright` ·
+Deploy/data (docker-captured real samples, 2026-06-10): `redis-cli` `pulumi` `wrangler` `az`.
 
 Note on the "fold" calls: lowfat has **no RTK-style command router** — it intercepts real
 binaries by name. So `eslint`/`prettier`/`pytest`/`vitest` are built as their own plugins
@@ -29,9 +30,12 @@ binary, so they'd never fire. Build them only if a wrapper convention emerges.
 
 Remaining candidates (lower value / lower format-confidence — synthetic samples risk drifting
 from real output): `log`/`read`/`wc` (need a real intercepted command), `gt` (Graphite, niche
-for a trunk-based solo workflow), deploy CLIs `vercel`/`wrangler`/`flyctl`/`netlify`, `az`,
-`redis-cli`, `pulumi`. Plus enhancement passes on the bundled `git`/`docker`. Build these only
-with **real captured samples** so the filters match actual output.
+for a trunk-based solo workflow), deploy CLIs `vercel`/`flyctl`/`netlify`. Plus enhancement
+passes on the bundled `git`/`docker`. Build these only with **real captured samples** so the
+filters match actual output. 2026-06-10: `redis-cli`/`pulumi`/`wrangler`/`az` graduated to
+built via docker-captured real samples; `vercel`/`netlify`/`flyctl`/`gt` stay deferred — their
+signal output (deploys, stack ops) is auth-gated, so no real capture is possible without
+accounts.
 
 ## Tier 0 — Universal, every session, high bloat
 
