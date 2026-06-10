@@ -1,5 +1,5 @@
 ---
-name: lowfat
+name: lowfat-pantry
 description: >-
   Set up and sync the lowfat command-output compactor and its plugin pantry for
   a project. Use when the user wants to install/configure lowfat, enable token
