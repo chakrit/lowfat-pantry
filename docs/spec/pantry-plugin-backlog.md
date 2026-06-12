@@ -32,7 +32,15 @@ Remaining candidates (lower value / lower format-confidence — synthetic sample
 from real output): `log`/`read`/`wc` (need a real intercepted command), `gt` (Graphite, niche
 for a trunk-based solo workflow), deploy CLIs `vercel`/`flyctl`/`netlify`. Plus enhancement
 passes on the bundled `git`/`docker`. Build these only with **real captured samples** so the
-filters match actual output. 2026-06-10: `redis-cli`/`pulumi`/`wrangler`/`az` graduated to
+filters match actual output.
+
+**Posture (2026-06-12): the pantry is effectively done; remaining work is demand-driven, not
+backlog-ordered.** Build or enhance only when a *real session shows specific bloat* worth
+fixing — then capture that exact output and fix precisely it. A backlog rank (even "Top
+enhance") is headroom, not a need; chasing it speculatively is the synthetic-sample drift
+this section warns against. For bundled commands (`git`/`docker`) there's an extra cost: a
+pantry override *replaces* the bundled filter wholesale (lowfat merges nothing) and needs
+trust — so don't fork one without a concrete, observed reason. 2026-06-10: `redis-cli`/`pulumi`/`wrangler`/`az` graduated to
 built via docker-captured real samples; `vercel`/`netlify`/`flyctl`/`gt` stay deferred — their
 signal output (deploys, stack ops) is auth-gated, so no real capture is possible without
 accounts.
@@ -41,7 +49,7 @@ accounts.
 
 | Command | Status   | Notes                                                                 |
 | ------- | -------- | --------------------------------------------------------------------- |
-| `git`   | bundled  | Only 4 subcommands specialized; rest hit 30-line cap. Top enhance.    |
+| `git`   | bundled  | 4 subcommands specialized; rest hit 30-line cap. Headroom, not a need — enhance only on observed bloat (see Posture). |
 | `rg`    | build    | School prefers ripgrep; lowfat grep claims only `grep`. P0 gap.       |
 | `gh`    | build    | PRs/issues/reviews — constant in this school. High value.             |
 | `test`  | build    | Generic test runner, show-failures-only. Cross-stack, huge payoff.    |
