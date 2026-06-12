@@ -53,9 +53,10 @@ mechanics exactly; improvise only the judgment.
 
 - `which lowfat` (+ `lowfat --version`) — is the binary present?
 - `.lowfat` present at/above the project root? (`lowfat info` reports the active config)
-- Integration hook wired? Check the agent's user-scope hook config for a lowfat
-  command-rewrite entry (Claude Code: a `PreToolUse` hook in `~/.claude/settings.json`;
-  other agents: their equivalent pre-command hook).
+- Integration hook wired? Check both scopes for a lowfat command-rewrite entry —
+  user-scope (Claude Code: a `PreToolUse` hook in `~/.claude/settings.json`) and
+  project-local (`.claude/settings.local.json` at the repo root). Other agents: their
+  equivalent pre-command hook config at either scope.
 - Pantry sync status — diff the pantry source against `<home>/plugins/` (see step 4).
 
 ## 2. Install if absent — USER-RUN
@@ -120,12 +121,22 @@ first-party content — the reconcile in (b) is what keeps this safe against sil
 
 ## 5. Wire transparent rewrite — opt-in, default OFF
 
-Offer (don't force) to register lowfat's command-rewrite hook with the agent at user
-scope so command output is compacted machine-wide without manual prefixing. Use
-`lowfat hook` / `lowfat shell-init` for the exact entry. On Claude Code that's a
-`PreToolUse` hook in `~/.claude/settings.json` (write it with the `update-config` skill
-if available); other agents use their equivalent pre-command hook. Sequence this LAST,
-after coverage exists.
+Offer (don't force) to register lowfat's command-rewrite hook so command output is
+compacted without manual prefixing. Get `lowfat hook` / `lowfat shell-init` for the exact
+entry, then pick a **scope** with the user:
+
+- **User scope** — compaction applies machine-wide, across every project (Claude Code:
+  `~/.claude/settings.json`). Right when the user wants lowfat everywhere.
+- **Project-local scope** — compaction is this-repo-only and not committed/shared
+  (Claude Code: `.claude/settings.local.json`, gitignored). Right when the user wants to
+  dogfood or scope lowfat to one project without changing global behavior. Default to this
+  when unsure — it's the narrower, reversible choice.
+
+Write the hook entry through whatever the host agent provides for safe settings edits, so
+existing hooks aren't clobbered — on Claude Code that's the `update-config` skill (it owns
+the `settings.json` merge); other agents edit their config file directly. Name the target
+file explicitly so the chosen scope is the one edited. Sequence this LAST, after
+coverage exists.
 
 > **⚠️ Permission-surface warning (tell the user before wiring):** `lowfat hook` returns
 > `permissionDecision: "allow"` alongside the rewritten command — so **every command lowfat

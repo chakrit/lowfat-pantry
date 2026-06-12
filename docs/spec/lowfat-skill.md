@@ -55,10 +55,13 @@ file/dir) so the agent improvises only the judgment, not the operations.
    - **d. Trust** — prompt the **user** to run `lowfat plugin trust <plugin>` for new/changed
      plugins. Agent never self-trusts, even first-party pantry content.
 
-5. **Wire integration** *(opt-in, default off)* — register lowfat's PreToolUse hook at
-   **user scope** (`~/.claude/settings.json`) for machine-wide transparent command rewrite.
-   Use the `update-config` skill to write the hook entry. The migration plan sequences
-   transparent rewriting last (after coverage exists); the skill offers it, doesn't force it.
+5. **Wire integration** *(opt-in, default off)* — register lowfat's pre-command hook for
+   transparent command rewrite, at a user-chosen **scope**: user (machine-wide) or
+   project-local (this repo only, gitignored). Claude Code paths:
+   `~/.claude/settings.json` and `.claude/settings.local.json`. Write the entry through
+   the host agent's safe settings-edit mechanism (Claude Code: the `update-config` skill);
+   other agents edit their config directly. The migration plan sequences transparent
+   rewriting last (after coverage exists); the skill offers it, doesn't force it.
 
 6. **Standalone invocation** (already set up) → terse status: lowfat active, N pantry plugins
    synced, `/lowfat-pantry` to re-sync.
@@ -76,6 +79,8 @@ reconcile step (4b) is what makes this safe against silent content drift.
 
 ## Open
 
-- `update-config` integration for the user-scope hook entry (step 5).
+- ~~`update-config` integration for the user-scope hook entry (step 5).~~ Done: step 5 now
+  covers both user and project-local scopes, harness-generic (Claude Code's `update-config`
+  named as the example mechanism, not assumed).
 - Sync resolves the skill's **own** install dir as the symlink source (works for any install
   method); for ACE imports, confirm that resolves to `school/skills/lowfat-pantry/plugins/`.
