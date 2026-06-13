@@ -10,60 +10,54 @@ description: >-
 
 # lowfat — setup & pantry sync
 
-`lowfat` is a token-aware command-output filter (the successor to RTK). It wraps a
-command, runs the real binary, and pipes the output through a `.lf` filter that keeps the
-signal and drops the bloat, at three intensities (`ultra`/`full`/`lite`). This repo is the
-**pantry**: a set of community `.lf` plugins under `plugins/<category>/<name>/` — where
-`<category>` is the command itself (e.g. `gh`) and `<name>` is `<command>-compact` (e.g.
-`gh-compact`), matching lowfat's bundled convention. There is **no** grouping/tier dir.
-This skill
-gets lowfat installed, seeds a project `.lowfat` config, and **syncs** selected pantry
-plugins into the user's lowfat home.
+`lowfat` is a token-aware command-output filter (successor to RTK): it wraps a command,
+runs the real binary, and pipes the output through a `.lf` filter at three intensities
+(`ultra`/`full`/`lite`). This repo is the **pantry** — community `.lf` plugins under
+`plugins/<category>/<name>/`, where `<category>` is the command (e.g. `gh`) and `<name>` is
+`<command>-compact` (e.g. `gh-compact`), matching lowfat's bundled convention. No
+grouping/tier dir. This skill installs lowfat, seeds a project `.lowfat`, and **syncs**
+selected pantry plugins into the user's lowfat home.
 
-This skill carries the sync logic as **agent steps**, not a bundled script — scope and
-reconcile are judgment calls (which plugins fit this project, whether a changed plugin is
-safe to re-trust) that benefit from context a script can't see. Spell the filesystem
-mechanics exactly; improvise only the judgment.
+Sync is carried as agent steps, not a bundled script. Spell the filesystem mechanics
+exactly; improvise only the judgment (which plugins fit the project, whether a changed
+plugin is safe to re-link).
 
-> **Safety boundary (hard):** the agent NEVER installs global tooling and NEVER runs
-> `lowfat plugin trust`. Those are user-run. The agent only proposes the exact commands and
-> creates/removes symlinks under the resolved lowfat home with explicit, idempotent checks.
+> **Safety boundary (hard):** NEVER install global tooling. NEVER run `lowfat plugin
+> trust`. Both are user-run. The agent only proposes the exact commands and creates/removes
+> symlinks under the resolved lowfat home with idempotent checks.
 
 ## 0. Resolve the pieces
 
-- **Pantry source dir** = this skill's own `plugins/` directory. Resolve it from the
-  skill's install location (works for any install method — ACE import, manual clone, skill
-  manager). For ACE imports this is `<school-clone>/skills/lowfat-pantry/plugins/`.
-  - **Caveat when the source is inside an ACE-managed / gitignored tree** (e.g.
-    `.claude/skills/` ignored by the repo): the `<home>/plugins/*` symlinks point at content
-    that is **not committed** and is recreated only when `ace` re-syncs the skill. On a fresh
-    machine the links dangle until `ace` runs; an `ace` re-sync that *deletes* the skill dir
-    (rather than updating in place) breaks every link. Flag this to the user and prefer the
-    most durable/portable clone as canonical.
-- **lowfat home** (where plugins + trust live), highest precedence first:
+- **Pantry source dir** = this skill's own `plugins/` directory. Resolve it from the skill's
+  install location (any install method — ACE import, manual clone, skill manager). For ACE
+  imports: `<school-clone>/skills/lowfat-pantry/plugins/`.
+  - **Caveat — source inside an ACE-managed / gitignored tree** (e.g. `.claude/skills/`):
+    the `<home>/plugins/*` symlinks point at uncommitted content, recreated only when `ace`
+    re-syncs the skill. On a fresh machine the links dangle until `ace` runs; an `ace`
+    re-sync that *deletes* the skill dir breaks every link. Flag this and prefer the most
+    durable/portable clone as canonical.
+- **lowfat home** (plugins + trust), highest precedence first:
   1. `$LOWFAT_HOME`
   2. `$XDG_CONFIG_HOME/lowfat` (if `XDG_CONFIG_HOME` is set)
   3. `~/.config/lowfat` (only if that dir already exists)
   4. `~/.lowfat` (fallback)
 
-  Confirm with `lowfat info` rather than guessing. Plugins live at `<home>/plugins/`,
-  trust state at `<home>/trusted.toml`.
+  Confirm with `lowfat info`, don't guess. Plugins at `<home>/plugins/`, trust at
+  `<home>/trusted.toml`.
 
 ## 1. Detect state (run in parallel)
 
-- `which lowfat` (+ `lowfat --version`) — is the binary present?
+- `which lowfat` (+ `lowfat --version`) — binary present?
 - `.lowfat` present at/above the project root? (`lowfat info` reports the active config)
-- Integration hook wired? Check both scopes for a lowfat command-rewrite entry —
-  user-scope (Claude Code: a `PreToolUse` hook in `~/.claude/settings.json`) and
-  project-local (`.claude/settings.local.json` at the repo root). Other agents: their
-  equivalent pre-command hook config at either scope.
+- Integration hook wired? Check both scopes — user (Claude Code: a `PreToolUse` hook in
+  `~/.claude/settings.json`) and project-local (`.claude/settings.local.json` at the repo
+  root). Other agents: their equivalent pre-command hook config at either scope.
 - Pantry sync status — diff the pantry source against `<home>/plugins/` (see step 4).
 
 ## 2. Install if absent — USER-RUN
 
 If `lowfat` is not on PATH, STOP and give the user the exact command for their platform
-(`cargo install lowfat`, or a brew/release install). The agent never installs global
-tooling. Resume once the user confirms it's present. *(RTK safety principle, kept.)*
+(`cargo install lowfat`, or a brew/release install). Resume once they confirm it's present.
 
 ## 3. Seed `.lowfat`
 
@@ -76,81 +70,69 @@ If no `.lowfat` exists at the project root, copy `templates/lowfat` to `./.lowfa
   `requirements.txt`→ pytest/ruff/mypy/black/pip, `*.tf`→terraform, `Chart.yaml`→helm.
   Never set both `filters` (whitelist) and `disable` (blacklist).
 
-Never enable `redact-secrets` globally without checking it won't corrupt this project's
-structured output (JSON/env); prefer per-pipeline opt-in.
+Never enable `redact-secrets` globally without first checking it won't corrupt this
+project's structured output (JSON/env) — prefer per-pipeline opt-in.
 
-## 4. Sync the pantry — the core step (agent-performed, idempotent)
+## 4. Sync the pantry — the core step (idempotent)
 
 ### a. Scope
-Ask the user **how much** pantry to install with `AskUserQuestion`: all · by tier · by
-category · hand-pick. Default the selection to plugins whose command matches the detected
-toolchain (from step 3).
+Ask **how much** pantry to install with `AskUserQuestion`: all · by tier · by category ·
+hand-pick. Default the selection to plugins whose command matches the detected toolchain.
 
 ### b. Reconcile (three-way diff)
-For each selected plugin compute, between the pantry source and `<home>/plugins/<cat>/<name>/`:
+For each selected plugin, between the pantry source and `<home>/plugins/<cat>/<name>/`:
 - **added** — in pantry, not in home → propose create.
-- **removed** — in home, not in pantry → propose nothing (leave the user's own plugins
-  alone) unless it's a stale symlink back into this pantry.
-- **changed** — both exist but content differs. This is the **trust drift guard**: lowfat
-  trusts by plugin *name*, so it will NOT re-prompt when a trusted plugin's content
-  changes. Surface every changed+already-trusted plugin here explicitly with
-  `AskUserQuestion` before re-linking.
+- **removed** — in home, not in pantry → leave alone (it's the user's own), unless it's a
+  stale symlink back into this pantry.
+- **changed** — both exist, content differs. **Trust-drift guard:** lowfat trusts by plugin
+  *name*, so it will not re-prompt when a trusted plugin's content changes. Surface every
+  changed + already-trusted plugin here with `AskUserQuestion` before re-linking.
 
 ### c. Apply (filesystem mechanics — exact)
 For each approved plugin, idempotently:
 - Ensure `<home>/plugins/<cat>/` exists.
-- Target = `<home>/plugins/<cat>/<name>`. If it's already a symlink to the pantry source,
-  skip (no-op). **If it points at a *different* clone of this same pantry** (multiple
-  checkouts on one machine — dev clone + ACE/school clone) whose content is byte-identical,
-  treat it as a no-op too: do NOT flag it as "changed" in 4b (that would fire the trust-drift
-  guard spuriously for every plugin). Only re-point if the user explicitly wants one clone to
-  be canonical (portability favors the in-repo/committed one). If it's a **real file/dir**
-  (not ours), do NOT clobber — report a conflict and ask. Otherwise create the symlink
-  `<target> -> <pantry>/<cat>/<name>`.
-- For removals the user approved, only `rm` the symlink (never a real dir).
+- Target = `<home>/plugins/<cat>/<name>`. If already a symlink to the pantry source, skip.
+  If it points at a *different* clone of this same pantry (dev clone + ACE/school clone)
+  with byte-identical content, also a no-op — do NOT flag it "changed" in 4b (that fires the
+  trust-drift guard spuriously). Re-point only if the user wants one clone canonical (favor
+  the in-repo/committed one). If it's a real file/dir (not ours), do NOT clobber — report a
+  conflict and ask. Else create the symlink `<target> -> <pantry>/<cat>/<name>`.
+- For approved removals, `rm` the symlink only (never a real dir).
 
 ### d. Trust — USER-RUN
-Trust gates **only the builtin-override case**: lowfat applies an untrusted external plugin
-freely when no bundled plugin shadows its command, so trust is *not* required for a plugin
-whose command has no builtin (`info` will show it active and the hook will rewrite through
-it regardless of `trusted.toml`). Trust matters when a pantry plugin must override a
-same-named bundled one. So: print `lowfat plugin trust <name>` only for plugins that
+Trust gates only the builtin-override case: an untrusted external plugin applies freely when
+no bundled plugin shadows its command (`info` shows it active and the hook rewrites through
+it regardless of `trusted.toml`). Print `lowfat plugin trust <name>` only for plugins that
 override a builtin **or** that the user wants to take precedence; for the rest, note they're
-already active untrusted and no ceremony is needed. The agent NEVER self-trusts, even for
-first-party content — the reconcile in (b) is what keeps this safe against silent drift.
+already active untrusted. NEVER self-trust, even first-party content.
 
 ## 5. Wire transparent rewrite — opt-in, default OFF
 
-Offer (don't force) to register lowfat's command-rewrite hook so command output is
-compacted without manual prefixing. Get `lowfat hook` / `lowfat shell-init` for the exact
-entry, then pick a **scope** with the user:
+Offer (don't force) to register lowfat's command-rewrite hook. Get the exact entry from
+`lowfat hook` / `lowfat shell-init`, then pick a **scope** with the user:
 
-- **User scope** — compaction applies machine-wide, across every project (Claude Code:
-  `~/.claude/settings.json`). Right when the user wants lowfat everywhere.
-- **Project-local scope** — compaction is this-repo-only and not committed/shared
-  (Claude Code: `.claude/settings.local.json`, gitignored). Right when the user wants to
-  dogfood or scope lowfat to one project without changing global behavior. Default to this
-  when unsure — it's the narrower, reversible choice.
+- **User scope** — compaction machine-wide, every project (Claude Code:
+  `~/.claude/settings.json`).
+- **Project-local scope** — this-repo-only, not committed/shared (Claude Code:
+  `.claude/settings.local.json`, gitignored). Default here when unsure — narrower,
+  reversible.
 
-Write the hook entry through whatever the host agent provides for safe settings edits, so
-existing hooks aren't clobbered — on Claude Code that's the `update-config` skill (it owns
-the `settings.json` merge); other agents edit their config file directly. Name the target
-file explicitly so the chosen scope is the one edited. Sequence this LAST, after
-coverage exists.
+Write the entry through whatever the host agent provides for safe settings edits so existing
+hooks aren't clobbered — Claude Code: the `update-config` skill (it owns the `settings.json`
+merge); other agents edit their config file directly. Name the target file explicitly so the
+chosen scope is the one edited. Sequence LAST, after coverage exists.
 
 > **⚠️ Permission-surface warning (tell the user before wiring):** `lowfat hook` returns
-> `permissionDecision: "allow"` alongside the rewritten command — so **every command lowfat
-> has a filter for** (git, gh, curl, docker, …) is auto-approved and **skips the agent's
-> permission prompt**. For `dontAsk`/YOLO-mode users this changes nothing. But for a user on
-> default (ask) mode, wiring this hook silently widens the permission surface: `git push`,
-> `curl` POSTs, `docker` runs, etc. get auto-approved purely because a compaction filter
-> exists. Surface this explicitly and get a deliberate opt-in. (Upstream fix tracked: the
-> hook should emit `updatedInput` *without* `permissionDecision` so the normal prompt runs on
-> the rewritten command — `zdk/lowfat` hook.rs:31-42. Until then, treat hook-wiring as a
-> permission-policy change, not just an output-formatting tweak.)
+> `permissionDecision: "allow"` alongside the rewritten command — so every command lowfat
+> has a filter for (git, gh, curl, docker, …) is auto-approved and skips the agent's
+> permission prompt. Harmless for `dontAsk`/YOLO users; for a user on default (ask) mode it
+> silently widens the permission surface — `git push`, `curl` POSTs, `docker` runs get
+> auto-approved purely because a compaction filter exists. Get a deliberate opt-in. (Upstream
+> fix tracked: the hook should emit `updatedInput` *without* `permissionDecision` so the
+> normal prompt runs on the rewritten command — `zdk/lowfat` hook.rs:31-42.)
 
-> **Note (config-via-symlink):** if the agent's settings file is a stow/dotfiles symlink,
-> the Edit tool may refuse to write through it — edit the real target path instead.
+> **Note:** if the agent's settings file is a stow/dotfiles symlink, the Edit tool may refuse
+> to write through it — edit the real target path instead.
 
 ## 6. Report
 
@@ -160,5 +142,7 @@ need trusting), hook wired or not. Mention `/lowfat-pantry` re-runs the sync.
 ## Reference
 - `docs/spec/lowfat-filter-dsl.md` — authoring `.lf` filters (for adding/editing plugins).
 - `docs/notes/lowfat-internals.md` — how lowfat resolves home/trust/levels/pipeline.
-- `plugins/README.md` — pantry layout and conventions.
-- `scripts/validate.sh` — validate a filter purely via `lowfat filter` (no install/trust).
+- `plugins/README.md` — pantry layout and conventions; `plugins/CATALOG.md` — per-plugin
+  inventory + gotchas.
+- `scripts/validate.py` — validate filters against each plugin's `tests.yml`, purely via
+  `lowfat filter` (no install/trust). Run as an executable (`./scripts/validate.py`).

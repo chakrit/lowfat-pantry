@@ -1,6 +1,6 @@
 # `/lowfat-pantry` Skill — Design
 
-Status: **draft**. The standalone agent skill this repo (`chakrit/lowfat-pantry`)
+Status: **implemented**. The standalone agent skill this repo (`chakrit/lowfat-pantry`)
 ships — usable from any skills-compatible agent (Claude Code being the primary target);
 ACE users import it via `school.toml` `[[imports]]` as one install channel. Derived from lowfat's own mechanics, not transposed from the
 author-written `rtk` skill (see `../decisions/2026-06-08-pantry-distribution.md`).
@@ -34,7 +34,8 @@ file/dir) so the agent improvises only the judgment, not the operations.
 ## Skill arc
 
 1. **Detect state** (parallel): `which lowfat` · `.lowfat` present · integration hook wired
-   (user-scope `~/.claude/settings.json`) · pantry sync status.
+   (check both scopes — user `~/.claude/settings.json` and project-local
+   `.claude/settings.local.json`) · pantry sync status.
 
 2. **Install if absent** — user-run (`cargo install lowfat` / brew). Agent never installs
    global tooling. Stop until present. *(rtk principle kept — safety boundary.)*
