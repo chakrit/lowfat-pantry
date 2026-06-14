@@ -13,7 +13,7 @@ the community plugins that teach it how to compact each tool.
     SKILL.md                     the /lowfat-pantry skill (setup + pantry sync as agent steps)
     plugins/<category>/<name>/   a pantry plugin: lowfat.toml · filter.lf · samples/ · tests.yml
     templates/lowfat             seed project config (copied to .lowfat)
-    scripts/validate.sh          validate filters purely via `lowfat filter`
+    scripts/validate.py          validate filters (tests.yml-aware) via `lowfat filter`
     docs/                        design + reference (see below)
 
 ## Plugins
@@ -50,11 +50,11 @@ lowfat home (`<LOWFAT_HOME>/plugins/`). lowfat itself: `cargo install lowfat`.
 Read `docs/spec/lowfat-filter-dsl.md` (the full `.lf` reference + cookbook), mirror an
 existing plugin (`plugins/rg` is the simplest, `plugins/gh` shows flag guards), then:
 
-    scripts/validate.sh plugins/<your-plugin>
+    ./scripts/validate.py plugins/<your-plugin>
 
-validates parse + per-level reduction via the pure `lowfat filter` runner (no install, no
-trust, no global state). Samples are byte-faithful to real command output; mark synthesized
-ones with `synthetic: true` in `tests.yml`.
+validates parse + per-level reduction (honoring each `tests.yml` case's real `exit`) via the
+pure `lowfat filter` runner (no install, no trust, no global state). Samples are byte-faithful
+to real command output; mark synthesized ones with `synthetic: true` in `tests.yml`.
 
 ## Docs
 

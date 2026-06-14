@@ -2,8 +2,8 @@
 """validate.py — tests.yml-aware filter validation.
 
 Runs each plugin's filter.lf against the cases declared in its tests.yml, using
-the REAL per-case sub/args/exit (unlike validate.sh, which always assumes exit 0).
-Purely via `lowfat filter` — no install, no trust, no global-state mutation.
+the REAL per-case sub/args/exit. Purely via `lowfat filter` — no install, no
+trust, no global-state mutation.
 
 For every (case x level) it reports input->output line reduction and flags:
   PARSE   filter failed to parse / lowfat errored
