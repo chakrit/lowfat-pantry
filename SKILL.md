@@ -139,6 +139,83 @@ chosen scope is the one edited. Sequence LAST, after coverage exists.
 Terse status: lowfat active (version), `.lowfat` level, N pantry plugins synced (and which
 need trusting), hook wired or not. Mention `/lowfat-pantry` re-runs the sync.
 
+## Authoring a pantry plugin — fast path
+
+When the user wants a *new* filter, you don't need to read the full DSL spec or lowfat
+source — both were already distilled. Follow this. (Deep cases — `split`, macros, awk
+state machines — are in `docs/spec/lowfat-filter-dsl.md`; reach for it only when the
+skeleton below isn't enough.)
+
+### Plugin layout (exact)
+A pantry plugin is a directory `plugins/<command>/<command>-compact/` holding:
+
+    lowfat.toml    # [plugin] name=<command>-compact, version, description, category=<command>, commands=["<command>"]
+    filter.lf      # the filter (below)
+    tests.yml      # command + cases pointing at samples
+    samples/       # byte-faithful captured output, one file per case
+
+Mirror `plugins/rg/rg-compact/` (simplest) or `plugins/gh/` (flag guards). Copy its
+`lowfat.toml` and swap the command.
+
+### `.lf` mental model (the 20% you need)
+- A filter is a list of **rules**: `<sub>[, <level>]:` then an indented op body.
+  First rule whose `(subcommand, level)` matches wins; **only that one runs**. Put the
+  catch-all `*:` LAST. No subcommands (ls/grep/rg)? One `*:` rule.
+- Env in `shell:`/`python:` ops: `$sub` `$level` (ultra/full/lite) `$exit` `$args`.
+  Current text arrives on **stdin**.
+- The everyday ops: `keep /re/` · `drop /re/` · `head N` · `tail N` · `head auto`
+  (=15/30/60 by level) · `or "text"` (fallback when stream went blank) ·
+  `or-shell: <cmd>` (run cmd on the RAW input when blank) · `raw` (pass unchanged) ·
+  `shell: <cmd>`. Regex is the Rust `regex` crate: **no backreferences/lookaround**.
+- Branch with `match level:` (arms `ultra:`/`full:`/`lite:`/`else:`) or
+  `if exit failed: … else: …` (guards: `exit ok|failed`, `level <lvl>`, `--flag`).
+
+### The decision tree (this is what actually makes a filter correct)
+1. **Does the command emit machine-readable output?** (`--json`, `-o yaml`, env dumps,
+   bare `prettier <file>`, `<tool> run`/`exec` printing program stdout.) If so, that path
+   must pass **byte-exact** — branch it out and `raw` it. `if --json: raw` /
+   `elif -o json: raw`. Never `keep`/`head` structured or passthrough output: it
+   corrupts JSON or hides results.
+2. **On failure, is the failure short or IS the failure the bloat?**
+   - Short errors (grep/find/rg/ls): `if exit failed: raw` (carry the error verbatim),
+     with `or "no matches"` for the empty-but-ok case.
+   - Noisy builds (tsc/mvn/gradle/dotnet): a failed build is *exactly* when you want
+     `[ERROR]` lines pulled from hundreds of progress lines — run your extraction on
+     failure too, with `or-shell: tail 50` as the over-prune safety net.
+3. **Otherwise, scale by level.** `match level:` with `head auto`, or explicit
+   `ultra/full/lite` head/tail caps. Drop progress/spinner noise with `drop /re/` first.
+
+### Skeleton to adapt (covers most tools)
+```
+*:
+    if exit failed:
+        raw
+        or "<tool>: nothing to report"
+    else:
+        match level:
+            ultra: head 20
+            lite:  head 200
+            else:  head 60
+```
+Add a structured-output guard arm above it when step 1 applies; split into per-subcommand
+rules (`status:`, `diff:`, …) when subcommands need different treatment.
+
+### Validate (always, before declaring done)
+    ./scripts/validate.py plugins/<command>
+
+Checks parse + per-level reduction against each `tests.yml` case (honoring its real
+`exit`), purely via `lowfat filter` — no install, no trust. Samples must be **byte-faithful**
+to real command output; never add inline `# synthetic` annotations (they leak into filtered
+output and skew line counts) — mark synthesized samples `synthetic: true` in `tests.yml`.
+
+### Prompting another model to build one
+Hand it: this section + the target plugin dir + 2-3 real captured samples (`<command> … |
+tee samples/<case>.txt`). Tell it to (1) classify each subcommand via the decision tree
+above, (2) write `filter.lf` + `lowfat.toml` + `tests.yml`, (3) run `./scripts/validate.py`
+and iterate until green. The single highest-leverage instruction: **"structured and
+passthrough output must survive byte-exact — branch and `raw` it, never filter it."** That
+one rule prevents the most damaging class of bug (silently corrupted JSON / hidden results).
+
 ## Reference
 - `docs/spec/lowfat-filter-dsl.md` — authoring `.lf` filters (for adding/editing plugins).
 - `docs/notes/lowfat-internals.md` — how lowfat resolves home/trust/levels/pipeline.

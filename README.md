@@ -8,6 +8,20 @@ filter that **keeps the signal and drops the bloat** at three intensities — `u
 lines) · `full` (~30) · `lite` (~60). This repo ships the skill that installs/syncs it and
 the community plugins that teach it how to compact each tool.
 
+> ### 🥡 The easy way: install lowfat *as a skill*
+>
+> **This whole repo is an agent skill.** You don't set lowfat up by hand — you hand the
+> repo to your coding agent and let it do the work. Install it once (see
+> [Install ↓](#install)), then run **`/lowfat-pantry`** inside any project. The agent
+> checks for lowfat (handing you the one install command to run if it's missing — the
+> binary install is yours, never the agent's), seeds a `.lowfat` config tuned to your
+> toolchain, picks the filters that match your stack, and *offers* to wire the
+> command-rewrite hook (opt-in, off by default). Re-run it anytime to re-sync.
+>
+> Building your own filter? The skill carries a [fast-path authoring
+> guide](SKILL.md#authoring-a-pantry-plugin--fast-path) so your agent can write a correct
+> plugin without reading the full DSL spec.
+
 ## What's here
 
     SKILL.md                     the /lowfat-pantry skill (setup + pantry sync as agent steps)
@@ -37,7 +51,7 @@ and never corrupts machine-readable output (JSON/env/formatted code pass through
 This repo is an agent skill (Claude Code, or any skills-compatible agent). Install it
 however you manage skills:
 
-- **ACE** — import via `school.toml` `[[imports]]`; it materializes at `school/skills/lowfat-pantry/`.
+- **[ACE](https://ace-rs.dev/)** — import via `school.toml` `[[imports]]`; it materializes at `school/skills/lowfat-pantry/`.
 - **skills.sh** — the regular skills installer also works: `npx skills add chakrit/lowfat-pantry`.
 - **Manual** — clone it where your skill tooling looks, or point your agent at it.
 
@@ -47,8 +61,11 @@ lowfat home (`<LOWFAT_HOME>/plugins/`). lowfat itself: `cargo install lowfat`.
 
 ## Authoring a plugin
 
-Read `docs/spec/lowfat-filter-dsl.md` (the full `.lf` reference + cookbook), mirror an
-existing plugin (`plugins/rg` is the simplest, `plugins/gh` shows flag guards), then:
+Letting an agent do it? Point it at the [fast-path
+guide](SKILL.md#authoring-a-pantry-plugin--fast-path) in the skill — enough to write a
+correct filter without the full spec. Doing it by hand: read
+`docs/spec/lowfat-filter-dsl.md` (the full `.lf` reference + cookbook), mirror an existing
+plugin (`plugins/rg` is the simplest, `plugins/gh` shows flag guards), then:
 
     ./scripts/validate.py plugins/<your-plugin>
 
