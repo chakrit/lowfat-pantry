@@ -6,8 +6,8 @@ around its limits. Not pantry features — these live in `zdk/lowfat`
 `lowfat-runner`/`lowfat`) that the `.lf` DSL and run path come from.
 
 Each item: the problem, what the pantry does *instead* (the workaround we carry), and the
-proposed shape. **This file is the log — nothing is filed upstream.** If an item ever does
-get an issue, link it under that item; otherwise the `Upstream issue` field stays empty.
+proposed shape. **This file is the log; issues are filed upstream only on request.** When
+one is, link it under that item; otherwise the `Upstream issue` field stays empty.
 
 Context (checked **2026-06-16**): `zdk/lowfat` had 0 open / 1 closed issue (#9, an unrelated
 git-compact `Broken pipe`) and 1 open PR (#8, MCP server) — none of these items exist there.
@@ -28,7 +28,7 @@ The copies rot whenever the standalone originals change. See backlog → "Wrappe
 file's `define`d macros into the current namespace at parse time. Lets shared tool logic
 live once in a library `.lf` that both the standalone filter and any wrapper `include`s.
 
-**Upstream issue.** _none filed yet_
+**Upstream issue.** <https://github.com/zdk/lowfat/issues/14>
 
 ## 2. Wrapper-unwrap (runner-prefix re-resolution) — the cleanest fix
 
