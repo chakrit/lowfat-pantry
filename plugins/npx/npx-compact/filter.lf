@@ -1,27 +1,137 @@
 #!/usr/bin/env lowfat-filter
-# npx-compact - drop npm fetch chatter, then cap conservatively.
+# npx-compact — npx keys filter selection on `npx`, so `npx eslint`/`npx tsc`
+# never reach eslint-compact/tsc-compact. This filter strips npm's install/fetch
+# preamble, detects the wrapped tool from $args (handling npx flags like
+# `-y`/`-p typescript`), and applies that tool's compaction; unknown tools get a
+# conservative cap.
+#
+# DRIFT CONTRACT: the eslint/prettier/tsc branches are ported from
+# plugins/{eslint,prettier,tsc}/*/filter.lf. The engine has no cross-filter
+# dispatch and macros are file-local, so this is a deliberate copy. Edit those
+# originals -> mirror here. The real fix is wrapper-unwrap in lowfat-core — see
+# the "Wrapper commands" section in docs/spec/pantry-plugin-backlog.md and the
+# wishlist in docs/spec/lf-wishlist.md. The sibling uv-compact follows the same pattern.
+#
+# Limitation: dispatch covers eslint/prettier/tsc (the tools commonly run via
+# npx). next/playwright/prisma are near-always package scripts (`npm run …`) and
+# their subcommand-keyed selectors don't map onto npx args, so they fall to the
+# generic cap.
 # env: $sub $level $exit $args
 
-define drop-npm-fetch:
-    drop /^Need to install the following packages:/
-    drop /^Ok to proceed\?/
-    drop /^[@[:alnum:]_\/.-]+@[0-9][^[:space:]]*$/
-    drop /^npm (WARN|notice)/
-    drop /^npm http fetch /
-    drop /^added [0-9]+ packages/
-    drop /^audited [0-9]+ packages/
+define npx-dispatch:
+    python: |
+        import os
+        import re
+        import sys
+
+        level = os.environ.get("level", "full")
+        exit_code = os.environ.get("exit", "0")
+        args = os.environ.get("args", "").split()
+        lines = sys.stdin.read().splitlines()
+
+        # --- strip npm's install/fetch preamble (npx prints it before tool output) ---
+        CHATTER = (
+            re.compile(r"^Need to install the following packages:"),
+            re.compile(r"^Ok to proceed\?"),
+            re.compile(r"^[@\w/.\-]+@[0-9]\S*$"),       # create-vite@5.5.0
+            re.compile(r"^npm (WARN|notice)"),
+            re.compile(r"^npm http fetch "),
+            re.compile(r"^added [0-9]+ packages"),
+            re.compile(r"^audited [0-9]+ packages"),
+        )
+        lines = [ln for ln in lines if not any(p.match(ln) for p in CHATTER)]
+
+        def has(*flags):
+            return any(f in args for f in flags)
+
+        # --- resolve the wrapped tool (npx <flags> <tool> …) ---
+        VALUE_FLAGS = {"-p", "--package", "-c", "--call"}
+        tool = None
+        i = 0
+        while i < len(args):
+            t = args[i]
+            if t in VALUE_FLAGS:
+                i += 2
+                continue
+            if t.startswith("-"):
+                i += 1
+                continue
+            tool = os.path.basename(t)
+            break
+
+        def emit(out):
+            for line in out:
+                print(line)
+
+        def capped(n):
+            emit(lines[:n])
+
+        def tailed(n):
+            emit(lines[-n:] if n < len(lines) else lines)
+
+        def blank(out):
+            return not [ln for ln in out if ln.strip()]
+
+        # --- eslint: ported from plugins/eslint/*/filter.lf ---
+        def do_eslint():
+            if has("--format", "-f") and "json" in args:
+                emit(lines)
+                return
+            limit = {"ultra": 25, "full": 60, "lite": 200}.get(level, 60)
+            out = [ln for ln in lines if ln.strip()][:limit]
+            if not out:
+                print("eslint: clean")
+            else:
+                emit(out)
+
+        # --- prettier: ported from plugins/prettier/*/filter.lf ---
+        def do_prettier():
+            if exit_code != "0":
+                emit(lines)
+                return
+            if has("--check", "-c"):
+                if blank(lines):
+                    print("prettier: all files formatted")
+                else:
+                    capped(40)
+                return
+            if has("--write", "-w"):
+                tailed({"ultra": 6, "full": 40, "lite": 200}.get(level, 40))
+                return
+            emit(lines)                          # bare prettier prints formatted code -> raw
+
+        # --- tsc: ported from plugins/tsc/*/filter.lf ---
+        def do_tsc():
+            if exit_code != "0":
+                if level == "ultra":
+                    keep = [ln for ln in lines if re.search(
+                        r"(error TS[0-9]+|^Found [0-9]+ error|^Errors  Files|^\s*[0-9]+\s+\S)", ln)]
+                    if not keep:
+                        keep = [ln for ln in lines if re.search(r"error TS[0-9]+", ln)]
+                    emit(keep[:40])
+                else:
+                    capped(200 if level == "lite" else 80)
+                return
+            if blank(lines):
+                print("tsc: no errors")
+            else:
+                capped(10)
+
+        # --- unknown tool: conservative cap (npx generic) ---
+        def do_generic():
+            if exit_code != "0":
+                emit(lines)
+                return
+            capped({"ultra": 40, "full": 80, "lite": 160}.get(level, 80))
+
+        if tool == "eslint":
+            do_eslint()
+        elif tool == "prettier":
+            do_prettier()
+        elif tool == "tsc":
+            do_tsc()
+        else:
+            do_generic()
 
 *:
-    if exit failed:
-        raw
-    else:
-        match level:
-            ultra:
-                drop-npm-fetch
-                head 40
-            lite:
-                drop-npm-fetch
-                head 160
-            else:
-                drop-npm-fetch
-                head 80
+    npx-dispatch

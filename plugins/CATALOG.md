@@ -1,4 +1,4 @@
-# Pantry catalog — all 51 plugins
+# Pantry catalog — all 52 plugins
 
 What each plugin actually does beyond a dumb head-cap, and the gotchas to know before
 trusting it. Grouped by area; every plugin scales across `ultra`/`full`/`lite` and ships
@@ -42,8 +42,12 @@ plugins (git, docker, grep, find, ls, tree) are not listed here.
 - **bun** — install keeps the `N packages installed` summary over the `+ pkg@ver` list;
   test keeps failing specs + tallies, drops `✓` lines at ultra. `run`/`build`/`x` bodies
   are never keyword-filtered.
-- **npx** — strips npm fetch chatter around the child tool, then caps conservatively
-  (the child's output is not assumed to be anything).
+- **npx** — wrapper-aware (like `uv`): strips npm install/fetch preamble, detects the
+  wrapped tool from args (handling `-y`, `-p typescript`), and dispatches — eslint/prettier/
+  tsc logic **ported** from their standalone filters under a drift contract (filter header).
+  Bare `npx prettier <file>` and `-f json` pass through raw (no code/JSON corruption);
+  unknown tools (`create-*`, etc.) get a conservative cap. Gotcha: the ported bodies drift
+  if the originals change — real fix is wrapper-unwrap in lowfat-core (`docs/spec/lf-wishlist.md`).
 - **next** — keeps build warnings/errors and summaries; trims the route table at ultra.
 - **prisma** — strips banner/box art; keeps migration progress, client-generation
   markers, and `Error:` lines.
@@ -64,6 +68,14 @@ plugins (git, docker, grep, find, ls, tree) are not listed here.
 - **pip** — drops resolver chatter (`Collecting`, `Downloading`, `Requirement already
   satisfied`); keeps `Successfully installed`/`Installing collected` and errors.
   Gotcha: a fully-cached install can compact to just `pip: ok`.
+- **uv** (also `uvx`) — wrapper-aware: parses the arg string to find the wrapped tool
+  (`uv run pytest`, `uvx ruff`, `uv tool run`, `python -m`, skipping value-flags like
+  `--with X`) and applies that tool's compaction — pytest/ruff logic is **copied** from
+  their standalone filters under a drift contract (filter header). uv's own
+  `sync`/`lock`/`pip`/`add` collapse to the install summary (`+ pkg==ver`, `Resolved`/
+  `Installed`/`Audited`); arbitrary `uv run <prog>` is head-capped, never keyword-filtered.
+  Gotcha: the copied bodies drift if pytest/ruff change — the real fix is wrapper-unwrap in
+  lowfat-core (see backlog "Wrapper commands"). `npx` chose generic-cap instead of dispatch.
 
 ## Go / JVM / .NET
 

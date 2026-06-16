@@ -32,7 +32,7 @@ the community plugins that teach it how to compact each tool.
 
 ## Plugins
 
-**51 community filters** beyond lowfat's six bundled ones (git, docker, grep, find, ls,
+**52 community filters** beyond lowfat's six bundled ones (git, docker, grep, find, ls,
 tree) — the full audited list with per-plugin notes and gotchas lives in
 **[`plugins/CATALOG.md`](plugins/CATALOG.md)**. A taste:
 

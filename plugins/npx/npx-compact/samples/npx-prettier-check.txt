@@ -1,0 +1,7 @@
+npm WARN exec The following package was not found and will be installed: prettier@3.3.2
+npm http fetch GET 200 https://registry.npmjs.org/prettier 94ms
+Checking formatting...
+[warn] src/api.ts
+[warn] src/components/Button.tsx
+[warn] src/server.ts
+[warn] Code style issues found in 3 files. Run Prettier with --write to fix.

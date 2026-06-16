@@ -1,0 +1,25 @@
+# Golden/invariant cases for uv-compact. Dispatch is driven by args (the wrapped
+# tool), so each case carries a realistic uv/uvx arg string. Synthetic samples.
+command: uv
+synthetic: true
+cases:
+  - sample: samples/uv-run-pytest-fail.txt
+    sub: run
+    args: "run pytest tests/"
+    exit: 1
+    levels: [lite, full, ultra]
+  - sample: samples/uv-run-ruff.txt
+    sub: ruff
+    args: "ruff check src/"
+    exit: 1
+    levels: [lite, full, ultra]
+  - sample: samples/uv-sync.txt
+    sub: sync
+    args: "sync"
+    exit: 0
+    levels: [lite, full, ultra]
+  - sample: samples/uv-run-app.txt
+    sub: run
+    args: "run uvicorn app:api"
+    exit: 0
+    levels: [lite, full, ultra]

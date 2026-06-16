@@ -1,0 +1,29 @@
+Resolved 41 packages in 2ms
+Installed 41 packages in 38ms
+============================= test session starts ==============================
+platform darwin -- Python 3.12.4, pytest-8.2.2, pluggy-1.5.0
+rootdir: /repo
+plugins: anyio-4.4.0, cov-5.0.0
+collected 58 items
+
+tests/test_api.py ............F............
+tests/test_config.py .......
+tests/test_models.py ............F....
+tests/test_tasks.py ............
+
+=================================== FAILURES ===================================
+________________________ test_checkout_retries_gateway _________________________
+tests/test_api.py:88: in test_checkout_retries_gateway
+    response = client.post("/checkout", json=payload)
+    assert response.status_code == 200
+E   assert 503 == 200
+E    +  where 503 = <Response [503]>.status_code
+________________________ test_model_serializes_decimal _________________________
+tests/test_models.py:142: in test_model_serializes_decimal
+    assert order.to_dict()["total"] == "19.99"
+E   AssertionError: assert Decimal('19.99') == '19.99'
+E    +  where Decimal('19.99') = <Order id=7>.total
+=========================== short test summary info ============================
+FAILED tests/test_api.py::test_checkout_retries_gateway - assert 503 == 200
+FAILED tests/test_models.py::test_model_serializes_decimal - AssertionError
+========================= 2 failed, 56 passed in 1.84s =========================

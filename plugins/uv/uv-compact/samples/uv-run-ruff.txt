@@ -1,0 +1,9 @@
+src/checkout/api.py:12:1: F401 [*] `os` imported but unused
+src/checkout/api.py:48:5: E722 Do not use bare `except`
+src/checkout/config.py:7:80: E501 Line too long (94 > 88)
+src/checkout/models.py:33:9: B008 Do not perform function call in argument defaults
+src/checkout/models.py:91:1: F811 Redefinition of unused `Order`
+src/checkout/tasks.py:5:1: I001 [*] Import block is un-sorted or un-formatted
+src/checkout/tasks.py:60:13: SIM108 Use ternary operator instead of if-else-block
+Found 7 errors.
+No fixes available (2 hidden fixes can be enabled with the `--unsafe-fixes` option).

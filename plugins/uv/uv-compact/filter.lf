@@ -1,0 +1,171 @@
+#!/usr/bin/env lowfat-filter
+# uv-compact — uv keys filter selection on the command word, so `uv run pytest`
+# / `uvx ruff` / `uv tool run …` never reach pytest-compact/ruff-compact (those
+# claim `pytest`/`ruff`, not `uv`). This filter unwraps the runner prefix, detects
+# the wrapped tool from $args, and applies that tool's compaction; it also
+# compacts uv's own resolver/install noise and caps arbitrary `uv run <prog>`.
+#
+# DRIFT CONTRACT: the pytest and ruff branches are copied from
+# plugins/pytest/pytest-compact and plugins/ruff/ruff-compact. The engine has no
+# cross-filter dispatch and macros are file-local, so this is a deliberate copy.
+# Edit those originals -> mirror the change here. The real fix is wrapper-unwrap
+# in lowfat-core (covers npx/poetry run/pnpm exec/bunx/pdm run too) — see the
+# "Wrapper commands" section in docs/spec/pantry-plugin-backlog.md.
+# env: $sub $level $exit $args
+
+define uv-dispatch:
+    python: |
+        import os
+        import re
+        import sys
+
+        level = os.environ.get("level", "full")
+        exit_code = os.environ.get("exit", "0")
+        args = os.environ.get("args", "").split()
+        lines = sys.stdin.read().splitlines()
+
+        # uv's own subcommands — anything else in arg0 (after stripping a runner
+        # prefix) is the wrapped tool, e.g. `uvx ruff` where arg0 is `ruff`.
+        UV_SUBS = {"run", "tool", "sync", "lock", "add", "remove", "pip",
+                   "export", "venv", "build", "init", "python", "tree", "cache",
+                   "self", "publish", "version", "help"}
+
+        rest = args[:]
+        wrapped = True
+        if rest and rest[0] == "run":
+            rest = rest[1:]                       # uv run <tool>
+        elif len(rest) >= 2 and rest[0] == "tool" and rest[1] == "run":
+            rest = rest[2:]                       # uv tool run <tool>
+        elif rest and rest[0] not in UV_SUBS:
+            pass                                  # uvx <tool>: arg0 is the tool
+        else:
+            wrapped = False                       # uv sync / pip / lock / ...
+
+        # uv-run options that take a separate-token value; their value must not
+        # be mistaken for the wrapped tool (`uv run --with httpx pytest`). Glued
+        # forms (--with=httpx, -p3.12) are single tokens, caught by the `-` skip.
+        VALUE_FLAGS = {"--with", "--with-requirements", "--with-editable",
+                       "-p", "--python", "--directory", "--project", "--index",
+                       "--default-index", "--extra-index-url", "--index-url",
+                       "-c", "--constraint", "--override", "--resolution",
+                       "--prerelease", "--index-strategy", "--keyring-provider",
+                       "--refresh-package", "--no-binary-package",
+                       "--only-binary-package", "--cache-dir", "--config-file",
+                       "--config-setting", "--exclude-newer"}
+        tool = None
+        if wrapped:
+            i = 0
+            while i < len(rest):                  # first non-flag/non-value token is the tool
+                t = rest[i]
+                if t in VALUE_FLAGS:
+                    i += 2
+                    continue
+                if t.startswith("-"):
+                    i += 1
+                    continue
+                tool = t
+                break
+            if tool in ("python", "python3") and "-m" in rest:
+                j = rest.index("-m")              # python -m pytest -> pytest
+                if j + 1 < len(rest):
+                    tool = rest[j + 1]
+            if tool:
+                tool = os.path.basename(tool)
+
+        def emit(out):
+            for line in out:
+                print(line)
+
+        # --- pytest: copied from plugins/pytest/pytest-compact/filter.lf ---
+        def do_pytest():
+            limit = {"ultra": 18, "full": 45, "lite": 90}.get(level, 45)
+            if exit_code == "0":
+                for line in lines:
+                    m = re.search(r"\d+ passed", line)
+                    if m:
+                        print(f"pytest: {m.group(0)}")
+                        return
+                print("pytest: passed")
+                return
+            out = []
+            in_section = False
+            in_summary = False
+            for line in lines:
+                if re.match(r"=+ (FAILURES|ERRORS) =+", line):
+                    in_section, in_summary = True, False
+                    out.append(line)
+                    continue
+                if re.match(r"=+ short test summary info =+", line):
+                    in_section, in_summary = False, True
+                    out.append(line)
+                    continue
+                if re.match(r"=+ .* (failed|error|errors).* =+", line):
+                    out.append(line)
+                    continue
+                if in_summary and (line.startswith("FAILED ") or line.startswith("ERROR ")):
+                    out.append(line)
+                    continue
+                if level == "ultra":
+                    if line.startswith("_____") or line.startswith("FAILED ") or line.startswith("ERROR ") or line.startswith("E   "):
+                        out.append(line)
+                elif in_section:
+                    out.append(line)
+            emit(out[:limit + 8])
+
+        # --- ruff: copied from plugins/ruff/ruff-compact/filter.lf ---
+        def do_ruff():
+            limit = {"ultra": 15, "full": 35, "lite": 70}.get(level, 35)
+            findings = []
+            summary = None
+            for line in lines:
+                if re.match(r"^[^:]+:[0-9]+:[0-9]+: [A-Z][A-Z0-9]+ ", line):
+                    findings.append(line)
+                    continue
+                if re.match(r"^(Found [0-9]+ error|All checks passed)", line):
+                    summary = line
+            if findings:
+                emit(findings[:limit])
+                if summary:
+                    print(summary)
+            elif exit_code == "0":
+                print("ruff: clean")
+            else:
+                emit(lines)
+
+        # --- uv's own resolver/install output ---
+        def do_uv_native():
+            limit = {"ultra": 15, "full": 30, "lite": 60}.get(level, 30)
+            keep = []
+            for line in lines:
+                s = line.strip()
+                if re.match(r"^(Resolved|Installed|Audited|Prepared|Uninstalled|Removed|Updated|Built|Downloaded) ", s):
+                    keep.append(line)
+                    continue
+                if re.match(r"^[+-] \S", s):       # + pkg==ver / - pkg==ver
+                    keep.append(line)
+                    continue
+                if re.search(r"(?i)error|warning|failed|panic", s):
+                    keep.append(line)
+            if keep:
+                emit(keep[:limit])
+            elif exit_code == "0":
+                print(f"uv {args[0] if args else ''}: ok".rstrip())
+            else:
+                emit(lines[:limit])
+
+        # --- arbitrary `uv run <prog>`: cap only, never keyword-filter ---
+        def do_generic():
+            limit = {"ultra": 20, "full": 40, "lite": 80}.get(level, 40)
+            emit(lines[:limit])
+
+        if not wrapped:
+            do_uv_native()
+        elif tool == "pytest":
+            do_pytest()
+        elif tool == "ruff":
+            do_ruff()
+        else:
+            do_generic()
+
+*:
+    uv-dispatch

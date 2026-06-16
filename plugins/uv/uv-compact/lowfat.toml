@@ -1,0 +1,7 @@
+[plugin]
+name = "uv-compact"
+version = "0.1.0"
+description = "Unwrap uv run/uvx/uv tool run to the wrapped tool's compaction (pytest, ruff); compact uv's own resolver/install noise; cap other passthrough"
+category = "uv"
+commands = ["uv", "uvx"]
+subcommands = ["run", "tool", "sync", "lock", "add", "pip"]
