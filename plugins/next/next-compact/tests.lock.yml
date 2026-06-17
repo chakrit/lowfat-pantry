@@ -1,0 +1,274 @@
+- name: plugins/next/next-compact/tests.cue \ next-compact \ samples/next-build.txt lite
+  commands:
+    - command: lowfat filter plugins/next/next-compact/filter.lf --sub=build --args='' --exit=0 --level=lite < plugins/next/next-compact/samples/next-build.txt
+      checks:
+        - name: stdout
+          data:
+            - ' ✓ Compiled successfully in 8.0s'
+            - '   Linting and checking validity of types ...'
+            - ""
+            - Route (app)                                 Size  First Load JS
+            - ┌ ○ /                                      184 B         108 kB
+            - ├ ○ /_not-found                            984 B         101 kB
+            - ├ ƒ /api/health                            140 B         101 kB
+            - ├ ƒ /api/users                             140 B         101 kB
+            - ├ ○ /dashboard                            2.8 kB        154 kB
+            - ├ ○ /dashboard/activity                   3.1 kB        158 kB
+            - ├ ○ /dashboard/settings                   2.2 kB        151 kB
+            - ├ ƒ /projects/[id]                        5.4 kB        188 kB
+            - ├ ○ /projects/new                         3.7 kB        162 kB
+            - ├ ○ /reports                              4.0 kB        173 kB
+            - ├ ○ /reports/export                       2.9 kB        150 kB
+            - └ ○ /status                               1.1 kB        112 kB
+            - + First Load JS shared by all             101 kB
+            - '  ├ chunks/4bd1b696-64f10a.js            53.2 kB'
+            - '  ├ chunks/517-3f1ab2.js                 45.9 kB'
+            - '  └ other shared chunks (total)          1.84 kB'
+            - ""
+            - ○  (Static)   prerendered as static content
+            - ƒ  (Dynamic)  server-rendered on demand
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/next/next-compact/filter.lf --sub=build --args='' --exit=0 --level=lite < plugins/next/next-compact/samples/next-build.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 24
+            - bytes 1242
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/next/next-compact/tests.cue \ next-compact \ samples/next-build.txt full
+  commands:
+    - command: lowfat filter plugins/next/next-compact/filter.lf --sub=build --args='' --exit=0 --level=full < plugins/next/next-compact/samples/next-build.txt
+      checks:
+        - name: stdout
+          data:
+            - ' ✓ Compiled successfully in 8.0s'
+            - '   Linting and checking validity of types ...'
+            - ""
+            - Route (app)                                 Size  First Load JS
+            - ┌ ○ /                                      184 B         108 kB
+            - ├ ○ /_not-found                            984 B         101 kB
+            - ├ ƒ /api/health                            140 B         101 kB
+            - ├ ƒ /api/users                             140 B         101 kB
+            - ├ ○ /dashboard                            2.8 kB        154 kB
+            - ├ ○ /dashboard/activity                   3.1 kB        158 kB
+            - ├ ○ /dashboard/settings                   2.2 kB        151 kB
+            - ├ ƒ /projects/[id]                        5.4 kB        188 kB
+            - ├ ○ /projects/new                         3.7 kB        162 kB
+            - ├ ○ /reports                              4.0 kB        173 kB
+            - ├ ○ /reports/export                       2.9 kB        150 kB
+            - └ ○ /status                               1.1 kB        112 kB
+            - + First Load JS shared by all             101 kB
+            - '  ├ chunks/4bd1b696-64f10a.js            53.2 kB'
+            - '  ├ chunks/517-3f1ab2.js                 45.9 kB'
+            - '  └ other shared chunks (total)          1.84 kB'
+            - ""
+            - ○  (Static)   prerendered as static content
+            - ƒ  (Dynamic)  server-rendered on demand
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/next/next-compact/filter.lf --sub=build --args='' --exit=0 --level=full < plugins/next/next-compact/samples/next-build.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 24
+            - bytes 1242
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/next/next-compact/tests.cue \ next-compact \ samples/next-build.txt ultra
+  commands:
+    - command: lowfat filter plugins/next/next-compact/filter.lf --sub=build --args='' --exit=0 --level=ultra < plugins/next/next-compact/samples/next-build.txt
+      checks:
+        - name: stdout
+          data:
+            - ' ✓ Compiled successfully in 8.0s'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/next/next-compact/filter.lf --sub=build --args='' --exit=0 --level=ultra < plugins/next/next-compact/samples/next-build.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 35
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/next/next-compact/tests.cue \ next-compact \ samples/next-build-warning.txt lite
+  commands:
+    - command: lowfat filter plugins/next/next-compact/filter.lf --sub=build --args='' --exit=0 --level=lite < plugins/next/next-compact/samples/next-build-warning.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Warning: React Hook useEffect has a missing dependency: ''loadProjects''. Either include it or remove the dependency array.'
+            - ' ✓ Compiled successfully in 9.1s'
+            - '   Linting and checking validity of types ...'
+            - ""
+            - Route (app)                                 Size  First Load JS
+            - ┌ ○ /                                      184 B         108 kB
+            - ├ ○ /dashboard                            2.8 kB        154 kB
+            - ├ ○ /settings                             2.1 kB        151 kB
+            - └ ƒ /api/projects                         140 B         101 kB
+            - + First Load JS shared by all             101 kB
+            - ○  (Static)   prerendered as static content
+            - ƒ  (Dynamic)  server-rendered on demand
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/next/next-compact/filter.lf --sub=build --args='' --exit=0 --level=lite < plugins/next/next-compact/samples/next-build-warning.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 13
+            - bytes 673
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/next/next-compact/tests.cue \ next-compact \ samples/next-build-warning.txt full
+  commands:
+    - command: lowfat filter plugins/next/next-compact/filter.lf --sub=build --args='' --exit=0 --level=full < plugins/next/next-compact/samples/next-build-warning.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Warning: React Hook useEffect has a missing dependency: ''loadProjects''. Either include it or remove the dependency array.'
+            - ' ✓ Compiled successfully in 9.1s'
+            - '   Linting and checking validity of types ...'
+            - ""
+            - Route (app)                                 Size  First Load JS
+            - ┌ ○ /                                      184 B         108 kB
+            - ├ ○ /dashboard                            2.8 kB        154 kB
+            - ├ ○ /settings                             2.1 kB        151 kB
+            - └ ƒ /api/projects                         140 B         101 kB
+            - + First Load JS shared by all             101 kB
+            - ○  (Static)   prerendered as static content
+            - ƒ  (Dynamic)  server-rendered on demand
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/next/next-compact/filter.lf --sub=build --args='' --exit=0 --level=full < plugins/next/next-compact/samples/next-build-warning.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 13
+            - bytes 673
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/next/next-compact/tests.cue \ next-compact \ samples/next-build-warning.txt ultra
+  commands:
+    - command: lowfat filter plugins/next/next-compact/filter.lf --sub=build --args='' --exit=0 --level=ultra < plugins/next/next-compact/samples/next-build-warning.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Warning: React Hook useEffect has a missing dependency: ''loadProjects''. Either include it or remove the dependency array.'
+            - ' ✓ Compiled successfully in 9.1s'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/next/next-compact/filter.lf --sub=build --args='' --exit=0 --level=ultra < plugins/next/next-compact/samples/next-build-warning.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 2
+            - bytes 157
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/next/next-compact/tests.cue \ next-compact \ samples/next-build-error.txt lite
+  commands:
+    - command: lowfat filter plugins/next/next-compact/filter.lf --sub=build --args='' --exit=1 --level=lite < plugins/next/next-compact/samples/next-build-error.txt
+      checks:
+        - name: stdout
+          data:
+            - '   ▲ Next.js 15.3.2'
+            - ""
+            - '   Creating an optimized production build ...'
+            - Failed to compile.
+            - ""
+            - ./app/dashboard/page.tsx
+            - 'Module not found: Can''t resolve ''@/components/project-list'''
+            - ""
+            - https://nextjs.org/docs/messages/module-not-found
+            - ""
+            - ./app/api/users/route.ts
+            - 'Type error: Route "app/api/users/route.ts" has an invalid "GET" export:'
+            - '  Type "{ params: { id: string; }; }" is not a valid type for the function''s second argument.'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/next/next-compact/filter.lf --sub=build --args='' --exit=1 --level=lite < plugins/next/next-compact/samples/next-build-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 13
+            - bytes 417
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/next/next-compact/tests.cue \ next-compact \ samples/next-build-error.txt full
+  commands:
+    - command: lowfat filter plugins/next/next-compact/filter.lf --sub=build --args='' --exit=1 --level=full < plugins/next/next-compact/samples/next-build-error.txt
+      checks:
+        - name: stdout
+          data:
+            - '   ▲ Next.js 15.3.2'
+            - ""
+            - '   Creating an optimized production build ...'
+            - Failed to compile.
+            - ""
+            - ./app/dashboard/page.tsx
+            - 'Module not found: Can''t resolve ''@/components/project-list'''
+            - ""
+            - https://nextjs.org/docs/messages/module-not-found
+            - ""
+            - ./app/api/users/route.ts
+            - 'Type error: Route "app/api/users/route.ts" has an invalid "GET" export:'
+            - '  Type "{ params: { id: string; }; }" is not a valid type for the function''s second argument.'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/next/next-compact/filter.lf --sub=build --args='' --exit=1 --level=full < plugins/next/next-compact/samples/next-build-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 13
+            - bytes 417
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/next/next-compact/tests.cue \ next-compact \ samples/next-build-error.txt ultra
+  commands:
+    - command: lowfat filter plugins/next/next-compact/filter.lf --sub=build --args='' --exit=1 --level=ultra < plugins/next/next-compact/samples/next-build-error.txt
+      checks:
+        - name: stdout
+          data:
+            - '   ▲ Next.js 15.3.2'
+            - ""
+            - '   Creating an optimized production build ...'
+            - Failed to compile.
+            - ""
+            - ./app/dashboard/page.tsx
+            - 'Module not found: Can''t resolve ''@/components/project-list'''
+            - ""
+            - https://nextjs.org/docs/messages/module-not-found
+            - ""
+            - ./app/api/users/route.ts
+            - 'Type error: Route "app/api/users/route.ts" has an invalid "GET" export:'
+            - '  Type "{ params: { id: string; }; }" is not a valid type for the function''s second argument.'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/next/next-compact/filter.lf --sub=build --args='' --exit=1 --level=ultra < plugins/next/next-compact/samples/next-build-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 13
+            - bytes 417
+        - name: exitcode
+          data:
+            - "0"

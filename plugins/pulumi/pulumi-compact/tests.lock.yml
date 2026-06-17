@@ -1,0 +1,698 @@
+- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-up.txt lite
+  commands:
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=up --args='up --yes' --exit=0 --level=lite < plugins/pulumi/pulumi-compact/samples/pulumi-up.txt
+      checks:
+        - name: stdout
+          data:
+            - ' +  random:index:RandomUuid svcToken25 create '
+            - ' +  random:index:RandomUuid svcToken26 create '
+            - ' +  random:index:RandomUuid svcToken27 create '
+            - ' +  random:index:RandomUuid svcToken28 create '
+            - ' ++ random:index:RandomPassword dbPassword create replacement [diff: ~length]'
+            - ' +- random:index:RandomPassword dbPassword replace [diff: ~length]'
+            - ' -  random:index:RandomUuid apiToken delete '
+            - ' -- random:index:RandomPassword dbPassword delete original [diff: ~length]'
+            - '    pulumi:pulumi:Stack payments-infra-dev  '
+            - 'Resources:'
+            - '    + 28 to create'
+            - '    - 1 to delete'
+            - '    +-1 to replace'
+            - '    30 changes. 2 unchanged'
+            - ""
+            - 'Updating (dev):'
+            - ""
+            - ' +  random:index:RandomUuid svcToken2 created (0.00s) '
+            - ' +  random:index:RandomUuid svcToken1 created (0.00s) '
+            - ' +  random:index:RandomUuid svcToken3 created (0.00s) '
+            - ' +  random:index:RandomUuid svcToken4 created (0.00s) '
+            - ' +  random:index:RandomUuid svcToken5 created (0.01s) '
+            - ' +  random:index:RandomUuid svcToken6 created (0.01s) '
+            - ' +  random:index:RandomUuid svcToken7 created (0.01s) '
+            - ' +  random:index:RandomUuid svcToken8 created (0.01s) '
+            - ' +  random:index:RandomUuid svcToken9 created (0.01s) '
+            - ' +  random:index:RandomUuid svcToken10 created (0.01s) '
+            - ' +  random:index:RandomUuid svcToken11 created (0.01s) '
+            - ' +  random:index:RandomUuid svcToken12 created (0.01s) '
+            - ' +  random:index:RandomUuid svcToken13 created (0.01s) '
+            - ' +  random:index:RandomUuid svcToken14 created (0.02s) '
+            - ' +  random:index:RandomUuid svcToken15 created (0.02s) '
+            - ' +  random:index:RandomUuid svcToken16 created (0.02s) '
+            - ' +  random:index:RandomUuid svcToken17 created (0.02s) '
+            - ' +  random:index:RandomUuid svcToken18 created (0.02s) '
+            - ' +  random:index:RandomUuid svcToken19 created (0.02s) '
+            - ' +  random:index:RandomUuid svcToken22 created (0.02s) '
+            - ' +  random:index:RandomUuid svcToken20 created (0.03s) '
+            - ' +  random:index:RandomUuid svcToken21 created (0.03s) '
+            - ' +  random:index:RandomUuid svcToken23 created (0.03s) '
+            - ' +  random:index:RandomUuid svcToken25 created (0.03s) '
+            - ' +  random:index:RandomUuid svcToken24 created (0.03s) '
+            - ' +  random:index:RandomUuid svcToken26 created (0.04s) '
+            - ' +  random:index:RandomUuid svcToken27 created (0.04s) '
+            - ' +  random:index:RandomUuid svcToken28 created (0.04s) '
+            - ' ++ random:index:RandomPassword dbPassword created replacement (0.12s) [diff: ~length]'
+            - ' +- random:index:RandomPassword dbPassword replaced (0.00s) [diff: ~length]'
+            - ' -  random:index:RandomUuid apiToken deleted (0.00s) '
+            - ' -- random:index:RandomPassword dbPassword deleted original (0.00s) [diff: ~length]'
+            - '    pulumi:pulumi:Stack payments-infra-dev  '
+            - 'Outputs:'
+            - '    host: "api-quality-raptor"'
+            - ""
+            - 'Resources:'
+            - '    + 28 created'
+            - '    - 1 deleted'
+            - '    +-1 replaced'
+            - '    30 changes. 2 unchanged'
+            - ""
+            - 'Duration: 1s'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=up --args='up --yes' --exit=0 --level=lite < plugins/pulumi/pulumi-compact/samples/pulumi-up.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 60
+            - bytes 2660
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-up.txt full
+  commands:
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=up --args='up --yes' --exit=0 --level=full < plugins/pulumi/pulumi-compact/samples/pulumi-up.txt
+      checks:
+        - name: stdout
+          data:
+            - ' +  random:index:RandomUuid svcToken14 created (0.02s) '
+            - ' +  random:index:RandomUuid svcToken15 created (0.02s) '
+            - ' +  random:index:RandomUuid svcToken16 created (0.02s) '
+            - ' +  random:index:RandomUuid svcToken17 created (0.02s) '
+            - ' +  random:index:RandomUuid svcToken18 created (0.02s) '
+            - ' +  random:index:RandomUuid svcToken19 created (0.02s) '
+            - ' +  random:index:RandomUuid svcToken22 created (0.02s) '
+            - ' +  random:index:RandomUuid svcToken20 created (0.03s) '
+            - ' +  random:index:RandomUuid svcToken21 created (0.03s) '
+            - ' +  random:index:RandomUuid svcToken23 created (0.03s) '
+            - ' +  random:index:RandomUuid svcToken25 created (0.03s) '
+            - ' +  random:index:RandomUuid svcToken24 created (0.03s) '
+            - ' +  random:index:RandomUuid svcToken26 created (0.04s) '
+            - ' +  random:index:RandomUuid svcToken27 created (0.04s) '
+            - ' +  random:index:RandomUuid svcToken28 created (0.04s) '
+            - ' ++ random:index:RandomPassword dbPassword created replacement (0.12s) [diff: ~length]'
+            - ' +- random:index:RandomPassword dbPassword replaced (0.00s) [diff: ~length]'
+            - ' -  random:index:RandomUuid apiToken deleted (0.00s) '
+            - ' -- random:index:RandomPassword dbPassword deleted original (0.00s) [diff: ~length]'
+            - '    pulumi:pulumi:Stack payments-infra-dev  '
+            - 'Outputs:'
+            - '    host: "api-quality-raptor"'
+            - ""
+            - 'Resources:'
+            - '    + 28 created'
+            - '    - 1 deleted'
+            - '    +-1 replaced'
+            - '    30 changes. 2 unchanged'
+            - ""
+            - 'Duration: 1s'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=up --args='up --yes' --exit=0 --level=full < plugins/pulumi/pulumi-compact/samples/pulumi-up.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 30
+            - bytes 1330
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-up.txt ultra
+  commands:
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=up --args='up --yes' --exit=0 --level=ultra < plugins/pulumi/pulumi-compact/samples/pulumi-up.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Resources:'
+            - '    + 28 to create'
+            - '    - 1 to delete'
+            - '    +-1 to replace'
+            - '    30 changes. 2 unchanged'
+            - 'Updating (dev):'
+            - '    pulumi:pulumi:Stack payments-infra-dev  '
+            - 'Outputs:'
+            - '    host: "api-quality-raptor"'
+            - 'Resources:'
+            - '    + 28 created'
+            - '    - 1 deleted'
+            - '    +-1 replaced'
+            - '    30 changes. 2 unchanged'
+            - 'Duration: 1s'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=up --args='up --yes' --exit=0 --level=ultra < plugins/pulumi/pulumi-compact/samples/pulumi-up.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 15
+            - bytes 298
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-up-change.txt full
+  commands:
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=up --args='up --yes' --exit=0 --level=full < plugins/pulumi/pulumi-compact/samples/pulumi-up-change.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Previewing update (dev):'
+            - ""
+            - ' ++ random:index:RandomPassword dbPassword create replacement [diff: ~length]'
+            - ' +- random:index:RandomPassword dbPassword replace [diff: ~length]'
+            - ' -- random:index:RandomPassword dbPassword delete original [diff: ~length]'
+            - '    pulumi:pulumi:Stack payments-infra-dev  '
+            - 'Resources:'
+            - '    +-1 to replace'
+            - '    30 unchanged'
+            - ""
+            - 'Updating (dev):'
+            - ""
+            - ' ++ random:index:RandomPassword dbPassword created replacement (0.08s) [diff: ~length]'
+            - ' +- random:index:RandomPassword dbPassword replaced (0.00s) [diff: ~length]'
+            - ' -- random:index:RandomPassword dbPassword deleted original (0.00s) [diff: ~length]'
+            - '    pulumi:pulumi:Stack payments-infra-dev  '
+            - 'Outputs:'
+            - '    host: "api-quality-raptor"'
+            - ""
+            - 'Resources:'
+            - '    +-1 replaced'
+            - '    30 unchanged'
+            - ""
+            - 'Duration: 1s'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=up --args='up --yes' --exit=0 --level=full < plugins/pulumi/pulumi-compact/samples/pulumi-up-change.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 24
+            - bytes 748
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-up-change.txt ultra
+  commands:
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=up --args='up --yes' --exit=0 --level=ultra < plugins/pulumi/pulumi-compact/samples/pulumi-up-change.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Previewing update (dev):'
+            - '    pulumi:pulumi:Stack payments-infra-dev  '
+            - 'Resources:'
+            - '    +-1 to replace'
+            - '    30 unchanged'
+            - 'Updating (dev):'
+            - '    pulumi:pulumi:Stack payments-infra-dev  '
+            - 'Outputs:'
+            - '    host: "api-quality-raptor"'
+            - 'Resources:'
+            - '    +-1 replaced'
+            - '    30 unchanged'
+            - 'Duration: 1s'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=up --args='up --yes' --exit=0 --level=ultra < plugins/pulumi/pulumi-compact/samples/pulumi-up-change.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 13
+            - bytes 276
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-preview.txt full
+  commands:
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=preview --args='' --exit=0 --level=full < plugins/pulumi/pulumi-compact/samples/pulumi-preview.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Previewing update (dev):'
+            - ""
+            - ' +  pulumi:pulumi:Stack payments-infra-dev create '
+            - ' +  random:index:RandomUuid apiToken create '
+            - ' +  random:index:RandomPassword dbPassword create '
+            - ' +  random:index:RandomPet hostName create '
+            - ' +  pulumi:pulumi:Stack payments-infra-dev create '
+            - 'Outputs:'
+            - '    host: [unknown]'
+            - ""
+            - 'Resources:'
+            - '    + 4 to create'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=preview --args='' --exit=0 --level=full < plugins/pulumi/pulumi-compact/samples/pulumi-preview.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 12
+            - bytes 327
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-preview.txt ultra
+  commands:
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=preview --args='' --exit=0 --level=ultra < plugins/pulumi/pulumi-compact/samples/pulumi-preview.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Previewing update (dev):'
+            - 'Outputs:'
+            - '    host: [unknown]'
+            - 'Resources:'
+            - '    + 4 to create'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=preview --args='' --exit=0 --level=ultra < plugins/pulumi/pulumi-compact/samples/pulumi-preview.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 5
+            - bytes 83
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-preview-diff.txt full
+  commands:
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=preview --args='preview --diff' --exit=0 --level=full < plugins/pulumi/pulumi-compact/samples/pulumi-preview-diff.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Previewing update (dev):'
+            - '  pulumi:pulumi:Stack: (same)'
+            - '    [urn=urn:pulumi:dev::payments-infra::pulumi:pulumi:Stack::payments-infra-dev]'
+            - '    +-random:index/randomPassword:RandomPassword: (replace)'
+            - '        [id=none]'
+            - '        [urn=urn:pulumi:dev::payments-infra::random:index/randomPassword:RandomPassword::dbPassword]'
+            - '        bcryptHash: [secret]'
+            - '      ~ id        : "none" => [unknown]'
+            - '      ~ length    : 32 => 40'
+            - '        lower     : true'
+            - '        minLower  : 0'
+            - '        minNumeric: 0'
+            - '        minSpecial: 0'
+            - '        minUpper  : 0'
+            - '        number    : true'
+            - '        numeric   : true'
+            - '        result    : [secret]'
+            - '        special   : true'
+            - '        upper     : true'
+            - 'Resources:'
+            - '    +-1 to replace'
+            - '    30 unchanged'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=preview --args='preview --diff' --exit=0 --level=full < plugins/pulumi/pulumi-compact/samples/pulumi-preview-diff.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 22
+            - bytes 703
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-preview-err.txt lite
+  commands:
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=preview --args='' --exit=1 --level=lite < plugins/pulumi/pulumi-compact/samples/pulumi-preview-err.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Previewing update (dev):'
+            - ""
+            - '    pulumi:pulumi:Stack payments-infra-dev  3 messages'
+            - 'Diagnostics:'
+            - '  pulumi:pulumi:Stack (payments-infra-dev):'
+            - "    \e[31mError\e[0m: error resolving type of resource hostName: unable to find resource type \"random:RandomBogus\" in resource provider \"random\""
+            - '      on Pulumi.yaml line 66:'
+            - "      66:     type: \e[1;4mrandom:RandomBogus\e[0m"
+            - ""
+            - 'Resources:'
+            - '    1 unchanged'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=preview --args='' --exit=1 --level=lite < plugins/pulumi/pulumi-compact/samples/pulumi-preview-err.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 11
+            - bytes 388
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-preview-err.txt full
+  commands:
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=preview --args='' --exit=1 --level=full < plugins/pulumi/pulumi-compact/samples/pulumi-preview-err.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Previewing update (dev):'
+            - ""
+            - '    pulumi:pulumi:Stack payments-infra-dev  3 messages'
+            - 'Diagnostics:'
+            - '  pulumi:pulumi:Stack (payments-infra-dev):'
+            - "    \e[31mError\e[0m: error resolving type of resource hostName: unable to find resource type \"random:RandomBogus\" in resource provider \"random\""
+            - '      on Pulumi.yaml line 66:'
+            - "      66:     type: \e[1;4mrandom:RandomBogus\e[0m"
+            - ""
+            - 'Resources:'
+            - '    1 unchanged'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=preview --args='' --exit=1 --level=full < plugins/pulumi/pulumi-compact/samples/pulumi-preview-err.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 11
+            - bytes 388
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-preview-err.txt ultra
+  commands:
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=preview --args='' --exit=1 --level=ultra < plugins/pulumi/pulumi-compact/samples/pulumi-preview-err.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Previewing update (dev):'
+            - "    pulumi:pulumi:Stack payments-infra-dev running \e[31mError\e[0m: error resolving type of resource hostName: unable to find resource type \"random:RandomBogus\" in resource provider \"random\""
+            - '    pulumi:pulumi:Stack payments-infra-dev running   on Pulumi.yaml line 66:'
+            - "    pulumi:pulumi:Stack payments-infra-dev running   66:     type: \e[1;4mrandom:RandomBogus\e[0m"
+            - '    pulumi:pulumi:Stack payments-infra-dev  3 messages'
+            - 'Diagnostics:'
+            - '  pulumi:pulumi:Stack (payments-infra-dev):'
+            - "    \e[31mError\e[0m: error resolving type of resource hostName: unable to find resource type \"random:RandomBogus\" in resource provider \"random\""
+            - '      on Pulumi.yaml line 66:'
+            - "      66:     type: \e[1;4mrandom:RandomBogus\e[0m"
+            - 'Resources:'
+            - '    1 unchanged'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=preview --args='' --exit=1 --level=ultra < plugins/pulumi/pulumi-compact/samples/pulumi-preview-err.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 12
+            - bytes 749
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-destroy.txt lite
+  commands:
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=destroy --args='destroy --yes' --exit=0 --level=lite < plugins/pulumi/pulumi-compact/samples/pulumi-destroy.txt
+      checks:
+        - name: stdout
+          data:
+            - ' -  random:index:RandomUuid svcToken8 delete '
+            - ' -  random:index:RandomUuid svcToken18 delete '
+            - ' -  random:index:RandomUuid svcToken23 delete '
+            - ' -  random:index:RandomPet hostName delete '
+            - ' -  random:index:RandomUuid svcToken11 delete '
+            - ' -  random:index:RandomPassword dbPassword delete '
+            - ' -  random:index:RandomUuid svcToken13 delete '
+            - ' -  random:index:RandomUuid svcToken25 delete '
+            - ' -  random:index:RandomUuid svcToken7 delete '
+            - ' -  random:index:RandomUuid svcToken27 delete '
+            - ' -  random:index:RandomUuid svcToken10 delete '
+            - ' -  random:index:RandomUuid svcToken26 delete '
+            - ' -  random:index:RandomUuid svcToken9 delete '
+            - ' -  pulumi:pulumi:Stack payments-infra-dev delete '
+            - ' -  pulumi:pulumi:Stack payments-infra-dev delete '
+            - '    pulumi:pulumi:Stack payments-infra-dev  '
+            - 'Resources:'
+            - '    - 31 to delete'
+            - ""
+            - 'Destroying (dev):'
+            - ""
+            - ' -  random:index:RandomUuid svcToken21 deleted (0.00s) '
+            - ' -  random:index:RandomUuid svcToken11 deleted (0.01s) '
+            - ' -  random:index:RandomUuid svcToken25 deleted (0.01s) '
+            - ' -  random:index:RandomPet hostName deleted (0.01s) '
+            - ' -  random:index:RandomUuid svcToken3 deleted (0.01s) '
+            - ' -  random:index:RandomUuid svcToken13 deleted (0.01s) '
+            - ' -  random:index:RandomPassword dbPassword deleted (0.02s) '
+            - ' -  random:index:RandomUuid svcToken7 deleted (0.02s) '
+            - ' -  random:index:RandomUuid svcToken12 deleted (0.02s) '
+            - ' -  random:index:RandomUuid svcToken15 deleted (0.02s) '
+            - ' -  random:index:RandomUuid svcToken17 deleted (0.02s) '
+            - ' -  random:index:RandomUuid svcToken18 deleted (0.02s) '
+            - ' -  random:index:RandomUuid svcToken1 deleted (0.03s) '
+            - ' -  random:index:RandomUuid svcToken4 deleted (0.03s) '
+            - ' -  random:index:RandomUuid svcToken5 deleted (0.03s) '
+            - ' -  random:index:RandomUuid svcToken16 deleted (0.04s) '
+            - ' -  random:index:RandomUuid svcToken19 deleted (0.04s) '
+            - ' -  random:index:RandomUuid svcToken20 deleted (0.04s) '
+            - ' -  random:index:RandomUuid svcToken22 deleted (0.04s) '
+            - ' -  random:index:RandomUuid svcToken24 deleted (0.04s) '
+            - ' -  random:index:RandomUuid svcToken10 deleted (0.05s) '
+            - ' -  random:index:RandomUuid svcToken8 deleted (0.05s) '
+            - ' -  random:index:RandomUuid svcToken9 deleted (0.05s) '
+            - ' -  random:index:RandomUuid svcToken14 deleted (0.06s) '
+            - ' -  random:index:RandomUuid svcToken23 deleted (0.04s) '
+            - ' -  random:index:RandomUuid svcToken28 deleted (0.04s) '
+            - ' -  random:index:RandomUuid svcToken2 deleted (0.04s) '
+            - ' -  random:index:RandomUuid svcToken26 deleted (0.03s) '
+            - ' -  random:index:RandomUuid svcToken27 deleted (0.03s) '
+            - ' -  random:index:RandomUuid svcToken6 deleted (0.03s) '
+            - ' -  pulumi:pulumi:Stack payments-infra-dev deleted (0.00s) '
+            - '    pulumi:pulumi:Stack payments-infra-dev  '
+            - 'Resources:'
+            - '    - 31 deleted'
+            - ""
+            - 'Duration: 1s'
+            - ""
+            - 'The resources in the stack have been deleted, but the history and configuration associated with the stack are still maintained. '
+            - If you want to remove the stack completely, run `pulumi stack rm dev`.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=destroy --args='destroy --yes' --exit=0 --level=lite < plugins/pulumi/pulumi-compact/samples/pulumi-destroy.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 60
+            - bytes 2826
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-destroy.txt full
+  commands:
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=destroy --args='destroy --yes' --exit=0 --level=full < plugins/pulumi/pulumi-compact/samples/pulumi-destroy.txt
+      checks:
+        - name: stdout
+          data:
+            - ' -  random:index:RandomUuid svcToken15 deleted (0.02s) '
+            - ' -  random:index:RandomUuid svcToken17 deleted (0.02s) '
+            - ' -  random:index:RandomUuid svcToken18 deleted (0.02s) '
+            - ' -  random:index:RandomUuid svcToken1 deleted (0.03s) '
+            - ' -  random:index:RandomUuid svcToken4 deleted (0.03s) '
+            - ' -  random:index:RandomUuid svcToken5 deleted (0.03s) '
+            - ' -  random:index:RandomUuid svcToken16 deleted (0.04s) '
+            - ' -  random:index:RandomUuid svcToken19 deleted (0.04s) '
+            - ' -  random:index:RandomUuid svcToken20 deleted (0.04s) '
+            - ' -  random:index:RandomUuid svcToken22 deleted (0.04s) '
+            - ' -  random:index:RandomUuid svcToken24 deleted (0.04s) '
+            - ' -  random:index:RandomUuid svcToken10 deleted (0.05s) '
+            - ' -  random:index:RandomUuid svcToken8 deleted (0.05s) '
+            - ' -  random:index:RandomUuid svcToken9 deleted (0.05s) '
+            - ' -  random:index:RandomUuid svcToken14 deleted (0.06s) '
+            - ' -  random:index:RandomUuid svcToken23 deleted (0.04s) '
+            - ' -  random:index:RandomUuid svcToken28 deleted (0.04s) '
+            - ' -  random:index:RandomUuid svcToken2 deleted (0.04s) '
+            - ' -  random:index:RandomUuid svcToken26 deleted (0.03s) '
+            - ' -  random:index:RandomUuid svcToken27 deleted (0.03s) '
+            - ' -  random:index:RandomUuid svcToken6 deleted (0.03s) '
+            - ' -  pulumi:pulumi:Stack payments-infra-dev deleted (0.00s) '
+            - '    pulumi:pulumi:Stack payments-infra-dev  '
+            - 'Resources:'
+            - '    - 31 deleted'
+            - ""
+            - 'Duration: 1s'
+            - ""
+            - 'The resources in the stack have been deleted, but the history and configuration associated with the stack are still maintained. '
+            - If you want to remove the stack completely, run `pulumi stack rm dev`.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=destroy --args='destroy --yes' --exit=0 --level=full < plugins/pulumi/pulumi-compact/samples/pulumi-destroy.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 30
+            - bytes 1517
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-destroy.txt ultra
+  commands:
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=destroy --args='destroy --yes' --exit=0 --level=ultra < plugins/pulumi/pulumi-compact/samples/pulumi-destroy.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Previewing destroy (dev):'
+            - '    pulumi:pulumi:Stack payments-infra-dev  '
+            - 'Resources:'
+            - '    - 31 to delete'
+            - 'Destroying (dev):'
+            - '    pulumi:pulumi:Stack payments-infra-dev  '
+            - 'Resources:'
+            - '    - 31 deleted'
+            - 'Duration: 1s'
+            - 'The resources in the stack have been deleted, but the history and configuration associated with the stack are still maintained. '
+            - If you want to remove the stack completely, run `pulumi stack rm dev`.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=destroy --args='destroy --yes' --exit=0 --level=ultra < plugins/pulumi/pulumi-compact/samples/pulumi-destroy.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 11
+            - bytes 405
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-stack.txt full
+  commands:
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=stack --args='stack' --exit=0 --level=full < plugins/pulumi/pulumi-compact/samples/pulumi-stack.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Current stack is dev:'
+            - '    Managed by 721e94d688f2'
+            - '    Last updated: now (2026-06-10 00:08:21.473707977 +0000 UTC)'
+            - '    Pulumi version used: v3.245.0'
+            - 'Current stack resources (5):'
+            - '    TYPE                                           NAME'
+            - '    pulumi:pulumi:Stack                            payments-infra-dev'
+            - '    ├─ random:index/randomUuid:RandomUuid          apiToken'
+            - '    ├─ random:index/randomPet:RandomPet            hostName'
+            - '    ├─ random:index/randomPassword:RandomPassword  dbPassword'
+            - '    └─ pulumi:providers:random                     default'
+            - ""
+            - 'Current stack outputs (1):'
+            - '    OUTPUT  VALUE'
+            - '    host    api-quality-raptor'
+            - ""
+            - Use `pulumi stack select` to change stack; `pulumi stack ls` lists known ones
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=stack --args='stack' --exit=0 --level=full < plugins/pulumi/pulumi-compact/samples/pulumi-stack.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 17
+            - bytes 716
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-stack.txt ultra
+  commands:
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=stack --args='stack' --exit=0 --level=ultra < plugins/pulumi/pulumi-compact/samples/pulumi-stack.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Current stack is dev:'
+            - '    Managed by 721e94d688f2'
+            - '    Last updated: now (2026-06-10 00:08:21.473707977 +0000 UTC)'
+            - '    Pulumi version used: v3.245.0'
+            - 'Current stack resources (5):'
+            - '    TYPE                                           NAME'
+            - '    pulumi:pulumi:Stack                            payments-infra-dev'
+            - '    ├─ random:index/randomUuid:RandomUuid          apiToken'
+            - '    ├─ random:index/randomPet:RandomPet            hostName'
+            - '    ├─ random:index/randomPassword:RandomPassword  dbPassword'
+            - '    └─ pulumi:providers:random                     default'
+            - ""
+            - 'Current stack outputs (1):'
+            - '    OUTPUT  VALUE'
+            - '    host    api-quality-raptor'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=stack --args='stack' --exit=0 --level=ultra < plugins/pulumi/pulumi-compact/samples/pulumi-stack.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 15
+            - bytes 637
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-stack-ls.txt full
+  commands:
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=stack --args='stack ls' --exit=0 --level=full < plugins/pulumi/pulumi-compact/samples/pulumi-stack-ls.txt
+      checks:
+        - name: stdout
+          data:
+            - NAME  LAST UPDATE  RESOURCE COUNT
+            - dev*  now          0
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=stack --args='stack ls' --exit=0 --level=full < plugins/pulumi/pulumi-compact/samples/pulumi-stack-ls.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 2
+            - bytes 55
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-stack-output.txt full
+  commands:
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=stack --args='stack output' --exit=0 --level=full < plugins/pulumi/pulumi-compact/samples/pulumi-stack-output.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Current stack outputs (1):'
+            - '    OUTPUT  VALUE'
+            - '    host    api-quality-raptor'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=stack --args='stack output' --exit=0 --level=full < plugins/pulumi/pulumi-compact/samples/pulumi-stack-output.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 3
+            - bytes 76
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-stack-output.txt ultra
+  commands:
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=stack --args='stack output' --exit=0 --level=ultra < plugins/pulumi/pulumi-compact/samples/pulumi-stack-output.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Current stack outputs (1):'
+            - '    OUTPUT  VALUE'
+            - '    host    api-quality-raptor'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=stack --args='stack output' --exit=0 --level=ultra < plugins/pulumi/pulumi-compact/samples/pulumi-stack-output.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 3
+            - bytes 76
+        - name: exitcode
+          data:
+            - "0"

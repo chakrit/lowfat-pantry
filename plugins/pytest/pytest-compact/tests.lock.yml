@@ -1,0 +1,251 @@
+- name: plugins/pytest/pytest-compact/tests.cue \ pytest-compact \ samples/pytest-fail.txt lite
+  commands:
+    - command: lowfat filter plugins/pytest/pytest-compact/filter.lf --sub= --args='tests/' --exit=1 --level=lite < plugins/pytest/pytest-compact/samples/pytest-fail.txt
+      checks:
+        - name: stdout
+          data:
+            - =================================== FAILURES ===================================
+            - ________________________ test_checkout_retries_gateway _________________________
+            - 'tests/test_api.py:88: in test_checkout_retries_gateway'
+            - '    assert response.status_code == 200'
+            - E   assert 503 == 200
+            - E    +  where 503 = <Response [503]>.status_code
+            - '------------------------------ Captured log call -------------------------------'
+            - WARNING  checkout.payments:payments.py:41 payment timeout order=ord_1011 attempt=1
+            - WARNING  checkout.payments:payments.py:41 payment timeout order=ord_1011 attempt=2
+            - ERROR    checkout.api:api.py:112 payment dependency unavailable order=ord_1011
+            - _________________________ test_total_includes_discount _________________________
+            - 'tests/test_models.py:137: in test_total_includes_discount'
+            - '    assert cart.total_cents == 1299'
+            - E   assert 1499 == 1299
+            - E    +  where 1499 = Cart(items=[...]).total_cents
+            - ""
+            - =========================== short test summary info ============================
+            - FAILED tests/test_api.py::test_checkout_retries_gateway - assert 503 == 200
+            - FAILED tests/test_models.py::test_total_includes_discount - assert 1499 == 1299
+            - ========================= 2 failed, 56 passed in 3.91s =========================
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pytest/pytest-compact/filter.lf --sub= --args='tests/' --exit=1 --level=lite < plugins/pytest/pytest-compact/samples/pytest-fail.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 20
+            - bytes 1222
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/pytest/pytest-compact/tests.cue \ pytest-compact \ samples/pytest-fail.txt full
+  commands:
+    - command: lowfat filter plugins/pytest/pytest-compact/filter.lf --sub= --args='tests/' --exit=1 --level=full < plugins/pytest/pytest-compact/samples/pytest-fail.txt
+      checks:
+        - name: stdout
+          data:
+            - =================================== FAILURES ===================================
+            - ________________________ test_checkout_retries_gateway _________________________
+            - 'tests/test_api.py:88: in test_checkout_retries_gateway'
+            - '    assert response.status_code == 200'
+            - E   assert 503 == 200
+            - E    +  where 503 = <Response [503]>.status_code
+            - '------------------------------ Captured log call -------------------------------'
+            - WARNING  checkout.payments:payments.py:41 payment timeout order=ord_1011 attempt=1
+            - WARNING  checkout.payments:payments.py:41 payment timeout order=ord_1011 attempt=2
+            - ERROR    checkout.api:api.py:112 payment dependency unavailable order=ord_1011
+            - _________________________ test_total_includes_discount _________________________
+            - 'tests/test_models.py:137: in test_total_includes_discount'
+            - '    assert cart.total_cents == 1299'
+            - E   assert 1499 == 1299
+            - E    +  where 1499 = Cart(items=[...]).total_cents
+            - ""
+            - =========================== short test summary info ============================
+            - FAILED tests/test_api.py::test_checkout_retries_gateway - assert 503 == 200
+            - FAILED tests/test_models.py::test_total_includes_discount - assert 1499 == 1299
+            - ========================= 2 failed, 56 passed in 3.91s =========================
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pytest/pytest-compact/filter.lf --sub= --args='tests/' --exit=1 --level=full < plugins/pytest/pytest-compact/samples/pytest-fail.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 20
+            - bytes 1222
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/pytest/pytest-compact/tests.cue \ pytest-compact \ samples/pytest-fail.txt ultra
+  commands:
+    - command: lowfat filter plugins/pytest/pytest-compact/filter.lf --sub= --args='tests/' --exit=1 --level=ultra < plugins/pytest/pytest-compact/samples/pytest-fail.txt
+      checks:
+        - name: stdout
+          data:
+            - =================================== FAILURES ===================================
+            - ________________________ test_checkout_retries_gateway _________________________
+            - E   assert 503 == 200
+            - E    +  where 503 = <Response [503]>.status_code
+            - ERROR    checkout.api:api.py:112 payment dependency unavailable order=ord_1011
+            - _________________________ test_total_includes_discount _________________________
+            - E   assert 1499 == 1299
+            - E    +  where 1499 = Cart(items=[...]).total_cents
+            - =========================== short test summary info ============================
+            - FAILED tests/test_api.py::test_checkout_retries_gateway - assert 503 == 200
+            - FAILED tests/test_models.py::test_total_includes_discount - assert 1499 == 1299
+            - ========================= 2 failed, 56 passed in 3.91s =========================
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pytest/pytest-compact/filter.lf --sub= --args='tests/' --exit=1 --level=ultra < plugins/pytest/pytest-compact/samples/pytest-fail.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 12
+            - bytes 786
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/pytest/pytest-compact/tests.cue \ pytest-compact \ samples/pytest-pass.txt lite
+  commands:
+    - command: lowfat filter plugins/pytest/pytest-compact/filter.lf --sub= --args='tests/' --exit=0 --level=lite < plugins/pytest/pytest-compact/samples/pytest-pass.txt
+      checks:
+        - name: stdout
+          data:
+            - 'pytest: 42 passed'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pytest/pytest-compact/filter.lf --sub= --args='tests/' --exit=0 --level=lite < plugins/pytest/pytest-compact/samples/pytest-pass.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 18
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/pytest/pytest-compact/tests.cue \ pytest-compact \ samples/pytest-pass.txt full
+  commands:
+    - command: lowfat filter plugins/pytest/pytest-compact/filter.lf --sub= --args='tests/' --exit=0 --level=full < plugins/pytest/pytest-compact/samples/pytest-pass.txt
+      checks:
+        - name: stdout
+          data:
+            - 'pytest: 42 passed'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pytest/pytest-compact/filter.lf --sub= --args='tests/' --exit=0 --level=full < plugins/pytest/pytest-compact/samples/pytest-pass.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 18
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/pytest/pytest-compact/tests.cue \ pytest-compact \ samples/pytest-pass.txt ultra
+  commands:
+    - command: lowfat filter plugins/pytest/pytest-compact/filter.lf --sub= --args='tests/' --exit=0 --level=ultra < plugins/pytest/pytest-compact/samples/pytest-pass.txt
+      checks:
+        - name: stdout
+          data:
+            - 'pytest: 42 passed'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pytest/pytest-compact/filter.lf --sub= --args='tests/' --exit=0 --level=ultra < plugins/pytest/pytest-compact/samples/pytest-pass.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 18
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/pytest/pytest-compact/tests.cue \ pytest-compact \ samples/pytest-error.txt lite
+  commands:
+    - command: lowfat filter plugins/pytest/pytest-compact/filter.lf --sub= --args='tests/test_config.py' --exit=2 --level=lite < plugins/pytest/pytest-compact/samples/pytest-error.txt
+      checks:
+        - name: stdout
+          data:
+            - ==================================== ERRORS ====================================
+            - ____________________ ERROR collecting tests/test_config.py _____________________
+            - ImportError while importing test module '/repo/tests/test_config.py'.
+            - 'Hint: make sure your test modules/packages have valid Python names.'
+            - 'Traceback:'
+            - 'tests/test_config.py:4: in <module>'
+            - '    from checkout.config import load_settings'
+            - 'src/checkout/config.py:8: in <module>'
+            - '    import tomllib2'
+            - 'E   ModuleNotFoundError: No module named ''tomllib2'''
+            - ""
+            - =========================== short test summary info ============================
+            - ERROR tests/test_config.py
+            - =============================== 1 error in 0.12s ===============================
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pytest/pytest-compact/filter.lf --sub= --args='tests/test_config.py' --exit=2 --level=lite < plugins/pytest/pytest-compact/samples/pytest-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 14
+            - bytes 693
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/pytest/pytest-compact/tests.cue \ pytest-compact \ samples/pytest-error.txt full
+  commands:
+    - command: lowfat filter plugins/pytest/pytest-compact/filter.lf --sub= --args='tests/test_config.py' --exit=2 --level=full < plugins/pytest/pytest-compact/samples/pytest-error.txt
+      checks:
+        - name: stdout
+          data:
+            - ==================================== ERRORS ====================================
+            - ____________________ ERROR collecting tests/test_config.py _____________________
+            - ImportError while importing test module '/repo/tests/test_config.py'.
+            - 'Hint: make sure your test modules/packages have valid Python names.'
+            - 'Traceback:'
+            - 'tests/test_config.py:4: in <module>'
+            - '    from checkout.config import load_settings'
+            - 'src/checkout/config.py:8: in <module>'
+            - '    import tomllib2'
+            - 'E   ModuleNotFoundError: No module named ''tomllib2'''
+            - ""
+            - =========================== short test summary info ============================
+            - ERROR tests/test_config.py
+            - =============================== 1 error in 0.12s ===============================
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pytest/pytest-compact/filter.lf --sub= --args='tests/test_config.py' --exit=2 --level=full < plugins/pytest/pytest-compact/samples/pytest-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 14
+            - bytes 693
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/pytest/pytest-compact/tests.cue \ pytest-compact \ samples/pytest-error.txt ultra
+  commands:
+    - command: lowfat filter plugins/pytest/pytest-compact/filter.lf --sub= --args='tests/test_config.py' --exit=2 --level=ultra < plugins/pytest/pytest-compact/samples/pytest-error.txt
+      checks:
+        - name: stdout
+          data:
+            - ==================================== ERRORS ====================================
+            - ____________________ ERROR collecting tests/test_config.py _____________________
+            - 'E   ModuleNotFoundError: No module named ''tomllib2'''
+            - =========================== short test summary info ============================
+            - ERROR tests/test_config.py
+            - =============================== 1 error in 0.12s ===============================
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pytest/pytest-compact/filter.lf --sub= --args='tests/test_config.py' --exit=2 --level=ultra < plugins/pytest/pytest-compact/samples/pytest-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 6
+            - bytes 403
+        - name: exitcode
+          data:
+            - "0"

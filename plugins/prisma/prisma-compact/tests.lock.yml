@@ -1,0 +1,244 @@
+- name: plugins/prisma/prisma-compact/tests.cue \ prisma-compact \ samples/prisma-generate.txt lite
+  commands:
+    - command: lowfat filter plugins/prisma/prisma-compact/filter.lf --sub=generate --args='' --exit=0 --level=lite < plugins/prisma/prisma-compact/samples/prisma-generate.txt
+      checks:
+        - name: stdout
+          data:
+            - ✔ Generated Prisma Client (v5.15.0) to ./node_modules/@prisma/client in 89ms
+            - ""
+            - 'You can now start using Prisma Client in your code. Reference: https://pris.ly/d/client'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/prisma/prisma-compact/filter.lf --sub=generate --args='' --exit=0 --level=lite < plugins/prisma/prisma-compact/samples/prisma-generate.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 5
+            - bytes 170
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/prisma/prisma-compact/tests.cue \ prisma-compact \ samples/prisma-generate.txt full
+  commands:
+    - command: lowfat filter plugins/prisma/prisma-compact/filter.lf --sub=generate --args='' --exit=0 --level=full < plugins/prisma/prisma-compact/samples/prisma-generate.txt
+      checks:
+        - name: stdout
+          data:
+            - ✔ Generated Prisma Client (v5.15.0) to ./node_modules/@prisma/client in 89ms
+            - ""
+            - 'You can now start using Prisma Client in your code. Reference: https://pris.ly/d/client'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/prisma/prisma-compact/filter.lf --sub=generate --args='' --exit=0 --level=full < plugins/prisma/prisma-compact/samples/prisma-generate.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 5
+            - bytes 170
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/prisma/prisma-compact/tests.cue \ prisma-compact \ samples/prisma-generate.txt ultra
+  commands:
+    - command: lowfat filter plugins/prisma/prisma-compact/filter.lf --sub=generate --args='' --exit=0 --level=ultra < plugins/prisma/prisma-compact/samples/prisma-generate.txt
+      checks:
+        - name: stdout
+          data:
+            - ✔ Generated Prisma Client (v5.15.0) to ./node_modules/@prisma/client in 89ms
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/prisma/prisma-compact/filter.lf --sub=generate --args='' --exit=0 --level=ultra < plugins/prisma/prisma-compact/samples/prisma-generate.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 79
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/prisma/prisma-compact/tests.cue \ prisma-compact \ samples/prisma-migrate.txt lite
+  commands:
+    - command: lowfat filter plugins/prisma/prisma-compact/filter.lf --sub=migrate --args='deploy' --exit=0 --level=lite < plugins/prisma/prisma-compact/samples/prisma-migrate.txt
+      checks:
+        - name: stdout
+          data:
+            - Applying migration `20260608081100_create_users`
+            - Applying migration `20260608083412_add_projects`
+            - Applying migration `20260608090233_add_indexes`
+            - ""
+            - 'The following migration(s) have been applied:'
+            - ""
+            - migrations/
+            - '  └─ 20260608081100_create_users/'
+            - '    └─ migration.sql'
+            - '  └─ 20260608083412_add_projects/'
+            - '    └─ migration.sql'
+            - '  └─ 20260608090233_add_indexes/'
+            - '    └─ migration.sql'
+            - ""
+            - Your database is now in sync with your schema.
+            - ""
+            - Running generate... (Use --skip-generate to skip the generators)
+            - ✔ Generated Prisma Client (v5.15.0) to ./node_modules/@prisma/client in 101ms
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/prisma/prisma-compact/filter.lf --sub=migrate --args='deploy' --exit=0 --level=lite < plugins/prisma/prisma-compact/samples/prisma-migrate.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 19
+            - bytes 589
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/prisma/prisma-compact/tests.cue \ prisma-compact \ samples/prisma-migrate.txt full
+  commands:
+    - command: lowfat filter plugins/prisma/prisma-compact/filter.lf --sub=migrate --args='deploy' --exit=0 --level=full < plugins/prisma/prisma-compact/samples/prisma-migrate.txt
+      checks:
+        - name: stdout
+          data:
+            - Applying migration `20260608081100_create_users`
+            - Applying migration `20260608083412_add_projects`
+            - Applying migration `20260608090233_add_indexes`
+            - ""
+            - 'The following migration(s) have been applied:'
+            - ""
+            - migrations/
+            - '  └─ 20260608081100_create_users/'
+            - '    └─ migration.sql'
+            - '  └─ 20260608083412_add_projects/'
+            - '    └─ migration.sql'
+            - '  └─ 20260608090233_add_indexes/'
+            - '    └─ migration.sql'
+            - ""
+            - Your database is now in sync with your schema.
+            - ""
+            - Running generate... (Use --skip-generate to skip the generators)
+            - ✔ Generated Prisma Client (v5.15.0) to ./node_modules/@prisma/client in 101ms
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/prisma/prisma-compact/filter.lf --sub=migrate --args='deploy' --exit=0 --level=full < plugins/prisma/prisma-compact/samples/prisma-migrate.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 19
+            - bytes 589
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/prisma/prisma-compact/tests.cue \ prisma-compact \ samples/prisma-migrate.txt ultra
+  commands:
+    - command: lowfat filter plugins/prisma/prisma-compact/filter.lf --sub=migrate --args='deploy' --exit=0 --level=ultra < plugins/prisma/prisma-compact/samples/prisma-migrate.txt
+      checks:
+        - name: stdout
+          data:
+            - Applying migration `20260608081100_create_users`
+            - Applying migration `20260608083412_add_projects`
+            - Applying migration `20260608090233_add_indexes`
+            - 'The following migration(s) have been applied:'
+            - Your database is now in sync with your schema.
+            - ✔ Generated Prisma Client (v5.15.0) to ./node_modules/@prisma/client in 101ms
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/prisma/prisma-compact/filter.lf --sub=migrate --args='deploy' --exit=0 --level=ultra < plugins/prisma/prisma-compact/samples/prisma-migrate.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 6
+            - bytes 319
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/prisma/prisma-compact/tests.cue \ prisma-compact \ samples/prisma-error.txt lite
+  commands:
+    - command: lowfat filter plugins/prisma/prisma-compact/filter.lf --sub=migrate --args='dev' --exit=1 --level=lite < plugins/prisma/prisma-compact/samples/prisma-error.txt
+      checks:
+        - name: stdout
+          data:
+            - Prisma schema loaded from prisma/schema.prisma
+            - 'Datasource "db": PostgreSQL database "app", schema "public" at "localhost:5432"'
+            - ""
+            - 'Error: P3006'
+            - ""
+            - Migration `20260608083412_add_projects` failed to apply cleanly to the shadow database.
+            - 'Error:'
+            - 'ERROR: relation "User" does not exist'
+            - '   0: sql_schema_connector::validate_migrations'
+            - '           with namespaces=None'
+            - '             at schema-engine/connectors/sql-schema-connector/src/lib.rs:324'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/prisma/prisma-compact/filter.lf --sub=migrate --args='dev' --exit=1 --level=lite < plugins/prisma/prisma-compact/samples/prisma-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 11
+            - bytes 432
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/prisma/prisma-compact/tests.cue \ prisma-compact \ samples/prisma-error.txt full
+  commands:
+    - command: lowfat filter plugins/prisma/prisma-compact/filter.lf --sub=migrate --args='dev' --exit=1 --level=full < plugins/prisma/prisma-compact/samples/prisma-error.txt
+      checks:
+        - name: stdout
+          data:
+            - Prisma schema loaded from prisma/schema.prisma
+            - 'Datasource "db": PostgreSQL database "app", schema "public" at "localhost:5432"'
+            - ""
+            - 'Error: P3006'
+            - ""
+            - Migration `20260608083412_add_projects` failed to apply cleanly to the shadow database.
+            - 'Error:'
+            - 'ERROR: relation "User" does not exist'
+            - '   0: sql_schema_connector::validate_migrations'
+            - '           with namespaces=None'
+            - '             at schema-engine/connectors/sql-schema-connector/src/lib.rs:324'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/prisma/prisma-compact/filter.lf --sub=migrate --args='dev' --exit=1 --level=full < plugins/prisma/prisma-compact/samples/prisma-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 11
+            - bytes 432
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/prisma/prisma-compact/tests.cue \ prisma-compact \ samples/prisma-error.txt ultra
+  commands:
+    - command: lowfat filter plugins/prisma/prisma-compact/filter.lf --sub=migrate --args='dev' --exit=1 --level=ultra < plugins/prisma/prisma-compact/samples/prisma-error.txt
+      checks:
+        - name: stdout
+          data:
+            - Prisma schema loaded from prisma/schema.prisma
+            - 'Datasource "db": PostgreSQL database "app", schema "public" at "localhost:5432"'
+            - ""
+            - 'Error: P3006'
+            - ""
+            - Migration `20260608083412_add_projects` failed to apply cleanly to the shadow database.
+            - 'Error:'
+            - 'ERROR: relation "User" does not exist'
+            - '   0: sql_schema_connector::validate_migrations'
+            - '           with namespaces=None'
+            - '             at schema-engine/connectors/sql-schema-connector/src/lib.rs:324'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/prisma/prisma-compact/filter.lf --sub=migrate --args='dev' --exit=1 --level=ultra < plugins/prisma/prisma-compact/samples/prisma-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 11
+            - bytes 432
+        - name: exitcode
+          data:
+            - "0"

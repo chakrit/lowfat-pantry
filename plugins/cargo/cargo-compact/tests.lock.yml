@@ -1,0 +1,275 @@
+- name: plugins/cargo/cargo-compact/tests.cue \ cargo-compact \ samples/cargo-build-full.txt lite
+  commands:
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=build --args='' --exit=0 --level=lite < plugins/cargo/cargo-compact/samples/cargo-build-full.txt
+      checks:
+        - name: stdout
+          data:
+            - 'warning: unused variable: `x`'
+            - '  --> src/main.rs:4:9'
+            - '   |'
+            - 4  |     let x = 42;
+            - '   |         ^ help: if this is intentional, prefix it with an underscore: `_x`'
+            - '   |'
+            - '   = note: `#[warn(unused_variables)]` on by default'
+            - ""
+            - 'warning: `myapp` (bin "myapp") generated 1 warning'
+            - '    Finished `dev` profile [unoptimized + debuginfo] target(s) in 3.42s'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=build --args='' --exit=0 --level=lite < plugins/cargo/cargo-compact/samples/cargo-build-full.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 10
+            - bytes 340
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/cargo/cargo-compact/tests.cue \ cargo-compact \ samples/cargo-build-full.txt full
+  commands:
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=build --args='' --exit=0 --level=full < plugins/cargo/cargo-compact/samples/cargo-build-full.txt
+      checks:
+        - name: stdout
+          data:
+            - 'warning: unused variable: `x`'
+            - '  --> src/main.rs:4:9'
+            - '   |'
+            - 4  |     let x = 42;
+            - '   |         ^ help: if this is intentional, prefix it with an underscore: `_x`'
+            - '   |'
+            - '   = note: `#[warn(unused_variables)]` on by default'
+            - ""
+            - 'warning: `myapp` (bin "myapp") generated 1 warning'
+            - '    Finished `dev` profile [unoptimized + debuginfo] target(s) in 3.42s'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=build --args='' --exit=0 --level=full < plugins/cargo/cargo-compact/samples/cargo-build-full.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 10
+            - bytes 340
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/cargo/cargo-compact/tests.cue \ cargo-compact \ samples/cargo-build-full.txt ultra
+  commands:
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=build --args='' --exit=0 --level=ultra < plugins/cargo/cargo-compact/samples/cargo-build-full.txt
+      checks:
+        - name: stdout
+          data:
+            - 'warning: unused variable: `x`'
+            - '  --> src/main.rs:4:9'
+            - '   = note: `#[warn(unused_variables)]` on by default'
+            - 'warning: `myapp` (bin "myapp") generated 1 warning'
+            - '    Finished `dev` profile [unoptimized + debuginfo] target(s) in 3.42s'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=build --args='' --exit=0 --level=ultra < plugins/cargo/cargo-compact/samples/cargo-build-full.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 5
+            - bytes 228
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/cargo/cargo-compact/tests.cue \ cargo-compact \ samples/cargo-build-error.txt lite
+  commands:
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=build --args='' --exit=101 --level=lite < plugins/cargo/cargo-compact/samples/cargo-build-error.txt
+      checks:
+        - name: stdout
+          data:
+            - 'error[E0425]: cannot find value `y` in this scope'
+            - ' --> src/main.rs:5:20'
+            - '  |'
+            - 5 |     println!("{}", y);
+            - '  |                    ^ help: a local variable with a similar name exists: `x`'
+            - ""
+            - 'error[E0308]: mismatched types'
+            - ' --> src/main.rs:7:18'
+            - '  |'
+            - '7 |     let z: u32 = "hello";'
+            - '  |            ---   ^^^^^^^ expected `u32`, found `&str`'
+            - ""
+            - 'error: aborting due to 2 previous errors'
+            - ""
+            - 'Some errors have detailed explanations: E0308, E0425.'
+            - For more information about an error, try `rustc --explain E0308`.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=build --args='' --exit=101 --level=lite < plugins/cargo/cargo-compact/samples/cargo-build-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 16
+            - bytes 492
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/cargo/cargo-compact/tests.cue \ cargo-compact \ samples/cargo-build-error.txt full
+  commands:
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=build --args='' --exit=101 --level=full < plugins/cargo/cargo-compact/samples/cargo-build-error.txt
+      checks:
+        - name: stdout
+          data:
+            - 'error[E0425]: cannot find value `y` in this scope'
+            - ' --> src/main.rs:5:20'
+            - '  |'
+            - 5 |     println!("{}", y);
+            - '  |                    ^ help: a local variable with a similar name exists: `x`'
+            - ""
+            - 'error[E0308]: mismatched types'
+            - ' --> src/main.rs:7:18'
+            - '  |'
+            - '7 |     let z: u32 = "hello";'
+            - '  |            ---   ^^^^^^^ expected `u32`, found `&str`'
+            - ""
+            - 'error: aborting due to 2 previous errors'
+            - ""
+            - 'Some errors have detailed explanations: E0308, E0425.'
+            - For more information about an error, try `rustc --explain E0308`.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=build --args='' --exit=101 --level=full < plugins/cargo/cargo-compact/samples/cargo-build-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 16
+            - bytes 492
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/cargo/cargo-compact/tests.cue \ cargo-compact \ samples/cargo-build-error.txt ultra
+  commands:
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=build --args='' --exit=101 --level=ultra < plugins/cargo/cargo-compact/samples/cargo-build-error.txt
+      checks:
+        - name: stdout
+          data:
+            - 'error[E0425]: cannot find value `y` in this scope'
+            - ' --> src/main.rs:5:20'
+            - 'error[E0308]: mismatched types'
+            - ' --> src/main.rs:7:18'
+            - 'error: aborting due to 2 previous errors'
+            - 'Some errors have detailed explanations: E0308, E0425.'
+            - For more information about an error, try `rustc --explain E0308`.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=build --args='' --exit=101 --level=ultra < plugins/cargo/cargo-compact/samples/cargo-build-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 7
+            - bytes 286
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/cargo/cargo-compact/tests.cue \ cargo-compact \ samples/cargo-test-error.txt lite
+  commands:
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=test --args='' --exit=101 --level=lite < plugins/cargo/cargo-compact/samples/cargo-test-error.txt
+      checks:
+        - name: stdout
+          data:
+            - '   Compiling myapp v0.1.0 (/Users/dev/myapp)'
+            - '    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.10s'
+            - '     Running unittests src/lib.rs (target/debug/deps/myapp-abc123)'
+            - ""
+            - running 5 tests
+            - test tests::multiplies ... FAILED
+            - ""
+            - 'failures:'
+            - ""
+            - '---- tests::multiplies stdout ----'
+            - 'thread ''tests::multiplies'' panicked at src/lib.rs:42:9:'
+            - assertion `left == right` failed
+            - '  left: 6'
+            - ' right: 8'
+            - 'note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace'
+            - ""
+            - 'failures:'
+            - '    tests::multiplies'
+            - ""
+            - 'test result: FAILED. 4 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=test --args='' --exit=101 --level=lite < plugins/cargo/cargo-compact/samples/cargo-test-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 20
+            - bytes 602
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/cargo/cargo-compact/tests.cue \ cargo-compact \ samples/cargo-test-error.txt full
+  commands:
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=test --args='' --exit=101 --level=full < plugins/cargo/cargo-compact/samples/cargo-test-error.txt
+      checks:
+        - name: stdout
+          data:
+            - '   Compiling myapp v0.1.0 (/Users/dev/myapp)'
+            - '    Finished `test` profile [unoptimized + debuginfo] target(s) in 2.10s'
+            - '     Running unittests src/lib.rs (target/debug/deps/myapp-abc123)'
+            - ""
+            - running 5 tests
+            - test tests::multiplies ... FAILED
+            - ""
+            - 'failures:'
+            - ""
+            - '---- tests::multiplies stdout ----'
+            - 'thread ''tests::multiplies'' panicked at src/lib.rs:42:9:'
+            - assertion `left == right` failed
+            - '  left: 6'
+            - ' right: 8'
+            - 'note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace'
+            - ""
+            - 'failures:'
+            - '    tests::multiplies'
+            - ""
+            - 'test result: FAILED. 4 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=test --args='' --exit=101 --level=full < plugins/cargo/cargo-compact/samples/cargo-test-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 20
+            - bytes 602
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/cargo/cargo-compact/tests.cue \ cargo-compact \ samples/cargo-test-error.txt ultra
+  commands:
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=test --args='' --exit=101 --level=ultra < plugins/cargo/cargo-compact/samples/cargo-test-error.txt
+      checks:
+        - name: stdout
+          data:
+            - test tests::multiplies ... FAILED
+            - 'failures:'
+            - '---- tests::multiplies stdout ----'
+            - 'thread ''tests::multiplies'' panicked at src/lib.rs:42:9:'
+            - assertion `left == right` failed
+            - '  left: 6'
+            - ' right: 8'
+            - 'failures:'
+            - 'test result: FAILED. 4 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=test --args='' --exit=101 --level=ultra < plugins/cargo/cargo-compact/samples/cargo-test-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 9
+            - bytes 296
+        - name: exitcode
+          data:
+            - "0"

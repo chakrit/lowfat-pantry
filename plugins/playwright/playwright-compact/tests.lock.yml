@@ -1,0 +1,221 @@
+- name: plugins/playwright/playwright-compact/tests.cue \ playwright-compact \ samples/playwright-pass.txt lite
+  commands:
+    - command: lowfat filter plugins/playwright/playwright-compact/filter.lf --sub=test --args='' --exit=0 --level=lite < plugins/playwright/playwright-compact/samples/playwright-pass.txt
+      checks:
+        - name: stdout
+          data:
+            - Running 32 tests using 4 workers
+            - '  32 passed (18.4s)'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/playwright/playwright-compact/filter.lf --sub=test --args='' --exit=0 --level=lite < plugins/playwright/playwright-compact/samples/playwright-pass.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 2
+            - bytes 53
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/playwright/playwright-compact/tests.cue \ playwright-compact \ samples/playwright-pass.txt full
+  commands:
+    - command: lowfat filter plugins/playwright/playwright-compact/filter.lf --sub=test --args='' --exit=0 --level=full < plugins/playwright/playwright-compact/samples/playwright-pass.txt
+      checks:
+        - name: stdout
+          data:
+            - Running 32 tests using 4 workers
+            - '  32 passed (18.4s)'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/playwright/playwright-compact/filter.lf --sub=test --args='' --exit=0 --level=full < plugins/playwright/playwright-compact/samples/playwright-pass.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 2
+            - bytes 53
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/playwright/playwright-compact/tests.cue \ playwright-compact \ samples/playwright-pass.txt ultra
+  commands:
+    - command: lowfat filter plugins/playwright/playwright-compact/filter.lf --sub=test --args='' --exit=0 --level=ultra < plugins/playwright/playwright-compact/samples/playwright-pass.txt
+      checks:
+        - name: stdout
+          data:
+            - Running 32 tests using 4 workers
+            - '  32 passed (18.4s)'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/playwright/playwright-compact/filter.lf --sub=test --args='' --exit=0 --level=ultra < plugins/playwright/playwright-compact/samples/playwright-pass.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 2
+            - bytes 53
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/playwright/playwright-compact/tests.cue \ playwright-compact \ samples/playwright-fail.txt lite
+  commands:
+    - command: lowfat filter plugins/playwright/playwright-compact/filter.lf --sub=test --args='--project=chromium' --exit=1 --level=lite < plugins/playwright/playwright-compact/samples/playwright-fail.txt
+      checks:
+        - name: stdout
+          data:
+            - Running 18 tests using 3 workers
+            - '  ✘   3 [chromium] › tests/dashboard.spec.ts:10:5 › dashboard › loads summary cards (30.0s)'
+            - '  ✘   6 [firefox] › tests/dashboard.spec.ts:10:5 › dashboard › loads summary cards (30.0s)'
+            - ""
+            - '  1) [chromium] › tests/dashboard.spec.ts:10:5 › dashboard › loads summary cards ─────────────'
+            - ""
+            - '    Error: expect(locator).toHaveText(expected) failed'
+            - ""
+            - '    Locator: getByTestId(''project-count'')'
+            - '    Expected: "12"'
+            - '    Received: "0"'
+            - '    Timeout: 30000ms'
+            - ""
+            - '      12 |     await page.goto(''/dashboard'')'
+            - '      13 |     await expect(page.getByRole(''heading'', { name: ''Dashboard'' })).toBeVisible()'
+            - '    > 14 |     await expect(page.getByTestId(''project-count'')).toHaveText(''12'')'
+            - '         |                                                     ^'
+            - '      15 |   })'
+            - '      16 | })'
+            - ""
+            - '    attachment #1: screenshot (image/png) ─────────────────────────────────────────────────────'
+            - '    test-results/dashboard-loads-summary-cards-chromium/test-failed-1.png'
+            - ""
+            - '  2) [firefox] › tests/dashboard.spec.ts:10:5 › dashboard › loads summary cards ───────────────'
+            - ""
+            - '    Error: expect(locator).toHaveText(expected) failed'
+            - ""
+            - '    Locator: getByTestId(''project-count'')'
+            - '    Expected: "12"'
+            - '    Received: "0"'
+            - '    Timeout: 30000ms'
+            - ""
+            - '  2 failed'
+            - '    [chromium] › tests/dashboard.spec.ts:10:5 › dashboard › loads summary cards'
+            - '    [firefox] › tests/dashboard.spec.ts:10:5 › dashboard › loads summary cards'
+            - '  16 passed (1.1m)'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/playwright/playwright-compact/filter.lf --sub=test --args='--project=chromium' --exit=1 --level=lite < plugins/playwright/playwright-compact/samples/playwright-fail.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 36
+            - bytes 1599
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/playwright/playwright-compact/tests.cue \ playwright-compact \ samples/playwright-fail.txt full
+  commands:
+    - command: lowfat filter plugins/playwright/playwright-compact/filter.lf --sub=test --args='--project=chromium' --exit=1 --level=full < plugins/playwright/playwright-compact/samples/playwright-fail.txt
+      checks:
+        - name: stdout
+          data:
+            - Running 18 tests using 3 workers
+            - '  ✘   3 [chromium] › tests/dashboard.spec.ts:10:5 › dashboard › loads summary cards (30.0s)'
+            - '  ✘   6 [firefox] › tests/dashboard.spec.ts:10:5 › dashboard › loads summary cards (30.0s)'
+            - ""
+            - '  1) [chromium] › tests/dashboard.spec.ts:10:5 › dashboard › loads summary cards ─────────────'
+            - ""
+            - '    Error: expect(locator).toHaveText(expected) failed'
+            - ""
+            - '    Locator: getByTestId(''project-count'')'
+            - '    Expected: "12"'
+            - '    Received: "0"'
+            - '    Timeout: 30000ms'
+            - ""
+            - '      12 |     await page.goto(''/dashboard'')'
+            - '      13 |     await expect(page.getByRole(''heading'', { name: ''Dashboard'' })).toBeVisible()'
+            - '    > 14 |     await expect(page.getByTestId(''project-count'')).toHaveText(''12'')'
+            - '         |                                                     ^'
+            - '      15 |   })'
+            - '      16 | })'
+            - ""
+            - '    attachment #1: screenshot (image/png) ─────────────────────────────────────────────────────'
+            - '    test-results/dashboard-loads-summary-cards-chromium/test-failed-1.png'
+            - ""
+            - '  2) [firefox] › tests/dashboard.spec.ts:10:5 › dashboard › loads summary cards ───────────────'
+            - ""
+            - '    Error: expect(locator).toHaveText(expected) failed'
+            - ""
+            - '    Locator: getByTestId(''project-count'')'
+            - '    Expected: "12"'
+            - '    Received: "0"'
+            - '    Timeout: 30000ms'
+            - ""
+            - '  2 failed'
+            - '    [chromium] › tests/dashboard.spec.ts:10:5 › dashboard › loads summary cards'
+            - '    [firefox] › tests/dashboard.spec.ts:10:5 › dashboard › loads summary cards'
+            - '  16 passed (1.1m)'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/playwright/playwright-compact/filter.lf --sub=test --args='--project=chromium' --exit=1 --level=full < plugins/playwright/playwright-compact/samples/playwright-fail.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 36
+            - bytes 1599
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/playwright/playwright-compact/tests.cue \ playwright-compact \ samples/playwright-fail.txt ultra
+  commands:
+    - command: lowfat filter plugins/playwright/playwright-compact/filter.lf --sub=test --args='--project=chromium' --exit=1 --level=ultra < plugins/playwright/playwright-compact/samples/playwright-fail.txt
+      checks:
+        - name: stdout
+          data:
+            - Running 18 tests using 3 workers
+            - '  ✘   3 [chromium] › tests/dashboard.spec.ts:10:5 › dashboard › loads summary cards (30.0s)'
+            - '  ✘   6 [firefox] › tests/dashboard.spec.ts:10:5 › dashboard › loads summary cards (30.0s)'
+            - ""
+            - '  1) [chromium] › tests/dashboard.spec.ts:10:5 › dashboard › loads summary cards ─────────────'
+            - ""
+            - '    Error: expect(locator).toHaveText(expected) failed'
+            - ""
+            - '    Locator: getByTestId(''project-count'')'
+            - '    Expected: "12"'
+            - '    Received: "0"'
+            - '    Timeout: 30000ms'
+            - ""
+            - '      12 |     await page.goto(''/dashboard'')'
+            - '      13 |     await expect(page.getByRole(''heading'', { name: ''Dashboard'' })).toBeVisible()'
+            - '    > 14 |     await expect(page.getByTestId(''project-count'')).toHaveText(''12'')'
+            - '         |                                                     ^'
+            - '      15 |   })'
+            - '      16 | })'
+            - ""
+            - '    attachment #1: screenshot (image/png) ─────────────────────────────────────────────────────'
+            - '    test-results/dashboard-loads-summary-cards-chromium/test-failed-1.png'
+            - ""
+            - '  2) [firefox] › tests/dashboard.spec.ts:10:5 › dashboard › loads summary cards ───────────────'
+            - ""
+            - '    Error: expect(locator).toHaveText(expected) failed'
+            - ""
+            - '    Locator: getByTestId(''project-count'')'
+            - '    Expected: "12"'
+            - '    Received: "0"'
+            - '    Timeout: 30000ms'
+            - ""
+            - '  2 failed'
+            - '    [chromium] › tests/dashboard.spec.ts:10:5 › dashboard › loads summary cards'
+            - '    [firefox] › tests/dashboard.spec.ts:10:5 › dashboard › loads summary cards'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/playwright/playwright-compact/filter.lf --sub=test --args='--project=chromium' --exit=1 --level=ultra < plugins/playwright/playwright-compact/samples/playwright-fail.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 35
+            - bytes 1580
+        - name: exitcode
+          data:
+            - "0"

@@ -1,0 +1,253 @@
+- name: plugins/prettier/prettier-compact/tests.cue \ prettier-compact \ samples/prettier-check-issues.txt lite
+  commands:
+    - command: lowfat filter plugins/prettier/prettier-compact/filter.lf --sub= --args='--check .' --exit=1 --level=lite < plugins/prettier/prettier-compact/samples/prettier-check-issues.txt
+      checks:
+        - name: stdout
+          data:
+            - Checking formatting...
+            - '[warn] src/checkout/api.ts'
+            - '[warn] src/checkout/config.ts'
+            - '[warn] src/checkout/models.ts'
+            - '[warn] Code style issues found in 3 files. Run Prettier with --write to fix.'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/prettier/prettier-compact/filter.lf --sub= --args='--check .' --exit=1 --level=lite < plugins/prettier/prettier-compact/samples/prettier-check-issues.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 5
+            - bytes 187
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/prettier/prettier-compact/tests.cue \ prettier-compact \ samples/prettier-check-issues.txt full
+  commands:
+    - command: lowfat filter plugins/prettier/prettier-compact/filter.lf --sub= --args='--check .' --exit=1 --level=full < plugins/prettier/prettier-compact/samples/prettier-check-issues.txt
+      checks:
+        - name: stdout
+          data:
+            - Checking formatting...
+            - '[warn] src/checkout/api.ts'
+            - '[warn] src/checkout/config.ts'
+            - '[warn] src/checkout/models.ts'
+            - '[warn] Code style issues found in 3 files. Run Prettier with --write to fix.'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/prettier/prettier-compact/filter.lf --sub= --args='--check .' --exit=1 --level=full < plugins/prettier/prettier-compact/samples/prettier-check-issues.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 5
+            - bytes 187
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/prettier/prettier-compact/tests.cue \ prettier-compact \ samples/prettier-check-issues.txt ultra
+  commands:
+    - command: lowfat filter plugins/prettier/prettier-compact/filter.lf --sub= --args='--check .' --exit=1 --level=ultra < plugins/prettier/prettier-compact/samples/prettier-check-issues.txt
+      checks:
+        - name: stdout
+          data:
+            - Checking formatting...
+            - '[warn] src/checkout/api.ts'
+            - '[warn] src/checkout/config.ts'
+            - '[warn] src/checkout/models.ts'
+            - '[warn] Code style issues found in 3 files. Run Prettier with --write to fix.'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/prettier/prettier-compact/filter.lf --sub= --args='--check .' --exit=1 --level=ultra < plugins/prettier/prettier-compact/samples/prettier-check-issues.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 5
+            - bytes 187
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/prettier/prettier-compact/tests.cue \ prettier-compact \ samples/prettier-check-clean.txt lite
+  commands:
+    - command: lowfat filter plugins/prettier/prettier-compact/filter.lf --sub= --args='--check .' --exit=0 --level=lite < plugins/prettier/prettier-compact/samples/prettier-check-clean.txt
+      checks:
+        - name: stdout
+          data:
+            - Checking formatting...
+            - All matched files use Prettier code style!
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/prettier/prettier-compact/filter.lf --sub= --args='--check .' --exit=0 --level=lite < plugins/prettier/prettier-compact/samples/prettier-check-clean.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 2
+            - bytes 66
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/prettier/prettier-compact/tests.cue \ prettier-compact \ samples/prettier-check-clean.txt full
+  commands:
+    - command: lowfat filter plugins/prettier/prettier-compact/filter.lf --sub= --args='--check .' --exit=0 --level=full < plugins/prettier/prettier-compact/samples/prettier-check-clean.txt
+      checks:
+        - name: stdout
+          data:
+            - Checking formatting...
+            - All matched files use Prettier code style!
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/prettier/prettier-compact/filter.lf --sub= --args='--check .' --exit=0 --level=full < plugins/prettier/prettier-compact/samples/prettier-check-clean.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 2
+            - bytes 66
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/prettier/prettier-compact/tests.cue \ prettier-compact \ samples/prettier-check-clean.txt ultra
+  commands:
+    - command: lowfat filter plugins/prettier/prettier-compact/filter.lf --sub= --args='--check .' --exit=0 --level=ultra < plugins/prettier/prettier-compact/samples/prettier-check-clean.txt
+      checks:
+        - name: stdout
+          data:
+            - Checking formatting...
+            - All matched files use Prettier code style!
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/prettier/prettier-compact/filter.lf --sub= --args='--check .' --exit=0 --level=ultra < plugins/prettier/prettier-compact/samples/prettier-check-clean.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 2
+            - bytes 66
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/prettier/prettier-compact/tests.cue \ prettier-compact \ samples/prettier-write.txt lite
+  commands:
+    - command: lowfat filter plugins/prettier/prettier-compact/filter.lf --sub= --args='--write .' --exit=0 --level=lite < plugins/prettier/prettier-compact/samples/prettier-write.txt
+      checks:
+        - name: stdout
+          data:
+            - src/checkout/api.ts 41ms
+            - src/checkout/file1.ts 1ms
+            - src/checkout/file2.ts 2ms
+            - src/checkout/file3.ts 3ms
+            - src/checkout/file4.ts 4ms
+            - src/checkout/file5.ts 5ms
+            - src/checkout/file6.ts 6ms
+            - src/checkout/file7.ts 7ms
+            - src/checkout/file8.ts 8ms
+            - src/checkout/file9.ts 9ms
+            - src/checkout/file10.ts 10ms
+            - src/checkout/file11.ts 11ms
+            - src/checkout/file12.ts 12ms
+            - src/checkout/file13.ts 13ms
+            - src/checkout/file14.ts 14ms
+            - src/checkout/file15.ts 15ms
+            - src/checkout/file16.ts 16ms
+            - src/checkout/file17.ts 17ms
+            - src/checkout/file18.ts 18ms
+            - src/checkout/file19.ts 19ms
+            - src/checkout/file20.ts 20ms
+            - src/checkout/file21.ts 21ms
+            - src/checkout/file22.ts 22ms
+            - src/checkout/file23.ts 23ms
+            - src/checkout/file24.ts 24ms
+            - src/checkout/file25.ts 25ms
+            - src/checkout/file26.ts 26ms
+            - src/checkout/file27.ts 27ms
+            - src/checkout/file28.ts 28ms
+            - src/checkout/file29.ts 29ms
+            - src/checkout/file30.ts 30ms
+            - src/checkout/models.ts (unchanged) 12ms
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/prettier/prettier-compact/filter.lf --sub= --args='--write .' --exit=0 --level=lite < plugins/prettier/prettier-compact/samples/prettier-write.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 32
+            - bytes 887
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/prettier/prettier-compact/tests.cue \ prettier-compact \ samples/prettier-write.txt full
+  commands:
+    - command: lowfat filter plugins/prettier/prettier-compact/filter.lf --sub= --args='--write .' --exit=0 --level=full < plugins/prettier/prettier-compact/samples/prettier-write.txt
+      checks:
+        - name: stdout
+          data:
+            - src/checkout/api.ts 41ms
+            - src/checkout/file1.ts 1ms
+            - src/checkout/file2.ts 2ms
+            - src/checkout/file3.ts 3ms
+            - src/checkout/file4.ts 4ms
+            - src/checkout/file5.ts 5ms
+            - src/checkout/file6.ts 6ms
+            - src/checkout/file7.ts 7ms
+            - src/checkout/file8.ts 8ms
+            - src/checkout/file9.ts 9ms
+            - src/checkout/file10.ts 10ms
+            - src/checkout/file11.ts 11ms
+            - src/checkout/file12.ts 12ms
+            - src/checkout/file13.ts 13ms
+            - src/checkout/file14.ts 14ms
+            - src/checkout/file15.ts 15ms
+            - src/checkout/file16.ts 16ms
+            - src/checkout/file17.ts 17ms
+            - src/checkout/file18.ts 18ms
+            - src/checkout/file19.ts 19ms
+            - src/checkout/file20.ts 20ms
+            - src/checkout/file21.ts 21ms
+            - src/checkout/file22.ts 22ms
+            - src/checkout/file23.ts 23ms
+            - src/checkout/file24.ts 24ms
+            - src/checkout/file25.ts 25ms
+            - src/checkout/file26.ts 26ms
+            - src/checkout/file27.ts 27ms
+            - src/checkout/file28.ts 28ms
+            - src/checkout/file29.ts 29ms
+            - src/checkout/file30.ts 30ms
+            - src/checkout/models.ts (unchanged) 12ms
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/prettier/prettier-compact/filter.lf --sub= --args='--write .' --exit=0 --level=full < plugins/prettier/prettier-compact/samples/prettier-write.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 32
+            - bytes 887
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/prettier/prettier-compact/tests.cue \ prettier-compact \ samples/prettier-write.txt ultra
+  commands:
+    - command: lowfat filter plugins/prettier/prettier-compact/filter.lf --sub= --args='--write .' --exit=0 --level=ultra < plugins/prettier/prettier-compact/samples/prettier-write.txt
+      checks:
+        - name: stdout
+          data:
+            - src/checkout/file26.ts 26ms
+            - src/checkout/file27.ts 27ms
+            - src/checkout/file28.ts 28ms
+            - src/checkout/file29.ts 29ms
+            - src/checkout/file30.ts 30ms
+            - src/checkout/models.ts (unchanged) 12ms
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/prettier/prettier-compact/filter.lf --sub= --args='--write .' --exit=0 --level=ultra < plugins/prettier/prettier-compact/samples/prettier-write.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 6
+            - bytes 180
+        - name: exitcode
+          data:
+            - "0"

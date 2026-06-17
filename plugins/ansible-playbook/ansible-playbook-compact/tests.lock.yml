@@ -1,0 +1,183 @@
+- name: plugins/ansible-playbook/ansible-playbook-compact/tests.cue \ ansible-playbook-compact \ samples/ansible-failure.txt lite
+  commands:
+    - command: lowfat filter plugins/ansible-playbook/ansible-playbook-compact/filter.lf --sub= --args='-i prod site.yml' --exit=2 --level=lite < plugins/ansible-playbook/ansible-playbook-compact/samples/ansible-failure.txt
+      checks:
+        - name: stdout
+          data:
+            - PLAY [Deploy checkout service] *************************************************
+            - ""
+            - TASK [Gathering Facts] ********************************************************
+            - ""
+            - 'TASK [common : Install base packages] *****************************************'
+            - 'changed: [web3.prod]'
+            - ""
+            - 'TASK [app : Template config file] *********************************************'
+            - 'changed: [web1.prod]'
+            - 'fatal: [web3.prod]: FAILED! => {"changed": false, "msg": "Destination directory /etc/app does not exist"}'
+            - ""
+            - 'TASK [app : Restart service] **************************************************'
+            - 'changed: [web1.prod]'
+            - ""
+            - PLAY RECAP ********************************************************************
+            - 'web1.prod                  : ok=4    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0'
+            - 'web2.prod                  : ok=4    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0'
+            - 'web3.prod                  : ok=2    changed=1    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/ansible-playbook/ansible-playbook-compact/filter.lf --sub= --args='-i prod site.yml' --exit=2 --level=lite < plugins/ansible-playbook/ansible-playbook-compact/samples/ansible-failure.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 19
+            - bytes 1001
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/ansible-playbook/ansible-playbook-compact/tests.cue \ ansible-playbook-compact \ samples/ansible-failure.txt full
+  commands:
+    - command: lowfat filter plugins/ansible-playbook/ansible-playbook-compact/filter.lf --sub= --args='-i prod site.yml' --exit=2 --level=full < plugins/ansible-playbook/ansible-playbook-compact/samples/ansible-failure.txt
+      checks:
+        - name: stdout
+          data:
+            - PLAY [Deploy checkout service] *************************************************
+            - ""
+            - TASK [Gathering Facts] ********************************************************
+            - ""
+            - 'TASK [common : Install base packages] *****************************************'
+            - 'changed: [web3.prod]'
+            - ""
+            - 'TASK [app : Template config file] *********************************************'
+            - 'changed: [web1.prod]'
+            - 'fatal: [web3.prod]: FAILED! => {"changed": false, "msg": "Destination directory /etc/app does not exist"}'
+            - ""
+            - 'TASK [app : Restart service] **************************************************'
+            - 'changed: [web1.prod]'
+            - ""
+            - PLAY RECAP ********************************************************************
+            - 'web1.prod                  : ok=4    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0'
+            - 'web2.prod                  : ok=4    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0'
+            - 'web3.prod                  : ok=2    changed=1    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/ansible-playbook/ansible-playbook-compact/filter.lf --sub= --args='-i prod site.yml' --exit=2 --level=full < plugins/ansible-playbook/ansible-playbook-compact/samples/ansible-failure.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 19
+            - bytes 1001
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/ansible-playbook/ansible-playbook-compact/tests.cue \ ansible-playbook-compact \ samples/ansible-failure.txt ultra
+  commands:
+    - command: lowfat filter plugins/ansible-playbook/ansible-playbook-compact/filter.lf --sub= --args='-i prod site.yml' --exit=2 --level=ultra < plugins/ansible-playbook/ansible-playbook-compact/samples/ansible-failure.txt
+      checks:
+        - name: stdout
+          data:
+            - 'fatal: [web3.prod]: FAILED! => {"changed": false, "msg": "Destination directory /etc/app does not exist"}'
+            - PLAY RECAP ********************************************************************
+            - 'web1.prod                  : ok=4    changed=2    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0'
+            - 'web2.prod                  : ok=4    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0'
+            - 'web3.prod                  : ok=2    changed=1    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/ansible-playbook/ansible-playbook-compact/filter.lf --sub= --args='-i prod site.yml' --exit=2 --level=ultra < plugins/ansible-playbook/ansible-playbook-compact/samples/ansible-failure.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 5
+            - bytes 531
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/ansible-playbook/ansible-playbook-compact/tests.cue \ ansible-playbook-compact \ samples/ansible-success.txt lite
+  commands:
+    - command: lowfat filter plugins/ansible-playbook/ansible-playbook-compact/filter.lf --sub= --args='-i prod site.yml' --exit=0 --level=lite < plugins/ansible-playbook/ansible-playbook-compact/samples/ansible-success.txt
+      checks:
+        - name: stdout
+          data:
+            - PLAY [Deploy checkout service] *************************************************
+            - ""
+            - TASK [Gathering Facts] ********************************************************
+            - ""
+            - 'TASK [common : Install base packages] *****************************************'
+            - 'changed: [web2.prod]'
+            - ""
+            - 'TASK [app : Template config file] *********************************************'
+            - 'changed: [web1.prod]'
+            - 'changed: [web2.prod]'
+            - ""
+            - PLAY RECAP ********************************************************************
+            - 'web1.prod                  : ok=3    changed=2    unreachable=0    failed=0    skipped=0'
+            - 'web2.prod                  : ok=3    changed=2    unreachable=0    failed=0    skipped=0'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/ansible-playbook/ansible-playbook-compact/filter.lf --sub= --args='-i prod site.yml' --exit=0 --level=lite < plugins/ansible-playbook/ansible-playbook-compact/samples/ansible-success.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 15
+            - bytes 647
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/ansible-playbook/ansible-playbook-compact/tests.cue \ ansible-playbook-compact \ samples/ansible-success.txt full
+  commands:
+    - command: lowfat filter plugins/ansible-playbook/ansible-playbook-compact/filter.lf --sub= --args='-i prod site.yml' --exit=0 --level=full < plugins/ansible-playbook/ansible-playbook-compact/samples/ansible-success.txt
+      checks:
+        - name: stdout
+          data:
+            - PLAY [Deploy checkout service] *************************************************
+            - ""
+            - TASK [Gathering Facts] ********************************************************
+            - ""
+            - 'TASK [common : Install base packages] *****************************************'
+            - 'changed: [web2.prod]'
+            - ""
+            - 'TASK [app : Template config file] *********************************************'
+            - 'changed: [web1.prod]'
+            - 'changed: [web2.prod]'
+            - ""
+            - PLAY RECAP ********************************************************************
+            - 'web1.prod                  : ok=3    changed=2    unreachable=0    failed=0    skipped=0'
+            - 'web2.prod                  : ok=3    changed=2    unreachable=0    failed=0    skipped=0'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/ansible-playbook/ansible-playbook-compact/filter.lf --sub= --args='-i prod site.yml' --exit=0 --level=full < plugins/ansible-playbook/ansible-playbook-compact/samples/ansible-success.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 15
+            - bytes 647
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/ansible-playbook/ansible-playbook-compact/tests.cue \ ansible-playbook-compact \ samples/ansible-success.txt ultra
+  commands:
+    - command: lowfat filter plugins/ansible-playbook/ansible-playbook-compact/filter.lf --sub= --args='-i prod site.yml' --exit=0 --level=ultra < plugins/ansible-playbook/ansible-playbook-compact/samples/ansible-success.txt
+      checks:
+        - name: stdout
+          data:
+            - 'changed: [web2.prod]'
+            - 'changed: [web1.prod]'
+            - 'changed: [web2.prod]'
+            - PLAY RECAP ********************************************************************
+            - 'web1.prod                  : ok=3    changed=2    unreachable=0    failed=0    skipped=0'
+            - 'web2.prod                  : ok=3    changed=2    unreachable=0    failed=0    skipped=0'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/ansible-playbook/ansible-playbook-compact/filter.lf --sub= --args='-i prod site.yml' --exit=0 --level=ultra < plugins/ansible-playbook/ansible-playbook-compact/samples/ansible-success.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 6
+            - bytes 321
+        - name: exitcode
+          data:
+            - "0"

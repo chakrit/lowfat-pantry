@@ -1,0 +1,487 @@
+- name: plugins/kubectl/kubectl-compact/tests.cue \ kubectl-compact \ samples/kubectl-get-pods.txt lite
+  commands:
+    - command: lowfat filter plugins/kubectl/kubectl-compact/filter.lf --sub=get --args='pods -A' --exit=0 --level=lite < plugins/kubectl/kubectl-compact/samples/kubectl-get-pods.txt
+      checks:
+        - name: stdout
+          data:
+            - NAMESPACE NAME READY STATUS RESTARTS AGE IP NODE
+            - default api-6f87d4b77d-2p9xk 2/2 Running 0 3d4h 10.42.1.12 ip-10-0-1-10
+            - default api-6f87d4b77d-6q4wb 2/2 Running 1 (2d ago) 3d4h 10.42.2.31 ip-10-0-2-22
+            - default api-6f87d4b77d-lqxmk 1/2 CrashLoopBackOff 17 (4m ago) 3d4h 10.42.3.18 ip-10-0-3-08
+            - default worker-5f9f57fb8d-8gq2v 1/1 Running 0 21h 10.42.1.44 ip-10-0-1-10
+            - default worker-5f9f57fb8d-bm6dp 1/1 Running 0 21h 10.42.2.49 ip-10-0-2-22
+            - payments ledger-6c47cc7bd7-rs5gb 1/1 Running 0 14h 10.42.4.91 ip-10-0-4-19
+            - payments ledger-6c47cc7bd7-vtx2p 1/1 Running 0 14h 10.42.5.34 ip-10-0-5-12
+            - payments reconciler-78d4c8cbb9-pst6f 0/1 ImagePullBackOff 6 19m 10.42.5.71 ip-10-0-5-12
+            - search indexer-0 1/1 Running 0 7d 10.42.6.20 ip-10-0-6-04
+            - search indexer-1 1/1 Running 0 7d 10.42.7.21 ip-10-0-7-17
+            - search indexer-2 1/1 Running 0 7d 10.42.8.22 ip-10-0-8-09
+            - observability prometheus-server-66f76cf9cc-kz4sq 2/2 Running 0 18d 10.42.2.3 ip-10-0-2-22
+            - observability grafana-5bbd47f7f5-vd22m 1/1 Running 0 18d 10.42.1.5 ip-10-0-1-10
+            - observability loki-0 1/1 Running 0 18d 10.42.3.6 ip-10-0-3-08
+            - kube-system coredns-6f6b679f8f-4pz9p 1/1 Running 0 22d 10.42.0.11 ip-10-0-0-01
+            - kube-system coredns-6f6b679f8f-gm2mt 1/1 Running 0 22d 10.42.0.12 ip-10-0-0-02
+            - kube-system metrics-server-7d75c7c9b8-x5nkg 1/1 Running 0 22d 10.42.0.22 ip-10-0-0-01
+            - jobs export-28912640-rbhr9 0/1 Completed 0 12h 10.42.9.31 ip-10-0-9-13
+            - jobs export-28912641-hj4mz 0/1 Completed 0 11h 10.42.9.32 ip-10-0-9-13
+            - jobs export-28912642-qgh4t 0/1 Completed 0 10h 10.42.9.33 ip-10-0-9-13
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/kubectl/kubectl-compact/filter.lf --sub=get --args='pods -A' --exit=0 --level=lite < plugins/kubectl/kubectl-compact/samples/kubectl-get-pods.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 21
+            - bytes 1542
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/kubectl/kubectl-compact/tests.cue \ kubectl-compact \ samples/kubectl-get-pods.txt full
+  commands:
+    - command: lowfat filter plugins/kubectl/kubectl-compact/filter.lf --sub=get --args='pods -A' --exit=0 --level=full < plugins/kubectl/kubectl-compact/samples/kubectl-get-pods.txt
+      checks:
+        - name: stdout
+          data:
+            - NAMESPACE NAME READY STATUS RESTARTS AGE IP NODE
+            - default api-6f87d4b77d-2p9xk 2/2 Running 0 3d4h 10.42.1.12 ip-10-0-1-10
+            - default api-6f87d4b77d-6q4wb 2/2 Running 1 (2d ago) 3d4h 10.42.2.31 ip-10-0-2-22
+            - default api-6f87d4b77d-lqxmk 1/2 CrashLoopBackOff 17 (4m ago) 3d4h 10.42.3.18 ip-10-0-3-08
+            - default worker-5f9f57fb8d-8gq2v 1/1 Running 0 21h 10.42.1.44 ip-10-0-1-10
+            - default worker-5f9f57fb8d-bm6dp 1/1 Running 0 21h 10.42.2.49 ip-10-0-2-22
+            - payments ledger-6c47cc7bd7-rs5gb 1/1 Running 0 14h 10.42.4.91 ip-10-0-4-19
+            - payments ledger-6c47cc7bd7-vtx2p 1/1 Running 0 14h 10.42.5.34 ip-10-0-5-12
+            - payments reconciler-78d4c8cbb9-pst6f 0/1 ImagePullBackOff 6 19m 10.42.5.71 ip-10-0-5-12
+            - search indexer-0 1/1 Running 0 7d 10.42.6.20 ip-10-0-6-04
+            - search indexer-1 1/1 Running 0 7d 10.42.7.21 ip-10-0-7-17
+            - search indexer-2 1/1 Running 0 7d 10.42.8.22 ip-10-0-8-09
+            - observability prometheus-server-66f76cf9cc-kz4sq 2/2 Running 0 18d 10.42.2.3 ip-10-0-2-22
+            - observability grafana-5bbd47f7f5-vd22m 1/1 Running 0 18d 10.42.1.5 ip-10-0-1-10
+            - observability loki-0 1/1 Running 0 18d 10.42.3.6 ip-10-0-3-08
+            - kube-system coredns-6f6b679f8f-4pz9p 1/1 Running 0 22d 10.42.0.11 ip-10-0-0-01
+            - kube-system coredns-6f6b679f8f-gm2mt 1/1 Running 0 22d 10.42.0.12 ip-10-0-0-02
+            - kube-system metrics-server-7d75c7c9b8-x5nkg 1/1 Running 0 22d 10.42.0.22 ip-10-0-0-01
+            - jobs export-28912640-rbhr9 0/1 Completed 0 12h 10.42.9.31 ip-10-0-9-13
+            - jobs export-28912641-hj4mz 0/1 Completed 0 11h 10.42.9.32 ip-10-0-9-13
+            - jobs export-28912642-qgh4t 0/1 Completed 0 10h 10.42.9.33 ip-10-0-9-13
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/kubectl/kubectl-compact/filter.lf --sub=get --args='pods -A' --exit=0 --level=full < plugins/kubectl/kubectl-compact/samples/kubectl-get-pods.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 21
+            - bytes 1542
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/kubectl/kubectl-compact/tests.cue \ kubectl-compact \ samples/kubectl-get-pods.txt ultra
+  commands:
+    - command: lowfat filter plugins/kubectl/kubectl-compact/filter.lf --sub=get --args='pods -A' --exit=0 --level=ultra < plugins/kubectl/kubectl-compact/samples/kubectl-get-pods.txt
+      checks:
+        - name: stdout
+          data:
+            - NAMESPACE NAME READY STATUS RESTARTS AGE IP NODE
+            - default api-6f87d4b77d-2p9xk 2/2 Running 0 3d4h 10.42.1.12 ip-10-0-1-10
+            - default api-6f87d4b77d-6q4wb 2/2 Running 1 (2d ago) 3d4h 10.42.2.31 ip-10-0-2-22
+            - default api-6f87d4b77d-lqxmk 1/2 CrashLoopBackOff 17 (4m ago) 3d4h 10.42.3.18 ip-10-0-3-08
+            - default worker-5f9f57fb8d-8gq2v 1/1 Running 0 21h 10.42.1.44 ip-10-0-1-10
+            - default worker-5f9f57fb8d-bm6dp 1/1 Running 0 21h 10.42.2.49 ip-10-0-2-22
+            - payments ledger-6c47cc7bd7-rs5gb 1/1 Running 0 14h 10.42.4.91 ip-10-0-4-19
+            - payments ledger-6c47cc7bd7-vtx2p 1/1 Running 0 14h 10.42.5.34 ip-10-0-5-12
+            - payments reconciler-78d4c8cbb9-pst6f 0/1 ImagePullBackOff 6 19m 10.42.5.71 ip-10-0-5-12
+            - search indexer-0 1/1 Running 0 7d 10.42.6.20 ip-10-0-6-04
+            - search indexer-1 1/1 Running 0 7d 10.42.7.21 ip-10-0-7-17
+            - search indexer-2 1/1 Running 0 7d 10.42.8.22 ip-10-0-8-09
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/kubectl/kubectl-compact/filter.lf --sub=get --args='pods -A' --exit=0 --level=ultra < plugins/kubectl/kubectl-compact/samples/kubectl-get-pods.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 12
+            - bytes 853
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/kubectl/kubectl-compact/tests.cue \ kubectl-compact \ samples/kubectl-describe-pod.txt lite
+  commands:
+    - command: lowfat filter plugins/kubectl/kubectl-compact/filter.lf --sub=describe --args='pod checkout-7d9b8f6f6f-2kq9x' --exit=0 --level=lite < plugins/kubectl/kubectl-compact/samples/kubectl-describe-pod.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Name:             checkout-7d9b8f6f6f-2kq9x'
+            - 'Namespace:        default'
+            - 'Labels:           app=checkout'
+            - 'Annotations:      kubectl.kubernetes.io/restartedAt: 2026-06-08T08:10:00+07:00'
+            - 'Status:           Running'
+            - 'Controlled By:    ReplicaSet/checkout-7d9b8f6f6f'
+            - 'Containers:'
+            - 'Conditions:'
+            - 'Events:'
+            - '  Type     Reason     Age                  From               Message'
+            - '  ----     ------     ----                 ----               -------'
+            - '  Normal   Scheduled  14m                  default-scheduler  Successfully assigned default/checkout-7d9b8f6f6f-2kq9x to ip-10-0-3-08'
+            - '  Normal   Pulled     13m                  kubelet            Successfully pulled image "registry.example.test/checkout:2026.06.08"'
+            - '  Normal   Created    13m                  kubelet            Created container: checkout'
+            - '  Normal   Started    13m                  kubelet            Started container checkout'
+            - '  Warning  Unhealthy  11m (x6 over 13m)    kubelet            Readiness probe failed: HTTP probe failed with statuscode: 503'
+            - '  Warning  BackOff    7m35s (x9 over 10m)  kubelet            Back-off restarting failed container checkout'
+            - '  Normal   Pulled     6m12s                kubelet            Container image already present on machine'
+            - '  Normal   Created    6m12s                kubelet            Created container: checkout'
+            - '  Normal   Started    6m11s                kubelet            Started container checkout'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/kubectl/kubectl-compact/filter.lf --sub=describe --args='pod checkout-7d9b8f6f6f-2kq9x' --exit=0 --level=lite < plugins/kubectl/kubectl-compact/samples/kubectl-describe-pod.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 20
+            - bytes 1389
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/kubectl/kubectl-compact/tests.cue \ kubectl-compact \ samples/kubectl-describe-pod.txt full
+  commands:
+    - command: lowfat filter plugins/kubectl/kubectl-compact/filter.lf --sub=describe --args='pod checkout-7d9b8f6f6f-2kq9x' --exit=0 --level=full < plugins/kubectl/kubectl-compact/samples/kubectl-describe-pod.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Name:             checkout-7d9b8f6f6f-2kq9x'
+            - 'Namespace:        default'
+            - 'Labels:           app=checkout'
+            - 'Annotations:      kubectl.kubernetes.io/restartedAt: 2026-06-08T08:10:00+07:00'
+            - 'Status:           Running'
+            - 'Controlled By:    ReplicaSet/checkout-7d9b8f6f6f'
+            - 'Containers:'
+            - 'Conditions:'
+            - 'Events:'
+            - '  Type     Reason     Age                  From               Message'
+            - '  ----     ------     ----                 ----               -------'
+            - '  Normal   Scheduled  14m                  default-scheduler  Successfully assigned default/checkout-7d9b8f6f6f-2kq9x to ip-10-0-3-08'
+            - '  Normal   Pulled     13m                  kubelet            Successfully pulled image "registry.example.test/checkout:2026.06.08"'
+            - '  Normal   Created    13m                  kubelet            Created container: checkout'
+            - '  Normal   Started    13m                  kubelet            Started container checkout'
+            - '  Warning  Unhealthy  11m (x6 over 13m)    kubelet            Readiness probe failed: HTTP probe failed with statuscode: 503'
+            - '  Warning  BackOff    7m35s (x9 over 10m)  kubelet            Back-off restarting failed container checkout'
+            - '  Normal   Pulled     6m12s                kubelet            Container image already present on machine'
+            - '  Normal   Created    6m12s                kubelet            Created container: checkout'
+            - '  Normal   Started    6m11s                kubelet            Started container checkout'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/kubectl/kubectl-compact/filter.lf --sub=describe --args='pod checkout-7d9b8f6f6f-2kq9x' --exit=0 --level=full < plugins/kubectl/kubectl-compact/samples/kubectl-describe-pod.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 20
+            - bytes 1389
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/kubectl/kubectl-compact/tests.cue \ kubectl-compact \ samples/kubectl-describe-pod.txt ultra
+  commands:
+    - command: lowfat filter plugins/kubectl/kubectl-compact/filter.lf --sub=describe --args='pod checkout-7d9b8f6f6f-2kq9x' --exit=0 --level=ultra < plugins/kubectl/kubectl-compact/samples/kubectl-describe-pod.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Name:             checkout-7d9b8f6f6f-2kq9x'
+            - 'Namespace:        default'
+            - 'Status:           Running'
+            - 'Controlled By:    ReplicaSet/checkout-7d9b8f6f6f'
+            - 'Events:'
+            - '  Type     Reason     Age                  From               Message'
+            - '  ----     ------     ----                 ----               -------'
+            - '  Normal   Scheduled  14m                  default-scheduler  Successfully assigned default/checkout-7d9b8f6f6f-2kq9x to ip-10-0-3-08'
+            - '  Normal   Pulled     13m                  kubelet            Successfully pulled image "registry.example.test/checkout:2026.06.08"'
+            - '  Normal   Created    13m                  kubelet            Created container: checkout'
+            - '  Normal   Started    13m                  kubelet            Started container checkout'
+            - '  Warning  Unhealthy  11m (x6 over 13m)    kubelet            Readiness probe failed: HTTP probe failed with statuscode: 503'
+            - '  Warning  BackOff    7m35s (x9 over 10m)  kubelet            Back-off restarting failed container checkout'
+            - '  Normal   Pulled     6m12s                kubelet            Container image already present on machine'
+            - '  Normal   Created    6m12s                kubelet            Created container: checkout'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/kubectl/kubectl-compact/filter.lf --sub=describe --args='pod checkout-7d9b8f6f6f-2kq9x' --exit=0 --level=ultra < plugins/kubectl/kubectl-compact/samples/kubectl-describe-pod.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 15
+            - bytes 1166
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/kubectl/kubectl-compact/tests.cue \ kubectl-compact \ samples/kubectl-logs.txt lite
+  commands:
+    - command: lowfat filter plugins/kubectl/kubectl-compact/filter.lf --sub=logs --args='deploy/api --tail=200' --exit=0 --level=lite < plugins/kubectl/kubectl-compact/samples/kubectl-logs.txt
+      checks:
+        - name: stdout
+          data:
+            - 2026-06-08T01:12:01.104Z INFO  boot config loaded profile=prod region=ap-southeast-1
+            - 2026-06-08T01:12:01.220Z INFO  boot listening addr=0.0.0.0:8080
+            - 2026-06-08T01:12:02.018Z INFO  http request method=GET path=/healthz status=200 latency_ms=3
+            - 2026-06-08T01:12:03.117Z INFO  http request method=GET path=/readyz status=503 latency_ms=8
+            - 2026-06-08T01:12:04.026Z WARN  db pool wait exceeded threshold_ms=250 wait_ms=401
+            - 2026-06-08T01:12:05.030Z INFO  job tick name=expire-carts scanned=184 expired=2
+            - 2026-06-08T01:12:06.031Z INFO  http request method=POST path=/checkout status=500 latency_ms=911
+            - 2026-06-08T01:12:06.032Z ERROR payment authorization failed order=ord_1011 cause="gateway timeout"
+            - 2026-06-08T01:12:07.033Z INFO  retrying payment authorization order=ord_1011 attempt=2
+            - 2026-06-08T01:12:08.034Z ERROR payment authorization failed order=ord_1011 cause="gateway timeout"
+            - 2026-06-08T01:12:09.035Z INFO  retrying payment authorization order=ord_1011 attempt=3
+            - 2026-06-08T01:12:10.036Z ERROR payment authorization failed order=ord_1011 cause="gateway timeout"
+            - 2026-06-08T01:12:11.037Z WARN  circuit breaker open dependency=payments duration_s=30
+            - 2026-06-08T01:12:12.038Z INFO  http request method=GET path=/metrics status=200 latency_ms=5
+            - 2026-06-08T01:12:13.039Z INFO  http request method=GET path=/healthz status=200 latency_ms=2
+            - 2026-06-08T01:12:14.040Z INFO  http request method=GET path=/readyz status=503 latency_ms=7
+            - 2026-06-08T01:12:15.041Z INFO  worker queue depth queue=orders depth=913
+            - 2026-06-08T01:12:16.042Z INFO  worker queue depth queue=orders depth=944
+            - 2026-06-08T01:12:17.043Z INFO  worker queue depth queue=orders depth=981
+            - 2026-06-08T01:12:18.044Z WARN  db pool wait exceeded threshold_ms=250 wait_ms=522
+            - 2026-06-08T01:12:19.045Z ERROR request failed id=req_27d route=/checkout status=500 error="payment dependency unavailable"
+            - 2026-06-08T01:12:20.046Z INFO  http request method=POST path=/checkout status=503 latency_ms=44
+            - 2026-06-08T01:12:21.047Z INFO  http request method=GET path=/healthz status=200 latency_ms=2
+            - 2026-06-08T01:12:22.048Z INFO  http request method=GET path=/readyz status=503 latency_ms=6
+            - 2026-06-08T01:12:23.049Z INFO  circuit breaker half-open dependency=payments
+            - 2026-06-08T01:12:24.050Z INFO  payment authorization succeeded order=ord_1012 latency_ms=233
+            - 2026-06-08T01:12:25.051Z INFO  circuit breaker closed dependency=payments
+            - 2026-06-08T01:12:26.052Z INFO  http request method=POST path=/checkout status=200 latency_ms=321
+            - 2026-06-08T01:12:27.053Z INFO  http request method=GET path=/metrics status=200 latency_ms=4
+            - 2026-06-08T01:12:28.054Z INFO  http request method=GET path=/readyz status=200 latency_ms=5
+            - 2026-06-08T01:12:29.055Z INFO  job tick name=expire-carts scanned=191 expired=3
+            - 2026-06-08T01:12:30.056Z INFO  http request method=GET path=/healthz status=200 latency_ms=2
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/kubectl/kubectl-compact/filter.lf --sub=logs --args='deploy/api --tail=200' --exit=0 --level=lite < plugins/kubectl/kubectl-compact/samples/kubectl-logs.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 32
+            - bytes 2832
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/kubectl/kubectl-compact/tests.cue \ kubectl-compact \ samples/kubectl-logs.txt full
+  commands:
+    - command: lowfat filter plugins/kubectl/kubectl-compact/filter.lf --sub=logs --args='deploy/api --tail=200' --exit=0 --level=full < plugins/kubectl/kubectl-compact/samples/kubectl-logs.txt
+      checks:
+        - name: stdout
+          data:
+            - 2026-06-08T01:12:03.117Z INFO  http request method=GET path=/readyz status=503 latency_ms=8
+            - 2026-06-08T01:12:04.026Z WARN  db pool wait exceeded threshold_ms=250 wait_ms=401
+            - 2026-06-08T01:12:05.030Z INFO  job tick name=expire-carts scanned=184 expired=2
+            - 2026-06-08T01:12:06.031Z INFO  http request method=POST path=/checkout status=500 latency_ms=911
+            - 2026-06-08T01:12:06.032Z ERROR payment authorization failed order=ord_1011 cause="gateway timeout"
+            - 2026-06-08T01:12:07.033Z INFO  retrying payment authorization order=ord_1011 attempt=2
+            - 2026-06-08T01:12:08.034Z ERROR payment authorization failed order=ord_1011 cause="gateway timeout"
+            - 2026-06-08T01:12:09.035Z INFO  retrying payment authorization order=ord_1011 attempt=3
+            - 2026-06-08T01:12:10.036Z ERROR payment authorization failed order=ord_1011 cause="gateway timeout"
+            - 2026-06-08T01:12:11.037Z WARN  circuit breaker open dependency=payments duration_s=30
+            - 2026-06-08T01:12:12.038Z INFO  http request method=GET path=/metrics status=200 latency_ms=5
+            - 2026-06-08T01:12:13.039Z INFO  http request method=GET path=/healthz status=200 latency_ms=2
+            - 2026-06-08T01:12:14.040Z INFO  http request method=GET path=/readyz status=503 latency_ms=7
+            - 2026-06-08T01:12:15.041Z INFO  worker queue depth queue=orders depth=913
+            - 2026-06-08T01:12:16.042Z INFO  worker queue depth queue=orders depth=944
+            - 2026-06-08T01:12:17.043Z INFO  worker queue depth queue=orders depth=981
+            - 2026-06-08T01:12:18.044Z WARN  db pool wait exceeded threshold_ms=250 wait_ms=522
+            - 2026-06-08T01:12:19.045Z ERROR request failed id=req_27d route=/checkout status=500 error="payment dependency unavailable"
+            - 2026-06-08T01:12:20.046Z INFO  http request method=POST path=/checkout status=503 latency_ms=44
+            - 2026-06-08T01:12:21.047Z INFO  http request method=GET path=/healthz status=200 latency_ms=2
+            - 2026-06-08T01:12:22.048Z INFO  http request method=GET path=/readyz status=503 latency_ms=6
+            - 2026-06-08T01:12:23.049Z INFO  circuit breaker half-open dependency=payments
+            - 2026-06-08T01:12:24.050Z INFO  payment authorization succeeded order=ord_1012 latency_ms=233
+            - 2026-06-08T01:12:25.051Z INFO  circuit breaker closed dependency=payments
+            - 2026-06-08T01:12:26.052Z INFO  http request method=POST path=/checkout status=200 latency_ms=321
+            - 2026-06-08T01:12:27.053Z INFO  http request method=GET path=/metrics status=200 latency_ms=4
+            - 2026-06-08T01:12:28.054Z INFO  http request method=GET path=/readyz status=200 latency_ms=5
+            - 2026-06-08T01:12:29.055Z INFO  job tick name=expire-carts scanned=191 expired=3
+            - 2026-06-08T01:12:30.056Z INFO  http request method=GET path=/healthz status=200 latency_ms=2
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/kubectl/kubectl-compact/filter.lf --sub=logs --args='deploy/api --tail=200' --exit=0 --level=full < plugins/kubectl/kubectl-compact/samples/kubectl-logs.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 29
+            - bytes 2590
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/kubectl/kubectl-compact/tests.cue \ kubectl-compact \ samples/kubectl-logs.txt ultra
+  commands:
+    - command: lowfat filter plugins/kubectl/kubectl-compact/filter.lf --sub=logs --args='deploy/api --tail=200' --exit=0 --level=ultra < plugins/kubectl/kubectl-compact/samples/kubectl-logs.txt
+      checks:
+        - name: stdout
+          data:
+            - 2026-06-08T01:12:17.043Z INFO  worker queue depth queue=orders depth=981
+            - 2026-06-08T01:12:18.044Z WARN  db pool wait exceeded threshold_ms=250 wait_ms=522
+            - 2026-06-08T01:12:19.045Z ERROR request failed id=req_27d route=/checkout status=500 error="payment dependency unavailable"
+            - 2026-06-08T01:12:20.046Z INFO  http request method=POST path=/checkout status=503 latency_ms=44
+            - 2026-06-08T01:12:21.047Z INFO  http request method=GET path=/healthz status=200 latency_ms=2
+            - 2026-06-08T01:12:22.048Z INFO  http request method=GET path=/readyz status=503 latency_ms=6
+            - 2026-06-08T01:12:23.049Z INFO  circuit breaker half-open dependency=payments
+            - 2026-06-08T01:12:24.050Z INFO  payment authorization succeeded order=ord_1012 latency_ms=233
+            - 2026-06-08T01:12:25.051Z INFO  circuit breaker closed dependency=payments
+            - 2026-06-08T01:12:26.052Z INFO  http request method=POST path=/checkout status=200 latency_ms=321
+            - 2026-06-08T01:12:27.053Z INFO  http request method=GET path=/metrics status=200 latency_ms=4
+            - 2026-06-08T01:12:28.054Z INFO  http request method=GET path=/readyz status=200 latency_ms=5
+            - 2026-06-08T01:12:29.055Z INFO  job tick name=expire-carts scanned=191 expired=3
+            - 2026-06-08T01:12:30.056Z INFO  http request method=GET path=/healthz status=200 latency_ms=2
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/kubectl/kubectl-compact/filter.lf --sub=logs --args='deploy/api --tail=200' --exit=0 --level=ultra < plugins/kubectl/kubectl-compact/samples/kubectl-logs.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 14
+            - bytes 1258
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/kubectl/kubectl-compact/tests.cue \ kubectl-compact \ samples/kubectl-apply-rollout.txt lite
+  commands:
+    - command: lowfat filter plugins/kubectl/kubectl-compact/filter.lf --sub=apply --args='-f k8s/' --exit=0 --level=lite < plugins/kubectl/kubectl-compact/samples/kubectl-apply-rollout.txt
+      checks:
+        - name: stdout
+          data:
+            - namespace/shop unchanged
+            - configmap/checkout-config configured
+            - secret/checkout-env unchanged
+            - service/checkout unchanged
+            - deployment.apps/checkout configured
+            - horizontalpodautoscaler.autoscaling/checkout unchanged
+            - serviceaccount/checkout unchanged
+            - role.rbac.authorization.k8s.io/checkout-reader unchanged
+            - rolebinding.rbac.authorization.k8s.io/checkout-reader unchanged
+            - 'Waiting for deployment "checkout" rollout to finish: 1 old replicas are pending termination...'
+            - 'Waiting for deployment "checkout" rollout to finish: 1 of 3 updated replicas are available...'
+            - 'Waiting for deployment "checkout" rollout to finish: 2 of 3 updated replicas are available...'
+            - deployment "checkout" successfully rolled out
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/kubectl/kubectl-compact/filter.lf --sub=apply --args='-f k8s/' --exit=0 --level=lite < plugins/kubectl/kubectl-compact/samples/kubectl-apply-rollout.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 13
+            - bytes 694
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/kubectl/kubectl-compact/tests.cue \ kubectl-compact \ samples/kubectl-apply-rollout.txt full
+  commands:
+    - command: lowfat filter plugins/kubectl/kubectl-compact/filter.lf --sub=apply --args='-f k8s/' --exit=0 --level=full < plugins/kubectl/kubectl-compact/samples/kubectl-apply-rollout.txt
+      checks:
+        - name: stdout
+          data:
+            - namespace/shop unchanged
+            - configmap/checkout-config configured
+            - secret/checkout-env unchanged
+            - service/checkout unchanged
+            - deployment.apps/checkout configured
+            - horizontalpodautoscaler.autoscaling/checkout unchanged
+            - serviceaccount/checkout unchanged
+            - role.rbac.authorization.k8s.io/checkout-reader unchanged
+            - rolebinding.rbac.authorization.k8s.io/checkout-reader unchanged
+            - 'Waiting for deployment "checkout" rollout to finish: 1 old replicas are pending termination...'
+            - 'Waiting for deployment "checkout" rollout to finish: 1 of 3 updated replicas are available...'
+            - 'Waiting for deployment "checkout" rollout to finish: 2 of 3 updated replicas are available...'
+            - deployment "checkout" successfully rolled out
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/kubectl/kubectl-compact/filter.lf --sub=apply --args='-f k8s/' --exit=0 --level=full < plugins/kubectl/kubectl-compact/samples/kubectl-apply-rollout.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 13
+            - bytes 694
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/kubectl/kubectl-compact/tests.cue \ kubectl-compact \ samples/kubectl-apply-rollout.txt ultra
+  commands:
+    - command: lowfat filter plugins/kubectl/kubectl-compact/filter.lf --sub=apply --args='-f k8s/' --exit=0 --level=ultra < plugins/kubectl/kubectl-compact/samples/kubectl-apply-rollout.txt
+      checks:
+        - name: stdout
+          data:
+            - namespace/shop unchanged
+            - configmap/checkout-config configured
+            - secret/checkout-env unchanged
+            - service/checkout unchanged
+            - deployment.apps/checkout configured
+            - horizontalpodautoscaler.autoscaling/checkout unchanged
+            - serviceaccount/checkout unchanged
+            - role.rbac.authorization.k8s.io/checkout-reader unchanged
+            - rolebinding.rbac.authorization.k8s.io/checkout-reader unchanged
+            - 'Waiting for deployment "checkout" rollout to finish: 1 old replicas are pending termination...'
+            - 'Waiting for deployment "checkout" rollout to finish: 1 of 3 updated replicas are available...'
+            - 'Waiting for deployment "checkout" rollout to finish: 2 of 3 updated replicas are available...'
+            - deployment "checkout" successfully rolled out
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/kubectl/kubectl-compact/filter.lf --sub=apply --args='-f k8s/' --exit=0 --level=ultra < plugins/kubectl/kubectl-compact/samples/kubectl-apply-rollout.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 13
+            - bytes 694
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/kubectl/kubectl-compact/tests.cue \ kubectl-compact \ samples/kubectl-get-noserver.txt full
+  commands:
+    - command: lowfat filter plugins/kubectl/kubectl-compact/filter.lf --sub=get --args='pods' --exit=1 --level=full < plugins/kubectl/kubectl-compact/samples/kubectl-get-noserver.txt
+      checks:
+        - name: stdout
+          data:
+            - 'E0610 00:22:51.763707       1 memcache.go:265] "Unhandled Error" err="couldn''t get current server API group list: Get \"http://localhost:8080/api?timeout=32s\": dial tcp [::1]:8080: connect: connection refused"'
+            - 'E0610 00:22:51.764040       1 memcache.go:265] "Unhandled Error" err="couldn''t get current server API group list: Get \"http://localhost:8080/api?timeout=32s\": dial tcp [::1]:8080: connect: connection refused"'
+            - 'E0610 00:22:51.765389       1 memcache.go:265] "Unhandled Error" err="couldn''t get current server API group list: Get \"http://localhost:8080/api?timeout=32s\": dial tcp [::1]:8080: connect: connection refused"'
+            - 'E0610 00:22:51.765576       1 memcache.go:265] "Unhandled Error" err="couldn''t get current server API group list: Get \"http://localhost:8080/api?timeout=32s\": dial tcp [::1]:8080: connect: connection refused"'
+            - 'E0610 00:22:51.767561       1 memcache.go:265] "Unhandled Error" err="couldn''t get current server API group list: Get \"http://localhost:8080/api?timeout=32s\": dial tcp [::1]:8080: connect: connection refused"'
+            - The connection to the server localhost:8080 was refused - did you specify the right host or port?
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/kubectl/kubectl-compact/filter.lf --sub=get --args='pods' --exit=1 --level=full < plugins/kubectl/kubectl-compact/samples/kubectl-get-noserver.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 6
+            - bytes 1153
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/kubectl/kubectl-compact/tests.cue \ kubectl-compact \ samples/kubectl-get-noserver.txt ultra
+  commands:
+    - command: lowfat filter plugins/kubectl/kubectl-compact/filter.lf --sub=get --args='pods' --exit=1 --level=ultra < plugins/kubectl/kubectl-compact/samples/kubectl-get-noserver.txt
+      checks:
+        - name: stdout
+          data:
+            - 'E0610 00:22:51.763707       1 memcache.go:265] "Unhandled Error" err="couldn''t get current server API group list: Get \"http://localhost:8080/api?timeout=32s\": dial tcp [::1]:8080: connect: connection refused"'
+            - 'E0610 00:22:51.764040       1 memcache.go:265] "Unhandled Error" err="couldn''t get current server API group list: Get \"http://localhost:8080/api?timeout=32s\": dial tcp [::1]:8080: connect: connection refused"'
+            - 'E0610 00:22:51.765389       1 memcache.go:265] "Unhandled Error" err="couldn''t get current server API group list: Get \"http://localhost:8080/api?timeout=32s\": dial tcp [::1]:8080: connect: connection refused"'
+            - 'E0610 00:22:51.765576       1 memcache.go:265] "Unhandled Error" err="couldn''t get current server API group list: Get \"http://localhost:8080/api?timeout=32s\": dial tcp [::1]:8080: connect: connection refused"'
+            - 'E0610 00:22:51.767561       1 memcache.go:265] "Unhandled Error" err="couldn''t get current server API group list: Get \"http://localhost:8080/api?timeout=32s\": dial tcp [::1]:8080: connect: connection refused"'
+            - The connection to the server localhost:8080 was refused - did you specify the right host or port?
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/kubectl/kubectl-compact/filter.lf --sub=get --args='pods' --exit=1 --level=ultra < plugins/kubectl/kubectl-compact/samples/kubectl-get-noserver.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 6
+            - bytes 1153
+        - name: exitcode
+          data:
+            - "0"

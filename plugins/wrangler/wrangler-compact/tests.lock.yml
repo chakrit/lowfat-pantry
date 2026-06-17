@@ -1,0 +1,260 @@
+- name: plugins/wrangler/wrangler-compact/tests.cue \ wrangler-compact \ samples/wrangler-deploy-dryrun.txt lite
+  commands:
+    - command: lowfat filter plugins/wrangler/wrangler-compact/filter.lf --sub=deploy --args='deploy --dry-run --outdir dist' --exit=0 --level=lite < plugins/wrangler/wrangler-compact/samples/wrangler-deploy-dryrun.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Total Upload: 0.50 KiB / gzip: 0.30 KiB'
+            - No bindings found.
+            - '--dry-run: exiting now.'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/wrangler/wrangler-compact/filter.lf --sub=deploy --args='deploy --dry-run --outdir dist' --exit=0 --level=lite < plugins/wrangler/wrangler-compact/samples/wrangler-deploy-dryrun.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 3
+            - bytes 83
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/wrangler/wrangler-compact/tests.cue \ wrangler-compact \ samples/wrangler-deploy-dryrun.txt full
+  commands:
+    - command: lowfat filter plugins/wrangler/wrangler-compact/filter.lf --sub=deploy --args='deploy --dry-run --outdir dist' --exit=0 --level=full < plugins/wrangler/wrangler-compact/samples/wrangler-deploy-dryrun.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Total Upload: 0.50 KiB / gzip: 0.30 KiB'
+            - No bindings found.
+            - '--dry-run: exiting now.'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/wrangler/wrangler-compact/filter.lf --sub=deploy --args='deploy --dry-run --outdir dist' --exit=0 --level=full < plugins/wrangler/wrangler-compact/samples/wrangler-deploy-dryrun.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 3
+            - bytes 83
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/wrangler/wrangler-compact/tests.cue \ wrangler-compact \ samples/wrangler-deploy-dryrun.txt ultra
+  commands:
+    - command: lowfat filter plugins/wrangler/wrangler-compact/filter.lf --sub=deploy --args='deploy --dry-run --outdir dist' --exit=0 --level=ultra < plugins/wrangler/wrangler-compact/samples/wrangler-deploy-dryrun.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Total Upload: 0.50 KiB / gzip: 0.30 KiB'
+            - No bindings found.
+            - '--dry-run: exiting now.'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/wrangler/wrangler-compact/filter.lf --sub=deploy --args='deploy --dry-run --outdir dist' --exit=0 --level=ultra < plugins/wrangler/wrangler-compact/samples/wrangler-deploy-dryrun.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 3
+            - bytes 83
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/wrangler/wrangler-compact/tests.cue \ wrangler-compact \ samples/wrangler-deploy-err.txt lite
+  commands:
+    - command: lowfat filter plugins/wrangler/wrangler-compact/filter.lf --sub=deploy --args='deploy --dry-run --outdir dist' --exit=1 --level=lite < plugins/wrangler/wrangler-compact/samples/wrangler-deploy-err.txt
+      checks:
+        - name: stdout
+          data:
+            - "\e[31m✘ \e[41;31m[\e[41;97mERROR\e[41;31m]\e[0m \e[1mBuild failed with 1 error:\e[0m"
+            - "  \e[31m✘ \e[41;31m[\e[41;97mERROR\e[41;31m]\e[0m \e[1mExpected identifier but found end of file\e[0m"
+            - '  '
+            - '      src/router.ts:7:0:'
+            - "  \e[37m      7 │ \e[32m\e[37m"
+            - "          ╵ \e[32m^\e[0m"
+            - '  '
+            - '  '
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/wrangler/wrangler-compact/filter.lf --sub=deploy --args='deploy --dry-run --outdir dist' --exit=1 --level=lite < plugins/wrangler/wrangler-compact/samples/wrangler-deploy-err.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 8
+            - bytes 266
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/wrangler/wrangler-compact/tests.cue \ wrangler-compact \ samples/wrangler-deploy-err.txt full
+  commands:
+    - command: lowfat filter plugins/wrangler/wrangler-compact/filter.lf --sub=deploy --args='deploy --dry-run --outdir dist' --exit=1 --level=full < plugins/wrangler/wrangler-compact/samples/wrangler-deploy-err.txt
+      checks:
+        - name: stdout
+          data:
+            - "\e[31m✘ \e[41;31m[\e[41;97mERROR\e[41;31m]\e[0m \e[1mBuild failed with 1 error:\e[0m"
+            - "  \e[31m✘ \e[41;31m[\e[41;97mERROR\e[41;31m]\e[0m \e[1mExpected identifier but found end of file\e[0m"
+            - '  '
+            - '      src/router.ts:7:0:'
+            - "  \e[37m      7 │ \e[32m\e[37m"
+            - "          ╵ \e[32m^\e[0m"
+            - '  '
+            - '  '
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/wrangler/wrangler-compact/filter.lf --sub=deploy --args='deploy --dry-run --outdir dist' --exit=1 --level=full < plugins/wrangler/wrangler-compact/samples/wrangler-deploy-err.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 8
+            - bytes 266
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/wrangler/wrangler-compact/tests.cue \ wrangler-compact \ samples/wrangler-deploy-err.txt ultra
+  commands:
+    - command: lowfat filter plugins/wrangler/wrangler-compact/filter.lf --sub=deploy --args='deploy --dry-run --outdir dist' --exit=1 --level=ultra < plugins/wrangler/wrangler-compact/samples/wrangler-deploy-err.txt
+      checks:
+        - name: stdout
+          data:
+            - "\e[31m✘ \e[41;31m[\e[41;97mERROR\e[41;31m]\e[0m \e[1mBuild failed with 1 error:\e[0m"
+            - "  \e[31m✘ \e[41;31m[\e[41;97mERROR\e[41;31m]\e[0m \e[1mExpected identifier but found end of file\e[0m"
+            - '  '
+            - '      src/router.ts:7:0:'
+            - "  \e[37m      7 │ \e[32m\e[37m"
+            - "          ╵ \e[32m^\e[0m"
+            - '  '
+            - '  '
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/wrangler/wrangler-compact/filter.lf --sub=deploy --args='deploy --dry-run --outdir dist' --exit=1 --level=ultra < plugins/wrangler/wrangler-compact/samples/wrangler-deploy-err.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 8
+            - bytes 266
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/wrangler/wrangler-compact/tests.cue \ wrangler-compact \ samples/wrangler-deploy-noauth.txt full
+  commands:
+    - command: lowfat filter plugins/wrangler/wrangler-compact/filter.lf --sub=deploy --args='deploy' --exit=1 --level=full < plugins/wrangler/wrangler-compact/samples/wrangler-deploy-noauth.txt
+      checks:
+        - name: stdout
+          data:
+            - "\e[31m✘ \e[41;31m[\e[41;97mERROR\e[41;31m]\e[0m \e[1mIn a non-interactive environment, it's necessary to set a CLOUDFLARE_API_TOKEN environment variable for wrangler to work. Please go to https://developers.cloudflare.com/fundamentals/api/get-started/create-token/ for instructions on how to create an api token, and assign its value to CLOUDFLARE_API_TOKEN.\e[0m"
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/wrangler/wrangler-compact/filter.lf --sub=deploy --args='deploy' --exit=1 --level=full < plugins/wrangler/wrangler-compact/samples/wrangler-deploy-noauth.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 359
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/wrangler/wrangler-compact/tests.cue \ wrangler-compact \ samples/wrangler-deploy-noauth.txt ultra
+  commands:
+    - command: lowfat filter plugins/wrangler/wrangler-compact/filter.lf --sub=deploy --args='deploy' --exit=1 --level=ultra < plugins/wrangler/wrangler-compact/samples/wrangler-deploy-noauth.txt
+      checks:
+        - name: stdout
+          data:
+            - "\e[31m✘ \e[41;31m[\e[41;97mERROR\e[41;31m]\e[0m \e[1mIn a non-interactive environment, it's necessary to set a CLOUDFLARE_API_TOKEN environment variable for wrangler to work. Please go to https://developers.cloudflare.com/fundamentals/api/get-started/create-token/ for instructions on how to create an api token, and assign its value to CLOUDFLARE_API_TOKEN.\e[0m"
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/wrangler/wrangler-compact/filter.lf --sub=deploy --args='deploy' --exit=1 --level=ultra < plugins/wrangler/wrangler-compact/samples/wrangler-deploy-noauth.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 359
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/wrangler/wrangler-compact/tests.cue \ wrangler-compact \ samples/wrangler-kv-noauth.txt full
+  commands:
+    - command: lowfat filter plugins/wrangler/wrangler-compact/filter.lf --sub=kv --args='kv namespace list' --exit=1 --level=full < plugins/wrangler/wrangler-compact/samples/wrangler-kv-noauth.txt
+      checks:
+        - name: stdout
+          data:
+            - "\e[31m✘ \e[41;31m[\e[41;97mERROR\e[41;31m]\e[0m \e[1mIn a non-interactive environment, it's necessary to set a CLOUDFLARE_API_TOKEN environment variable for wrangler to work. Please go to https://developers.cloudflare.com/fundamentals/api/get-started/create-token/ for instructions on how to create an api token, and assign its value to CLOUDFLARE_API_TOKEN.\e[0m"
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/wrangler/wrangler-compact/filter.lf --sub=kv --args='kv namespace list' --exit=1 --level=full < plugins/wrangler/wrangler-compact/samples/wrangler-kv-noauth.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 359
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/wrangler/wrangler-compact/tests.cue \ wrangler-compact \ samples/wrangler-types.txt full
+  commands:
+    - command: lowfat filter plugins/wrangler/wrangler-compact/filter.lf --sub=types --args='types' --exit=0 --level=full < plugins/wrangler/wrangler-compact/samples/wrangler-types.txt
+      checks:
+        - name: stdout
+          data:
+            - Generating project types...
+            - interface __BaseEnv_Env {
+            - '}'
+            - declare namespace Cloudflare {
+            - "\tinterface GlobalProps {"
+            - "\t\tmainModule: typeof import(\"./src/index\");"
+            - "\t}"
+            - "\tinterface Env extends __BaseEnv_Env {}"
+            - '}'
+            - interface Env extends __BaseEnv_Env {}
+            - Generating runtime types...
+            - Runtime types generated.
+            - ✨ Types written to worker-configuration.d.ts
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/wrangler/wrangler-compact/filter.lf --sub=types --args='types' --exit=0 --level=full < plugins/wrangler/wrangler-compact/samples/wrangler-types.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 13
+            - bytes 340
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/wrangler/wrangler-compact/tests.cue \ wrangler-compact \ samples/wrangler-types.txt ultra
+  commands:
+    - command: lowfat filter plugins/wrangler/wrangler-compact/filter.lf --sub=types --args='types' --exit=0 --level=ultra < plugins/wrangler/wrangler-compact/samples/wrangler-types.txt
+      checks:
+        - name: stdout
+          data:
+            - Generating project types...
+            - interface __BaseEnv_Env {
+            - '}'
+            - declare namespace Cloudflare {
+            - "\tinterface GlobalProps {"
+            - "\t\tmainModule: typeof import(\"./src/index\");"
+            - "\t}"
+            - "\tinterface Env extends __BaseEnv_Env {}"
+            - '}'
+            - interface Env extends __BaseEnv_Env {}
+            - Generating runtime types...
+            - Runtime types generated.
+            - ✨ Types written to worker-configuration.d.ts
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/wrangler/wrangler-compact/filter.lf --sub=types --args='types' --exit=0 --level=ultra < plugins/wrangler/wrangler-compact/samples/wrangler-types.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 13
+            - bytes 340
+        - name: exitcode
+          data:
+            - "0"

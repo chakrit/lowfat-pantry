@@ -1,0 +1,379 @@
+- name: plugins/json/json-compact/tests.cue \ json-compact \ samples/json-array.txt lite
+  commands:
+    - command: lowfat filter plugins/json/json-compact/filter.lf --sub=pretty --args='' --exit=0 --level=lite < plugins/json/json-compact/samples/json-array.txt
+      checks:
+        - name: stdout
+          data:
+            - '['
+            - '  {'
+            - '    "id": 1,'
+            - '    "name": "order-0001",'
+            - '    "status": "paid"'
+            - '  },'
+            - '  {'
+            - '    "id": 2,'
+            - '    "name": "order-0002",'
+            - '    "status": "paid"'
+            - '  },'
+            - '  {'
+            - '    "id": 3,'
+            - '    "name": "order-0003",'
+            - '    "status": "refunded"'
+            - '  },'
+            - '  {'
+            - '    "id": 4,'
+            - '    "name": "order-0004",'
+            - '    "status": "paid"'
+            - '  },'
+            - '  {'
+            - '    "id": 5,'
+            - '    "name": "order-0005",'
+            - '    "status": "pending"'
+            - '  },'
+            - '  {'
+            - '    "id": 6,'
+            - '    "name": "order-0006",'
+            - '    "status": "paid"'
+            - '  },'
+            - '  {'
+            - '    "id": 7,'
+            - '    "name": "order-0007",'
+            - '    "status": "paid"'
+            - '  },'
+            - '  {'
+            - '    "id": 8,'
+            - '    "name": "order-0008",'
+            - '    "status": "void"'
+            - '  },'
+            - '  {'
+            - '    "id": 9,'
+            - '    "name": "order-0009",'
+            - '    "status": "paid"'
+            - '  },'
+            - '  {'
+            - '    "id": 10,'
+            - '    "name": "order-0010",'
+            - '    "status": "paid"'
+            - '  },'
+            - '  {'
+            - '    "id": 11,'
+            - '    "name": "order-0011",'
+            - '    "status": "pending"'
+            - '  },'
+            - '  {'
+            - '    "id": 12,'
+            - '    "name": "order-0012",'
+            - '    "status": "paid"'
+            - '  },'
+            - '  {'
+            - '    "id": 13,'
+            - '    "name": "order-0013",'
+            - '    "status": "paid"'
+            - '  },'
+            - '  {'
+            - '    "id": 14,'
+            - '    "name": "order-0014",'
+            - '    "status": "paid"'
+            - '  },'
+            - '  {'
+            - '    "id": 15,'
+            - '    "name": "order-0015",'
+            - '    "status": "failed"'
+            - '  }'
+            - ']'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/json/json-compact/filter.lf --sub=pretty --args='' --exit=0 --level=lite < plugins/json/json-compact/samples/json-array.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 77
+            - bytes 1056
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/json/json-compact/tests.cue \ json-compact \ samples/json-array.txt full
+  commands:
+    - command: lowfat filter plugins/json/json-compact/filter.lf --sub=pretty --args='' --exit=0 --level=full < plugins/json/json-compact/samples/json-array.txt
+      checks:
+        - name: stdout
+          data:
+            - '['
+            - '  {'
+            - '    "id": 1,'
+            - '    "name": "order-0001",'
+            - '    "status": "paid"'
+            - '  },'
+            - '  {'
+            - '    "id": 2,'
+            - '    "name": "order-0002",'
+            - '    "status": "paid"'
+            - '  },'
+            - '  {'
+            - '    "id": 3,'
+            - '    "name": "order-0003",'
+            - '    "status": "refunded"'
+            - '  },'
+            - '  {'
+            - '    "id": 4,'
+            - '    "name": "order-0004",'
+            - '    "status": "paid"'
+            - '  },'
+            - '  {'
+            - '    "id": 5,'
+            - '    "name": "order-0005",'
+            - '    "status": "pending"'
+            - '  },'
+            - '  {'
+            - '    "id": 6,'
+            - '    "name": "order-0006",'
+            - '    "status": "paid"'
+            - '  },'
+            - '  {'
+            - '    "id": 7,'
+            - '    "name": "order-0007",'
+            - '    "status": "paid"'
+            - '  },'
+            - '  {'
+            - '    "id": 8,'
+            - '    "name": "order-0008",'
+            - '    "status": "void"'
+            - '  },'
+            - '  {'
+            - '    "id": 9,'
+            - '    "name": "order-0009",'
+            - '    "status": "paid"'
+            - '  },'
+            - '  {'
+            - '    "id": 10,'
+            - '    "name": "order-0010",'
+            - '    "status": "paid"'
+            - '  },'
+            - '  {'
+            - '    "id": 11,'
+            - '    "name": "order-0011",'
+            - '    "status": "pending"'
+            - '  },'
+            - '  {'
+            - '    "id": 12,'
+            - '    "name": "order-0012",'
+            - '    "status": "paid"'
+            - '  },'
+            - '  {'
+            - '    "id": 13,'
+            - '    "name": "order-0013",'
+            - '    "status": "paid"'
+            - '  },'
+            - '  {'
+            - '    "id": 14,'
+            - '    "name": "order-0014",'
+            - '    "status": "paid"'
+            - '  },'
+            - '  {'
+            - '    "id": 15,'
+            - '    "name": "order-0015",'
+            - '    "status": "failed"'
+            - '  }'
+            - ']'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/json/json-compact/filter.lf --sub=pretty --args='' --exit=0 --level=full < plugins/json/json-compact/samples/json-array.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 77
+            - bytes 1056
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/json/json-compact/tests.cue \ json-compact \ samples/json-array.txt ultra
+  commands:
+    - command: lowfat filter plugins/json/json-compact/filter.lf --sub=pretty --args='' --exit=0 --level=ultra < plugins/json/json-compact/samples/json-array.txt
+      checks:
+        - name: stdout
+          data:
+            - '['
+            - '  {'
+            - '    "id": 1,'
+            - '    "name": "order-0001",'
+            - '    "status": "paid"'
+            - '  },'
+            - '  {'
+            - '    "id": 2,'
+            - '    "name": "order-0002",'
+            - '    "status": "paid"'
+            - '  },'
+            - '  {'
+            - '    "id": 3,'
+            - '    "name": "order-0003",'
+            - '    "status": "refunded"'
+            - '  },'
+            - '  {'
+            - '    "id": 4,'
+            - '    "name": "order-0004",'
+            - '    "status": "paid"'
+            - '  },'
+            - '  {'
+            - '    "id": 5,'
+            - '    "name": "order-0005",'
+            - '    "status": "pending"'
+            - '  },'
+            - '  {'
+            - '    "id": 6,'
+            - '    "name": "order-0006",'
+            - '    "status": "paid"'
+            - '  },'
+            - '  {'
+            - '    "id": 7,'
+            - '    "name": "order-0007",'
+            - '    "status": "paid"'
+            - '  },'
+            - '  {'
+            - '    "id": 8,'
+            - '    "name": "order-0008",'
+            - '    "status": "void"'
+            - '  },'
+            - '  {'
+            - '    "id": 9,'
+            - '    "name": "order-0009",'
+            - '    "status": "paid"'
+            - '  },'
+            - '  {'
+            - '    "id": 10,'
+            - '    "name": "order-0010",'
+            - '    "status": "paid"'
+            - '  },'
+            - '  {'
+            - '    "id": 11,'
+            - '    "name": "order-0011",'
+            - '    "status": "pending"'
+            - '  },'
+            - '  {'
+            - '    "id": 12,'
+            - '    "name": "order-0012",'
+            - '    "status": "paid"'
+            - '  },'
+            - '  "... (3 more)"'
+            - ']'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/json/json-compact/filter.lf --sub=pretty --args='' --exit=0 --level=ultra < plugins/json/json-compact/samples/json-array.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 63
+            - bytes 862
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/json/json-compact/tests.cue \ json-compact \ samples/json-object.txt lite
+  commands:
+    - command: lowfat filter plugins/json/json-compact/filter.lf --sub=compact --args='' --exit=0 --level=lite < plugins/json/json-compact/samples/json-object.txt
+      checks:
+        - name: stdout
+          data:
+            - '{'
+            - '  "service": "checkout",'
+            - '  "version": "1.8.4",'
+            - '  "regions": ['
+            - '    "us-east-1",'
+            - '    "us-west-2",'
+            - '    "eu-west-1"'
+            - '  ],'
+            - '  "features": {'
+            - '    "tax": true,'
+            - '    "coupons": true,'
+            - '    "giftCards": false'
+            - '  },'
+            - '  "limits": {'
+            - '    "requestsPerMinute": 1200,'
+            - '    "maxCartItems": 99'
+            - '  }'
+            - '}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/json/json-compact/filter.lf --sub=compact --args='' --exit=0 --level=lite < plugins/json/json-compact/samples/json-object.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 18
+            - bytes 275
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/json/json-compact/tests.cue \ json-compact \ samples/json-object.txt full
+  commands:
+    - command: lowfat filter plugins/json/json-compact/filter.lf --sub=compact --args='' --exit=0 --level=full < plugins/json/json-compact/samples/json-object.txt
+      checks:
+        - name: stdout
+          data:
+            - '{'
+            - '  "service": "checkout",'
+            - '  "version": "1.8.4",'
+            - '  "regions": ['
+            - '    "us-east-1",'
+            - '    "us-west-2",'
+            - '    "eu-west-1"'
+            - '  ],'
+            - '  "features": {'
+            - '    "tax": true,'
+            - '    "coupons": true,'
+            - '    "giftCards": false'
+            - '  },'
+            - '  "limits": {'
+            - '    "requestsPerMinute": 1200,'
+            - '    "maxCartItems": 99'
+            - '  }'
+            - '}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/json/json-compact/filter.lf --sub=compact --args='' --exit=0 --level=full < plugins/json/json-compact/samples/json-object.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 18
+            - bytes 275
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/json/json-compact/tests.cue \ json-compact \ samples/json-object.txt ultra
+  commands:
+    - command: lowfat filter plugins/json/json-compact/filter.lf --sub=compact --args='' --exit=0 --level=ultra < plugins/json/json-compact/samples/json-object.txt
+      checks:
+        - name: stdout
+          data:
+            - '{'
+            - '  "service": "checkout",'
+            - '  "version": "1.8.4",'
+            - '  "regions": ['
+            - '    "us-east-1",'
+            - '    "us-west-2",'
+            - '    "eu-west-1"'
+            - '  ],'
+            - '  "features": {'
+            - '    "tax": true,'
+            - '    "coupons": true,'
+            - '    "giftCards": false'
+            - '  },'
+            - '  "limits": {'
+            - '    "requestsPerMinute": 1200,'
+            - '    "maxCartItems": 99'
+            - '  }'
+            - '}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/json/json-compact/filter.lf --sub=compact --args='' --exit=0 --level=ultra < plugins/json/json-compact/samples/json-object.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 18
+            - bytes 275
+        - name: exitcode
+          data:
+            - "0"

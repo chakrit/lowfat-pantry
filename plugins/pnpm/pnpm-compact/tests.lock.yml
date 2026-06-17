@@ -1,0 +1,255 @@
+- name: plugins/pnpm/pnpm-compact/tests.cue \ pnpm-compact \ samples/pnpm-install.txt lite
+  commands:
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=install --args='' --exit=0 --level=lite < plugins/pnpm/pnpm-compact/samples/pnpm-install.txt
+      checks:
+        - name: stdout
+          data:
+            - 'WARN  deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported'
+            - 'WARN  deprecated inflight@1.0.6: This module is not supported, and leaks memory.'
+            - 'Packages: +326'
+            - 'dependencies:'
+            - + @fastify/cors 9.0.1
+            - + fastify 4.28.0
+            - + zod 3.23.8
+            - 'devDependencies:'
+            - + typescript 5.4.5
+            - + vitest 1.6.0
+            - Done in 3.7s
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=install --args='' --exit=0 --level=lite < plugins/pnpm/pnpm-compact/samples/pnpm-install.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 11
+            - bytes 305
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/pnpm/pnpm-compact/tests.cue \ pnpm-compact \ samples/pnpm-install.txt full
+  commands:
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=install --args='' --exit=0 --level=full < plugins/pnpm/pnpm-compact/samples/pnpm-install.txt
+      checks:
+        - name: stdout
+          data:
+            - 'WARN  deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported'
+            - 'WARN  deprecated inflight@1.0.6: This module is not supported, and leaks memory.'
+            - 'Packages: +326'
+            - 'dependencies:'
+            - + @fastify/cors 9.0.1
+            - + fastify 4.28.0
+            - + zod 3.23.8
+            - 'devDependencies:'
+            - + typescript 5.4.5
+            - + vitest 1.6.0
+            - Done in 3.7s
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=install --args='' --exit=0 --level=full < plugins/pnpm/pnpm-compact/samples/pnpm-install.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 11
+            - bytes 305
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/pnpm/pnpm-compact/tests.cue \ pnpm-compact \ samples/pnpm-install.txt ultra
+  commands:
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=install --args='' --exit=0 --level=ultra < plugins/pnpm/pnpm-compact/samples/pnpm-install.txt
+      checks:
+        - name: stdout
+          data:
+            - 'WARN  deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported'
+            - 'WARN  deprecated inflight@1.0.6: This module is not supported, and leaks memory.'
+            - 'Packages: +326'
+            - 'dependencies:'
+            - + @fastify/cors 9.0.1
+            - + fastify 4.28.0
+            - + zod 3.23.8
+            - 'devDependencies:'
+            - + typescript 5.4.5
+            - + vitest 1.6.0
+            - Done in 3.7s
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=install --args='' --exit=0 --level=ultra < plugins/pnpm/pnpm-compact/samples/pnpm-install.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 11
+            - bytes 305
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/pnpm/pnpm-compact/tests.cue \ pnpm-compact \ samples/pnpm-test.txt lite
+  commands:
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=test --args='' --exit=0 --level=lite < plugins/pnpm/pnpm-compact/samples/pnpm-test.txt
+      checks:
+        - name: stdout
+          data:
+            - '> api@0.8.0 test /repo/api'
+            - '> vitest run'
+            - ""
+            - ' RUN  v1.6.0 /repo/api'
+            - ""
+            - ' ✓ src/routes/orders.test.ts (14 tests) 64ms'
+            - ' ✓ src/routes/users.test.ts (11 tests) 49ms'
+            - ' ✓ src/services/pricing.test.ts (21 tests) 83ms'
+            - ""
+            - ' Test Files  3 passed (3)'
+            - '      Tests  46 passed (46)'
+            - '   Duration  1.86s'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=test --args='' --exit=0 --level=lite < plugins/pnpm/pnpm-compact/samples/pnpm-test.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 13
+            - bytes 283
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/pnpm/pnpm-compact/tests.cue \ pnpm-compact \ samples/pnpm-test.txt full
+  commands:
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=test --args='' --exit=0 --level=full < plugins/pnpm/pnpm-compact/samples/pnpm-test.txt
+      checks:
+        - name: stdout
+          data:
+            - '> api@0.8.0 test /repo/api'
+            - '> vitest run'
+            - ""
+            - ' RUN  v1.6.0 /repo/api'
+            - ""
+            - ' ✓ src/routes/orders.test.ts (14 tests) 64ms'
+            - ' ✓ src/routes/users.test.ts (11 tests) 49ms'
+            - ' ✓ src/services/pricing.test.ts (21 tests) 83ms'
+            - ""
+            - ' Test Files  3 passed (3)'
+            - '      Tests  46 passed (46)'
+            - '   Duration  1.86s'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=test --args='' --exit=0 --level=full < plugins/pnpm/pnpm-compact/samples/pnpm-test.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 13
+            - bytes 283
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/pnpm/pnpm-compact/tests.cue \ pnpm-compact \ samples/pnpm-test.txt ultra
+  commands:
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=test --args='' --exit=0 --level=ultra < plugins/pnpm/pnpm-compact/samples/pnpm-test.txt
+      checks:
+        - name: stdout
+          data:
+            - '> api@0.8.0 test /repo/api'
+            - '> vitest run'
+            - ""
+            - ' RUN  v1.6.0 /repo/api'
+            - ""
+            - ' ✓ src/routes/orders.test.ts (14 tests) 64ms'
+            - ' ✓ src/routes/users.test.ts (11 tests) 49ms'
+            - ' ✓ src/services/pricing.test.ts (21 tests) 83ms'
+            - ""
+            - ' Test Files  3 passed (3)'
+            - '      Tests  46 passed (46)'
+            - '   Duration  1.86s'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=test --args='' --exit=0 --level=ultra < plugins/pnpm/pnpm-compact/samples/pnpm-test.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 13
+            - bytes 283
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/pnpm/pnpm-compact/tests.cue \ pnpm-compact \ samples/pnpm-error.txt lite
+  commands:
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=install --args='' --exit=1 --level=lite < plugins/pnpm/pnpm-compact/samples/pnpm-error.txt
+      checks:
+        - name: stdout
+          data:
+            - ERR_PNPM_PEER_DEP_ISSUES Unmet peer dependencies
+            - ""
+            - .
+            - +- legacy-widget 2.3.1
+            - '  +- peer react@"^18.0.0": found 19.0.0'
+            - ""
+            - 'hint: If you don''t want pnpm to fail on peer dependency issues, set strict-peer-dependencies=false'
+            - ERR_PNPM_ABORTED_REMOVE_MODULES_DIR_NO_TTY Aborted removal of modules directory due to no TTY
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=install --args='' --exit=1 --level=lite < plugins/pnpm/pnpm-compact/samples/pnpm-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 8
+            - bytes 309
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/pnpm/pnpm-compact/tests.cue \ pnpm-compact \ samples/pnpm-error.txt full
+  commands:
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=install --args='' --exit=1 --level=full < plugins/pnpm/pnpm-compact/samples/pnpm-error.txt
+      checks:
+        - name: stdout
+          data:
+            - ERR_PNPM_PEER_DEP_ISSUES Unmet peer dependencies
+            - ""
+            - .
+            - +- legacy-widget 2.3.1
+            - '  +- peer react@"^18.0.0": found 19.0.0'
+            - ""
+            - 'hint: If you don''t want pnpm to fail on peer dependency issues, set strict-peer-dependencies=false'
+            - ERR_PNPM_ABORTED_REMOVE_MODULES_DIR_NO_TTY Aborted removal of modules directory due to no TTY
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=install --args='' --exit=1 --level=full < plugins/pnpm/pnpm-compact/samples/pnpm-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 8
+            - bytes 309
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/pnpm/pnpm-compact/tests.cue \ pnpm-compact \ samples/pnpm-error.txt ultra
+  commands:
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=install --args='' --exit=1 --level=ultra < plugins/pnpm/pnpm-compact/samples/pnpm-error.txt
+      checks:
+        - name: stdout
+          data:
+            - ERR_PNPM_PEER_DEP_ISSUES Unmet peer dependencies
+            - ""
+            - .
+            - +- legacy-widget 2.3.1
+            - '  +- peer react@"^18.0.0": found 19.0.0'
+            - ""
+            - 'hint: If you don''t want pnpm to fail on peer dependency issues, set strict-peer-dependencies=false'
+            - ERR_PNPM_ABORTED_REMOVE_MODULES_DIR_NO_TTY Aborted removal of modules directory due to no TTY
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=install --args='' --exit=1 --level=ultra < plugins/pnpm/pnpm-compact/samples/pnpm-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 8
+            - bytes 309
+        - name: exitcode
+          data:
+            - "0"

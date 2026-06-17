@@ -1,0 +1,252 @@
+- name: plugins/aws/aws-compact/tests.cue \ aws-compact \ samples/aws-json.txt lite
+  commands:
+    - command: lowfat filter plugins/aws/aws-compact/filter.lf --sub=s3 --args='s3api list-buckets' --exit=0 --level=lite < plugins/aws/aws-compact/samples/aws-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{'
+            - '    "Buckets": ['
+            - '        {'
+            - '            "Name": "app-artifacts-prod",'
+            - '            "CreationDate": "2026-01-18T08:22:14+00:00"'
+            - '        },'
+            - '        {'
+            - '            "Name": "app-logs-prod",'
+            - '            "CreationDate": "2026-02-03T11:45:51+00:00"'
+            - '        },'
+            - '        {'
+            - '            "Name": "app-uploads-prod",'
+            - '            "CreationDate": "2026-04-12T15:01:33+00:00"'
+            - '        }'
+            - '    ],'
+            - '    "Owner": {'
+            - '        "DisplayName": "platform",'
+            - '        "ID": "79a59df900b949e55d96a1e698fbaexample"'
+            - '    }'
+            - '}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/aws/aws-compact/filter.lf --sub=s3 --args='s3api list-buckets' --exit=0 --level=lite < plugins/aws/aws-compact/samples/aws-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 20
+            - bytes 486
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/aws/aws-compact/tests.cue \ aws-compact \ samples/aws-json.txt full
+  commands:
+    - command: lowfat filter plugins/aws/aws-compact/filter.lf --sub=s3 --args='s3api list-buckets' --exit=0 --level=full < plugins/aws/aws-compact/samples/aws-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{'
+            - '    "Buckets": ['
+            - '        {'
+            - '            "Name": "app-artifacts-prod",'
+            - '            "CreationDate": "2026-01-18T08:22:14+00:00"'
+            - '        },'
+            - '        {'
+            - '            "Name": "app-logs-prod",'
+            - '            "CreationDate": "2026-02-03T11:45:51+00:00"'
+            - '        },'
+            - '        {'
+            - '            "Name": "app-uploads-prod",'
+            - '            "CreationDate": "2026-04-12T15:01:33+00:00"'
+            - '        }'
+            - '    ],'
+            - '    "Owner": {'
+            - '        "DisplayName": "platform",'
+            - '        "ID": "79a59df900b949e55d96a1e698fbaexample"'
+            - '    }'
+            - '}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/aws/aws-compact/filter.lf --sub=s3 --args='s3api list-buckets' --exit=0 --level=full < plugins/aws/aws-compact/samples/aws-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 20
+            - bytes 486
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/aws/aws-compact/tests.cue \ aws-compact \ samples/aws-json.txt ultra
+  commands:
+    - command: lowfat filter plugins/aws/aws-compact/filter.lf --sub=s3 --args='s3api list-buckets' --exit=0 --level=ultra < plugins/aws/aws-compact/samples/aws-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{'
+            - '    "Buckets": ['
+            - '        {'
+            - '            "Name": "app-artifacts-prod",'
+            - '            "CreationDate": "2026-01-18T08:22:14+00:00"'
+            - '        },'
+            - '        {'
+            - '            "Name": "app-logs-prod",'
+            - '            "CreationDate": "2026-02-03T11:45:51+00:00"'
+            - '        },'
+            - '        {'
+            - '            "Name": "app-uploads-prod",'
+            - '            "CreationDate": "2026-04-12T15:01:33+00:00"'
+            - '        }'
+            - '    ],'
+            - '    "Owner": {'
+            - '        "DisplayName": "platform",'
+            - '        "ID": "79a59df900b949e55d96a1e698fbaexample"'
+            - '    }'
+            - '}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/aws/aws-compact/filter.lf --sub=s3 --args='s3api list-buckets' --exit=0 --level=ultra < plugins/aws/aws-compact/samples/aws-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 20
+            - bytes 486
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/aws/aws-compact/tests.cue \ aws-compact \ samples/aws-table.txt lite
+  commands:
+    - command: lowfat filter plugins/aws/aws-compact/filter.lf --sub=s3 --args='s3api list-buckets --output table' --exit=0 --level=lite < plugins/aws/aws-compact/samples/aws-table.txt
+      checks:
+        - name: stdout
+          data:
+            - ListBuckets
+            - ' Buckets'
+            - ' CreationDate Name'
+            - ' 2026-01-18T08:22:14 app-artifacts-prod'
+            - ' 2026-02-03T11:45:51 app-logs-prod'
+            - ' 2026-04-12T15:01:33 app-uploads-prod'
+            - ' 2026-04-14T09:18:02 app-reports-prod'
+            - ' 2026-05-01T07:05:48 app-backups-prod'
+            - ' 2026-05-22T21:40:10 app-athena-results-prod'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/aws/aws-compact/filter.lf --sub=s3 --args='s3api list-buckets --output table' --exit=0 --level=lite < plugins/aws/aws-compact/samples/aws-table.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 9
+            - bytes 274
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/aws/aws-compact/tests.cue \ aws-compact \ samples/aws-table.txt full
+  commands:
+    - command: lowfat filter plugins/aws/aws-compact/filter.lf --sub=s3 --args='s3api list-buckets --output table' --exit=0 --level=full < plugins/aws/aws-compact/samples/aws-table.txt
+      checks:
+        - name: stdout
+          data:
+            - ListBuckets
+            - ' Buckets'
+            - ' CreationDate Name'
+            - ' 2026-01-18T08:22:14 app-artifacts-prod'
+            - ' 2026-02-03T11:45:51 app-logs-prod'
+            - ' 2026-04-12T15:01:33 app-uploads-prod'
+            - ' 2026-04-14T09:18:02 app-reports-prod'
+            - ' 2026-05-01T07:05:48 app-backups-prod'
+            - ' 2026-05-22T21:40:10 app-athena-results-prod'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/aws/aws-compact/filter.lf --sub=s3 --args='s3api list-buckets --output table' --exit=0 --level=full < plugins/aws/aws-compact/samples/aws-table.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 9
+            - bytes 274
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/aws/aws-compact/tests.cue \ aws-compact \ samples/aws-table.txt ultra
+  commands:
+    - command: lowfat filter plugins/aws/aws-compact/filter.lf --sub=s3 --args='s3api list-buckets --output table' --exit=0 --level=ultra < plugins/aws/aws-compact/samples/aws-table.txt
+      checks:
+        - name: stdout
+          data:
+            - ListBuckets
+            - ' Buckets'
+            - ' CreationDate Name'
+            - ' 2026-01-18T08:22:14 app-artifacts-prod'
+            - ' 2026-02-03T11:45:51 app-logs-prod'
+            - ' 2026-04-12T15:01:33 app-uploads-prod'
+            - ' 2026-04-14T09:18:02 app-reports-prod'
+            - ' 2026-05-01T07:05:48 app-backups-prod'
+            - ' 2026-05-22T21:40:10 app-athena-results-prod'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/aws/aws-compact/filter.lf --sub=s3 --args='s3api list-buckets --output table' --exit=0 --level=ultra < plugins/aws/aws-compact/samples/aws-table.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 9
+            - bytes 274
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/aws/aws-compact/tests.cue \ aws-compact \ samples/aws-error.txt lite
+  commands:
+    - command: lowfat filter plugins/aws/aws-compact/filter.lf --sub=s3 --args='s3api list-buckets' --exit=254 --level=lite < plugins/aws/aws-compact/samples/aws-error.txt
+      checks:
+        - name: stdout
+          data:
+            - 'An error occurred (AccessDenied) when calling the ListBuckets operation: User: arn:aws:iam::123456789012:user/ci is not authorized to perform: s3:ListAllMyBuckets because no identity-based policy allows the s3:ListAllMyBuckets action'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/aws/aws-compact/filter.lf --sub=s3 --args='s3api list-buckets' --exit=254 --level=lite < plugins/aws/aws-compact/samples/aws-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 234
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/aws/aws-compact/tests.cue \ aws-compact \ samples/aws-error.txt full
+  commands:
+    - command: lowfat filter plugins/aws/aws-compact/filter.lf --sub=s3 --args='s3api list-buckets' --exit=254 --level=full < plugins/aws/aws-compact/samples/aws-error.txt
+      checks:
+        - name: stdout
+          data:
+            - 'An error occurred (AccessDenied) when calling the ListBuckets operation: User: arn:aws:iam::123456789012:user/ci is not authorized to perform: s3:ListAllMyBuckets because no identity-based policy allows the s3:ListAllMyBuckets action'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/aws/aws-compact/filter.lf --sub=s3 --args='s3api list-buckets' --exit=254 --level=full < plugins/aws/aws-compact/samples/aws-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 234
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/aws/aws-compact/tests.cue \ aws-compact \ samples/aws-error.txt ultra
+  commands:
+    - command: lowfat filter plugins/aws/aws-compact/filter.lf --sub=s3 --args='s3api list-buckets' --exit=254 --level=ultra < plugins/aws/aws-compact/samples/aws-error.txt
+      checks:
+        - name: stdout
+          data:
+            - 'An error occurred (AccessDenied) when calling the ListBuckets operation: User: arn:aws:iam::123456789012:user/ci is not authorized to perform: s3:ListAllMyBuckets because no identity-based policy allows the s3:ListAllMyBuckets action'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/aws/aws-compact/filter.lf --sub=s3 --args='s3api list-buckets' --exit=254 --level=ultra < plugins/aws/aws-compact/samples/aws-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 234
+        - name: exitcode
+          data:
+            - "0"

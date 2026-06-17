@@ -1,0 +1,114 @@
+- name: plugins/sqlite3/sqlite3-compact/tests.cue \ sqlite3-compact \ samples/sqlite3-rows.txt lite
+  commands:
+    - command: lowfat filter plugins/sqlite3/sqlite3-compact/filter.lf --sub= --args='app.db 'select * from orders'' --exit=0 --level=lite < plugins/sqlite3/sqlite3-compact/samples/sqlite3-rows.txt
+      checks:
+        - name: stdout
+          data:
+            - ""
+        - name: exitcode
+          data:
+            - "2"
+    - command: lowfat filter plugins/sqlite3/sqlite3-compact/filter.lf --sub= --args='app.db 'select * from orders'' --exit=0 --level=lite < plugins/sqlite3/sqlite3-compact/samples/sqlite3-rows.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 0
+            - bytes 0
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/sqlite3/sqlite3-compact/tests.cue \ sqlite3-compact \ samples/sqlite3-rows.txt full
+  commands:
+    - command: lowfat filter plugins/sqlite3/sqlite3-compact/filter.lf --sub= --args='app.db 'select * from orders'' --exit=0 --level=full < plugins/sqlite3/sqlite3-compact/samples/sqlite3-rows.txt
+      checks:
+        - name: stdout
+          data:
+            - ""
+        - name: exitcode
+          data:
+            - "2"
+    - command: lowfat filter plugins/sqlite3/sqlite3-compact/filter.lf --sub= --args='app.db 'select * from orders'' --exit=0 --level=full < plugins/sqlite3/sqlite3-compact/samples/sqlite3-rows.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 0
+            - bytes 0
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/sqlite3/sqlite3-compact/tests.cue \ sqlite3-compact \ samples/sqlite3-rows.txt ultra
+  commands:
+    - command: lowfat filter plugins/sqlite3/sqlite3-compact/filter.lf --sub= --args='app.db 'select * from orders'' --exit=0 --level=ultra < plugins/sqlite3/sqlite3-compact/samples/sqlite3-rows.txt
+      checks:
+        - name: stdout
+          data:
+            - ""
+        - name: exitcode
+          data:
+            - "2"
+    - command: lowfat filter plugins/sqlite3/sqlite3-compact/filter.lf --sub= --args='app.db 'select * from orders'' --exit=0 --level=ultra < plugins/sqlite3/sqlite3-compact/samples/sqlite3-rows.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 0
+            - bytes 0
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/sqlite3/sqlite3-compact/tests.cue \ sqlite3-compact \ samples/sqlite3-error.txt lite
+  commands:
+    - command: lowfat filter plugins/sqlite3/sqlite3-compact/filter.lf --sub= --args='app.db 'select totl from orders'' --exit=1 --level=lite < plugins/sqlite3/sqlite3-compact/samples/sqlite3-error.txt
+      checks:
+        - name: stdout
+          data:
+            - ""
+        - name: exitcode
+          data:
+            - "2"
+    - command: lowfat filter plugins/sqlite3/sqlite3-compact/filter.lf --sub= --args='app.db 'select totl from orders'' --exit=1 --level=lite < plugins/sqlite3/sqlite3-compact/samples/sqlite3-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 0
+            - bytes 0
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/sqlite3/sqlite3-compact/tests.cue \ sqlite3-compact \ samples/sqlite3-error.txt full
+  commands:
+    - command: lowfat filter plugins/sqlite3/sqlite3-compact/filter.lf --sub= --args='app.db 'select totl from orders'' --exit=1 --level=full < plugins/sqlite3/sqlite3-compact/samples/sqlite3-error.txt
+      checks:
+        - name: stdout
+          data:
+            - ""
+        - name: exitcode
+          data:
+            - "2"
+    - command: lowfat filter plugins/sqlite3/sqlite3-compact/filter.lf --sub= --args='app.db 'select totl from orders'' --exit=1 --level=full < plugins/sqlite3/sqlite3-compact/samples/sqlite3-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 0
+            - bytes 0
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/sqlite3/sqlite3-compact/tests.cue \ sqlite3-compact \ samples/sqlite3-error.txt ultra
+  commands:
+    - command: lowfat filter plugins/sqlite3/sqlite3-compact/filter.lf --sub= --args='app.db 'select totl from orders'' --exit=1 --level=ultra < plugins/sqlite3/sqlite3-compact/samples/sqlite3-error.txt
+      checks:
+        - name: stdout
+          data:
+            - ""
+        - name: exitcode
+          data:
+            - "2"
+    - command: lowfat filter plugins/sqlite3/sqlite3-compact/filter.lf --sub= --args='app.db 'select totl from orders'' --exit=1 --level=ultra < plugins/sqlite3/sqlite3-compact/samples/sqlite3-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 0
+            - bytes 0
+        - name: exitcode
+          data:
+            - "0"

@@ -1,0 +1,246 @@
+- name: plugins/helm/helm-compact/tests.cue \ helm-compact \ samples/helm-install.txt lite
+  commands:
+    - command: lowfat filter plugins/helm/helm-compact/filter.lf --sub=install --args='api ./chart -n production' --exit=0 --level=lite < plugins/helm/helm-compact/samples/helm-install.txt
+      checks:
+        - name: stdout
+          data:
+            - 'NAME: api'
+            - 'LAST DEPLOYED: Mon Jun  8 10:14:58 2026'
+            - 'NAMESPACE: production'
+            - 'STATUS: deployed'
+            - 'REVISION: 1'
+            - 'TEST SUITE: None'
+            - 'NOTES:'
+            - '1. Get the application URL by running these commands:'
+            - '  export POD_NAME=$(kubectl get pods --namespace production -l "app.kubernetes.io/name=api,app.kubernetes.io/instance=api" -o jsonpath="{.items[0].metadata.name}")'
+            - '  export CONTAINER_PORT=$(kubectl get pod --namespace production $POD_NAME -o jsonpath="{.spec.containers[0].ports[0].containerPort}")'
+            - '  kubectl --namespace production port-forward $POD_NAME 8080:$CONTAINER_PORT'
+            - ""
+            - The chart also installed Prometheus rules, a service monitor, a PodDisruptionBudget, and
+            - network policy resources. Review values.yaml for the complete list of toggles.
+            - ""
+            - 'Common commands:'
+            - '  helm status api -n production'
+            - '  helm get values api -n production'
+            - '  helm rollback api 1 -n production'
+            - '  kubectl logs deploy/api -n production'
+            - '  kubectl describe ingress api -n production'
+            - '  kubectl get events -n production --sort-by=.lastTimestamp'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/helm/helm-compact/filter.lf --sub=install --args='api ./chart -n production' --exit=0 --level=lite < plugins/helm/helm-compact/samples/helm-install.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 22
+            - bytes 991
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/helm/helm-compact/tests.cue \ helm-compact \ samples/helm-install.txt full
+  commands:
+    - command: lowfat filter plugins/helm/helm-compact/filter.lf --sub=install --args='api ./chart -n production' --exit=0 --level=full < plugins/helm/helm-compact/samples/helm-install.txt
+      checks:
+        - name: stdout
+          data:
+            - 'NAME: api'
+            - 'LAST DEPLOYED: Mon Jun  8 10:14:58 2026'
+            - 'NAMESPACE: production'
+            - 'STATUS: deployed'
+            - 'REVISION: 1'
+            - 'TEST SUITE: None'
+            - 'NOTES:'
+            - '1. Get the application URL by running these commands:'
+            - '  export POD_NAME=$(kubectl get pods --namespace production -l "app.kubernetes.io/name=api,app.kubernetes.io/instance=api" -o jsonpath="{.items[0].metadata.name}")'
+            - '  export CONTAINER_PORT=$(kubectl get pod --namespace production $POD_NAME -o jsonpath="{.spec.containers[0].ports[0].containerPort}")'
+            - '  kubectl --namespace production port-forward $POD_NAME 8080:$CONTAINER_PORT'
+            - ""
+            - The chart also installed Prometheus rules, a service monitor, a PodDisruptionBudget, and
+            - network policy resources. Review values.yaml for the complete list of toggles.
+            - ""
+            - 'Common commands:'
+            - '  helm status api -n production'
+            - '  helm get values api -n production'
+            - '  helm rollback api 1 -n production'
+            - '  kubectl logs deploy/api -n production'
+            - '  kubectl describe ingress api -n production'
+            - '  kubectl get events -n production --sort-by=.lastTimestamp'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/helm/helm-compact/filter.lf --sub=install --args='api ./chart -n production' --exit=0 --level=full < plugins/helm/helm-compact/samples/helm-install.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 22
+            - bytes 991
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/helm/helm-compact/tests.cue \ helm-compact \ samples/helm-install.txt ultra
+  commands:
+    - command: lowfat filter plugins/helm/helm-compact/filter.lf --sub=install --args='api ./chart -n production' --exit=0 --level=ultra < plugins/helm/helm-compact/samples/helm-install.txt
+      checks:
+        - name: stdout
+          data:
+            - 'NAME: api'
+            - 'LAST DEPLOYED: Mon Jun  8 10:14:58 2026'
+            - 'NAMESPACE: production'
+            - 'STATUS: deployed'
+            - 'REVISION: 1'
+            - 'TEST SUITE: None'
+            - 'NOTES:'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/helm/helm-compact/filter.lf --sub=install --args='api ./chart -n production' --exit=0 --level=ultra < plugins/helm/helm-compact/samples/helm-install.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 7
+            - bytes 125
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/helm/helm-compact/tests.cue \ helm-compact \ samples/helm-list.txt lite
+  commands:
+    - command: lowfat filter plugins/helm/helm-compact/filter.lf --sub=list --args='-A' --exit=0 --level=lite < plugins/helm/helm-compact/samples/helm-list.txt
+      checks:
+        - name: stdout
+          data:
+            - NAME NAMESPACE REVISION UPDATED STATUS CHART APP VERSION
+            - api production 12 2026-06-08 10:18:42.240353 +0700 +07 deployed api-1.8.2 2.4.1
+            - worker production 8 2026-06-08 09:52:13.101774 +0700 +07 deployed worker-0.9.1 1.11.0
+            - web production 21 2026-06-08 09:44:08.727010 +0700 +07 deployed web-3.2.0 5.18.2
+            - postgres data 4 2026-06-07 22:11:59.041477 +0700 +07 deployed postgresql 16.2.0
+            - redis data 6 2026-06-07 21:10:39.881001 +0700 +07 deployed redis-19.1.3 7.2.5
+            - gateway edge 17 2026-06-07 19:03:12.443000 +0700 +07 deployed gateway-2.1.0 1.6.4
+            - cert-manager cert-manager 3 2026-06-06 14:01:01.000000 +0700 +07 deployed cert-manager v1.15.0
+            - metrics-server kube-system 2 2026-06-06 13:55:44.000000 +0700 +07 deployed metrics-server 0.7.1
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/helm/helm-compact/filter.lf --sub=list --args='-A' --exit=0 --level=lite < plugins/helm/helm-compact/samples/helm-list.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 9
+            - bytes 735
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/helm/helm-compact/tests.cue \ helm-compact \ samples/helm-list.txt full
+  commands:
+    - command: lowfat filter plugins/helm/helm-compact/filter.lf --sub=list --args='-A' --exit=0 --level=full < plugins/helm/helm-compact/samples/helm-list.txt
+      checks:
+        - name: stdout
+          data:
+            - NAME NAMESPACE REVISION UPDATED STATUS CHART APP VERSION
+            - api production 12 2026-06-08 10:18:42.240353 +0700 +07 deployed api-1.8.2 2.4.1
+            - worker production 8 2026-06-08 09:52:13.101774 +0700 +07 deployed worker-0.9.1 1.11.0
+            - web production 21 2026-06-08 09:44:08.727010 +0700 +07 deployed web-3.2.0 5.18.2
+            - postgres data 4 2026-06-07 22:11:59.041477 +0700 +07 deployed postgresql 16.2.0
+            - redis data 6 2026-06-07 21:10:39.881001 +0700 +07 deployed redis-19.1.3 7.2.5
+            - gateway edge 17 2026-06-07 19:03:12.443000 +0700 +07 deployed gateway-2.1.0 1.6.4
+            - cert-manager cert-manager 3 2026-06-06 14:01:01.000000 +0700 +07 deployed cert-manager v1.15.0
+            - metrics-server kube-system 2 2026-06-06 13:55:44.000000 +0700 +07 deployed metrics-server 0.7.1
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/helm/helm-compact/filter.lf --sub=list --args='-A' --exit=0 --level=full < plugins/helm/helm-compact/samples/helm-list.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 9
+            - bytes 735
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/helm/helm-compact/tests.cue \ helm-compact \ samples/helm-list.txt ultra
+  commands:
+    - command: lowfat filter plugins/helm/helm-compact/filter.lf --sub=list --args='-A' --exit=0 --level=ultra < plugins/helm/helm-compact/samples/helm-list.txt
+      checks:
+        - name: stdout
+          data:
+            - NAME NAMESPACE REVISION UPDATED STATUS CHART APP VERSION
+            - api production 12 2026-06-08 10:18:42.240353 +0700 +07 deployed api-1.8.2 2.4.1
+            - worker production 8 2026-06-08 09:52:13.101774 +0700 +07 deployed worker-0.9.1 1.11.0
+            - web production 21 2026-06-08 09:44:08.727010 +0700 +07 deployed web-3.2.0 5.18.2
+            - postgres data 4 2026-06-07 22:11:59.041477 +0700 +07 deployed postgresql 16.2.0
+            - redis data 6 2026-06-07 21:10:39.881001 +0700 +07 deployed redis-19.1.3 7.2.5
+            - gateway edge 17 2026-06-07 19:03:12.443000 +0700 +07 deployed gateway-2.1.0 1.6.4
+            - cert-manager cert-manager 3 2026-06-06 14:01:01.000000 +0700 +07 deployed cert-manager v1.15.0
+            - metrics-server kube-system 2 2026-06-06 13:55:44.000000 +0700 +07 deployed metrics-server 0.7.1
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/helm/helm-compact/filter.lf --sub=list --args='-A' --exit=0 --level=ultra < plugins/helm/helm-compact/samples/helm-list.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 9
+            - bytes 735
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/helm/helm-compact/tests.cue \ helm-compact \ samples/helm-upgrade-error.txt lite
+  commands:
+    - command: lowfat filter plugins/helm/helm-compact/filter.lf --sub=upgrade --args='api ./chart -n production --install' --exit=1 --level=lite < plugins/helm/helm-compact/samples/helm-upgrade-error.txt
+      checks:
+        - name: stdout
+          data:
+            - Release "api" does not exist. Installing it now.
+            - 'Error: rendered manifests contain a resource that already exists. Unable to continue with install: ServiceAccount "api" in namespace "production" exists and cannot be imported into the current release: invalid ownership metadata; label validation error: missing key "app.kubernetes.io/managed-by": must be set to "Helm"; annotation validation error: missing key "meta.helm.sh/release-name": must be set to "api"; annotation validation error: missing key "meta.helm.sh/release-namespace": must be set to "production"'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/helm/helm-compact/filter.lf --sub=upgrade --args='api ./chart -n production --install' --exit=1 --level=lite < plugins/helm/helm-compact/samples/helm-upgrade-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 2
+            - bytes 565
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/helm/helm-compact/tests.cue \ helm-compact \ samples/helm-upgrade-error.txt full
+  commands:
+    - command: lowfat filter plugins/helm/helm-compact/filter.lf --sub=upgrade --args='api ./chart -n production --install' --exit=1 --level=full < plugins/helm/helm-compact/samples/helm-upgrade-error.txt
+      checks:
+        - name: stdout
+          data:
+            - Release "api" does not exist. Installing it now.
+            - 'Error: rendered manifests contain a resource that already exists. Unable to continue with install: ServiceAccount "api" in namespace "production" exists and cannot be imported into the current release: invalid ownership metadata; label validation error: missing key "app.kubernetes.io/managed-by": must be set to "Helm"; annotation validation error: missing key "meta.helm.sh/release-name": must be set to "api"; annotation validation error: missing key "meta.helm.sh/release-namespace": must be set to "production"'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/helm/helm-compact/filter.lf --sub=upgrade --args='api ./chart -n production --install' --exit=1 --level=full < plugins/helm/helm-compact/samples/helm-upgrade-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 2
+            - bytes 565
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/helm/helm-compact/tests.cue \ helm-compact \ samples/helm-upgrade-error.txt ultra
+  commands:
+    - command: lowfat filter plugins/helm/helm-compact/filter.lf --sub=upgrade --args='api ./chart -n production --install' --exit=1 --level=ultra < plugins/helm/helm-compact/samples/helm-upgrade-error.txt
+      checks:
+        - name: stdout
+          data:
+            - Release "api" does not exist. Installing it now.
+            - 'Error: rendered manifests contain a resource that already exists. Unable to continue with install: ServiceAccount "api" in namespace "production" exists and cannot be imported into the current release: invalid ownership metadata; label validation error: missing key "app.kubernetes.io/managed-by": must be set to "Helm"; annotation validation error: missing key "meta.helm.sh/release-name": must be set to "api"; annotation validation error: missing key "meta.helm.sh/release-namespace": must be set to "production"'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/helm/helm-compact/filter.lf --sub=upgrade --args='api ./chart -n production --install' --exit=1 --level=ultra < plugins/helm/helm-compact/samples/helm-upgrade-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 2
+            - bytes 565
+        - name: exitcode
+          data:
+            - "0"

@@ -1,0 +1,334 @@
+- name: plugins/journalctl/journalctl-compact/tests.cue \ journalctl-compact \ samples/journalctl-unit.txt lite
+  commands:
+    - command: lowfat filter plugins/journalctl/journalctl-compact/filter.lf --sub=-u --args='-u checkout-api' --exit=0 --level=lite < plugins/journalctl/journalctl-compact/samples/journalctl-unit.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Jun 08 11:58:00 host checkout-api[1401]: booting checkout-api build=7f3a91c env=prod'
+            - 'Jun 08 11:58:01 host checkout-api[1401]: config loaded from /etc/checkout-api/config.toml'
+            - 'Jun 08 11:58:02 host checkout-api[1401]: connected to postgres primary'
+            - 'Jun 08 11:58:03 host checkout-api[1401]: connected to redis cache'
+            - 'Jun 08 11:58:04 host checkout-api[1401]: warmed product cache entries=1200'
+            - 'Jun 08 11:58:05 host checkout-api[1401]: listening on 0.0.0.0:8080'
+            - 'Jun 08 11:58:06 host checkout-api[1401]: GET /health status=200 elapsed=2ms'
+            - 'Jun 08 11:58:07 host checkout-api[1401]: GET /products status=200 elapsed=18ms'
+            - 'Jun 08 11:58:08 host checkout-api[1401]: GET /products/sku-1 status=200 elapsed=11ms'
+            - 'Jun 08 11:58:09 host checkout-api[1401]: GET /products/sku-2 status=200 elapsed=12ms'
+            - 'Jun 08 11:58:10 host checkout-api[1401]: GET /products/sku-3 status=200 elapsed=10ms'
+            - 'Jun 08 11:58:11 host checkout-api[1401]: POST /cart/items status=201 elapsed=29ms'
+            - 'Jun 08 11:58:12 host checkout-api[1401]: GET /cart status=200 elapsed=9ms'
+            - 'Jun 08 11:58:13 host checkout-api[1401]: POST /checkout status=500 elapsed=44ms'
+            - 'Jun 08 11:58:13 host checkout-api[1401]: ERROR payment gateway timeout provider=stripe request_id=req_123'
+            - 'Jun 08 11:58:14 host checkout-api[1401]: retrying payment intent id=pi_123 attempt=2'
+            - 'Jun 08 11:58:15 host checkout-api[1401]: POST /checkout status=200 elapsed=61ms'
+            - 'Jun 08 11:58:16 host checkout-api[1401]: queued receipt order=1001'
+            - 'Jun 08 11:58:17 host checkout-api[1401]: GET /orders/1001 status=200 elapsed=12ms'
+            - 'Jun 08 11:58:18 host checkout-api[1401]: GET /metrics status=200 elapsed=7ms'
+            - 'Jun 08 11:58:19 host checkout-api[1401]: GET /health status=200 elapsed=2ms'
+            - 'Jun 08 11:58:20 host checkout-api[1401]: GET /products status=200 elapsed=16ms'
+            - 'Jun 08 11:58:21 host checkout-api[1401]: GET /products/sku-4 status=200 elapsed=10ms'
+            - 'Jun 08 11:58:22 host checkout-api[1401]: GET /products/sku-5 status=200 elapsed=11ms'
+            - 'Jun 08 11:58:23 host checkout-api[1401]: GET /cart status=200 elapsed=10ms'
+            - 'Jun 08 11:58:24 host checkout-api[1401]: POST /cart/items status=201 elapsed=27ms'
+            - 'Jun 08 11:58:25 host checkout-api[1401]: GET /cart status=200 elapsed=8ms'
+            - 'Jun 08 11:58:26 host checkout-api[1401]: POST /checkout status=200 elapsed=58ms'
+            - 'Jun 08 11:58:27 host checkout-api[1401]: queued receipt order=1002'
+            - 'Jun 08 11:58:28 host checkout-api[1401]: GET /orders/1002 status=200 elapsed=13ms'
+            - 'Jun 08 11:58:29 host checkout-api[1401]: GET /health status=200 elapsed=2ms'
+            - 'Jun 08 11:58:30 host checkout-api[1401]: GET /products status=200 elapsed=17ms'
+            - 'Jun 08 11:58:31 host checkout-api[1401]: GET /products/sku-6 status=200 elapsed=10ms'
+            - 'Jun 08 11:58:32 host checkout-api[1401]: GET /products/sku-7 status=200 elapsed=11ms'
+            - 'Jun 08 11:58:33 host checkout-api[1401]: GET /cart status=200 elapsed=9ms'
+            - 'Jun 08 11:58:34 host checkout-api[1401]: POST /cart/items status=201 elapsed=28ms'
+            - 'Jun 08 11:58:35 host checkout-api[1401]: GET /cart status=200 elapsed=8ms'
+            - 'Jun 08 11:58:36 host checkout-api[1401]: POST /checkout status=200 elapsed=57ms'
+            - 'Jun 08 11:58:37 host checkout-api[1401]: queued receipt order=1003'
+            - 'Jun 08 11:58:38 host checkout-api[1401]: GET /orders/1003 status=200 elapsed=12ms'
+            - 'Jun 08 11:58:39 host checkout-api[1401]: GET /metrics status=200 elapsed=7ms'
+            - 'Jun 08 11:58:40 host checkout-api[1401]: GET /health status=200 elapsed=2ms'
+            - 'Jun 08 11:58:41 host checkout-api[1401]: GET /products status=200 elapsed=16ms'
+            - 'Jun 08 11:58:42 host checkout-api[1401]: GET /products/sku-8 status=200 elapsed=10ms'
+            - 'Jun 08 11:58:43 host checkout-api[1401]: GET /products/sku-9 status=200 elapsed=11ms'
+            - 'Jun 08 11:58:44 host checkout-api[1401]: GET /cart status=200 elapsed=9ms'
+            - 'Jun 08 11:58:45 host checkout-api[1401]: POST /cart/items status=201 elapsed=30ms'
+            - 'Jun 08 11:58:46 host checkout-api[1401]: GET /cart status=200 elapsed=8ms'
+            - 'Jun 08 11:58:47 host checkout-api[1401]: POST /checkout status=200 elapsed=56ms'
+            - 'Jun 08 11:58:48 host checkout-api[1401]: queued receipt order=1004'
+            - 'Jun 08 11:58:49 host checkout-api[1401]: GET /orders/1004 status=200 elapsed=12ms'
+            - 'Jun 08 11:58:50 host checkout-api[1401]: GET /metrics status=200 elapsed=7ms'
+            - 'Jun 08 11:58:51 host checkout-api[1401]: GET /health status=200 elapsed=2ms'
+            - 'Jun 08 11:58:52 host checkout-api[1401]: GET /products status=200 elapsed=16ms'
+            - 'Jun 08 11:58:53 host checkout-api[1401]: GET /products/sku-10 status=200 elapsed=10ms'
+            - 'Jun 08 11:58:54 host checkout-api[1401]: GET /products/sku-11 status=200 elapsed=11ms'
+            - 'Jun 08 11:58:55 host checkout-api[1401]: GET /cart status=200 elapsed=9ms'
+            - 'Jun 08 11:58:56 host checkout-api[1401]: POST /cart/items status=201 elapsed=30ms'
+            - 'Jun 08 11:58:57 host checkout-api[1401]: GET /cart status=200 elapsed=8ms'
+            - 'Jun 08 11:58:58 host checkout-api[1401]: POST /checkout status=200 elapsed=57ms'
+            - 'Jun 08 11:58:59 host checkout-api[1401]: queued receipt order=1005'
+            - 'Jun 08 11:59:00 host checkout-api[1401]: GET /orders/1005 status=200 elapsed=12ms'
+            - 'Jun 08 11:59:01 host checkout-api[1401]: GET /metrics status=200 elapsed=7ms'
+            - 'Jun 08 11:59:02 host checkout-api[1401]: GET /health status=200 elapsed=2ms'
+            - 'Jun 08 11:59:03 host checkout-api[1401]: GET /products status=200 elapsed=16ms'
+            - 'Jun 08 11:59:04 host checkout-api[1401]: GET /products/sku-12 status=200 elapsed=10ms'
+            - 'Jun 08 11:59:05 host checkout-api[1401]: GET /products/sku-13 status=200 elapsed=11ms'
+            - 'Jun 08 11:59:06 host checkout-api[1401]: GET /cart status=200 elapsed=9ms'
+            - 'Jun 08 11:59:07 host checkout-api[1401]: POST /cart/items status=201 elapsed=30ms'
+            - 'Jun 08 11:59:08 host checkout-api[1401]: GET /cart status=200 elapsed=8ms'
+            - 'Jun 08 11:59:09 host checkout-api[1401]: POST /checkout status=500 elapsed=43ms'
+            - 'Jun 08 11:59:09 host checkout-api[1401]: ERROR inventory reservation failed sku=sku-13'
+            - 'Jun 08 11:59:10 host checkout-api[1401]: retrying reservation sku=sku-13 attempt=2'
+            - 'Jun 08 11:59:11 host checkout-api[1401]: POST /checkout status=200 elapsed=64ms'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/journalctl/journalctl-compact/filter.lf --sub=-u --args='-u checkout-api' --exit=0 --level=lite < plugins/journalctl/journalctl-compact/samples/journalctl-unit.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 74
+            - bytes 5854
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/journalctl/journalctl-compact/tests.cue \ journalctl-compact \ samples/journalctl-unit.txt full
+  commands:
+    - command: lowfat filter plugins/journalctl/journalctl-compact/filter.lf --sub=-u --args='-u checkout-api' --exit=0 --level=full < plugins/journalctl/journalctl-compact/samples/journalctl-unit.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Jun 08 11:58:13 host checkout-api[1401]: ERROR payment gateway timeout provider=stripe request_id=req_123'
+            - 'Jun 08 11:58:14 host checkout-api[1401]: retrying payment intent id=pi_123 attempt=2'
+            - 'Jun 08 11:58:15 host checkout-api[1401]: POST /checkout status=200 elapsed=61ms'
+            - 'Jun 08 11:58:16 host checkout-api[1401]: queued receipt order=1001'
+            - 'Jun 08 11:58:17 host checkout-api[1401]: GET /orders/1001 status=200 elapsed=12ms'
+            - 'Jun 08 11:58:18 host checkout-api[1401]: GET /metrics status=200 elapsed=7ms'
+            - 'Jun 08 11:58:19 host checkout-api[1401]: GET /health status=200 elapsed=2ms'
+            - 'Jun 08 11:58:20 host checkout-api[1401]: GET /products status=200 elapsed=16ms'
+            - 'Jun 08 11:58:21 host checkout-api[1401]: GET /products/sku-4 status=200 elapsed=10ms'
+            - 'Jun 08 11:58:22 host checkout-api[1401]: GET /products/sku-5 status=200 elapsed=11ms'
+            - 'Jun 08 11:58:23 host checkout-api[1401]: GET /cart status=200 elapsed=10ms'
+            - 'Jun 08 11:58:24 host checkout-api[1401]: POST /cart/items status=201 elapsed=27ms'
+            - 'Jun 08 11:58:25 host checkout-api[1401]: GET /cart status=200 elapsed=8ms'
+            - 'Jun 08 11:58:26 host checkout-api[1401]: POST /checkout status=200 elapsed=58ms'
+            - 'Jun 08 11:58:27 host checkout-api[1401]: queued receipt order=1002'
+            - 'Jun 08 11:58:28 host checkout-api[1401]: GET /orders/1002 status=200 elapsed=13ms'
+            - 'Jun 08 11:58:29 host checkout-api[1401]: GET /health status=200 elapsed=2ms'
+            - 'Jun 08 11:58:30 host checkout-api[1401]: GET /products status=200 elapsed=17ms'
+            - 'Jun 08 11:58:31 host checkout-api[1401]: GET /products/sku-6 status=200 elapsed=10ms'
+            - 'Jun 08 11:58:32 host checkout-api[1401]: GET /products/sku-7 status=200 elapsed=11ms'
+            - 'Jun 08 11:58:33 host checkout-api[1401]: GET /cart status=200 elapsed=9ms'
+            - 'Jun 08 11:58:34 host checkout-api[1401]: POST /cart/items status=201 elapsed=28ms'
+            - 'Jun 08 11:58:35 host checkout-api[1401]: GET /cart status=200 elapsed=8ms'
+            - 'Jun 08 11:58:36 host checkout-api[1401]: POST /checkout status=200 elapsed=57ms'
+            - 'Jun 08 11:58:37 host checkout-api[1401]: queued receipt order=1003'
+            - 'Jun 08 11:58:38 host checkout-api[1401]: GET /orders/1003 status=200 elapsed=12ms'
+            - 'Jun 08 11:58:39 host checkout-api[1401]: GET /metrics status=200 elapsed=7ms'
+            - 'Jun 08 11:58:40 host checkout-api[1401]: GET /health status=200 elapsed=2ms'
+            - 'Jun 08 11:58:41 host checkout-api[1401]: GET /products status=200 elapsed=16ms'
+            - 'Jun 08 11:58:42 host checkout-api[1401]: GET /products/sku-8 status=200 elapsed=10ms'
+            - 'Jun 08 11:58:43 host checkout-api[1401]: GET /products/sku-9 status=200 elapsed=11ms'
+            - 'Jun 08 11:58:44 host checkout-api[1401]: GET /cart status=200 elapsed=9ms'
+            - 'Jun 08 11:58:45 host checkout-api[1401]: POST /cart/items status=201 elapsed=30ms'
+            - 'Jun 08 11:58:46 host checkout-api[1401]: GET /cart status=200 elapsed=8ms'
+            - 'Jun 08 11:58:47 host checkout-api[1401]: POST /checkout status=200 elapsed=56ms'
+            - 'Jun 08 11:58:48 host checkout-api[1401]: queued receipt order=1004'
+            - 'Jun 08 11:58:49 host checkout-api[1401]: GET /orders/1004 status=200 elapsed=12ms'
+            - 'Jun 08 11:58:50 host checkout-api[1401]: GET /metrics status=200 elapsed=7ms'
+            - 'Jun 08 11:58:51 host checkout-api[1401]: GET /health status=200 elapsed=2ms'
+            - 'Jun 08 11:58:52 host checkout-api[1401]: GET /products status=200 elapsed=16ms'
+            - 'Jun 08 11:58:53 host checkout-api[1401]: GET /products/sku-10 status=200 elapsed=10ms'
+            - 'Jun 08 11:58:54 host checkout-api[1401]: GET /products/sku-11 status=200 elapsed=11ms'
+            - 'Jun 08 11:58:55 host checkout-api[1401]: GET /cart status=200 elapsed=9ms'
+            - 'Jun 08 11:58:56 host checkout-api[1401]: POST /cart/items status=201 elapsed=30ms'
+            - 'Jun 08 11:58:57 host checkout-api[1401]: GET /cart status=200 elapsed=8ms'
+            - 'Jun 08 11:58:58 host checkout-api[1401]: POST /checkout status=200 elapsed=57ms'
+            - 'Jun 08 11:58:59 host checkout-api[1401]: queued receipt order=1005'
+            - 'Jun 08 11:59:00 host checkout-api[1401]: GET /orders/1005 status=200 elapsed=12ms'
+            - 'Jun 08 11:59:01 host checkout-api[1401]: GET /metrics status=200 elapsed=7ms'
+            - 'Jun 08 11:59:02 host checkout-api[1401]: GET /health status=200 elapsed=2ms'
+            - 'Jun 08 11:59:03 host checkout-api[1401]: GET /products status=200 elapsed=16ms'
+            - 'Jun 08 11:59:04 host checkout-api[1401]: GET /products/sku-12 status=200 elapsed=10ms'
+            - 'Jun 08 11:59:05 host checkout-api[1401]: GET /products/sku-13 status=200 elapsed=11ms'
+            - 'Jun 08 11:59:06 host checkout-api[1401]: GET /cart status=200 elapsed=9ms'
+            - 'Jun 08 11:59:07 host checkout-api[1401]: POST /cart/items status=201 elapsed=30ms'
+            - 'Jun 08 11:59:08 host checkout-api[1401]: GET /cart status=200 elapsed=8ms'
+            - 'Jun 08 11:59:09 host checkout-api[1401]: POST /checkout status=500 elapsed=43ms'
+            - 'Jun 08 11:59:09 host checkout-api[1401]: ERROR inventory reservation failed sku=sku-13'
+            - 'Jun 08 11:59:10 host checkout-api[1401]: retrying reservation sku=sku-13 attempt=2'
+            - 'Jun 08 11:59:11 host checkout-api[1401]: POST /checkout status=200 elapsed=64ms'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/journalctl/journalctl-compact/filter.lf --sub=-u --args='-u checkout-api' --exit=0 --level=full < plugins/journalctl/journalctl-compact/samples/journalctl-unit.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 60
+            - bytes 4754
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/journalctl/journalctl-compact/tests.cue \ journalctl-compact \ samples/journalctl-unit.txt ultra
+  commands:
+    - command: lowfat filter plugins/journalctl/journalctl-compact/filter.lf --sub=-u --args='-u checkout-api' --exit=0 --level=ultra < plugins/journalctl/journalctl-compact/samples/journalctl-unit.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Jun 08 11:58:53 host checkout-api[1401]: GET /products/sku-10 status=200 elapsed=10ms'
+            - 'Jun 08 11:58:54 host checkout-api[1401]: GET /products/sku-11 status=200 elapsed=11ms'
+            - 'Jun 08 11:58:55 host checkout-api[1401]: GET /cart status=200 elapsed=9ms'
+            - 'Jun 08 11:58:56 host checkout-api[1401]: POST /cart/items status=201 elapsed=30ms'
+            - 'Jun 08 11:58:57 host checkout-api[1401]: GET /cart status=200 elapsed=8ms'
+            - 'Jun 08 11:58:58 host checkout-api[1401]: POST /checkout status=200 elapsed=57ms'
+            - 'Jun 08 11:58:59 host checkout-api[1401]: queued receipt order=1005'
+            - 'Jun 08 11:59:00 host checkout-api[1401]: GET /orders/1005 status=200 elapsed=12ms'
+            - 'Jun 08 11:59:01 host checkout-api[1401]: GET /metrics status=200 elapsed=7ms'
+            - 'Jun 08 11:59:02 host checkout-api[1401]: GET /health status=200 elapsed=2ms'
+            - 'Jun 08 11:59:03 host checkout-api[1401]: GET /products status=200 elapsed=16ms'
+            - 'Jun 08 11:59:04 host checkout-api[1401]: GET /products/sku-12 status=200 elapsed=10ms'
+            - 'Jun 08 11:59:05 host checkout-api[1401]: GET /products/sku-13 status=200 elapsed=11ms'
+            - 'Jun 08 11:59:06 host checkout-api[1401]: GET /cart status=200 elapsed=9ms'
+            - 'Jun 08 11:59:07 host checkout-api[1401]: POST /cart/items status=201 elapsed=30ms'
+            - 'Jun 08 11:59:08 host checkout-api[1401]: GET /cart status=200 elapsed=8ms'
+            - 'Jun 08 11:59:09 host checkout-api[1401]: POST /checkout status=500 elapsed=43ms'
+            - 'Jun 08 11:59:09 host checkout-api[1401]: ERROR inventory reservation failed sku=sku-13'
+            - 'Jun 08 11:59:10 host checkout-api[1401]: retrying reservation sku=sku-13 attempt=2'
+            - 'Jun 08 11:59:11 host checkout-api[1401]: POST /checkout status=200 elapsed=64ms'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/journalctl/journalctl-compact/filter.lf --sub=-u --args='-u checkout-api' --exit=0 --level=ultra < plugins/journalctl/journalctl-compact/samples/journalctl-unit.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 20
+            - bytes 1595
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/journalctl/journalctl-compact/tests.cue \ journalctl-compact \ samples/journalctl-json.txt lite
+  commands:
+    - command: lowfat filter plugins/journalctl/journalctl-compact/filter.lf --sub=-u --args='-u checkout-api -o json' --exit=0 --level=lite < plugins/journalctl/journalctl-compact/samples/journalctl-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{"__REALTIME_TIMESTAMP":"1812473880000000","_SYSTEMD_UNIT":"checkout-api.service","PRIORITY":"6","MESSAGE":"booting checkout-api build=7f3a91c env=prod"}'
+            - '{"__REALTIME_TIMESTAMP":"1812473881000000","_SYSTEMD_UNIT":"checkout-api.service","PRIORITY":"6","MESSAGE":"connected to postgres primary"}'
+            - '{"__REALTIME_TIMESTAMP":"1812473882000000","_SYSTEMD_UNIT":"checkout-api.service","PRIORITY":"3","MESSAGE":"payment gateway timeout provider=stripe request_id=req_123"}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/journalctl/journalctl-compact/filter.lf --sub=-u --args='-u checkout-api -o json' --exit=0 --level=lite < plugins/journalctl/journalctl-compact/samples/journalctl-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 4
+            - bytes 464
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/journalctl/journalctl-compact/tests.cue \ journalctl-compact \ samples/journalctl-json.txt full
+  commands:
+    - command: lowfat filter plugins/journalctl/journalctl-compact/filter.lf --sub=-u --args='-u checkout-api -o json' --exit=0 --level=full < plugins/journalctl/journalctl-compact/samples/journalctl-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{"__REALTIME_TIMESTAMP":"1812473880000000","_SYSTEMD_UNIT":"checkout-api.service","PRIORITY":"6","MESSAGE":"booting checkout-api build=7f3a91c env=prod"}'
+            - '{"__REALTIME_TIMESTAMP":"1812473881000000","_SYSTEMD_UNIT":"checkout-api.service","PRIORITY":"6","MESSAGE":"connected to postgres primary"}'
+            - '{"__REALTIME_TIMESTAMP":"1812473882000000","_SYSTEMD_UNIT":"checkout-api.service","PRIORITY":"3","MESSAGE":"payment gateway timeout provider=stripe request_id=req_123"}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/journalctl/journalctl-compact/filter.lf --sub=-u --args='-u checkout-api -o json' --exit=0 --level=full < plugins/journalctl/journalctl-compact/samples/journalctl-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 4
+            - bytes 464
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/journalctl/journalctl-compact/tests.cue \ journalctl-compact \ samples/journalctl-json.txt ultra
+  commands:
+    - command: lowfat filter plugins/journalctl/journalctl-compact/filter.lf --sub=-u --args='-u checkout-api -o json' --exit=0 --level=ultra < plugins/journalctl/journalctl-compact/samples/journalctl-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{"__REALTIME_TIMESTAMP":"1812473880000000","_SYSTEMD_UNIT":"checkout-api.service","PRIORITY":"6","MESSAGE":"booting checkout-api build=7f3a91c env=prod"}'
+            - '{"__REALTIME_TIMESTAMP":"1812473881000000","_SYSTEMD_UNIT":"checkout-api.service","PRIORITY":"6","MESSAGE":"connected to postgres primary"}'
+            - '{"__REALTIME_TIMESTAMP":"1812473882000000","_SYSTEMD_UNIT":"checkout-api.service","PRIORITY":"3","MESSAGE":"payment gateway timeout provider=stripe request_id=req_123"}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/journalctl/journalctl-compact/filter.lf --sub=-u --args='-u checkout-api -o json' --exit=0 --level=ultra < plugins/journalctl/journalctl-compact/samples/journalctl-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 4
+            - bytes 464
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/journalctl/journalctl-compact/tests.cue \ journalctl-compact \ samples/journalctl-error.txt lite
+  commands:
+    - command: lowfat filter plugins/journalctl/journalctl-compact/filter.lf --sub=-u --args='-u checkout-api' --exit=1 --level=lite < plugins/journalctl/journalctl-compact/samples/journalctl-error.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Hint: You are currently not seeing messages from other users and the system.'
+            - '      Users in groups ''adm'', ''systemd-journal'' can see all messages.'
+            - No journal files were opened due to insufficient permissions.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/journalctl/journalctl-compact/filter.lf --sub=-u --args='-u checkout-api' --exit=1 --level=lite < plugins/journalctl/journalctl-compact/samples/journalctl-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 4
+            - bytes 209
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/journalctl/journalctl-compact/tests.cue \ journalctl-compact \ samples/journalctl-error.txt full
+  commands:
+    - command: lowfat filter plugins/journalctl/journalctl-compact/filter.lf --sub=-u --args='-u checkout-api' --exit=1 --level=full < plugins/journalctl/journalctl-compact/samples/journalctl-error.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Hint: You are currently not seeing messages from other users and the system.'
+            - '      Users in groups ''adm'', ''systemd-journal'' can see all messages.'
+            - No journal files were opened due to insufficient permissions.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/journalctl/journalctl-compact/filter.lf --sub=-u --args='-u checkout-api' --exit=1 --level=full < plugins/journalctl/journalctl-compact/samples/journalctl-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 4
+            - bytes 209
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/journalctl/journalctl-compact/tests.cue \ journalctl-compact \ samples/journalctl-error.txt ultra
+  commands:
+    - command: lowfat filter plugins/journalctl/journalctl-compact/filter.lf --sub=-u --args='-u checkout-api' --exit=1 --level=ultra < plugins/journalctl/journalctl-compact/samples/journalctl-error.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Hint: You are currently not seeing messages from other users and the system.'
+            - '      Users in groups ''adm'', ''systemd-journal'' can see all messages.'
+            - No journal files were opened due to insufficient permissions.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/journalctl/journalctl-compact/filter.lf --sub=-u --args='-u checkout-api' --exit=1 --level=ultra < plugins/journalctl/journalctl-compact/samples/journalctl-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 4
+            - bytes 209
+        - name: exitcode
+          data:
+            - "0"

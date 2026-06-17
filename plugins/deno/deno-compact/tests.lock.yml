@@ -1,0 +1,170 @@
+- name: plugins/deno/deno-compact/tests.cue \ deno-compact \ samples/deno-test-fail.txt lite
+  commands:
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=test --args='test' --exit=1 --level=lite < plugins/deno/deno-compact/samples/deno-test-fail.txt
+      checks:
+        - name: stdout
+          data:
+            - running 4 tests from ./cart_test.ts
+            - test applies coupon to total ... FAILED (3ms)
+            - ""
+            - ' ERRORS '
+            - ""
+            - applies coupon to total => ./cart_test.ts:42:6
+            - 'error: AssertionError: Values are not equal.'
+            - ""
+            - ""
+            - '    [Diff] Actual / Expected'
+            - ""
+            - ""
+            - '-   1299'
+            - +   1499
+            - ""
+            - '  at assertEquals (https://deno.land/std/assert/mod.ts:200:9)'
+            - '  at file:///app/cart_test.ts:43:3'
+            - ""
+            - ' FAILURES '
+            - ""
+            - applies coupon to total => ./cart_test.ts:42:6
+            - ""
+            - 'failures:'
+            - ""
+            - "\tapplies coupon to total"
+            - ""
+            - 'test result: FAILED. 3 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out (8ms)'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=test --args='test' --exit=1 --level=lite < plugins/deno/deno-compact/samples/deno-test-fail.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 27
+            - bytes 517
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/deno/deno-compact/tests.cue \ deno-compact \ samples/deno-test-fail.txt full
+  commands:
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=test --args='test' --exit=1 --level=full < plugins/deno/deno-compact/samples/deno-test-fail.txt
+      checks:
+        - name: stdout
+          data:
+            - running 4 tests from ./cart_test.ts
+            - test applies coupon to total ... FAILED (3ms)
+            - ""
+            - ' ERRORS '
+            - ""
+            - applies coupon to total => ./cart_test.ts:42:6
+            - 'error: AssertionError: Values are not equal.'
+            - ""
+            - ""
+            - '    [Diff] Actual / Expected'
+            - ""
+            - ""
+            - '-   1299'
+            - +   1499
+            - ""
+            - '  at assertEquals (https://deno.land/std/assert/mod.ts:200:9)'
+            - '  at file:///app/cart_test.ts:43:3'
+            - ""
+            - ' FAILURES '
+            - ""
+            - applies coupon to total => ./cart_test.ts:42:6
+            - ""
+            - 'failures:'
+            - ""
+            - "\tapplies coupon to total"
+            - ""
+            - 'test result: FAILED. 3 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out (8ms)'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=test --args='test' --exit=1 --level=full < plugins/deno/deno-compact/samples/deno-test-fail.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 27
+            - bytes 517
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/deno/deno-compact/tests.cue \ deno-compact \ samples/deno-test-fail.txt ultra
+  commands:
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=test --args='test' --exit=1 --level=ultra < plugins/deno/deno-compact/samples/deno-test-fail.txt
+      checks:
+        - name: stdout
+          data:
+            - running 4 tests from ./cart_test.ts
+            - test applies coupon to total ... FAILED (3ms)
+            - 'error: AssertionError: Values are not equal.'
+            - 'failures:'
+            - 'test result: FAILED. 3 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out (8ms)'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=test --args='test' --exit=1 --level=ultra < plugins/deno/deno-compact/samples/deno-test-fail.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 5
+            - bytes 222
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/deno/deno-compact/tests.cue \ deno-compact \ samples/deno-check-clean.txt lite
+  commands:
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=check --args='check main.ts' --exit=0 --level=lite < plugins/deno/deno-compact/samples/deno-check-clean.txt
+      checks:
+        - name: stdout
+          data:
+            - 'deno: no issues'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=check --args='check main.ts' --exit=0 --level=lite < plugins/deno/deno-compact/samples/deno-check-clean.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 16
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/deno/deno-compact/tests.cue \ deno-compact \ samples/deno-check-clean.txt full
+  commands:
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=check --args='check main.ts' --exit=0 --level=full < plugins/deno/deno-compact/samples/deno-check-clean.txt
+      checks:
+        - name: stdout
+          data:
+            - 'deno: no issues'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=check --args='check main.ts' --exit=0 --level=full < plugins/deno/deno-compact/samples/deno-check-clean.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 16
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/deno/deno-compact/tests.cue \ deno-compact \ samples/deno-check-clean.txt ultra
+  commands:
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=check --args='check main.ts' --exit=0 --level=ultra < plugins/deno/deno-compact/samples/deno-check-clean.txt
+      checks:
+        - name: stdout
+          data:
+            - 'deno: no issues'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=check --args='check main.ts' --exit=0 --level=ultra < plugins/deno/deno-compact/samples/deno-check-clean.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 16
+        - name: exitcode
+          data:
+            - "0"

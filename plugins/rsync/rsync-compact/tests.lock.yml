@@ -1,0 +1,197 @@
+- name: plugins/rsync/rsync-compact/tests.cue \ rsync-compact \ samples/rsync-transfer.txt lite
+  commands:
+    - command: lowfat filter plugins/rsync/rsync-compact/filter.lf --sub= --args='-av src/ host:/dst/' --exit=0 --level=lite < plugins/rsync/rsync-compact/samples/rsync-transfer.txt
+      checks:
+        - name: stdout
+          data:
+            - sending incremental file list
+            - src/checkout/file1.ts
+            - src/checkout/file2.ts
+            - src/checkout/file3.ts
+            - src/checkout/file4.ts
+            - src/checkout/file5.ts
+            - src/checkout/file6.ts
+            - src/checkout/file7.ts
+            - src/checkout/file8.ts
+            - src/checkout/file9.ts
+            - src/checkout/file10.ts
+            - src/checkout/file11.ts
+            - src/checkout/file12.ts
+            - src/checkout/file13.ts
+            - src/checkout/file14.ts
+            - src/checkout/file15.ts
+            - src/checkout/file16.ts
+            - src/checkout/file17.ts
+            - src/checkout/file18.ts
+            - src/checkout/file19.ts
+            - src/checkout/file20.ts
+            - src/checkout/file21.ts
+            - src/checkout/file22.ts
+            - src/checkout/file23.ts
+            - src/checkout/file24.ts
+            - src/checkout/file25.ts
+            - src/checkout/file26.ts
+            - src/checkout/file27.ts
+            - src/checkout/file28.ts
+            - src/checkout/file29.ts
+            - src/checkout/file30.ts
+            - ""
+            - sent 12,345 bytes  received 678 bytes  26,046.00 bytes/sec
+            - total size is 456,789  speedup is 35.10
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/rsync/rsync-compact/filter.lf --sub= --args='-av src/ host:/dst/' --exit=0 --level=lite < plugins/rsync/rsync-compact/samples/rsync-transfer.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 34
+            - bytes 811
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/rsync/rsync-compact/tests.cue \ rsync-compact \ samples/rsync-transfer.txt full
+  commands:
+    - command: lowfat filter plugins/rsync/rsync-compact/filter.lf --sub= --args='-av src/ host:/dst/' --exit=0 --level=full < plugins/rsync/rsync-compact/samples/rsync-transfer.txt
+      checks:
+        - name: stdout
+          data:
+            - sending incremental file list
+            - src/checkout/file1.ts
+            - src/checkout/file2.ts
+            - src/checkout/file3.ts
+            - src/checkout/file4.ts
+            - src/checkout/file5.ts
+            - src/checkout/file6.ts
+            - src/checkout/file7.ts
+            - src/checkout/file8.ts
+            - src/checkout/file9.ts
+            - src/checkout/file10.ts
+            - src/checkout/file11.ts
+            - src/checkout/file12.ts
+            - src/checkout/file13.ts
+            - src/checkout/file14.ts
+            - src/checkout/file15.ts
+            - src/checkout/file16.ts
+            - src/checkout/file17.ts
+            - src/checkout/file18.ts
+            - src/checkout/file19.ts
+            - src/checkout/file20.ts
+            - src/checkout/file21.ts
+            - src/checkout/file22.ts
+            - src/checkout/file23.ts
+            - src/checkout/file24.ts
+            - src/checkout/file25.ts
+            - src/checkout/file26.ts
+            - src/checkout/file27.ts
+            - src/checkout/file28.ts
+            - src/checkout/file29.ts
+            - src/checkout/file30.ts
+            - ""
+            - sent 12,345 bytes  received 678 bytes  26,046.00 bytes/sec
+            - total size is 456,789  speedup is 35.10
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/rsync/rsync-compact/filter.lf --sub= --args='-av src/ host:/dst/' --exit=0 --level=full < plugins/rsync/rsync-compact/samples/rsync-transfer.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 34
+            - bytes 811
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/rsync/rsync-compact/tests.cue \ rsync-compact \ samples/rsync-transfer.txt ultra
+  commands:
+    - command: lowfat filter plugins/rsync/rsync-compact/filter.lf --sub= --args='-av src/ host:/dst/' --exit=0 --level=ultra < plugins/rsync/rsync-compact/samples/rsync-transfer.txt
+      checks:
+        - name: stdout
+          data:
+            - src/checkout/file19.ts
+            - src/checkout/file20.ts
+            - src/checkout/file21.ts
+            - src/checkout/file22.ts
+            - src/checkout/file23.ts
+            - src/checkout/file24.ts
+            - src/checkout/file25.ts
+            - src/checkout/file26.ts
+            - src/checkout/file27.ts
+            - src/checkout/file28.ts
+            - src/checkout/file29.ts
+            - src/checkout/file30.ts
+            - ""
+            - sent 12,345 bytes  received 678 bytes  26,046.00 bytes/sec
+            - total size is 456,789  speedup is 35.10
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/rsync/rsync-compact/filter.lf --sub= --args='-av src/ host:/dst/' --exit=0 --level=ultra < plugins/rsync/rsync-compact/samples/rsync-transfer.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 15
+            - bytes 376
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/rsync/rsync-compact/tests.cue \ rsync-compact \ samples/rsync-error.txt lite
+  commands:
+    - command: lowfat filter plugins/rsync/rsync-compact/filter.lf --sub= --args='-av /missing/ host:/dst/' --exit=23 --level=lite < plugins/rsync/rsync-compact/samples/rsync-error.txt
+      checks:
+        - name: stdout
+          data:
+            - 'rsync: [sender] change_dir "/missing" failed: No such file or directory (2)'
+            - 'rsync error: some files/attrs were not transferred (code 23) at main.c(1338)'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/rsync/rsync-compact/filter.lf --sub= --args='-av /missing/ host:/dst/' --exit=23 --level=lite < plugins/rsync/rsync-compact/samples/rsync-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 2
+            - bytes 153
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/rsync/rsync-compact/tests.cue \ rsync-compact \ samples/rsync-error.txt full
+  commands:
+    - command: lowfat filter plugins/rsync/rsync-compact/filter.lf --sub= --args='-av /missing/ host:/dst/' --exit=23 --level=full < plugins/rsync/rsync-compact/samples/rsync-error.txt
+      checks:
+        - name: stdout
+          data:
+            - 'rsync: [sender] change_dir "/missing" failed: No such file or directory (2)'
+            - 'rsync error: some files/attrs were not transferred (code 23) at main.c(1338)'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/rsync/rsync-compact/filter.lf --sub= --args='-av /missing/ host:/dst/' --exit=23 --level=full < plugins/rsync/rsync-compact/samples/rsync-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 2
+            - bytes 153
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/rsync/rsync-compact/tests.cue \ rsync-compact \ samples/rsync-error.txt ultra
+  commands:
+    - command: lowfat filter plugins/rsync/rsync-compact/filter.lf --sub= --args='-av /missing/ host:/dst/' --exit=23 --level=ultra < plugins/rsync/rsync-compact/samples/rsync-error.txt
+      checks:
+        - name: stdout
+          data:
+            - 'rsync: [sender] change_dir "/missing" failed: No such file or directory (2)'
+            - 'rsync error: some files/attrs were not transferred (code 23) at main.c(1338)'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/rsync/rsync-compact/filter.lf --sub= --args='-av /missing/ host:/dst/' --exit=23 --level=ultra < plugins/rsync/rsync-compact/samples/rsync-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 2
+            - bytes 153
+        - name: exitcode
+          data:
+            - "0"

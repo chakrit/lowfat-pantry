@@ -1,0 +1,443 @@
+- name: plugins/docker-compose/docker-compose-compact/tests.cue \ docker-compose-compact \ samples/docker-compose-up.txt lite
+  commands:
+    - command: lowfat filter plugins/docker-compose/docker-compose-compact/filter.lf --sub=up --args='up' --exit=0 --level=lite < plugins/docker-compose/docker-compose-compact/samples/docker-compose-up.txt
+      checks:
+        - name: stdout
+          data:
+            - Attaching to shop_db_1, shop_redis_1, shop_api_1
+            - db_1     | PostgreSQL Database directory appears to contain a database; Skipping initialization
+            - 'redis_1  | 1:C 08 Jun 2026 12:04:10.123 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo'
+            - api_1    | Listening on http://0.0.0.0:8080
+            - api_1    | GET /health 200 4ms
+            - api_1    | GET /products 200 18ms
+            - api_1    | worker queue depth=0
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/docker-compose/docker-compose-compact/filter.lf --sub=up --args='up' --exit=0 --level=lite < plugins/docker-compose/docker-compose-compact/samples/docker-compose-up.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 7
+            - bytes 374
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/docker-compose/docker-compose-compact/tests.cue \ docker-compose-compact \ samples/docker-compose-up.txt full
+  commands:
+    - command: lowfat filter plugins/docker-compose/docker-compose-compact/filter.lf --sub=up --args='up' --exit=0 --level=full < plugins/docker-compose/docker-compose-compact/samples/docker-compose-up.txt
+      checks:
+        - name: stdout
+          data:
+            - Attaching to shop_db_1, shop_redis_1, shop_api_1
+            - db_1     | PostgreSQL Database directory appears to contain a database; Skipping initialization
+            - 'redis_1  | 1:C 08 Jun 2026 12:04:10.123 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo'
+            - api_1    | Listening on http://0.0.0.0:8080
+            - api_1    | GET /health 200 4ms
+            - api_1    | GET /products 200 18ms
+            - api_1    | worker queue depth=0
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/docker-compose/docker-compose-compact/filter.lf --sub=up --args='up' --exit=0 --level=full < plugins/docker-compose/docker-compose-compact/samples/docker-compose-up.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 7
+            - bytes 374
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/docker-compose/docker-compose-compact/tests.cue \ docker-compose-compact \ samples/docker-compose-up.txt ultra
+  commands:
+    - command: lowfat filter plugins/docker-compose/docker-compose-compact/filter.lf --sub=up --args='up' --exit=0 --level=ultra < plugins/docker-compose/docker-compose-compact/samples/docker-compose-up.txt
+      checks:
+        - name: stdout
+          data:
+            - Attaching to shop_db_1, shop_redis_1, shop_api_1
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/docker-compose/docker-compose-compact/filter.lf --sub=up --args='up' --exit=0 --level=ultra < plugins/docker-compose/docker-compose-compact/samples/docker-compose-up.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 49
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/docker-compose/docker-compose-compact/tests.cue \ docker-compose-compact \ samples/docker-compose-logs.txt lite
+  commands:
+    - command: lowfat filter plugins/docker-compose/docker-compose-compact/filter.lf --sub=logs --args='logs api' --exit=0 --level=lite < plugins/docker-compose/docker-compose-compact/samples/docker-compose-logs.txt
+      checks:
+        - name: stdout
+          data:
+            - api_1    | 2026-06-08T12:00:00Z boot config loaded
+            - api_1    | 2026-06-08T12:00:01Z connected to postgres
+            - api_1    | 2026-06-08T12:00:02Z connected to redis
+            - api_1    | 2026-06-08T12:00:03Z GET /health 200 3ms
+            - api_1    | 2026-06-08T12:00:04Z GET /products 200 20ms
+            - api_1    | 2026-06-08T12:00:05Z GET /products/sku-1 200 11ms
+            - api_1    | 2026-06-08T12:00:06Z GET /products/sku-2 200 12ms
+            - api_1    | 2026-06-08T12:00:07Z GET /products/sku-3 200 13ms
+            - api_1    | 2026-06-08T12:00:08Z GET /products/sku-4 200 10ms
+            - api_1    | 2026-06-08T12:00:09Z GET /products/sku-5 200 9ms
+            - api_1    | 2026-06-08T12:00:10Z GET /cart 200 17ms
+            - api_1    | 2026-06-08T12:00:11Z GET /cart 200 16ms
+            - api_1    | 2026-06-08T12:00:12Z POST /cart/items 201 31ms
+            - api_1    | 2026-06-08T12:00:13Z GET /cart 200 14ms
+            - api_1    | 2026-06-08T12:00:14Z POST /checkout 500 44ms
+            - 'api_1    | 2026-06-08T12:00:14Z Error: payment gateway timeout'
+            - api_1    | 2026-06-08T12:00:15Z retrying payment intent pi_123
+            - api_1    | 2026-06-08T12:00:16Z POST /checkout 200 61ms
+            - worker_1 | 2026-06-08T12:00:17Z processed job send-receipt in 9ms
+            - api_1    | 2026-06-08T12:00:18Z GET /orders/1001 200 12ms
+            - api_1    | 2026-06-08T12:00:19Z GET /health 200 2ms
+            - api_1    | 2026-06-08T12:00:20Z GET /metrics 200 7ms
+            - api_1    | 2026-06-08T12:00:21Z GET /products 200 16ms
+            - api_1    | 2026-06-08T12:00:22Z GET /products/sku-6 200 11ms
+            - api_1    | 2026-06-08T12:00:23Z GET /products/sku-7 200 12ms
+            - api_1    | 2026-06-08T12:00:24Z GET /products/sku-8 200 13ms
+            - api_1    | 2026-06-08T12:00:25Z GET /cart 200 10ms
+            - api_1    | 2026-06-08T12:00:26Z POST /cart/items 201 28ms
+            - api_1    | 2026-06-08T12:00:27Z GET /cart 200 8ms
+            - api_1    | 2026-06-08T12:00:28Z POST /checkout 200 57ms
+            - worker_1 | 2026-06-08T12:00:29Z processed job send-receipt in 8ms
+            - api_1    | 2026-06-08T12:00:30Z GET /orders/1003 200 12ms
+            - api_1    | 2026-06-08T12:00:31Z GET /health 200 2ms
+            - api_1    | 2026-06-08T12:00:32Z GET /metrics 200 7ms
+            - api_1    | 2026-06-08T12:00:33Z GET /products 200 16ms
+            - api_1    | 2026-06-08T12:00:34Z GET /products/sku-9 200 11ms
+            - api_1    | 2026-06-08T12:00:35Z GET /products/sku-10 200 12ms
+            - api_1    | 2026-06-08T12:00:36Z GET /cart 200 9ms
+            - api_1    | 2026-06-08T12:00:37Z POST /cart/items 201 30ms
+            - api_1    | 2026-06-08T12:00:38Z GET /cart 200 8ms
+            - api_1    | 2026-06-08T12:00:39Z POST /checkout 200 55ms
+            - worker_1 | 2026-06-08T12:00:40Z processed job send-receipt in 9ms
+            - api_1    | 2026-06-08T12:00:41Z GET /orders/1004 200 12ms
+            - api_1    | 2026-06-08T12:00:42Z GET /health 200 2ms
+            - api_1    | 2026-06-08T12:00:43Z GET /metrics 200 7ms
+            - api_1    | 2026-06-08T12:00:44Z GET /products 200 15ms
+            - api_1    | 2026-06-08T12:00:45Z GET /products/sku-11 200 11ms
+            - api_1    | 2026-06-08T12:00:46Z GET /products/sku-12 200 12ms
+            - api_1    | 2026-06-08T12:00:47Z GET /cart 200 9ms
+            - api_1    | 2026-06-08T12:00:48Z POST /cart/items 201 29ms
+            - api_1    | 2026-06-08T12:00:49Z GET /cart 200 8ms
+            - api_1    | 2026-06-08T12:00:50Z POST /checkout 200 56ms
+            - worker_1 | 2026-06-08T12:00:51Z processed job send-receipt in 8ms
+            - api_1    | 2026-06-08T12:00:52Z GET /orders/1005 200 12ms
+            - api_1    | 2026-06-08T12:00:53Z GET /health 200 2ms
+            - api_1    | 2026-06-08T12:00:54Z GET /metrics 200 7ms
+            - api_1    | 2026-06-08T12:00:55Z GET /products 200 16ms
+            - api_1    | 2026-06-08T12:00:56Z GET /products/sku-13 200 11ms
+            - api_1    | 2026-06-08T12:00:57Z GET /products/sku-14 200 12ms
+            - api_1    | 2026-06-08T12:00:58Z GET /cart 200 9ms
+            - api_1    | 2026-06-08T12:00:59Z POST /cart/items 201 30ms
+            - api_1    | 2026-06-08T12:01:00Z GET /cart 200 8ms
+            - api_1    | 2026-06-08T12:01:01Z POST /checkout 200 57ms
+            - worker_1 | 2026-06-08T12:01:02Z processed job send-receipt in 8ms
+            - api_1    | 2026-06-08T12:01:03Z GET /orders/1006 200 12ms
+            - api_1    | 2026-06-08T12:01:04Z GET /health 200 2ms
+            - api_1    | 2026-06-08T12:01:05Z GET /metrics 200 7ms
+            - api_1    | 2026-06-08T12:01:06Z GET /products 200 16ms
+            - api_1    | 2026-06-08T12:01:07Z GET /products/sku-15 200 11ms
+            - api_1    | 2026-06-08T12:01:08Z GET /products/sku-16 200 12ms
+            - api_1    | 2026-06-08T12:01:09Z GET /cart 200 9ms
+            - api_1    | 2026-06-08T12:01:10Z POST /cart/items 201 30ms
+            - api_1    | 2026-06-08T12:01:11Z GET /cart 200 8ms
+            - api_1    | 2026-06-08T12:01:12Z POST /checkout 200 57ms
+            - worker_1 | 2026-06-08T12:01:13Z processed job send-receipt in 8ms
+            - api_1    | 2026-06-08T12:01:14Z GET /orders/1007 200 12ms
+            - api_1    | 2026-06-08T12:01:15Z GET /health 200 2ms
+            - api_1    | 2026-06-08T12:01:16Z GET /metrics 200 7ms
+            - api_1    | 2026-06-08T12:01:17Z POST /checkout 500 43ms
+            - 'api_1    | 2026-06-08T12:01:17Z error: inventory reservation failed sku=sku-16'
+            - worker_1 | 2026-06-08T12:01:18Z exited with code 1
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/docker-compose/docker-compose-compact/filter.lf --sub=logs --args='logs api' --exit=0 --level=lite < plugins/docker-compose/docker-compose-compact/samples/docker-compose-logs.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 81
+            - bytes 4600
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/docker-compose/docker-compose-compact/tests.cue \ docker-compose-compact \ samples/docker-compose-logs.txt full
+  commands:
+    - command: lowfat filter plugins/docker-compose/docker-compose-compact/filter.lf --sub=logs --args='logs api' --exit=0 --level=full < plugins/docker-compose/docker-compose-compact/samples/docker-compose-logs.txt
+      checks:
+        - name: stdout
+          data:
+            - api_1    | 2026-06-08T12:00:20Z GET /metrics 200 7ms
+            - api_1    | 2026-06-08T12:00:21Z GET /products 200 16ms
+            - api_1    | 2026-06-08T12:00:22Z GET /products/sku-6 200 11ms
+            - api_1    | 2026-06-08T12:00:23Z GET /products/sku-7 200 12ms
+            - api_1    | 2026-06-08T12:00:24Z GET /products/sku-8 200 13ms
+            - api_1    | 2026-06-08T12:00:25Z GET /cart 200 10ms
+            - api_1    | 2026-06-08T12:00:26Z POST /cart/items 201 28ms
+            - api_1    | 2026-06-08T12:00:27Z GET /cart 200 8ms
+            - api_1    | 2026-06-08T12:00:28Z POST /checkout 200 57ms
+            - worker_1 | 2026-06-08T12:00:29Z processed job send-receipt in 8ms
+            - api_1    | 2026-06-08T12:00:30Z GET /orders/1003 200 12ms
+            - api_1    | 2026-06-08T12:00:31Z GET /health 200 2ms
+            - api_1    | 2026-06-08T12:00:32Z GET /metrics 200 7ms
+            - api_1    | 2026-06-08T12:00:33Z GET /products 200 16ms
+            - api_1    | 2026-06-08T12:00:34Z GET /products/sku-9 200 11ms
+            - api_1    | 2026-06-08T12:00:35Z GET /products/sku-10 200 12ms
+            - api_1    | 2026-06-08T12:00:36Z GET /cart 200 9ms
+            - api_1    | 2026-06-08T12:00:37Z POST /cart/items 201 30ms
+            - api_1    | 2026-06-08T12:00:38Z GET /cart 200 8ms
+            - api_1    | 2026-06-08T12:00:39Z POST /checkout 200 55ms
+            - worker_1 | 2026-06-08T12:00:40Z processed job send-receipt in 9ms
+            - api_1    | 2026-06-08T12:00:41Z GET /orders/1004 200 12ms
+            - api_1    | 2026-06-08T12:00:42Z GET /health 200 2ms
+            - api_1    | 2026-06-08T12:00:43Z GET /metrics 200 7ms
+            - api_1    | 2026-06-08T12:00:44Z GET /products 200 15ms
+            - api_1    | 2026-06-08T12:00:45Z GET /products/sku-11 200 11ms
+            - api_1    | 2026-06-08T12:00:46Z GET /products/sku-12 200 12ms
+            - api_1    | 2026-06-08T12:00:47Z GET /cart 200 9ms
+            - api_1    | 2026-06-08T12:00:48Z POST /cart/items 201 29ms
+            - api_1    | 2026-06-08T12:00:49Z GET /cart 200 8ms
+            - api_1    | 2026-06-08T12:00:50Z POST /checkout 200 56ms
+            - worker_1 | 2026-06-08T12:00:51Z processed job send-receipt in 8ms
+            - api_1    | 2026-06-08T12:00:52Z GET /orders/1005 200 12ms
+            - api_1    | 2026-06-08T12:00:53Z GET /health 200 2ms
+            - api_1    | 2026-06-08T12:00:54Z GET /metrics 200 7ms
+            - api_1    | 2026-06-08T12:00:55Z GET /products 200 16ms
+            - api_1    | 2026-06-08T12:00:56Z GET /products/sku-13 200 11ms
+            - api_1    | 2026-06-08T12:00:57Z GET /products/sku-14 200 12ms
+            - api_1    | 2026-06-08T12:00:58Z GET /cart 200 9ms
+            - api_1    | 2026-06-08T12:00:59Z POST /cart/items 201 30ms
+            - api_1    | 2026-06-08T12:01:00Z GET /cart 200 8ms
+            - api_1    | 2026-06-08T12:01:01Z POST /checkout 200 57ms
+            - worker_1 | 2026-06-08T12:01:02Z processed job send-receipt in 8ms
+            - api_1    | 2026-06-08T12:01:03Z GET /orders/1006 200 12ms
+            - api_1    | 2026-06-08T12:01:04Z GET /health 200 2ms
+            - api_1    | 2026-06-08T12:01:05Z GET /metrics 200 7ms
+            - api_1    | 2026-06-08T12:01:06Z GET /products 200 16ms
+            - api_1    | 2026-06-08T12:01:07Z GET /products/sku-15 200 11ms
+            - api_1    | 2026-06-08T12:01:08Z GET /products/sku-16 200 12ms
+            - api_1    | 2026-06-08T12:01:09Z GET /cart 200 9ms
+            - api_1    | 2026-06-08T12:01:10Z POST /cart/items 201 30ms
+            - api_1    | 2026-06-08T12:01:11Z GET /cart 200 8ms
+            - api_1    | 2026-06-08T12:01:12Z POST /checkout 200 57ms
+            - worker_1 | 2026-06-08T12:01:13Z processed job send-receipt in 8ms
+            - api_1    | 2026-06-08T12:01:14Z GET /orders/1007 200 12ms
+            - api_1    | 2026-06-08T12:01:15Z GET /health 200 2ms
+            - api_1    | 2026-06-08T12:01:16Z GET /metrics 200 7ms
+            - api_1    | 2026-06-08T12:01:17Z POST /checkout 500 43ms
+            - 'api_1    | 2026-06-08T12:01:17Z error: inventory reservation failed sku=sku-16'
+            - worker_1 | 2026-06-08T12:01:18Z exited with code 1
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/docker-compose/docker-compose-compact/filter.lf --sub=logs --args='logs api' --exit=0 --level=full < plugins/docker-compose/docker-compose-compact/samples/docker-compose-logs.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 60
+            - bytes 3408
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/docker-compose/docker-compose-compact/tests.cue \ docker-compose-compact \ samples/docker-compose-logs.txt ultra
+  commands:
+    - command: lowfat filter plugins/docker-compose/docker-compose-compact/filter.lf --sub=logs --args='logs api' --exit=0 --level=ultra < plugins/docker-compose/docker-compose-compact/samples/docker-compose-logs.txt
+      checks:
+        - name: stdout
+          data:
+            - api_1    | 2026-06-08T12:01:00Z GET /cart 200 8ms
+            - api_1    | 2026-06-08T12:01:01Z POST /checkout 200 57ms
+            - worker_1 | 2026-06-08T12:01:02Z processed job send-receipt in 8ms
+            - api_1    | 2026-06-08T12:01:03Z GET /orders/1006 200 12ms
+            - api_1    | 2026-06-08T12:01:04Z GET /health 200 2ms
+            - api_1    | 2026-06-08T12:01:05Z GET /metrics 200 7ms
+            - api_1    | 2026-06-08T12:01:06Z GET /products 200 16ms
+            - api_1    | 2026-06-08T12:01:07Z GET /products/sku-15 200 11ms
+            - api_1    | 2026-06-08T12:01:08Z GET /products/sku-16 200 12ms
+            - api_1    | 2026-06-08T12:01:09Z GET /cart 200 9ms
+            - api_1    | 2026-06-08T12:01:10Z POST /cart/items 201 30ms
+            - api_1    | 2026-06-08T12:01:11Z GET /cart 200 8ms
+            - api_1    | 2026-06-08T12:01:12Z POST /checkout 200 57ms
+            - worker_1 | 2026-06-08T12:01:13Z processed job send-receipt in 8ms
+            - api_1    | 2026-06-08T12:01:14Z GET /orders/1007 200 12ms
+            - api_1    | 2026-06-08T12:01:15Z GET /health 200 2ms
+            - api_1    | 2026-06-08T12:01:16Z GET /metrics 200 7ms
+            - api_1    | 2026-06-08T12:01:17Z POST /checkout 500 43ms
+            - 'api_1    | 2026-06-08T12:01:17Z error: inventory reservation failed sku=sku-16'
+            - worker_1 | 2026-06-08T12:01:18Z exited with code 1
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/docker-compose/docker-compose-compact/filter.lf --sub=logs --args='logs api' --exit=0 --level=ultra < plugins/docker-compose/docker-compose-compact/samples/docker-compose-logs.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 20
+            - bytes 1143
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/docker-compose/docker-compose-compact/tests.cue \ docker-compose-compact \ samples/docker-compose-ps.txt lite
+  commands:
+    - command: lowfat filter plugins/docker-compose/docker-compose-compact/filter.lf --sub=ps --args='ps' --exit=0 --level=lite < plugins/docker-compose/docker-compose-compact/samples/docker-compose-ps.txt
+      checks:
+        - name: stdout
+          data:
+            - ' Name Command State Ports'
+            - shop_api_1 docker-entrypoint.sh node s ... Up 0.0.0.0:8080->8080/tcp,:::8080->8080/tcp
+            - shop_db_1 docker-entrypoint.sh postgres Up 0.0.0.0:5432->5432/tcp,:::5432->5432/tcp
+            - shop_redis_1 docker-entrypoint.sh redis ... Up 6379/tcp
+            - shop_worker_1 docker-entrypoint.sh node w ... Exit 1
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/docker-compose/docker-compose-compact/filter.lf --sub=ps --args='ps' --exit=0 --level=lite < plugins/docker-compose/docker-compose-compact/samples/docker-compose-ps.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 5
+            - bytes 306
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/docker-compose/docker-compose-compact/tests.cue \ docker-compose-compact \ samples/docker-compose-ps.txt full
+  commands:
+    - command: lowfat filter plugins/docker-compose/docker-compose-compact/filter.lf --sub=ps --args='ps' --exit=0 --level=full < plugins/docker-compose/docker-compose-compact/samples/docker-compose-ps.txt
+      checks:
+        - name: stdout
+          data:
+            - ' Name Command State Ports'
+            - shop_api_1 docker-entrypoint.sh node s ... Up 0.0.0.0:8080->8080/tcp,:::8080->8080/tcp
+            - shop_db_1 docker-entrypoint.sh postgres Up 0.0.0.0:5432->5432/tcp,:::5432->5432/tcp
+            - shop_redis_1 docker-entrypoint.sh redis ... Up 6379/tcp
+            - shop_worker_1 docker-entrypoint.sh node w ... Exit 1
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/docker-compose/docker-compose-compact/filter.lf --sub=ps --args='ps' --exit=0 --level=full < plugins/docker-compose/docker-compose-compact/samples/docker-compose-ps.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 5
+            - bytes 306
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/docker-compose/docker-compose-compact/tests.cue \ docker-compose-compact \ samples/docker-compose-ps.txt ultra
+  commands:
+    - command: lowfat filter plugins/docker-compose/docker-compose-compact/filter.lf --sub=ps --args='ps' --exit=0 --level=ultra < plugins/docker-compose/docker-compose-compact/samples/docker-compose-ps.txt
+      checks:
+        - name: stdout
+          data:
+            - ' Name Command State Ports'
+            - shop_api_1 docker-entrypoint.sh node s ... Up 0.0.0.0:8080->8080/tcp,:::8080->8080/tcp
+            - shop_db_1 docker-entrypoint.sh postgres Up 0.0.0.0:5432->5432/tcp,:::5432->5432/tcp
+            - shop_redis_1 docker-entrypoint.sh redis ... Up 6379/tcp
+            - shop_worker_1 docker-entrypoint.sh node w ... Exit 1
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/docker-compose/docker-compose-compact/filter.lf --sub=ps --args='ps' --exit=0 --level=ultra < plugins/docker-compose/docker-compose-compact/samples/docker-compose-ps.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 5
+            - bytes 306
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/docker-compose/docker-compose-compact/tests.cue \ docker-compose-compact \ samples/docker-compose-build-error.txt lite
+  commands:
+    - command: lowfat filter plugins/docker-compose/docker-compose-compact/filter.lf --sub=build --args='build api' --exit=1 --level=lite < plugins/docker-compose/docker-compose-compact/samples/docker-compose-build-error.txt
+      checks:
+        - name: stdout
+          data:
+            - Building api
+            - 'Step 1/8 : FROM node:22-alpine'
+            - ' ---> 2f1b7f6fb1a2'
+            - 'Step 2/8 : WORKDIR /app'
+            - ' ---> Using cache'
+            - 'Step 3/8 : COPY package.json package-lock.json ./'
+            - ' ---> Using cache'
+            - 'Step 4/8 : RUN npm ci'
+            - ' ---> Running in 02d0d5db4d09'
+            - npm ERR! code EUSAGE
+            - 'npm ERR! Missing: @example/shared@1.4.0 from lock file'
+            - 'ERROR: Service ''api'' failed to build: The command ''/bin/sh -c npm ci'' returned a non-zero code: 1'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/docker-compose/docker-compose-compact/filter.lf --sub=build --args='build api' --exit=1 --level=lite < plugins/docker-compose/docker-compose-compact/samples/docker-compose-build-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 13
+            - bytes 400
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/docker-compose/docker-compose-compact/tests.cue \ docker-compose-compact \ samples/docker-compose-build-error.txt full
+  commands:
+    - command: lowfat filter plugins/docker-compose/docker-compose-compact/filter.lf --sub=build --args='build api' --exit=1 --level=full < plugins/docker-compose/docker-compose-compact/samples/docker-compose-build-error.txt
+      checks:
+        - name: stdout
+          data:
+            - Building api
+            - 'Step 1/8 : FROM node:22-alpine'
+            - ' ---> 2f1b7f6fb1a2'
+            - 'Step 2/8 : WORKDIR /app'
+            - ' ---> Using cache'
+            - 'Step 3/8 : COPY package.json package-lock.json ./'
+            - ' ---> Using cache'
+            - 'Step 4/8 : RUN npm ci'
+            - ' ---> Running in 02d0d5db4d09'
+            - npm ERR! code EUSAGE
+            - 'npm ERR! Missing: @example/shared@1.4.0 from lock file'
+            - 'ERROR: Service ''api'' failed to build: The command ''/bin/sh -c npm ci'' returned a non-zero code: 1'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/docker-compose/docker-compose-compact/filter.lf --sub=build --args='build api' --exit=1 --level=full < plugins/docker-compose/docker-compose-compact/samples/docker-compose-build-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 13
+            - bytes 400
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/docker-compose/docker-compose-compact/tests.cue \ docker-compose-compact \ samples/docker-compose-build-error.txt ultra
+  commands:
+    - command: lowfat filter plugins/docker-compose/docker-compose-compact/filter.lf --sub=build --args='build api' --exit=1 --level=ultra < plugins/docker-compose/docker-compose-compact/samples/docker-compose-build-error.txt
+      checks:
+        - name: stdout
+          data:
+            - Building api
+            - 'Step 1/8 : FROM node:22-alpine'
+            - ' ---> 2f1b7f6fb1a2'
+            - 'Step 2/8 : WORKDIR /app'
+            - ' ---> Using cache'
+            - 'Step 3/8 : COPY package.json package-lock.json ./'
+            - ' ---> Using cache'
+            - 'Step 4/8 : RUN npm ci'
+            - ' ---> Running in 02d0d5db4d09'
+            - npm ERR! code EUSAGE
+            - 'npm ERR! Missing: @example/shared@1.4.0 from lock file'
+            - 'ERROR: Service ''api'' failed to build: The command ''/bin/sh -c npm ci'' returned a non-zero code: 1'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/docker-compose/docker-compose-compact/filter.lf --sub=build --args='build api' --exit=1 --level=ultra < plugins/docker-compose/docker-compose-compact/samples/docker-compose-build-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 13
+            - bytes 400
+        - name: exitcode
+          data:
+            - "0"

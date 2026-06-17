@@ -1,0 +1,524 @@
+- name: plugins/az/az-compact/tests.cue \ az-compact \ samples/az-vm-create-help.txt lite
+  commands:
+    - command: lowfat filter plugins/az/az-compact/filter.lf --sub=vm --args='vm create --help' --exit=0 --level=lite < plugins/az/az-compact/samples/az-vm-create-help.txt
+      checks:
+        - name: stdout
+          data:
+            - Command
+            - '    az vm create : Create an Azure Virtual Machine.'
+            - Arguments
+            - '    --name -n                                                       [Required] : Name of the virtual'
+            - '    --resource-group -g                                             [Required] : Name of resource'
+            - '    --accept-term                                                              : Accept the license'
+            - '    --add-proxy-agent-ext --add-proxy-agent-extension                          : Specify whether to'
+            - '    --additional-events --additional-scheduled-events                          : The configuration'
+            - '    --align-regional-disks --align-regional-disks-to-vm-zone                   : Specify whether the'
+            - '    --availability-set                                                         : Name or ID of an'
+            - '    --boot-diagnostics-storage                                                 : Pre-existing'
+            - '    --capacity-reservation-group --crg                                         : The ID or name of'
+            - '    --computer-name                                                            : The host OS name of'
+            - '    --count                                                          [Preview] : Number of virtual'
+            - '    --custom-data                                                              : Custom init script'
+            - '    --data-disk-iops                                                           : Specify the Read-'
+            - '    --data-disk-mbps                                                           : Specify the'
+            - '    --disable-integrity-monitoring-autoupgrade                                 : Disable auto'
+            - '    --edge-zone                                                                : The name of edge'
+            - '    --enable-agent                                                             : Indicates whether'
+            - '    --enable-auto-update                                                       : Indicate whether'
+            - '    --enable-hibernation                                                       : The flag that'
+            - '    --enable-hotpatching                                                       : Patch VMs without'
+            - '    --enable-integrity-monitoring                                              : Enable installing'
+            - '    --enable-proxy-agent                                                       : Specify whether'
+            - '    --enable-reboot --enable-user-reboot-scheduled-events                      : The configuration'
+            - '    --enable-redeploy --enable-user-redeploy-scheduled-events                  : The configuration'
+            - '    --enable-secure-boot                                                       : Enable secure boot.'
+            - '    --enable-vtpm                                                              : Enable vTPM.'
+            - '    --encryption-identity                                                      : Resource Id of the'
+            - '    --eviction-policy                                                          : The eviction policy'
+            - '    --exclude-zones                                                            : If "--zone-'
+            - '    --image                                                                    : The name of the'
+            - '    --imds-access-control-profile-reference-id --imds-profile-id               : Specify the access'
+            - '    --imds-mode                                                                : Specify the mode'
+            - '    --include-zones                                                            : If "--zone-'
+            - '    --key-incarnation-id                                                       : Increase the value'
+            - '    --license-type                                                             : Specifies that the'
+            - '    --location -l                                                              : Location in which'
+            - '    --max-price                                                      [Preview] : The maximum price'
+            - '    --no-wait                                                                  : Do not wait for the'
+            - '    --os-disk-secure-vm-disk-encryption-set                                    : Specify the'
+            - '    --os-disk-security-encryption-type                                         : Specify the'
+            - '    --patch-mode                                                               : Mode of in-guest'
+            - '    --platform-fault-domain                                                    : Specify the scale'
+            - '    --ppg                                                                      : The name or ID of'
+            - '    --priority                                                                 : Priority. Use'
+            - '    --proxy-agent-mode                                            [Deprecated] : Specify the mode'
+            - '    --secrets                                                                  : One or many Key'
+            - '    --security-type                                                            : Specify the'
+            - '    --size                                                                     : The VM size to be'
+            - '    --ssh-key-name                                                             : Use it as public'
+            - '    --tags                                                                     : Space-separated'
+            - '    --user-data                                                                : UserData for the'
+            - '    --v-cpus-available                                                         : Specify the number'
+            - '    --v-cpus-per-core                                                          : Specify the ratio'
+            - '    --validate                                                                 : Generate and'
+            - '    --vmss                                                                     : Name or ID of an'
+            - '    --wire-server-access-control-profile-reference-id --wire-server-profile-id : Specify the access'
+            - '    --wire-server-mode                                                         : Specify the mode'
+            - Examples
+            - '    Create a default Ubuntu2204 VM with automatic SSH authentication.'
+            - '        az vm create -n MyVm -g MyResourceGroup --image Ubuntu2204'
+            - ""
+            - ""
+            - '    Create a default RedHat VM with automatic SSH authentication using an image URN.'
+            - '        az vm create -n MyVm -g MyResourceGroup --image RedHat:RHEL:7-RAW:7.4.2018010506'
+            - ""
+            - ""
+            - '    Create a default Windows Server VM with a private IP address.'
+            - '        az vm create -n MyVm -g MyResourceGroup --public-ip-address "" --image Win2012R2Datacenter'
+            - ""
+            - ""
+            - '    Create a VM from a custom managed image.'
+            - '        az vm create -g MyResourceGroup -n MyVm --image MyImage'
+            - ""
+            - ""
+            - '    Create a VM from a generalized gallery image version.'
+            - '        az vm create -g MyResourceGroup -n MyVm --image /subscriptions/00000000-0000-0000-0000-'
+            - '        000000000000/resourceGroups/myRG/providers/Microsoft.Compute/galleries/myGallery/images/myIm'
+            - '        age/versions/1.0.0'
+            - ""
+            - ""
+            - '    Create a VM from a specialized gallery image version.'
+            - '        az vm create -g MyResourceGroup -n MyVm --image /subscriptions/00000000-0000-0000-0000-'
+            - '        000000000000/resourceGroups/myRG/providers/Microsoft.Compute/galleries/myGallery/images/myIm'
+            - '        age/versions/1.0.0 --specialized'
+            - ""
+            - ""
+            - '    Create a VM from the latest version of a gallery image'
+            - '        az vm create -g MyResourceGroup -n MyVm --image /subscriptions/00000000-0000-0000-0000-'
+            - '        000000000000/resourceGroups/myRG/providers/Microsoft.Compute/galleries/myGallery/images/myIm'
+            - '        age'
+            - ""
+            - ""
+            - '    Create a VM by attaching to a managed operating system disk.'
+            - '        az vm create -g MyResourceGroup -n MyVm --attach-os-disk MyOsDisk --os-type linux'
+            - ""
+            - ""
+            - '    Create a VM by attaching to an unmanaged operating system disk from a VHD blob uri.'
+            - '        az vm create -g MyResourceGroup -n MyVm --attach-os-disk'
+            - '        https://vhd1234.blob.core.windows.net/vhds/osdisk1234.vhd --os-type linux --use-unmanaged-'
+            - '        disk'
+            - ""
+            - ""
+            - '    Create an Debian11 VM using a cloud-init script for configuration. See:'
+            - '    https://learn.microsoft.com/azure/virtual-machines/linux/using-cloud-init.'
+            - '        az vm create -g MyResourceGroup -n MyVm --image Debian11 --custom-data MyCloudInitScript.yml'
+            - ""
+            - ""
+            - '    Create a Debian11 VM with SSH key authentication and a public DNS entry, located on an existing'
+            - '    virtual network and availability set.'
+            - '        az vm create -n MyVm -g MyResourceGroup --image Debian11 --vnet-name MyVnet --subnet subnet1'
+            - '        \'
+            - '            --availability-set MyAvailabilitySet --public-ip-address-dns-name MyUniqueDnsName \'
+            - '            --ssh-key-values @key-file'
+            - ""
+            - ""
+            - '    Create a simple Ubuntu Linux VM with a public IP address, DNS entry, two data disks (10GB and'
+            - '    20GB), and then generate RSA ssh key pairs.'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/az/az-compact/filter.lf --sub=vm --args='vm create --help' --exit=0 --level=lite < plugins/az/az-compact/samples/az-vm-create-help.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 120
+            - bytes 8323
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/az/az-compact/tests.cue \ az-compact \ samples/az-vm-create-help.txt full
+  commands:
+    - command: lowfat filter plugins/az/az-compact/filter.lf --sub=vm --args='vm create --help' --exit=0 --level=full < plugins/az/az-compact/samples/az-vm-create-help.txt
+      checks:
+        - name: stdout
+          data:
+            - Command
+            - '    az vm create : Create an Azure Virtual Machine.'
+            - Arguments
+            - '    --name -n                                                       [Required] : Name of the virtual'
+            - '    --resource-group -g                                             [Required] : Name of resource'
+            - '    --accept-term                                                              : Accept the license'
+            - '    --add-proxy-agent-ext --add-proxy-agent-extension                          : Specify whether to'
+            - '    --additional-events --additional-scheduled-events                          : The configuration'
+            - '    --align-regional-disks --align-regional-disks-to-vm-zone                   : Specify whether the'
+            - '    --availability-set                                                         : Name or ID of an'
+            - '    --boot-diagnostics-storage                                                 : Pre-existing'
+            - '    --capacity-reservation-group --crg                                         : The ID or name of'
+            - '    --computer-name                                                            : The host OS name of'
+            - '    --count                                                          [Preview] : Number of virtual'
+            - '    --custom-data                                                              : Custom init script'
+            - '    --data-disk-iops                                                           : Specify the Read-'
+            - '    --data-disk-mbps                                                           : Specify the'
+            - '    --disable-integrity-monitoring-autoupgrade                                 : Disable auto'
+            - '    --edge-zone                                                                : The name of edge'
+            - '    --enable-agent                                                             : Indicates whether'
+            - '    --enable-auto-update                                                       : Indicate whether'
+            - '    --enable-hibernation                                                       : The flag that'
+            - '    --enable-hotpatching                                                       : Patch VMs without'
+            - '    --enable-integrity-monitoring                                              : Enable installing'
+            - '    --enable-proxy-agent                                                       : Specify whether'
+            - '    --enable-reboot --enable-user-reboot-scheduled-events                      : The configuration'
+            - '    --enable-redeploy --enable-user-redeploy-scheduled-events                  : The configuration'
+            - '    --enable-secure-boot                                                       : Enable secure boot.'
+            - '    --enable-vtpm                                                              : Enable vTPM.'
+            - '    --encryption-identity                                                      : Resource Id of the'
+            - Examples
+            - '    Create a default Ubuntu2204 VM with automatic SSH authentication.'
+            - '        az vm create -n MyVm -g MyResourceGroup --image Ubuntu2204'
+            - ""
+            - ""
+            - '    Create a default RedHat VM with automatic SSH authentication using an image URN.'
+            - '        az vm create -n MyVm -g MyResourceGroup --image RedHat:RHEL:7-RAW:7.4.2018010506'
+            - ""
+            - ""
+            - '    Create a default Windows Server VM with a private IP address.'
+            - '        az vm create -n MyVm -g MyResourceGroup --public-ip-address "" --image Win2012R2Datacenter'
+            - ""
+            - ""
+            - '    Create a VM from a custom managed image.'
+            - '        az vm create -g MyResourceGroup -n MyVm --image MyImage'
+            - ""
+            - ""
+            - '    Create a VM from a generalized gallery image version.'
+            - '        az vm create -g MyResourceGroup -n MyVm --image /subscriptions/00000000-0000-0000-0000-'
+            - '        000000000000/resourceGroups/myRG/providers/Microsoft.Compute/galleries/myGallery/images/myIm'
+            - '        age/versions/1.0.0'
+            - ""
+            - ""
+            - '    Create a VM from a specialized gallery image version.'
+            - '        az vm create -g MyResourceGroup -n MyVm --image /subscriptions/00000000-0000-0000-0000-'
+            - '        000000000000/resourceGroups/myRG/providers/Microsoft.Compute/galleries/myGallery/images/myIm'
+            - '        age/versions/1.0.0 --specialized'
+            - ""
+            - ""
+            - '    Create a VM from the latest version of a gallery image'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/az/az-compact/filter.lf --sub=vm --args='vm create --help' --exit=0 --level=full < plugins/az/az-compact/samples/az-vm-create-help.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 60
+            - bytes 3967
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/az/az-compact/tests.cue \ az-compact \ samples/az-vm-create-help.txt ultra
+  commands:
+    - command: lowfat filter plugins/az/az-compact/filter.lf --sub=vm --args='vm create --help' --exit=0 --level=ultra < plugins/az/az-compact/samples/az-vm-create-help.txt
+      checks:
+        - name: stdout
+          data:
+            - Command
+            - '    az vm create : Create an Azure Virtual Machine.'
+            - Arguments
+            - '    --name -n                                                       [Required] : Name of the virtual'
+            - '    --resource-group -g                                             [Required] : Name of resource'
+            - '    --accept-term                                                              : Accept the license'
+            - '    --add-proxy-agent-ext --add-proxy-agent-extension                          : Specify whether to'
+            - '    --additional-events --additional-scheduled-events                          : The configuration'
+            - '    --align-regional-disks --align-regional-disks-to-vm-zone                   : Specify whether the'
+            - '    --availability-set                                                         : Name or ID of an'
+            - '    --boot-diagnostics-storage                                                 : Pre-existing'
+            - '    --capacity-reservation-group --crg                                         : The ID or name of'
+            - '    --computer-name                                                            : The host OS name of'
+            - '    --count                                                          [Preview] : Number of virtual'
+            - '    --custom-data                                                              : Custom init script'
+            - Examples
+            - '    Create a default Ubuntu2204 VM with automatic SSH authentication.'
+            - '        az vm create -n MyVm -g MyResourceGroup --image Ubuntu2204'
+            - ""
+            - ""
+            - '    Create a default RedHat VM with automatic SSH authentication using an image URN.'
+            - '        az vm create -n MyVm -g MyResourceGroup --image RedHat:RHEL:7-RAW:7.4.2018010506'
+            - ""
+            - ""
+            - '    Create a default Windows Server VM with a private IP address.'
+            - '        az vm create -n MyVm -g MyResourceGroup --public-ip-address "" --image Win2012R2Datacenter'
+            - ""
+            - ""
+            - '    Create a VM from a custom managed image.'
+            - '        az vm create -g MyResourceGroup -n MyVm --image MyImage'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/az/az-compact/filter.lf --sub=vm --args='vm create --help' --exit=0 --level=ultra < plugins/az/az-compact/samples/az-vm-create-help.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 30
+            - bytes 1860
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/az/az-compact/tests.cue \ az-compact \ samples/az-storage-help.txt full
+  commands:
+    - command: lowfat filter plugins/az/az-compact/filter.lf --sub=storage --args='storage --help' --exit=0 --level=full < plugins/az/az-compact/samples/az-storage-help.txt
+      checks:
+        - name: stdout
+          data:
+            - Group
+            - '    az storage : Manage Azure Cloud Storage resources.'
+            - 'Subgroups:'
+            - '    account                  : Manage storage accounts.'
+            - '    advanced-platform-metric : Manage Advanced Platform Metric.'
+            - '    blob                     : Manage object storage for unstructured data (blobs).'
+            - '    container                : Manage blob storage containers.'
+            - '    container-rm             : Manage Azure containers using the Microsoft.Storage resource'
+            - '    cors                     : Manage storage service Cross-Origin Resource Sharing (CORS).'
+            - '    directory                : Manage file storage directories.'
+            - '    entity                   : Manage table storage entities.'
+            - '    file                     : Manage file shares.'
+            - '    fs                       : Manage file systems in Azure Data Lake Storage Gen2 account.'
+            - '    logging                  : Manage storage service logging information.'
+            - '    message        [Preview] : Manage queue storage messages.'
+            - '    metrics                  : Manage storage service metrics.'
+            - '    queue          [Preview] : Manage storage queues.'
+            - '    share                    : Manage file shares.'
+            - '    share-rm                 : Manage Azure file shares using the Microsoft.Storage resource'
+            - '    sku                      : Manage Sku.'
+            - '    table                    : Manage NoSQL key-value storage.'
+            - 'Commands:'
+            - '    copy                     : Copy files or directories to or from Azure storage.'
+            - '    remove                   : Delete blobs or files from Azure Storage.'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/az/az-compact/filter.lf --sub=storage --args='storage --help' --exit=0 --level=full < plugins/az/az-compact/samples/az-storage-help.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 24
+            - bytes 1462
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/az/az-compact/tests.cue \ az-compact \ samples/az-version.txt full
+  commands:
+    - command: lowfat filter plugins/az/az-compact/filter.lf --sub=version --args='version' --exit=0 --level=full < plugins/az/az-compact/samples/az-version.txt
+      checks:
+        - name: stdout
+          data:
+            - '{'
+            - '  "azure-cli": "2.87.0",'
+            - '  "azure-cli-core": "2.87.0",'
+            - '  "azure-cli-telemetry": "1.1.0",'
+            - '  "extensions": {}'
+            - '}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/az/az-compact/filter.lf --sub=version --args='version' --exit=0 --level=full < plugins/az/az-compact/samples/az-version.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 6
+            - bytes 112
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/az/az-compact/tests.cue \ az-compact \ samples/az-version.txt ultra
+  commands:
+    - command: lowfat filter plugins/az/az-compact/filter.lf --sub=version --args='version' --exit=0 --level=ultra < plugins/az/az-compact/samples/az-version.txt
+      checks:
+        - name: stdout
+          data:
+            - '{'
+            - '  "azure-cli": "2.87.0",'
+            - '  "azure-cli-core": "2.87.0",'
+            - '  "azure-cli-telemetry": "1.1.0",'
+            - '  "extensions": {}'
+            - '}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/az/az-compact/filter.lf --sub=version --args='version' --exit=0 --level=ultra < plugins/az/az-compact/samples/az-version.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 6
+            - bytes 112
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/az/az-compact/tests.cue \ az-compact \ samples/az-account-noauth.txt full
+  commands:
+    - command: lowfat filter plugins/az/az-compact/filter.lf --sub=account --args='account show' --exit=1 --level=full < plugins/az/az-compact/samples/az-account-noauth.txt
+      checks:
+        - name: stdout
+          data:
+            - 'ERROR: Please run ''az login'' to setup account.'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/az/az-compact/filter.lf --sub=account --args='account show' --exit=1 --level=full < plugins/az/az-compact/samples/az-account-noauth.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 47
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/az/az-compact/tests.cue \ az-compact \ samples/az-account-noauth.txt ultra
+  commands:
+    - command: lowfat filter plugins/az/az-compact/filter.lf --sub=account --args='account show' --exit=1 --level=ultra < plugins/az/az-compact/samples/az-account-noauth.txt
+      checks:
+        - name: stdout
+          data:
+            - 'ERROR: Please run ''az login'' to setup account.'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/az/az-compact/filter.lf --sub=account --args='account show' --exit=1 --level=ultra < plugins/az/az-compact/samples/az-account-noauth.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 47
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/az/az-compact/tests.cue \ az-compact \ samples/az-group-noauth.txt full
+  commands:
+    - command: lowfat filter plugins/az/az-compact/filter.lf --sub=group --args='group list' --exit=1 --level=full < plugins/az/az-compact/samples/az-group-noauth.txt
+      checks:
+        - name: stdout
+          data:
+            - 'ERROR: Please run ''az login'' to setup account.'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/az/az-compact/filter.lf --sub=group --args='group list' --exit=1 --level=full < plugins/az/az-compact/samples/az-group-noauth.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 47
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/az/az-compact/tests.cue \ az-compact \ samples/az-err-typo.txt full
+  commands:
+    - command: lowfat filter plugins/az/az-compact/filter.lf --sub=gruop --args='gruop list' --exit=2 --level=full < plugins/az/az-compact/samples/az-err-typo.txt
+      checks:
+        - name: stdout
+          data:
+            - 'ERROR: ''gruop'' is misspelled or not recognized by the system.'
+            - ""
+            - https://aka.ms/cli_ref
+            - Read more about the command in reference docs
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/az/az-compact/filter.lf --sub=gruop --args='gruop list' --exit=2 --level=full < plugins/az/az-compact/samples/az-err-typo.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 4
+            - bytes 132
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/az/az-compact/tests.cue \ az-compact \ samples/az-err-typo.txt ultra
+  commands:
+    - command: lowfat filter plugins/az/az-compact/filter.lf --sub=gruop --args='gruop list' --exit=2 --level=ultra < plugins/az/az-compact/samples/az-err-typo.txt
+      checks:
+        - name: stdout
+          data:
+            - 'ERROR: ''gruop'' is misspelled or not recognized by the system.'
+            - ""
+            - https://aka.ms/cli_ref
+            - Read more about the command in reference docs
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/az/az-compact/filter.lf --sub=gruop --args='gruop list' --exit=2 --level=ultra < plugins/az/az-compact/samples/az-err-typo.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 4
+            - bytes 132
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/az/az-compact/tests.cue \ az-compact \ samples/az-cloud-list-table.txt full
+  commands:
+    - command: lowfat filter plugins/az/az-compact/filter.lf --sub=cloud --args='cloud list -o table' --exit=0 --level=full < plugins/az/az-compact/samples/az-cloud-list-table.txt
+      checks:
+        - name: stdout
+          data:
+            - IsActive    Name               Profile
+            - '----------  -----------------  ---------'
+            - True        AzureCloud         latest
+            - False       AzureChinaCloud    latest
+            - False       AzureUSGovernment  latest
+            - False       AzureGermanCloud   latest
+            - False       AzureBleuCloud     latest
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/az/az-compact/filter.lf --sub=cloud --args='cloud list -o table' --exit=0 --level=full < plugins/az/az-compact/samples/az-cloud-list-table.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 7
+            - bytes 270
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/az/az-compact/tests.cue \ az-compact \ samples/az-cloud-list-table.txt ultra
+  commands:
+    - command: lowfat filter plugins/az/az-compact/filter.lf --sub=cloud --args='cloud list -o table' --exit=0 --level=ultra < plugins/az/az-compact/samples/az-cloud-list-table.txt
+      checks:
+        - name: stdout
+          data:
+            - IsActive    Name               Profile
+            - '----------  -----------------  ---------'
+            - True        AzureCloud         latest
+            - False       AzureChinaCloud    latest
+            - False       AzureUSGovernment  latest
+            - False       AzureGermanCloud   latest
+            - False       AzureBleuCloud     latest
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/az/az-compact/filter.lf --sub=cloud --args='cloud list -o table' --exit=0 --level=ultra < plugins/az/az-compact/samples/az-cloud-list-table.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 7
+            - bytes 270
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/az/az-compact/tests.cue \ az-compact \ samples/az-extension-list.txt full
+  commands:
+    - command: lowfat filter plugins/az/az-compact/filter.lf --sub=extension --args='extension list' --exit=0 --level=full < plugins/az/az-compact/samples/az-extension-list.txt
+      checks:
+        - name: stdout
+          data:
+            - '[]'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/az/az-compact/filter.lf --sub=extension --args='extension list' --exit=0 --level=full < plugins/az/az-compact/samples/az-extension-list.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 3
+        - name: exitcode
+          data:
+            - "0"

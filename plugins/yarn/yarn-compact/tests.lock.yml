@@ -1,0 +1,227 @@
+- name: plugins/yarn/yarn-compact/tests.cue \ yarn-compact \ samples/yarn-install.txt lite
+  commands:
+    - command: lowfat filter plugins/yarn/yarn-compact/filter.lf --sub=install --args='install' --exit=0 --level=lite < plugins/yarn/yarn-compact/samples/yarn-install.txt
+      checks:
+        - name: stdout
+          data:
+            - yarn install v1.22.22
+            - warning "workspace-aggregator > @app/web > react-dom@18.3.1" has incorrect peer dependency "react@^18.3.1".
+            - warning Workspaces can only be enabled in private projects.
+            - success Saved lockfile.
+            - Done in 12.34s.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/yarn/yarn-compact/filter.lf --sub=install --args='install' --exit=0 --level=lite < plugins/yarn/yarn-compact/samples/yarn-install.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 5
+            - bytes 230
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/yarn/yarn-compact/tests.cue \ yarn-compact \ samples/yarn-install.txt full
+  commands:
+    - command: lowfat filter plugins/yarn/yarn-compact/filter.lf --sub=install --args='install' --exit=0 --level=full < plugins/yarn/yarn-compact/samples/yarn-install.txt
+      checks:
+        - name: stdout
+          data:
+            - yarn install v1.22.22
+            - warning "workspace-aggregator > @app/web > react-dom@18.3.1" has incorrect peer dependency "react@^18.3.1".
+            - warning Workspaces can only be enabled in private projects.
+            - success Saved lockfile.
+            - Done in 12.34s.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/yarn/yarn-compact/filter.lf --sub=install --args='install' --exit=0 --level=full < plugins/yarn/yarn-compact/samples/yarn-install.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 5
+            - bytes 230
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/yarn/yarn-compact/tests.cue \ yarn-compact \ samples/yarn-install.txt ultra
+  commands:
+    - command: lowfat filter plugins/yarn/yarn-compact/filter.lf --sub=install --args='install' --exit=0 --level=ultra < plugins/yarn/yarn-compact/samples/yarn-install.txt
+      checks:
+        - name: stdout
+          data:
+            - warning "workspace-aggregator > @app/web > react-dom@18.3.1" has incorrect peer dependency "react@^18.3.1".
+            - warning Workspaces can only be enabled in private projects.
+            - success Saved lockfile.
+            - Done in 12.34s.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/yarn/yarn-compact/filter.lf --sub=install --args='install' --exit=0 --level=ultra < plugins/yarn/yarn-compact/samples/yarn-install.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 4
+            - bytes 208
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/yarn/yarn-compact/tests.cue \ yarn-compact \ samples/yarn-install-error.txt lite
+  commands:
+    - command: lowfat filter plugins/yarn/yarn-compact/filter.lf --sub=install --args='install' --exit=1 --level=lite < plugins/yarn/yarn-compact/samples/yarn-install-error.txt
+      checks:
+        - name: stdout
+          data:
+            - yarn install v1.22.22
+            - '[1/4] Resolving packages...'
+            - 'error An unexpected error occurred: "https://registry.yarnpkg.com/@app%2fcore: Not found".'
+            - info Visit https://yarnpkg.com/en/docs/cli/install for documentation about this command.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/yarn/yarn-compact/filter.lf --sub=install --args='install' --exit=1 --level=lite < plugins/yarn/yarn-compact/samples/yarn-install-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 4
+            - bytes 230
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/yarn/yarn-compact/tests.cue \ yarn-compact \ samples/yarn-install-error.txt full
+  commands:
+    - command: lowfat filter plugins/yarn/yarn-compact/filter.lf --sub=install --args='install' --exit=1 --level=full < plugins/yarn/yarn-compact/samples/yarn-install-error.txt
+      checks:
+        - name: stdout
+          data:
+            - yarn install v1.22.22
+            - '[1/4] Resolving packages...'
+            - 'error An unexpected error occurred: "https://registry.yarnpkg.com/@app%2fcore: Not found".'
+            - info Visit https://yarnpkg.com/en/docs/cli/install for documentation about this command.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/yarn/yarn-compact/filter.lf --sub=install --args='install' --exit=1 --level=full < plugins/yarn/yarn-compact/samples/yarn-install-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 4
+            - bytes 230
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/yarn/yarn-compact/tests.cue \ yarn-compact \ samples/yarn-install-error.txt ultra
+  commands:
+    - command: lowfat filter plugins/yarn/yarn-compact/filter.lf --sub=install --args='install' --exit=1 --level=ultra < plugins/yarn/yarn-compact/samples/yarn-install-error.txt
+      checks:
+        - name: stdout
+          data:
+            - yarn install v1.22.22
+            - '[1/4] Resolving packages...'
+            - 'error An unexpected error occurred: "https://registry.yarnpkg.com/@app%2fcore: Not found".'
+            - info Visit https://yarnpkg.com/en/docs/cli/install for documentation about this command.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/yarn/yarn-compact/filter.lf --sub=install --args='install' --exit=1 --level=ultra < plugins/yarn/yarn-compact/samples/yarn-install-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 4
+            - bytes 230
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/yarn/yarn-compact/tests.cue \ yarn-compact \ samples/yarn-test.txt lite
+  commands:
+    - command: lowfat filter plugins/yarn/yarn-compact/filter.lf --sub=test --args='test' --exit=1 --level=lite < plugins/yarn/yarn-compact/samples/yarn-test.txt
+      checks:
+        - name: stdout
+          data:
+            - yarn run v1.22.22
+            - $ vitest run
+            - ' RUN  v1.6.0'
+            - ""
+            - ' ✓ src/cart.test.ts (4 tests) 18ms'
+            - ' ✓ src/api.test.ts (7 tests) 42ms'
+            - ' ❯ src/checkout.test.ts (3 tests | 1 failed) 51ms'
+            - '   × applies coupon to total'
+            - '     → expected 1299 to be 1499'
+            - ""
+            - ' Test Files  1 failed | 2 passed (3)'
+            - '      Tests  1 failed | 13 passed (14)'
+            - error Command failed with exit code 1.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/yarn/yarn-compact/filter.lf --sub=test --args='test' --exit=1 --level=lite < plugins/yarn/yarn-compact/samples/yarn-test.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 13
+            - bytes 350
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/yarn/yarn-compact/tests.cue \ yarn-compact \ samples/yarn-test.txt full
+  commands:
+    - command: lowfat filter plugins/yarn/yarn-compact/filter.lf --sub=test --args='test' --exit=1 --level=full < plugins/yarn/yarn-compact/samples/yarn-test.txt
+      checks:
+        - name: stdout
+          data:
+            - yarn run v1.22.22
+            - $ vitest run
+            - ' RUN  v1.6.0'
+            - ""
+            - ' ✓ src/cart.test.ts (4 tests) 18ms'
+            - ' ✓ src/api.test.ts (7 tests) 42ms'
+            - ' ❯ src/checkout.test.ts (3 tests | 1 failed) 51ms'
+            - '   × applies coupon to total'
+            - '     → expected 1299 to be 1499'
+            - ""
+            - ' Test Files  1 failed | 2 passed (3)'
+            - '      Tests  1 failed | 13 passed (14)'
+            - error Command failed with exit code 1.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/yarn/yarn-compact/filter.lf --sub=test --args='test' --exit=1 --level=full < plugins/yarn/yarn-compact/samples/yarn-test.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 13
+            - bytes 350
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/yarn/yarn-compact/tests.cue \ yarn-compact \ samples/yarn-test.txt ultra
+  commands:
+    - command: lowfat filter plugins/yarn/yarn-compact/filter.lf --sub=test --args='test' --exit=1 --level=ultra < plugins/yarn/yarn-compact/samples/yarn-test.txt
+      checks:
+        - name: stdout
+          data:
+            - yarn run v1.22.22
+            - $ vitest run
+            - ' RUN  v1.6.0'
+            - ""
+            - ' ✓ src/cart.test.ts (4 tests) 18ms'
+            - ' ✓ src/api.test.ts (7 tests) 42ms'
+            - ' ❯ src/checkout.test.ts (3 tests | 1 failed) 51ms'
+            - '   × applies coupon to total'
+            - '     → expected 1299 to be 1499'
+            - ""
+            - ' Test Files  1 failed | 2 passed (3)'
+            - '      Tests  1 failed | 13 passed (14)'
+            - error Command failed with exit code 1.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/yarn/yarn-compact/filter.lf --sub=test --args='test' --exit=1 --level=ultra < plugins/yarn/yarn-compact/samples/yarn-test.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 13
+            - bytes 350
+        - name: exitcode
+          data:
+            - "0"

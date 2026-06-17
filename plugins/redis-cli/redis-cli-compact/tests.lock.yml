@@ -1,0 +1,816 @@
+- name: plugins/redis-cli/redis-cli-compact/tests.cue \ redis-cli-compact \ samples/redis-cli-info.txt lite
+  commands:
+    - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=info --args='' --exit=0 --level=lite < plugins/redis-cli/redis-cli-compact/samples/redis-cli-info.txt
+      checks:
+        - name: stdout
+          data:
+            - '# Server'
+            - redis_version:7.4.9
+            - redis_mode:standalone
+            - os:Linux 7.0.5-orbstack-00330-ge3df4e19b0a0-dirty aarch64
+            - uptime_in_days:0
+            - '# Clients'
+            - connected_clients:1
+            - blocked_clients:0
+            - '# Memory'
+            - used_memory_human:1.16M
+            - used_memory_peak_human:1.16M
+            - maxmemory_human:0B
+            - mem_fragmentation_ratio:5.64
+            - '# Persistence'
+            - loading:0
+            - rdb_changes_since_last_save:370
+            - rdb_last_save_time:1781049917
+            - '# Stats'
+            - total_connections_received:334
+            - total_commands_processed:333
+            - instantaneous_ops_per_sec:205
+            - rejected_connections:0
+            - expired_keys:0
+            - evicted_keys:0
+            - keyspace_hits:0
+            - keyspace_misses:0
+            - '# Replication'
+            - role:master
+            - connected_slaves:0
+            - master_repl_offset:0
+            - '# CPU'
+            - '# Modules'
+            - '# Errorstats'
+            - '# Cluster'
+            - '# Keyspace'
+            - db0:keys=291,expires=0,avg_ttl=0,subexpiry=0
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=info --args='' --exit=0 --level=lite < plugins/redis-cli/redis-cli-compact/samples/redis-cli-info.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 36
+            - bytes 716
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/redis-cli/redis-cli-compact/tests.cue \ redis-cli-compact \ samples/redis-cli-info.txt full
+  commands:
+    - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=info --args='' --exit=0 --level=full < plugins/redis-cli/redis-cli-compact/samples/redis-cli-info.txt
+      checks:
+        - name: stdout
+          data:
+            - '# Server'
+            - redis_version:7.4.9
+            - redis_mode:standalone
+            - os:Linux 7.0.5-orbstack-00330-ge3df4e19b0a0-dirty aarch64
+            - uptime_in_days:0
+            - '# Clients'
+            - connected_clients:1
+            - blocked_clients:0
+            - '# Memory'
+            - used_memory_human:1.16M
+            - used_memory_peak_human:1.16M
+            - maxmemory_human:0B
+            - mem_fragmentation_ratio:5.64
+            - '# Persistence'
+            - loading:0
+            - rdb_changes_since_last_save:370
+            - rdb_last_save_time:1781049917
+            - '# Stats'
+            - total_connections_received:334
+            - total_commands_processed:333
+            - instantaneous_ops_per_sec:205
+            - rejected_connections:0
+            - expired_keys:0
+            - evicted_keys:0
+            - keyspace_hits:0
+            - keyspace_misses:0
+            - '# Replication'
+            - role:master
+            - connected_slaves:0
+            - master_repl_offset:0
+            - '# CPU'
+            - '# Modules'
+            - '# Errorstats'
+            - '# Cluster'
+            - '# Keyspace'
+            - db0:keys=291,expires=0,avg_ttl=0,subexpiry=0
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=info --args='' --exit=0 --level=full < plugins/redis-cli/redis-cli-compact/samples/redis-cli-info.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 36
+            - bytes 716
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/redis-cli/redis-cli-compact/tests.cue \ redis-cli-compact \ samples/redis-cli-info.txt ultra
+  commands:
+    - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=info --args='' --exit=0 --level=ultra < plugins/redis-cli/redis-cli-compact/samples/redis-cli-info.txt
+      checks:
+        - name: stdout
+          data:
+            - redis_version:7.4.9
+            - redis_mode:standalone
+            - uptime_in_days:0
+            - connected_clients:1
+            - used_memory_human:1.16M
+            - used_memory_peak_human:1.16M
+            - mem_fragmentation_ratio:5.64
+            - instantaneous_ops_per_sec:205
+            - evicted_keys:0
+            - keyspace_hits:0
+            - keyspace_misses:0
+            - role:master
+            - db0:keys=291,expires=0,avg_ttl=0,subexpiry=0
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=info --args='' --exit=0 --level=ultra < plugins/redis-cli/redis-cli-compact/samples/redis-cli-info.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 13
+            - bytes 297
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/redis-cli/redis-cli-compact/tests.cue \ redis-cli-compact \ samples/redis-cli-info.txt full
+  commands:
+    - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=INFO --args='' --exit=0 --level=full < plugins/redis-cli/redis-cli-compact/samples/redis-cli-info.txt
+      checks:
+        - name: stdout
+          data:
+            - '# Server'
+            - redis_version:7.4.9
+            - redis_mode:standalone
+            - os:Linux 7.0.5-orbstack-00330-ge3df4e19b0a0-dirty aarch64
+            - uptime_in_days:0
+            - '# Clients'
+            - connected_clients:1
+            - blocked_clients:0
+            - '# Memory'
+            - used_memory_human:1.16M
+            - used_memory_peak_human:1.16M
+            - maxmemory_human:0B
+            - mem_fragmentation_ratio:5.64
+            - '# Persistence'
+            - loading:0
+            - rdb_changes_since_last_save:370
+            - rdb_last_save_time:1781049917
+            - '# Stats'
+            - total_connections_received:334
+            - total_commands_processed:333
+            - instantaneous_ops_per_sec:205
+            - rejected_connections:0
+            - expired_keys:0
+            - evicted_keys:0
+            - keyspace_hits:0
+            - keyspace_misses:0
+            - '# Replication'
+            - role:master
+            - connected_slaves:0
+            - master_repl_offset:0
+            - '# CPU'
+            - '# Modules'
+            - '# Errorstats'
+            - '# Cluster'
+            - '# Keyspace'
+            - db0:keys=291,expires=0,avg_ttl=0,subexpiry=0
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=INFO --args='' --exit=0 --level=full < plugins/redis-cli/redis-cli-compact/samples/redis-cli-info.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 36
+            - bytes 716
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/redis-cli/redis-cli-compact/tests.cue \ redis-cli-compact \ samples/redis-cli-scan.txt lite
+  commands:
+    - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=--scan --args='--scan' --exit=0 --level=lite < plugins/redis-cli/redis-cli-compact/samples/redis-cli-scan.txt
+      checks:
+        - name: stdout
+          data:
+            - user:202:profile
+            - user:52:profile
+            - user:212:profile
+            - user:17:profile
+            - user:167:profile
+            - user:149:profile
+            - session:25
+            - user:175:profile
+            - user:163:profile
+            - session:36
+            - user:110:profile
+            - user:221:profile
+            - user:16:profile
+            - user:234:profile
+            - user:61:profile
+            - session:23
+            - user:153:profile
+            - user:169:profile
+            - session:32
+            - user:121:profile
+            - user:20:profile
+            - user:243:profile
+            - user:119:profile
+            - session:29
+            - user:8:profile
+            - user:4:profile
+            - user:64:profile
+            - user:30:profile
+            - session:33
+            - user:224:profile
+            - user:70:profile
+            - user:100:profile
+            - session:20
+            - user:223:profile
+            - user:230:profile
+            - user:173:profile
+            - user:21:profile
+            - user:102:profile
+            - user:204:profile
+            - user:107:profile
+            - user:250:profile
+            - session:2
+            - user:131:profile
+            - user:113:profile
+            - user:199:profile
+            - user:15:profile
+            - user:181:profile
+            - user:101:profile
+            - user:36:profile
+            - user:182:profile
+            - user:184:profile
+            - user:29:profile
+            - session:21
+            - user:116:profile
+            - user:90:profile
+            - user:51:profile
+            - user:94:profile
+            - user:72:profile
+            - user:136:profile
+            - user:73:profile
+            - '... (291 lines total)'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=--scan --args='--scan' --exit=0 --level=lite < plugins/redis-cli/redis-cli-compact/samples/redis-cli-scan.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 61
+            - bytes 966
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/redis-cli/redis-cli-compact/tests.cue \ redis-cli-compact \ samples/redis-cli-scan.txt full
+  commands:
+    - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=--scan --args='--scan' --exit=0 --level=full < plugins/redis-cli/redis-cli-compact/samples/redis-cli-scan.txt
+      checks:
+        - name: stdout
+          data:
+            - user:202:profile
+            - user:52:profile
+            - user:212:profile
+            - user:17:profile
+            - user:167:profile
+            - user:149:profile
+            - session:25
+            - user:175:profile
+            - user:163:profile
+            - session:36
+            - user:110:profile
+            - user:221:profile
+            - user:16:profile
+            - user:234:profile
+            - user:61:profile
+            - session:23
+            - user:153:profile
+            - user:169:profile
+            - session:32
+            - user:121:profile
+            - user:20:profile
+            - user:243:profile
+            - user:119:profile
+            - session:29
+            - user:8:profile
+            - user:4:profile
+            - user:64:profile
+            - user:30:profile
+            - session:33
+            - user:224:profile
+            - '... (291 lines total)'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=--scan --args='--scan' --exit=0 --level=full < plugins/redis-cli/redis-cli-compact/samples/redis-cli-scan.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 31
+            - bytes 485
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/redis-cli/redis-cli-compact/tests.cue \ redis-cli-compact \ samples/redis-cli-scan.txt ultra
+  commands:
+    - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=--scan --args='--scan' --exit=0 --level=ultra < plugins/redis-cli/redis-cli-compact/samples/redis-cli-scan.txt
+      checks:
+        - name: stdout
+          data:
+            - user:202:profile
+            - user:52:profile
+            - user:212:profile
+            - user:17:profile
+            - user:167:profile
+            - user:149:profile
+            - session:25
+            - user:175:profile
+            - user:163:profile
+            - session:36
+            - user:110:profile
+            - user:221:profile
+            - user:16:profile
+            - user:234:profile
+            - user:61:profile
+            - '... (291 lines total)'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=--scan --args='--scan' --exit=0 --level=ultra < plugins/redis-cli/redis-cli-compact/samples/redis-cli-scan.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 16
+            - bytes 261
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/redis-cli/redis-cli-compact/tests.cue \ redis-cli-compact \ samples/redis-cli-keys.txt lite
+  commands:
+    - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=keys --args='keys user:*' --exit=0 --level=lite < plugins/redis-cli/redis-cli-compact/samples/redis-cli-keys.txt
+      checks:
+        - name: stdout
+          data:
+            - user:202:profile
+            - user:250:profile
+            - user:231:profile
+            - user:145:profile
+            - user:119:profile
+            - user:126:profile
+            - user:219:profile
+            - user:213:profile
+            - user:166:profile
+            - user:117:profile
+            - user:106:profile
+            - user:198:profile
+            - user:83:profile
+            - user:79:profile
+            - user:99:profile
+            - user:1:profile
+            - user:108:profile
+            - user:226:profile
+            - user:113:profile
+            - user:199:profile
+            - user:11:profile
+            - user:14:profile
+            - user:72:profile
+            - user:136:profile
+            - user:111:profile
+            - user:190:profile
+            - user:52:profile
+            - user:95:profile
+            - user:6:profile
+            - user:131:profile
+            - user:97:profile
+            - user:54:profile
+            - user:206:profile
+            - user:124:profile
+            - user:37:profile
+            - user:208:profile
+            - user:90:profile
+            - user:51:profile
+            - user:247:profile
+            - user:78:profile
+            - user:18:profile
+            - user:82:profile
+            - user:35:profile
+            - user:63:profile
+            - user:45:profile
+            - user:210:profile
+            - user:214:profile
+            - user:225:profile
+            - user:81:profile
+            - user:44:profile
+            - user:232:profile
+            - user:150:profile
+            - user:164:profile
+            - user:87:profile
+            - user:26:profile
+            - user:215:profile
+            - user:4:profile
+            - user:64:profile
+            - user:236:profile
+            - user:41:profile
+            - '... (250 lines total)'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=keys --args='keys user:*' --exit=0 --level=lite < plugins/redis-cli/redis-cli-compact/samples/redis-cli-keys.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 61
+            - bytes 1011
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/redis-cli/redis-cli-compact/tests.cue \ redis-cli-compact \ samples/redis-cli-keys.txt full
+  commands:
+    - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=keys --args='keys user:*' --exit=0 --level=full < plugins/redis-cli/redis-cli-compact/samples/redis-cli-keys.txt
+      checks:
+        - name: stdout
+          data:
+            - user:202:profile
+            - user:250:profile
+            - user:231:profile
+            - user:145:profile
+            - user:119:profile
+            - user:126:profile
+            - user:219:profile
+            - user:213:profile
+            - user:166:profile
+            - user:117:profile
+            - user:106:profile
+            - user:198:profile
+            - user:83:profile
+            - user:79:profile
+            - user:99:profile
+            - user:1:profile
+            - user:108:profile
+            - user:226:profile
+            - user:113:profile
+            - user:199:profile
+            - user:11:profile
+            - user:14:profile
+            - user:72:profile
+            - user:136:profile
+            - user:111:profile
+            - user:190:profile
+            - user:52:profile
+            - user:95:profile
+            - user:6:profile
+            - user:131:profile
+            - '... (250 lines total)'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=keys --args='keys user:*' --exit=0 --level=full < plugins/redis-cli/redis-cli-compact/samples/redis-cli-keys.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 31
+            - bytes 520
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/redis-cli/redis-cli-compact/tests.cue \ redis-cli-compact \ samples/redis-cli-keys.txt ultra
+  commands:
+    - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=keys --args='keys user:*' --exit=0 --level=ultra < plugins/redis-cli/redis-cli-compact/samples/redis-cli-keys.txt
+      checks:
+        - name: stdout
+          data:
+            - user:202:profile
+            - user:250:profile
+            - user:231:profile
+            - user:145:profile
+            - user:119:profile
+            - user:126:profile
+            - user:219:profile
+            - user:213:profile
+            - user:166:profile
+            - user:117:profile
+            - user:106:profile
+            - user:198:profile
+            - user:83:profile
+            - user:79:profile
+            - user:99:profile
+            - '... (250 lines total)'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=keys --args='keys user:*' --exit=0 --level=ultra < plugins/redis-cli/redis-cli-compact/samples/redis-cli-keys.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 16
+            - bytes 274
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/redis-cli/redis-cli-compact/tests.cue \ redis-cli-compact \ samples/redis-cli-slowlog.txt full
+  commands:
+    - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=slowlog --args='slowlog get 10' --exit=0 --level=full < plugins/redis-cli/redis-cli-compact/samples/redis-cli-slowlog.txt
+      checks:
+        - name: stdout
+          data:
+            - "330"
+            - "1781049929"
+            - "1"
+            - hset
+            - session:40
+            - token
+            - tok40
+            - ttl
+            - "3600"
+            - 127.0.0.1:41238
+            - ""
+            - "329"
+            - "1781049929"
+            - "1"
+            - lpush
+            - queue:jobs
+            - job-40
+            - 127.0.0.1:41236
+            - ""
+            - "328"
+            - "1781049929"
+            - "2"
+            - hset
+            - session:39
+            - token
+            - tok39
+            - ttl
+            - "3600"
+            - 127.0.0.1:41224
+            - ""
+            - '... (95 lines total)'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=slowlog --args='slowlog get 10' --exit=0 --level=full < plugins/redis-cli/redis-cli-compact/samples/redis-cli-slowlog.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 31
+            - bytes 221
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/redis-cli/redis-cli-compact/tests.cue \ redis-cli-compact \ samples/redis-cli-slowlog.txt ultra
+  commands:
+    - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=slowlog --args='slowlog get 10' --exit=0 --level=ultra < plugins/redis-cli/redis-cli-compact/samples/redis-cli-slowlog.txt
+      checks:
+        - name: stdout
+          data:
+            - "330"
+            - "1781049929"
+            - "1"
+            - hset
+            - session:40
+            - token
+            - tok40
+            - ttl
+            - "3600"
+            - 127.0.0.1:41238
+            - ""
+            - "329"
+            - "1781049929"
+            - "1"
+            - lpush
+            - '... (95 lines total)'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=slowlog --args='slowlog get 10' --exit=0 --level=ultra < plugins/redis-cli/redis-cli-compact/samples/redis-cli-slowlog.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 16
+            - bytes 115
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/redis-cli/redis-cli-compact/tests.cue \ redis-cli-compact \ samples/redis-cli-memory-stats.txt full
+  commands:
+    - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=memory --args='memory stats' --exit=0 --level=full < plugins/redis-cli/redis-cli-compact/samples/redis-cli-memory-stats.txt
+      checks:
+        - name: stdout
+          data:
+            - peak.allocated
+            - "1333392"
+            - total.allocated
+            - "1333368"
+            - startup.allocated
+            - "981256"
+            - replication.backlog
+            - "0"
+            - clients.slaves
+            - "0"
+            - clients.normal
+            - "0"
+            - cluster.links
+            - "0"
+            - aof.buffer
+            - "0"
+            - lua.caches
+            - "0"
+            - functions.caches
+            - "192"
+            - db.0
+            - overhead.hashtable.main
+            - "16016"
+            - overhead.hashtable.expires
+            - "216"
+            - overhead.db.hashtable.lut
+            - "4096"
+            - overhead.db.hashtable.rehashing
+            - "0"
+            - overhead.total
+            - '... (67 lines total)'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=memory --args='memory stats' --exit=0 --level=full < plugins/redis-cli/redis-cli-compact/samples/redis-cli-memory-stats.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 31
+            - bytes 358
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/redis-cli/redis-cli-compact/tests.cue \ redis-cli-compact \ samples/redis-cli-memory-stats.txt ultra
+  commands:
+    - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=memory --args='memory stats' --exit=0 --level=ultra < plugins/redis-cli/redis-cli-compact/samples/redis-cli-memory-stats.txt
+      checks:
+        - name: stdout
+          data:
+            - peak.allocated
+            - "1333392"
+            - total.allocated
+            - "1333368"
+            - startup.allocated
+            - "981256"
+            - replication.backlog
+            - "0"
+            - clients.slaves
+            - "0"
+            - clients.normal
+            - "0"
+            - cluster.links
+            - "0"
+            - aof.buffer
+            - '... (67 lines total)'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=memory --args='memory stats' --exit=0 --level=ultra < plugins/redis-cli/redis-cli-compact/samples/redis-cli-memory-stats.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 16
+            - bytes 176
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/redis-cli/redis-cli-compact/tests.cue \ redis-cli-compact \ samples/redis-cli-client-list.txt full
+  commands:
+    - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=client --args='client list' --exit=0 --level=full < plugins/redis-cli/redis-cli-compact/samples/redis-cli-client-list.txt
+      checks:
+        - name: stdout
+          data:
+            - id=339 addr=127.0.0.1:41266 laddr=127.0.0.1:6379 fd=10 name= age=0 idle=0 flags=N db=0 sub=0 psub=0 ssub=0 multi=-1 watch=0 qbuf=26 qbuf-free=20448 argv-mem=10 multi-mem=0 rbs=16384 rbp=16384 obl=0 oll=0 omem=0 tot-mem=37786 events=r cmd=client|list user=default redir=-1 resp=2 lib-name= lib-ver=
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=client --args='client list' --exit=0 --level=full < plugins/redis-cli/redis-cli-compact/samples/redis-cli-client-list.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 298
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/redis-cli/redis-cli-compact/tests.cue \ redis-cli-compact \ samples/redis-cli-get.txt full
+  commands:
+    - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=get --args='get user:1:profile' --exit=0 --level=full < plugins/redis-cli/redis-cli-compact/samples/redis-cli-get.txt
+      checks:
+        - name: stdout
+          data:
+            - '{"id":1,"name":"user1"}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=get --args='get user:1:profile' --exit=0 --level=full < plugins/redis-cli/redis-cli-compact/samples/redis-cli-get.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 24
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/redis-cli/redis-cli-compact/tests.cue \ redis-cli-compact \ samples/redis-cli-get.txt ultra
+  commands:
+    - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=get --args='get user:1:profile' --exit=0 --level=ultra < plugins/redis-cli/redis-cli-compact/samples/redis-cli-get.txt
+      checks:
+        - name: stdout
+          data:
+            - '{"id":1,"name":"user1"}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=get --args='get user:1:profile' --exit=0 --level=ultra < plugins/redis-cli/redis-cli-compact/samples/redis-cli-get.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 24
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/redis-cli/redis-cli-compact/tests.cue \ redis-cli-compact \ samples/redis-cli-err-unknown.txt full
+  commands:
+    - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=gett --args='gett foo' --exit=0 --level=full < plugins/redis-cli/redis-cli-compact/samples/redis-cli-err-unknown.txt
+      checks:
+        - name: stdout
+          data:
+            - 'ERR unknown command ''GETT'', with args beginning with: ''foo'' '
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=gett --args='gett foo' --exit=0 --level=full < plugins/redis-cli/redis-cli-compact/samples/redis-cli-err-unknown.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 2
+            - bytes 62
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/redis-cli/redis-cli-compact/tests.cue \ redis-cli-compact \ samples/redis-cli-err-unknown.txt ultra
+  commands:
+    - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=gett --args='gett foo' --exit=0 --level=ultra < plugins/redis-cli/redis-cli-compact/samples/redis-cli-err-unknown.txt
+      checks:
+        - name: stdout
+          data:
+            - 'ERR unknown command ''GETT'', with args beginning with: ''foo'' '
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=gett --args='gett foo' --exit=0 --level=ultra < plugins/redis-cli/redis-cli-compact/samples/redis-cli-err-unknown.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 2
+            - bytes 62
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/redis-cli/redis-cli-compact/tests.cue \ redis-cli-compact \ samples/redis-cli-err-conn.txt full
+  commands:
+    - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=-p --args='-p 9999 ping' --exit=1 --level=full < plugins/redis-cli/redis-cli-compact/samples/redis-cli-err-conn.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Could not connect to Redis at 127.0.0.1:9999: Connection refused'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=-p --args='-p 9999 ping' --exit=1 --level=full < plugins/redis-cli/redis-cli-compact/samples/redis-cli-err-conn.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 65
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/redis-cli/redis-cli-compact/tests.cue \ redis-cli-compact \ samples/redis-cli-err-conn.txt ultra
+  commands:
+    - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=-p --args='-p 9999 ping' --exit=1 --level=ultra < plugins/redis-cli/redis-cli-compact/samples/redis-cli-err-conn.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Could not connect to Redis at 127.0.0.1:9999: Connection refused'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=-p --args='-p 9999 ping' --exit=1 --level=ultra < plugins/redis-cli/redis-cli-compact/samples/redis-cli-err-conn.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 65
+        - name: exitcode
+          data:
+            - "0"

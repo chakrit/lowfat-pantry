@@ -1,0 +1,337 @@
+- name: plugins/systemctl/systemctl-compact/tests.cue \ systemctl-compact \ samples/systemctl-status.txt lite
+  commands:
+    - command: lowfat filter plugins/systemctl/systemctl-compact/filter.lf --sub=status --args='status nginx' --exit=0 --level=lite < plugins/systemctl/systemctl-compact/samples/systemctl-status.txt
+      checks:
+        - name: stdout
+          data:
+            - ● nginx.service - A high performance web server and a reverse proxy server
+            - '     Loaded: loaded (/lib/systemd/system/nginx.service; enabled; preset: enabled)'
+            - '     Active: active (running) since Mon 2026-06-08 10:14:23 +07; 2h 18min ago'
+            - '   Main PID: 842 (nginx)'
+            - '      Tasks: 5 (limit: 18923)'
+            - '     Memory: 18.6M'
+            - '        CPU: 1.482s'
+            - '     CGroup: /system.slice/nginx.service'
+            - 'Jun 08 10:14:23 host systemd[1]: Starting nginx.service - A high performance web server and a reverse proxy server...'
+            - 'Jun 08 10:14:23 host nginx[839]: nginx: the configuration file /etc/nginx/nginx.conf syntax is ok'
+            - 'Jun 08 10:14:23 host nginx[839]: nginx: configuration file /etc/nginx/nginx.conf test is successful'
+            - 'Jun 08 10:14:23 host systemd[1]: Started nginx.service - A high performance web server and a reverse proxy server.'
+            - 'Jun 08 11:04:52 host nginx[843]: 10.0.0.4 - - "GET /health HTTP/1.1" 200 2 "-" "curl/8.5.0"'
+            - 'Jun 08 11:19:07 host nginx[844]: 10.0.0.7 - - "GET /api/products HTTP/1.1" 200 3182 "-" "Mozilla/5.0"'
+            - 'Jun 08 11:42:31 host nginx[845]: 10.0.0.7 - - "POST /api/checkout HTTP/1.1" 502 157 "-" "Mozilla/5.0"'
+            - 'Jun 08 11:42:31 host nginx[845]: upstream prematurely closed connection while reading response header from upstream'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/systemctl/systemctl-compact/filter.lf --sub=status --args='status nginx' --exit=0 --level=lite < plugins/systemctl/systemctl-compact/samples/systemctl-status.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 16
+            - bytes 1215
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/systemctl/systemctl-compact/tests.cue \ systemctl-compact \ samples/systemctl-status.txt full
+  commands:
+    - command: lowfat filter plugins/systemctl/systemctl-compact/filter.lf --sub=status --args='status nginx' --exit=0 --level=full < plugins/systemctl/systemctl-compact/samples/systemctl-status.txt
+      checks:
+        - name: stdout
+          data:
+            - ● nginx.service - A high performance web server and a reverse proxy server
+            - '     Loaded: loaded (/lib/systemd/system/nginx.service; enabled; preset: enabled)'
+            - '     Active: active (running) since Mon 2026-06-08 10:14:23 +07; 2h 18min ago'
+            - '   Main PID: 842 (nginx)'
+            - 'Jun 08 10:14:23 host systemd[1]: Starting nginx.service - A high performance web server and a reverse proxy server...'
+            - 'Jun 08 10:14:23 host nginx[839]: nginx: the configuration file /etc/nginx/nginx.conf syntax is ok'
+            - 'Jun 08 10:14:23 host nginx[839]: nginx: configuration file /etc/nginx/nginx.conf test is successful'
+            - 'Jun 08 10:14:23 host systemd[1]: Started nginx.service - A high performance web server and a reverse proxy server.'
+            - 'Jun 08 11:04:52 host nginx[843]: 10.0.0.4 - - "GET /health HTTP/1.1" 200 2 "-" "curl/8.5.0"'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/systemctl/systemctl-compact/filter.lf --sub=status --args='status nginx' --exit=0 --level=full < plugins/systemctl/systemctl-compact/samples/systemctl-status.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 9
+            - bytes 785
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/systemctl/systemctl-compact/tests.cue \ systemctl-compact \ samples/systemctl-status.txt ultra
+  commands:
+    - command: lowfat filter plugins/systemctl/systemctl-compact/filter.lf --sub=status --args='status nginx' --exit=0 --level=ultra < plugins/systemctl/systemctl-compact/samples/systemctl-status.txt
+      checks:
+        - name: stdout
+          data:
+            - ● nginx.service - A high performance web server and a reverse proxy server
+            - '     Loaded: loaded (/lib/systemd/system/nginx.service; enabled; preset: enabled)'
+            - '     Active: active (running) since Mon 2026-06-08 10:14:23 +07; 2h 18min ago'
+            - '   Main PID: 842 (nginx)'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/systemctl/systemctl-compact/filter.lf --sub=status --args='status nginx' --exit=0 --level=ultra < plugins/systemctl/systemctl-compact/samples/systemctl-status.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 4
+            - bytes 262
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/systemctl/systemctl-compact/tests.cue \ systemctl-compact \ samples/systemctl-list-units.txt lite
+  commands:
+    - command: lowfat filter plugins/systemctl/systemctl-compact/filter.lf --sub=list-units --args='list-units --type=service' --exit=0 --level=lite < plugins/systemctl/systemctl-compact/samples/systemctl-list-units.txt
+      checks:
+        - name: stdout
+          data:
+            - ' UNIT LOAD ACTIVE SUB DESCRIPTION'
+            - ' cron.service loaded active running Regular background program processing daemon'
+            - ' dbus.service loaded active running D-Bus System Message Bus'
+            - ' docker.service loaded active running Docker Application Container Engine'
+            - ' getty@tty1.service loaded active running Getty on tty1'
+            - ' nginx.service loaded active running A high performance web server and a reverse proxy server'
+            - ' postgresql.service loaded active running PostgreSQL RDBMS'
+            - ' redis-server.service loaded active running Advanced key-value store'
+            - ' ssh.service loaded active running OpenBSD Secure Shell server'
+            - ' systemd-journald.service loaded active running Journal Service'
+            - ' systemd-logind.service loaded active running User Login Management'
+            - ' systemd-networkd.service loaded active running Network Configuration'
+            - ' systemd-resolved.service loaded active running Network Name Resolution'
+            - ' timers.target loaded active active Timers'
+            - ' basic.target loaded active active Basic System'
+            - ' multi-user.target loaded active active Multi-User System'
+            - ' sockets.target loaded active active Socket Units'
+            - 16 loaded units listed. Pass --all to see loaded but inactive units, too.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/systemctl/systemctl-compact/filter.lf --sub=list-units --args='list-units --type=service' --exit=0 --level=lite < plugins/systemctl/systemctl-compact/samples/systemctl-list-units.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 18
+            - bytes 1138
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/systemctl/systemctl-compact/tests.cue \ systemctl-compact \ samples/systemctl-list-units.txt full
+  commands:
+    - command: lowfat filter plugins/systemctl/systemctl-compact/filter.lf --sub=list-units --args='list-units --type=service' --exit=0 --level=full < plugins/systemctl/systemctl-compact/samples/systemctl-list-units.txt
+      checks:
+        - name: stdout
+          data:
+            - ' UNIT LOAD ACTIVE SUB DESCRIPTION'
+            - ' cron.service loaded active running Regular background program processing daemon'
+            - ' dbus.service loaded active running D-Bus System Message Bus'
+            - ' docker.service loaded active running Docker Application Container Engine'
+            - ' getty@tty1.service loaded active running Getty on tty1'
+            - ' nginx.service loaded active running A high performance web server and a reverse proxy server'
+            - ' postgresql.service loaded active running PostgreSQL RDBMS'
+            - ' redis-server.service loaded active running Advanced key-value store'
+            - ' ssh.service loaded active running OpenBSD Secure Shell server'
+            - ' systemd-journald.service loaded active running Journal Service'
+            - ' systemd-logind.service loaded active running User Login Management'
+            - ' systemd-networkd.service loaded active running Network Configuration'
+            - ' systemd-resolved.service loaded active running Network Name Resolution'
+            - ' timers.target loaded active active Timers'
+            - ' basic.target loaded active active Basic System'
+            - ' multi-user.target loaded active active Multi-User System'
+            - ' sockets.target loaded active active Socket Units'
+            - 16 loaded units listed. Pass --all to see loaded but inactive units, too.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/systemctl/systemctl-compact/filter.lf --sub=list-units --args='list-units --type=service' --exit=0 --level=full < plugins/systemctl/systemctl-compact/samples/systemctl-list-units.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 18
+            - bytes 1138
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/systemctl/systemctl-compact/tests.cue \ systemctl-compact \ samples/systemctl-list-units.txt ultra
+  commands:
+    - command: lowfat filter plugins/systemctl/systemctl-compact/filter.lf --sub=list-units --args='list-units --type=service' --exit=0 --level=ultra < plugins/systemctl/systemctl-compact/samples/systemctl-list-units.txt
+      checks:
+        - name: stdout
+          data:
+            - ' UNIT LOAD ACTIVE SUB DESCRIPTION'
+            - ' cron.service loaded active running Regular background program processing daemon'
+            - ' dbus.service loaded active running D-Bus System Message Bus'
+            - ' docker.service loaded active running Docker Application Container Engine'
+            - ' getty@tty1.service loaded active running Getty on tty1'
+            - ' nginx.service loaded active running A high performance web server and a reverse proxy server'
+            - ' postgresql.service loaded active running PostgreSQL RDBMS'
+            - ' redis-server.service loaded active running Advanced key-value store'
+            - ' ssh.service loaded active running OpenBSD Secure Shell server'
+            - ' systemd-journald.service loaded active running Journal Service'
+            - ' systemd-logind.service loaded active running User Login Management'
+            - ' systemd-networkd.service loaded active running Network Configuration'
+            - ' systemd-resolved.service loaded active running Network Name Resolution'
+            - ' timers.target loaded active active Timers'
+            - ' basic.target loaded active active Basic System'
+            - ' multi-user.target loaded active active Multi-User System'
+            - 16 loaded units listed. Pass --all to see loaded but inactive units, too.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/systemctl/systemctl-compact/filter.lf --sub=list-units --args='list-units --type=service' --exit=0 --level=ultra < plugins/systemctl/systemctl-compact/samples/systemctl-list-units.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 17
+            - bytes 1088
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/systemctl/systemctl-compact/tests.cue \ systemctl-compact \ samples/systemctl-is-active.txt lite
+  commands:
+    - command: lowfat filter plugins/systemctl/systemctl-compact/filter.lf --sub=is-active --args='is-active nginx' --exit=0 --level=lite < plugins/systemctl/systemctl-compact/samples/systemctl-is-active.txt
+      checks:
+        - name: stdout
+          data:
+            - active
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/systemctl/systemctl-compact/filter.lf --sub=is-active --args='is-active nginx' --exit=0 --level=lite < plugins/systemctl/systemctl-compact/samples/systemctl-is-active.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 7
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/systemctl/systemctl-compact/tests.cue \ systemctl-compact \ samples/systemctl-is-active.txt full
+  commands:
+    - command: lowfat filter plugins/systemctl/systemctl-compact/filter.lf --sub=is-active --args='is-active nginx' --exit=0 --level=full < plugins/systemctl/systemctl-compact/samples/systemctl-is-active.txt
+      checks:
+        - name: stdout
+          data:
+            - active
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/systemctl/systemctl-compact/filter.lf --sub=is-active --args='is-active nginx' --exit=0 --level=full < plugins/systemctl/systemctl-compact/samples/systemctl-is-active.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 7
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/systemctl/systemctl-compact/tests.cue \ systemctl-compact \ samples/systemctl-is-active.txt ultra
+  commands:
+    - command: lowfat filter plugins/systemctl/systemctl-compact/filter.lf --sub=is-active --args='is-active nginx' --exit=0 --level=ultra < plugins/systemctl/systemctl-compact/samples/systemctl-is-active.txt
+      checks:
+        - name: stdout
+          data:
+            - active
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/systemctl/systemctl-compact/filter.lf --sub=is-active --args='is-active nginx' --exit=0 --level=ultra < plugins/systemctl/systemctl-compact/samples/systemctl-is-active.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 7
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/systemctl/systemctl-compact/tests.cue \ systemctl-compact \ samples/systemctl-status-failed.txt lite
+  commands:
+    - command: lowfat filter plugins/systemctl/systemctl-compact/filter.lf --sub=status --args='status checkout-worker' --exit=3 --level=lite < plugins/systemctl/systemctl-compact/samples/systemctl-status-failed.txt
+      checks:
+        - name: stdout
+          data:
+            - × checkout-worker.service - Checkout queue worker
+            - '     Loaded: loaded (/etc/systemd/system/checkout-worker.service; enabled; preset: enabled)'
+            - '     Active: failed (Result: exit-code) since Mon 2026-06-08 12:01:17 +07; 3min ago'
+            - '   Duration: 842ms'
+            - '    Process: 1911 ExecStart=/usr/local/bin/checkout-worker (code=exited, status=2)'
+            - '   Main PID: 1911 (code=exited, status=2)'
+            - '        CPU: 211ms'
+            - ""
+            - 'Jun 08 12:01:16 host systemd[1]: Started checkout-worker.service - Checkout queue worker.'
+            - 'Jun 08 12:01:17 host checkout-worker[1911]: Error: missing PAYMENT_SECRET'
+            - 'Jun 08 12:01:17 host systemd[1]: checkout-worker.service: Main process exited, code=exited, status=2/INVALIDARGUMENT'
+            - 'Jun 08 12:01:17 host systemd[1]: checkout-worker.service: Failed with result ''exit-code''.'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/systemctl/systemctl-compact/filter.lf --sub=status --args='status checkout-worker' --exit=3 --level=lite < plugins/systemctl/systemctl-compact/samples/systemctl-status-failed.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 13
+            - bytes 763
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/systemctl/systemctl-compact/tests.cue \ systemctl-compact \ samples/systemctl-status-failed.txt full
+  commands:
+    - command: lowfat filter plugins/systemctl/systemctl-compact/filter.lf --sub=status --args='status checkout-worker' --exit=3 --level=full < plugins/systemctl/systemctl-compact/samples/systemctl-status-failed.txt
+      checks:
+        - name: stdout
+          data:
+            - × checkout-worker.service - Checkout queue worker
+            - '     Loaded: loaded (/etc/systemd/system/checkout-worker.service; enabled; preset: enabled)'
+            - '     Active: failed (Result: exit-code) since Mon 2026-06-08 12:01:17 +07; 3min ago'
+            - '   Duration: 842ms'
+            - '    Process: 1911 ExecStart=/usr/local/bin/checkout-worker (code=exited, status=2)'
+            - '   Main PID: 1911 (code=exited, status=2)'
+            - '        CPU: 211ms'
+            - ""
+            - 'Jun 08 12:01:16 host systemd[1]: Started checkout-worker.service - Checkout queue worker.'
+            - 'Jun 08 12:01:17 host checkout-worker[1911]: Error: missing PAYMENT_SECRET'
+            - 'Jun 08 12:01:17 host systemd[1]: checkout-worker.service: Main process exited, code=exited, status=2/INVALIDARGUMENT'
+            - 'Jun 08 12:01:17 host systemd[1]: checkout-worker.service: Failed with result ''exit-code''.'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/systemctl/systemctl-compact/filter.lf --sub=status --args='status checkout-worker' --exit=3 --level=full < plugins/systemctl/systemctl-compact/samples/systemctl-status-failed.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 13
+            - bytes 763
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/systemctl/systemctl-compact/tests.cue \ systemctl-compact \ samples/systemctl-status-failed.txt ultra
+  commands:
+    - command: lowfat filter plugins/systemctl/systemctl-compact/filter.lf --sub=status --args='status checkout-worker' --exit=3 --level=ultra < plugins/systemctl/systemctl-compact/samples/systemctl-status-failed.txt
+      checks:
+        - name: stdout
+          data:
+            - × checkout-worker.service - Checkout queue worker
+            - '     Loaded: loaded (/etc/systemd/system/checkout-worker.service; enabled; preset: enabled)'
+            - '     Active: failed (Result: exit-code) since Mon 2026-06-08 12:01:17 +07; 3min ago'
+            - '   Duration: 842ms'
+            - '    Process: 1911 ExecStart=/usr/local/bin/checkout-worker (code=exited, status=2)'
+            - '   Main PID: 1911 (code=exited, status=2)'
+            - '        CPU: 211ms'
+            - ""
+            - 'Jun 08 12:01:16 host systemd[1]: Started checkout-worker.service - Checkout queue worker.'
+            - 'Jun 08 12:01:17 host checkout-worker[1911]: Error: missing PAYMENT_SECRET'
+            - 'Jun 08 12:01:17 host systemd[1]: checkout-worker.service: Main process exited, code=exited, status=2/INVALIDARGUMENT'
+            - 'Jun 08 12:01:17 host systemd[1]: checkout-worker.service: Failed with result ''exit-code''.'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/systemctl/systemctl-compact/filter.lf --sub=status --args='status checkout-worker' --exit=3 --level=ultra < plugins/systemctl/systemctl-compact/samples/systemctl-status-failed.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 13
+            - bytes 763
+        - name: exitcode
+          data:
+            - "0"

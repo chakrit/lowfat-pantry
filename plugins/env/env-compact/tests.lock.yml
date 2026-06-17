@@ -1,0 +1,214 @@
+- name: plugins/env/env-compact/tests.cue \ env-compact \ samples/env-dump.txt lite
+  commands:
+    - command: lowfat filter plugins/env/env-compact/filter.lf --sub= --args='' --exit=0 --level=lite < plugins/env/env-compact/samples/env-dump.txt
+      checks:
+        - name: stdout
+          data:
+            - API_KEY=***
+            - AUTH_HEADER=***
+            - AWS_ACCESS_KEY_ID=***
+            - AWS_SECRET_ACCESS_KEY=***
+            - CARGO_HOME=/Users/dev/.cargo
+            - CI=false
+            - DATABASE_URL=***
+            - EDITOR=vim
+            - FEATURE_FLAGS=checkout,coupons
+            - GITHUB_TOKEN=***
+            - HOME=/Users/dev
+            - JAVA_HOME=/Library/Java/JavaVirtualMachines/temurin.jdk/Contents/Home
+            - LANG=en_US.UTF-8
+            - LOG_LEVEL=debug
+            - NODE_ENV=development
+            - NPM_CONFIG_CACHE=/Users/dev/.npm
+            - OLDPWD=/repo
+            - PATH=/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin
+            - PRIVATE_KEY=***
+            - PWD=/repo/app
+            - REDIS_URL=redis://localhost:6379/0
+            - RUSTUP_HOME=/Users/dev/.rustup
+            - SESSION_SECRET=***
+            - SHELL=/bin/zsh
+            - SSH_AUTH_SOCK=***
+            - TERM=xterm-256color
+            - TMPDIR=/var/folders/tmp/
+            - USER=dev
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/env/env-compact/filter.lf --sub= --args='' --exit=0 --level=lite < plugins/env/env-compact/samples/env-dump.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 28
+            - bytes 630
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/env/env-compact/tests.cue \ env-compact \ samples/env-dump.txt full
+  commands:
+    - command: lowfat filter plugins/env/env-compact/filter.lf --sub= --args='' --exit=0 --level=full < plugins/env/env-compact/samples/env-dump.txt
+      checks:
+        - name: stdout
+          data:
+            - API_KEY=***
+            - AUTH_HEADER=***
+            - AWS_ACCESS_KEY_ID=***
+            - AWS_SECRET_ACCESS_KEY=***
+            - CARGO_HOME=/Users/dev/.cargo
+            - CI=false
+            - DATABASE_URL=***
+            - EDITOR=vim
+            - FEATURE_FLAGS=checkout,coupons
+            - GITHUB_TOKEN=***
+            - HOME=/Users/dev
+            - JAVA_HOME=/Library/Java/JavaVirtualMachines/temurin.jdk/Contents/Home
+            - LANG=en_US.UTF-8
+            - LOG_LEVEL=debug
+            - NODE_ENV=development
+            - NPM_CONFIG_CACHE=/Users/dev/.npm
+            - OLDPWD=/repo
+            - PATH=/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin
+            - PRIVATE_KEY=***
+            - PWD=/repo/app
+            - REDIS_URL=redis://localhost:6379/0
+            - RUSTUP_HOME=/Users/dev/.rustup
+            - SESSION_SECRET=***
+            - SHELL=/bin/zsh
+            - SSH_AUTH_SOCK=***
+            - TERM=xterm-256color
+            - TMPDIR=/var/folders/tmp/
+            - USER=dev
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/env/env-compact/filter.lf --sub= --args='' --exit=0 --level=full < plugins/env/env-compact/samples/env-dump.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 28
+            - bytes 630
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/env/env-compact/tests.cue \ env-compact \ samples/env-dump.txt ultra
+  commands:
+    - command: lowfat filter plugins/env/env-compact/filter.lf --sub= --args='' --exit=0 --level=ultra < plugins/env/env-compact/samples/env-dump.txt
+      checks:
+        - name: stdout
+          data:
+            - API_KEY=***
+            - AUTH_HEADER=***
+            - AWS_ACCESS_KEY_ID=***
+            - AWS_SECRET_ACCESS_KEY=***
+            - CARGO_HOME=/Users/dev/.cargo
+            - CI=false
+            - DATABASE_URL=***
+            - EDITOR=vim
+            - FEATURE_FLAGS=checkout,coupons
+            - GITHUB_TOKEN=***
+            - HOME=/Users/dev
+            - JAVA_HOME=/Library/Java/JavaVirtualMachines/temurin.jdk/Contents/Home
+            - LANG=en_US.UTF-8
+            - LOG_LEVEL=debug
+            - NODE_ENV=development
+            - NPM_CONFIG_CACHE=/Users/dev/.npm
+            - OLDPWD=/repo
+            - PATH=/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin
+            - PRIVATE_KEY=***
+            - PWD=/repo/app
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/env/env-compact/filter.lf --sub= --args='' --exit=0 --level=ultra < plugins/env/env-compact/samples/env-dump.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 20
+            - bytes 458
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/env/env-compact/tests.cue \ env-compact \ samples/printenv-small.txt lite
+  commands:
+    - command: lowfat filter plugins/env/env-compact/filter.lf --sub= --args='' --exit=0 --level=lite < plugins/env/env-compact/samples/printenv-small.txt
+      checks:
+        - name: stdout
+          data:
+            - HOME=/Users/dev
+            - LOGNAME=dev
+            - PASSWORD=***
+            - PATH=/usr/local/bin:/usr/bin:/bin
+            - PROJECT=lowfat-pantry
+            - SHELL=/bin/zsh
+            - TERM=xterm-256color
+            - TERM_PROGRAM=Apple_Terminal
+            - TOKEN=***
+            - USER=dev
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/env/env-compact/filter.lf --sub= --args='' --exit=0 --level=lite < plugins/env/env-compact/samples/printenv-small.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 10
+            - bytes 179
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/env/env-compact/tests.cue \ env-compact \ samples/printenv-small.txt full
+  commands:
+    - command: lowfat filter plugins/env/env-compact/filter.lf --sub= --args='' --exit=0 --level=full < plugins/env/env-compact/samples/printenv-small.txt
+      checks:
+        - name: stdout
+          data:
+            - HOME=/Users/dev
+            - LOGNAME=dev
+            - PASSWORD=***
+            - PATH=/usr/local/bin:/usr/bin:/bin
+            - PROJECT=lowfat-pantry
+            - SHELL=/bin/zsh
+            - TERM=xterm-256color
+            - TERM_PROGRAM=Apple_Terminal
+            - TOKEN=***
+            - USER=dev
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/env/env-compact/filter.lf --sub= --args='' --exit=0 --level=full < plugins/env/env-compact/samples/printenv-small.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 10
+            - bytes 179
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/env/env-compact/tests.cue \ env-compact \ samples/printenv-small.txt ultra
+  commands:
+    - command: lowfat filter plugins/env/env-compact/filter.lf --sub= --args='' --exit=0 --level=ultra < plugins/env/env-compact/samples/printenv-small.txt
+      checks:
+        - name: stdout
+          data:
+            - HOME=/Users/dev
+            - LOGNAME=dev
+            - PASSWORD=***
+            - PATH=/usr/local/bin:/usr/bin:/bin
+            - PROJECT=lowfat-pantry
+            - SHELL=/bin/zsh
+            - TERM=xterm-256color
+            - TERM_PROGRAM=Apple_Terminal
+            - TOKEN=***
+            - USER=dev
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/env/env-compact/filter.lf --sub= --args='' --exit=0 --level=ultra < plugins/env/env-compact/samples/printenv-small.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 10
+            - bytes 179
+        - name: exitcode
+          data:
+            - "0"

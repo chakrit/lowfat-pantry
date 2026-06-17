@@ -1,0 +1,192 @@
+- name: plugins/black/black-compact/tests.cue \ black-compact \ samples/black-reformat.txt lite
+  commands:
+    - command: lowfat filter plugins/black/black-compact/filter.lf --sub= --args='.' --exit=0 --level=lite < plugins/black/black-compact/samples/black-reformat.txt
+      checks:
+        - name: stdout
+          data:
+            - reformatted src/checkout/api.py
+            - reformatted src/checkout/models.py
+            - reformatted src/checkout/config.py
+            - "All done! ✨ \U0001F370 ✨"
+            - 3 files reformatted, 14 files left unchanged.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/black/black-compact/filter.lf --sub= --args='.' --exit=0 --level=lite < plugins/black/black-compact/samples/black-reformat.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 5
+            - bytes 171
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/black/black-compact/tests.cue \ black-compact \ samples/black-reformat.txt full
+  commands:
+    - command: lowfat filter plugins/black/black-compact/filter.lf --sub= --args='.' --exit=0 --level=full < plugins/black/black-compact/samples/black-reformat.txt
+      checks:
+        - name: stdout
+          data:
+            - reformatted src/checkout/api.py
+            - reformatted src/checkout/models.py
+            - reformatted src/checkout/config.py
+            - "All done! ✨ \U0001F370 ✨"
+            - 3 files reformatted, 14 files left unchanged.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/black/black-compact/filter.lf --sub= --args='.' --exit=0 --level=full < plugins/black/black-compact/samples/black-reformat.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 5
+            - bytes 171
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/black/black-compact/tests.cue \ black-compact \ samples/black-reformat.txt ultra
+  commands:
+    - command: lowfat filter plugins/black/black-compact/filter.lf --sub= --args='.' --exit=0 --level=ultra < plugins/black/black-compact/samples/black-reformat.txt
+      checks:
+        - name: stdout
+          data:
+            - reformatted src/checkout/api.py
+            - reformatted src/checkout/models.py
+            - reformatted src/checkout/config.py
+            - 3 files reformatted, 14 files left unchanged.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/black/black-compact/filter.lf --sub= --args='.' --exit=0 --level=ultra < plugins/black/black-compact/samples/black-reformat.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 4
+            - bytes 148
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/black/black-compact/tests.cue \ black-compact \ samples/black-check.txt lite
+  commands:
+    - command: lowfat filter plugins/black/black-compact/filter.lf --sub= --args='--check .' --exit=1 --level=lite < plugins/black/black-compact/samples/black-check.txt
+      checks:
+        - name: stdout
+          data:
+            - would reformat src/checkout/api.py
+            - would reformat src/checkout/models.py
+            - "Oh no! \U0001F4A5 \U0001F494 \U0001F4A5"
+            - 2 files would be reformatted, 15 files left unchanged.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/black/black-compact/filter.lf --sub= --args='--check .' --exit=1 --level=lite < plugins/black/black-compact/samples/black-check.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 4
+            - bytes 150
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/black/black-compact/tests.cue \ black-compact \ samples/black-check.txt full
+  commands:
+    - command: lowfat filter plugins/black/black-compact/filter.lf --sub= --args='--check .' --exit=1 --level=full < plugins/black/black-compact/samples/black-check.txt
+      checks:
+        - name: stdout
+          data:
+            - would reformat src/checkout/api.py
+            - would reformat src/checkout/models.py
+            - "Oh no! \U0001F4A5 \U0001F494 \U0001F4A5"
+            - 2 files would be reformatted, 15 files left unchanged.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/black/black-compact/filter.lf --sub= --args='--check .' --exit=1 --level=full < plugins/black/black-compact/samples/black-check.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 4
+            - bytes 150
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/black/black-compact/tests.cue \ black-compact \ samples/black-check.txt ultra
+  commands:
+    - command: lowfat filter plugins/black/black-compact/filter.lf --sub= --args='--check .' --exit=1 --level=ultra < plugins/black/black-compact/samples/black-check.txt
+      checks:
+        - name: stdout
+          data:
+            - would reformat src/checkout/api.py
+            - would reformat src/checkout/models.py
+            - 2 files would be reformatted, 15 files left unchanged.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/black/black-compact/filter.lf --sub= --args='--check .' --exit=1 --level=ultra < plugins/black/black-compact/samples/black-check.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 3
+            - bytes 128
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/black/black-compact/tests.cue \ black-compact \ samples/black-clean.txt lite
+  commands:
+    - command: lowfat filter plugins/black/black-compact/filter.lf --sub= --args='.' --exit=0 --level=lite < plugins/black/black-compact/samples/black-clean.txt
+      checks:
+        - name: stdout
+          data:
+            - "All done! ✨ \U0001F370 ✨"
+            - 17 files left unchanged.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/black/black-compact/filter.lf --sub= --args='.' --exit=0 --level=lite < plugins/black/black-compact/samples/black-clean.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 2
+            - bytes 48
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/black/black-compact/tests.cue \ black-compact \ samples/black-clean.txt full
+  commands:
+    - command: lowfat filter plugins/black/black-compact/filter.lf --sub= --args='.' --exit=0 --level=full < plugins/black/black-compact/samples/black-clean.txt
+      checks:
+        - name: stdout
+          data:
+            - "All done! ✨ \U0001F370 ✨"
+            - 17 files left unchanged.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/black/black-compact/filter.lf --sub= --args='.' --exit=0 --level=full < plugins/black/black-compact/samples/black-clean.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 2
+            - bytes 48
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/black/black-compact/tests.cue \ black-compact \ samples/black-clean.txt ultra
+  commands:
+    - command: lowfat filter plugins/black/black-compact/filter.lf --sub= --args='.' --exit=0 --level=ultra < plugins/black/black-compact/samples/black-clean.txt
+      checks:
+        - name: stdout
+          data:
+            - 17 files left unchanged.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/black/black-compact/filter.lf --sub= --args='.' --exit=0 --level=ultra < plugins/black/black-compact/samples/black-clean.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 25
+        - name: exitcode
+          data:
+            - "0"

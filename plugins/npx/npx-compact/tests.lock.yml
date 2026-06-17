@@ -1,0 +1,369 @@
+- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-eslint.txt lite
+  commands:
+    - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=eslint --args='eslint src' --exit=0 --level=lite < plugins/npx/npx-compact/samples/npx-eslint.txt
+      checks:
+        - name: stdout
+          data:
+            - /work/app/src/api.ts
+            - '  12:7   warning  ''payload'' is assigned a value but never used  @typescript-eslint/no-unused-vars'
+            - '  44:13  warning  Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any'
+            - /work/app/src/server.ts
+            - '  28:5   warning  Promises must be awaited or handled            @typescript-eslint/no-floating-promises'
+            - ✖ 3 problems (0 errors, 3 warnings)
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=eslint --args='eslint src' --exit=0 --level=lite < plugins/npx/npx-compact/samples/npx-eslint.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 6
+            - bytes 386
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-eslint.txt full
+  commands:
+    - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=eslint --args='eslint src' --exit=0 --level=full < plugins/npx/npx-compact/samples/npx-eslint.txt
+      checks:
+        - name: stdout
+          data:
+            - /work/app/src/api.ts
+            - '  12:7   warning  ''payload'' is assigned a value but never used  @typescript-eslint/no-unused-vars'
+            - '  44:13  warning  Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any'
+            - /work/app/src/server.ts
+            - '  28:5   warning  Promises must be awaited or handled            @typescript-eslint/no-floating-promises'
+            - ✖ 3 problems (0 errors, 3 warnings)
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=eslint --args='eslint src' --exit=0 --level=full < plugins/npx/npx-compact/samples/npx-eslint.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 6
+            - bytes 386
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-eslint.txt ultra
+  commands:
+    - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=eslint --args='eslint src' --exit=0 --level=ultra < plugins/npx/npx-compact/samples/npx-eslint.txt
+      checks:
+        - name: stdout
+          data:
+            - /work/app/src/api.ts
+            - '  12:7   warning  ''payload'' is assigned a value but never used  @typescript-eslint/no-unused-vars'
+            - '  44:13  warning  Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any'
+            - /work/app/src/server.ts
+            - '  28:5   warning  Promises must be awaited or handled            @typescript-eslint/no-floating-promises'
+            - ✖ 3 problems (0 errors, 3 warnings)
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=eslint --args='eslint src' --exit=0 --level=ultra < plugins/npx/npx-compact/samples/npx-eslint.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 6
+            - bytes 386
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-eslint.txt lite
+  commands:
+    - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=-y --args='-y eslint src' --exit=0 --level=lite < plugins/npx/npx-compact/samples/npx-eslint.txt
+      checks:
+        - name: stdout
+          data:
+            - /work/app/src/api.ts
+            - '  12:7   warning  ''payload'' is assigned a value but never used  @typescript-eslint/no-unused-vars'
+            - '  44:13  warning  Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any'
+            - /work/app/src/server.ts
+            - '  28:5   warning  Promises must be awaited or handled            @typescript-eslint/no-floating-promises'
+            - ✖ 3 problems (0 errors, 3 warnings)
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=-y --args='-y eslint src' --exit=0 --level=lite < plugins/npx/npx-compact/samples/npx-eslint.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 6
+            - bytes 386
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-eslint.txt full
+  commands:
+    - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=-y --args='-y eslint src' --exit=0 --level=full < plugins/npx/npx-compact/samples/npx-eslint.txt
+      checks:
+        - name: stdout
+          data:
+            - /work/app/src/api.ts
+            - '  12:7   warning  ''payload'' is assigned a value but never used  @typescript-eslint/no-unused-vars'
+            - '  44:13  warning  Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any'
+            - /work/app/src/server.ts
+            - '  28:5   warning  Promises must be awaited or handled            @typescript-eslint/no-floating-promises'
+            - ✖ 3 problems (0 errors, 3 warnings)
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=-y --args='-y eslint src' --exit=0 --level=full < plugins/npx/npx-compact/samples/npx-eslint.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 6
+            - bytes 386
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-eslint.txt ultra
+  commands:
+    - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=-y --args='-y eslint src' --exit=0 --level=ultra < plugins/npx/npx-compact/samples/npx-eslint.txt
+      checks:
+        - name: stdout
+          data:
+            - /work/app/src/api.ts
+            - '  12:7   warning  ''payload'' is assigned a value but never used  @typescript-eslint/no-unused-vars'
+            - '  44:13  warning  Unexpected any. Specify a different type       @typescript-eslint/no-explicit-any'
+            - /work/app/src/server.ts
+            - '  28:5   warning  Promises must be awaited or handled            @typescript-eslint/no-floating-promises'
+            - ✖ 3 problems (0 errors, 3 warnings)
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=-y --args='-y eslint src' --exit=0 --level=ultra < plugins/npx/npx-compact/samples/npx-eslint.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 6
+            - bytes 386
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-prettier-check.txt lite
+  commands:
+    - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=prettier --args='prettier --check src' --exit=1 --level=lite < plugins/npx/npx-compact/samples/npx-prettier-check.txt
+      checks:
+        - name: stdout
+          data:
+            - Checking formatting...
+            - '[warn] src/api.ts'
+            - '[warn] src/components/Button.tsx'
+            - '[warn] src/server.ts'
+            - '[warn] Code style issues found in 3 files. Run Prettier with --write to fix.'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=prettier --args='prettier --check src' --exit=1 --level=lite < plugins/npx/npx-compact/samples/npx-prettier-check.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 5
+            - bytes 172
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-prettier-check.txt full
+  commands:
+    - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=prettier --args='prettier --check src' --exit=1 --level=full < plugins/npx/npx-compact/samples/npx-prettier-check.txt
+      checks:
+        - name: stdout
+          data:
+            - Checking formatting...
+            - '[warn] src/api.ts'
+            - '[warn] src/components/Button.tsx'
+            - '[warn] src/server.ts'
+            - '[warn] Code style issues found in 3 files. Run Prettier with --write to fix.'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=prettier --args='prettier --check src' --exit=1 --level=full < plugins/npx/npx-compact/samples/npx-prettier-check.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 5
+            - bytes 172
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-prettier-check.txt ultra
+  commands:
+    - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=prettier --args='prettier --check src' --exit=1 --level=ultra < plugins/npx/npx-compact/samples/npx-prettier-check.txt
+      checks:
+        - name: stdout
+          data:
+            - Checking formatting...
+            - '[warn] src/api.ts'
+            - '[warn] src/components/Button.tsx'
+            - '[warn] src/server.ts'
+            - '[warn] Code style issues found in 3 files. Run Prettier with --write to fix.'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=prettier --args='prettier --check src' --exit=1 --level=ultra < plugins/npx/npx-compact/samples/npx-prettier-check.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 5
+            - bytes 172
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-create.txt lite
+  commands:
+    - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=create-vite --args='create-vite demo' --exit=0 --level=lite < plugins/npx/npx-compact/samples/npx-create.txt
+      checks:
+        - name: stdout
+          data:
+            - Scaffolding project in /work/demo...
+            - ""
+            - 'Done. Now run:'
+            - ""
+            - '  cd demo'
+            - '  npm install'
+            - '  npm run dev'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=create-vite --args='create-vite demo' --exit=0 --level=lite < plugins/npx/npx-compact/samples/npx-create.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 7
+            - bytes 92
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-create.txt full
+  commands:
+    - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=create-vite --args='create-vite demo' --exit=0 --level=full < plugins/npx/npx-compact/samples/npx-create.txt
+      checks:
+        - name: stdout
+          data:
+            - Scaffolding project in /work/demo...
+            - ""
+            - 'Done. Now run:'
+            - ""
+            - '  cd demo'
+            - '  npm install'
+            - '  npm run dev'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=create-vite --args='create-vite demo' --exit=0 --level=full < plugins/npx/npx-compact/samples/npx-create.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 7
+            - bytes 92
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-create.txt ultra
+  commands:
+    - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=create-vite --args='create-vite demo' --exit=0 --level=ultra < plugins/npx/npx-compact/samples/npx-create.txt
+      checks:
+        - name: stdout
+          data:
+            - Scaffolding project in /work/demo...
+            - ""
+            - 'Done. Now run:'
+            - ""
+            - '  cd demo'
+            - '  npm install'
+            - '  npm run dev'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=create-vite --args='create-vite demo' --exit=0 --level=ultra < plugins/npx/npx-compact/samples/npx-create.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 7
+            - bytes 92
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-error.txt lite
+  commands:
+    - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=tsc --args='tsc --noEmit' --exit=2 --level=lite < plugins/npx/npx-compact/samples/npx-error.txt
+      checks:
+        - name: stdout
+          data:
+            - 'src/index.ts:11:19 - error TS2307: Cannot find module ''./missing'' or its corresponding type declarations.'
+            - ""
+            - 11 import missing from './missing';
+            - '                     ~~~~~~~~~~~'
+            - ""
+            - 'src/index.ts:25:7 - error TS2322: Type ''string'' is not assignable to type ''number''.'
+            - ""
+            - '25 const port: number = process.env.PORT || ''3000'';'
+            - '         ~~~~'
+            - ""
+            - 'Found 2 errors in the same file, starting at: src/index.ts:11'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=tsc --args='tsc --noEmit' --exit=2 --level=lite < plugins/npx/npx-compact/samples/npx-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 11
+            - bytes 391
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-error.txt full
+  commands:
+    - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=tsc --args='tsc --noEmit' --exit=2 --level=full < plugins/npx/npx-compact/samples/npx-error.txt
+      checks:
+        - name: stdout
+          data:
+            - 'src/index.ts:11:19 - error TS2307: Cannot find module ''./missing'' or its corresponding type declarations.'
+            - ""
+            - 11 import missing from './missing';
+            - '                     ~~~~~~~~~~~'
+            - ""
+            - 'src/index.ts:25:7 - error TS2322: Type ''string'' is not assignable to type ''number''.'
+            - ""
+            - '25 const port: number = process.env.PORT || ''3000'';'
+            - '         ~~~~'
+            - ""
+            - 'Found 2 errors in the same file, starting at: src/index.ts:11'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=tsc --args='tsc --noEmit' --exit=2 --level=full < plugins/npx/npx-compact/samples/npx-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 11
+            - bytes 391
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-error.txt ultra
+  commands:
+    - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=tsc --args='tsc --noEmit' --exit=2 --level=ultra < plugins/npx/npx-compact/samples/npx-error.txt
+      checks:
+        - name: stdout
+          data:
+            - 'src/index.ts:11:19 - error TS2307: Cannot find module ''./missing'' or its corresponding type declarations.'
+            - 11 import missing from './missing';
+            - 'src/index.ts:25:7 - error TS2322: Type ''string'' is not assignable to type ''number''.'
+            - '25 const port: number = process.env.PORT || ''3000'';'
+            - 'Found 2 errors in the same file, starting at: src/index.ts:11'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=tsc --args='tsc --noEmit' --exit=2 --level=ultra < plugins/npx/npx-compact/samples/npx-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 5
+            - bytes 340
+        - name: exitcode
+          data:
+            - "0"

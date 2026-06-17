@@ -1,0 +1,197 @@
+- name: plugins/bun/bun-compact/tests.cue \ bun-compact \ samples/bun-install.txt lite
+  commands:
+    - command: lowfat filter plugins/bun/bun-compact/filter.lf --sub=add --args='add react' --exit=0 --level=lite < plugins/bun/bun-compact/samples/bun-install.txt
+      checks:
+        - name: stdout
+          data:
+            - bun add v1.1.18 (8f3a2b1c)
+            - ""
+            - ' + pkg-1@1.1.0'
+            - ' + pkg-2@1.2.0'
+            - ' + pkg-3@1.3.0'
+            - ' + pkg-4@1.4.0'
+            - ' + pkg-5@1.5.0'
+            - ' + pkg-6@1.6.0'
+            - ' + pkg-7@1.7.0'
+            - ' + pkg-8@1.8.0'
+            - ' + pkg-9@1.9.0'
+            - ' + pkg-10@1.10.0'
+            - ' + pkg-11@1.11.0'
+            - ' + pkg-12@1.12.0'
+            - ' + pkg-13@1.13.0'
+            - ' + pkg-14@1.14.0'
+            - ' + pkg-15@1.15.0'
+            - ' + pkg-16@1.16.0'
+            - ' + pkg-17@1.17.0'
+            - ' + pkg-18@1.18.0'
+            - ""
+            - ' 18 packages installed [1.23s]'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/bun/bun-compact/filter.lf --sub=add --args='add react' --exit=0 --level=lite < plugins/bun/bun-compact/samples/bun-install.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 22
+            - bytes 348
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/bun/bun-compact/tests.cue \ bun-compact \ samples/bun-install.txt full
+  commands:
+    - command: lowfat filter plugins/bun/bun-compact/filter.lf --sub=add --args='add react' --exit=0 --level=full < plugins/bun/bun-compact/samples/bun-install.txt
+      checks:
+        - name: stdout
+          data:
+            - bun add v1.1.18 (8f3a2b1c)
+            - ""
+            - ' + pkg-1@1.1.0'
+            - ' + pkg-2@1.2.0'
+            - ' + pkg-3@1.3.0'
+            - ' + pkg-4@1.4.0'
+            - ' + pkg-5@1.5.0'
+            - ' + pkg-6@1.6.0'
+            - ' + pkg-7@1.7.0'
+            - ' + pkg-8@1.8.0'
+            - ' + pkg-9@1.9.0'
+            - ' + pkg-10@1.10.0'
+            - ' + pkg-11@1.11.0'
+            - ' + pkg-12@1.12.0'
+            - ' + pkg-13@1.13.0'
+            - ' + pkg-14@1.14.0'
+            - ' + pkg-15@1.15.0'
+            - ' + pkg-16@1.16.0'
+            - ' + pkg-17@1.17.0'
+            - ' + pkg-18@1.18.0'
+            - ""
+            - ' 18 packages installed [1.23s]'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/bun/bun-compact/filter.lf --sub=add --args='add react' --exit=0 --level=full < plugins/bun/bun-compact/samples/bun-install.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 22
+            - bytes 348
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/bun/bun-compact/tests.cue \ bun-compact \ samples/bun-install.txt ultra
+  commands:
+    - command: lowfat filter plugins/bun/bun-compact/filter.lf --sub=add --args='add react' --exit=0 --level=ultra < plugins/bun/bun-compact/samples/bun-install.txt
+      checks:
+        - name: stdout
+          data:
+            - bun add v1.1.18 (8f3a2b1c)
+            - ' 18 packages installed [1.23s]'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/bun/bun-compact/filter.lf --sub=add --args='add react' --exit=0 --level=ultra < plugins/bun/bun-compact/samples/bun-install.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 2
+            - bytes 58
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/bun/bun-compact/tests.cue \ bun-compact \ samples/bun-test-fail.txt lite
+  commands:
+    - command: lowfat filter plugins/bun/bun-compact/filter.lf --sub=test --args='test' --exit=1 --level=lite < plugins/bun/bun-compact/samples/bun-test-fail.txt
+      checks:
+        - name: stdout
+          data:
+            - bun test v1.1.18 (8f3a2b1c)
+            - ""
+            - 'src/cart.test.ts:'
+            - ✓ adds items to cart [0.42ms]
+            - ✓ removes items [0.31ms]
+            - ✓ computes subtotal [0.55ms]
+            - ""
+            - 'src/checkout.test.ts:'
+            - ✓ charges the card [1.10ms]
+            - ✗ applies coupon to total [1.25ms]
+            - '  error: expected 1299 to be 1499'
+            - '      at src/checkout.test.ts:42:18'
+            - ""
+            - ' 5 pass'
+            - ' 1 fail'
+            - ' 1 expect() calls'
+            - Ran 6 tests across 2 files. [38.00ms]
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/bun/bun-compact/filter.lf --sub=test --args='test' --exit=1 --level=lite < plugins/bun/bun-compact/samples/bun-test-fail.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 17
+            - bytes 370
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/bun/bun-compact/tests.cue \ bun-compact \ samples/bun-test-fail.txt full
+  commands:
+    - command: lowfat filter plugins/bun/bun-compact/filter.lf --sub=test --args='test' --exit=1 --level=full < plugins/bun/bun-compact/samples/bun-test-fail.txt
+      checks:
+        - name: stdout
+          data:
+            - bun test v1.1.18 (8f3a2b1c)
+            - ""
+            - 'src/cart.test.ts:'
+            - ✓ adds items to cart [0.42ms]
+            - ✓ removes items [0.31ms]
+            - ✓ computes subtotal [0.55ms]
+            - ""
+            - 'src/checkout.test.ts:'
+            - ✓ charges the card [1.10ms]
+            - ✗ applies coupon to total [1.25ms]
+            - '  error: expected 1299 to be 1499'
+            - '      at src/checkout.test.ts:42:18'
+            - ""
+            - ' 5 pass'
+            - ' 1 fail'
+            - ' 1 expect() calls'
+            - Ran 6 tests across 2 files. [38.00ms]
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/bun/bun-compact/filter.lf --sub=test --args='test' --exit=1 --level=full < plugins/bun/bun-compact/samples/bun-test-fail.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 17
+            - bytes 370
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/bun/bun-compact/tests.cue \ bun-compact \ samples/bun-test-fail.txt ultra
+  commands:
+    - command: lowfat filter plugins/bun/bun-compact/filter.lf --sub=test --args='test' --exit=1 --level=ultra < plugins/bun/bun-compact/samples/bun-test-fail.txt
+      checks:
+        - name: stdout
+          data:
+            - bun test v1.1.18 (8f3a2b1c)
+            - 'src/cart.test.ts:'
+            - 'src/checkout.test.ts:'
+            - ✗ applies coupon to total [1.25ms]
+            - '  error: expected 1299 to be 1499'
+            - '      at src/checkout.test.ts:42:18'
+            - ' 5 pass'
+            - ' 1 fail'
+            - Ran 6 tests across 2 files. [38.00ms]
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/bun/bun-compact/filter.lf --sub=test --args='test' --exit=1 --level=ultra < plugins/bun/bun-compact/samples/bun-test-fail.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 9
+            - bytes 229
+        - name: exitcode
+          data:
+            - "0"

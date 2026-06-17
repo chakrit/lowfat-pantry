@@ -1,0 +1,360 @@
+- name: plugins/uv/uv-compact/tests.cue \ uv-compact \ samples/uv-run-pytest-fail.txt lite
+  commands:
+    - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=run --args='run pytest tests/' --exit=1 --level=lite < plugins/uv/uv-compact/samples/uv-run-pytest-fail.txt
+      checks:
+        - name: stdout
+          data:
+            - =================================== FAILURES ===================================
+            - ________________________ test_checkout_retries_gateway _________________________
+            - 'tests/test_api.py:88: in test_checkout_retries_gateway'
+            - '    response = client.post("/checkout", json=payload)'
+            - '    assert response.status_code == 200'
+            - E   assert 503 == 200
+            - E    +  where 503 = <Response [503]>.status_code
+            - ________________________ test_model_serializes_decimal _________________________
+            - 'tests/test_models.py:142: in test_model_serializes_decimal'
+            - '    assert order.to_dict()["total"] == "19.99"'
+            - 'E   AssertionError: assert Decimal(''19.99'') == ''19.99'''
+            - E    +  where Decimal('19.99') = <Order id=7>.total
+            - =========================== short test summary info ============================
+            - FAILED tests/test_api.py::test_checkout_retries_gateway - assert 503 == 200
+            - FAILED tests/test_models.py::test_model_serializes_decimal - AssertionError
+            - ========================= 2 failed, 56 passed in 1.84s =========================
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=run --args='run pytest tests/' --exit=1 --level=lite < plugins/uv/uv-compact/samples/uv-run-pytest-fail.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 16
+            - bytes 989
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/uv/uv-compact/tests.cue \ uv-compact \ samples/uv-run-pytest-fail.txt full
+  commands:
+    - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=run --args='run pytest tests/' --exit=1 --level=full < plugins/uv/uv-compact/samples/uv-run-pytest-fail.txt
+      checks:
+        - name: stdout
+          data:
+            - =================================== FAILURES ===================================
+            - ________________________ test_checkout_retries_gateway _________________________
+            - 'tests/test_api.py:88: in test_checkout_retries_gateway'
+            - '    response = client.post("/checkout", json=payload)'
+            - '    assert response.status_code == 200'
+            - E   assert 503 == 200
+            - E    +  where 503 = <Response [503]>.status_code
+            - ________________________ test_model_serializes_decimal _________________________
+            - 'tests/test_models.py:142: in test_model_serializes_decimal'
+            - '    assert order.to_dict()["total"] == "19.99"'
+            - 'E   AssertionError: assert Decimal(''19.99'') == ''19.99'''
+            - E    +  where Decimal('19.99') = <Order id=7>.total
+            - =========================== short test summary info ============================
+            - FAILED tests/test_api.py::test_checkout_retries_gateway - assert 503 == 200
+            - FAILED tests/test_models.py::test_model_serializes_decimal - AssertionError
+            - ========================= 2 failed, 56 passed in 1.84s =========================
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=run --args='run pytest tests/' --exit=1 --level=full < plugins/uv/uv-compact/samples/uv-run-pytest-fail.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 16
+            - bytes 989
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/uv/uv-compact/tests.cue \ uv-compact \ samples/uv-run-pytest-fail.txt ultra
+  commands:
+    - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=run --args='run pytest tests/' --exit=1 --level=ultra < plugins/uv/uv-compact/samples/uv-run-pytest-fail.txt
+      checks:
+        - name: stdout
+          data:
+            - =================================== FAILURES ===================================
+            - ________________________ test_checkout_retries_gateway _________________________
+            - E   assert 503 == 200
+            - E    +  where 503 = <Response [503]>.status_code
+            - ________________________ test_model_serializes_decimal _________________________
+            - 'E   AssertionError: assert Decimal(''19.99'') == ''19.99'''
+            - E    +  where Decimal('19.99') = <Order id=7>.total
+            - =========================== short test summary info ============================
+            - FAILED tests/test_api.py::test_checkout_retries_gateway - assert 503 == 200
+            - FAILED tests/test_models.py::test_model_serializes_decimal - AssertionError
+            - ========================= 2 failed, 56 passed in 1.84s =========================
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=run --args='run pytest tests/' --exit=1 --level=ultra < plugins/uv/uv-compact/samples/uv-run-pytest-fail.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 11
+            - bytes 735
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/uv/uv-compact/tests.cue \ uv-compact \ samples/uv-run-ruff.txt lite
+  commands:
+    - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=ruff --args='ruff check src/' --exit=1 --level=lite < plugins/uv/uv-compact/samples/uv-run-ruff.txt
+      checks:
+        - name: stdout
+          data:
+            - 'src/checkout/api.py:12:1: F401 [*] `os` imported but unused'
+            - 'src/checkout/api.py:48:5: E722 Do not use bare `except`'
+            - 'src/checkout/config.py:7:80: E501 Line too long (94 > 88)'
+            - 'src/checkout/models.py:33:9: B008 Do not perform function call in argument defaults'
+            - 'src/checkout/models.py:91:1: F811 Redefinition of unused `Order`'
+            - 'src/checkout/tasks.py:5:1: I001 [*] Import block is un-sorted or un-formatted'
+            - 'src/checkout/tasks.py:60:13: SIM108 Use ternary operator instead of if-else-block'
+            - Found 7 errors.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=ruff --args='ruff check src/' --exit=1 --level=lite < plugins/uv/uv-compact/samples/uv-run-ruff.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 8
+            - bytes 499
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/uv/uv-compact/tests.cue \ uv-compact \ samples/uv-run-ruff.txt full
+  commands:
+    - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=ruff --args='ruff check src/' --exit=1 --level=full < plugins/uv/uv-compact/samples/uv-run-ruff.txt
+      checks:
+        - name: stdout
+          data:
+            - 'src/checkout/api.py:12:1: F401 [*] `os` imported but unused'
+            - 'src/checkout/api.py:48:5: E722 Do not use bare `except`'
+            - 'src/checkout/config.py:7:80: E501 Line too long (94 > 88)'
+            - 'src/checkout/models.py:33:9: B008 Do not perform function call in argument defaults'
+            - 'src/checkout/models.py:91:1: F811 Redefinition of unused `Order`'
+            - 'src/checkout/tasks.py:5:1: I001 [*] Import block is un-sorted or un-formatted'
+            - 'src/checkout/tasks.py:60:13: SIM108 Use ternary operator instead of if-else-block'
+            - Found 7 errors.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=ruff --args='ruff check src/' --exit=1 --level=full < plugins/uv/uv-compact/samples/uv-run-ruff.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 8
+            - bytes 499
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/uv/uv-compact/tests.cue \ uv-compact \ samples/uv-run-ruff.txt ultra
+  commands:
+    - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=ruff --args='ruff check src/' --exit=1 --level=ultra < plugins/uv/uv-compact/samples/uv-run-ruff.txt
+      checks:
+        - name: stdout
+          data:
+            - 'src/checkout/api.py:12:1: F401 [*] `os` imported but unused'
+            - 'src/checkout/api.py:48:5: E722 Do not use bare `except`'
+            - 'src/checkout/config.py:7:80: E501 Line too long (94 > 88)'
+            - 'src/checkout/models.py:33:9: B008 Do not perform function call in argument defaults'
+            - 'src/checkout/models.py:91:1: F811 Redefinition of unused `Order`'
+            - 'src/checkout/tasks.py:5:1: I001 [*] Import block is un-sorted or un-formatted'
+            - 'src/checkout/tasks.py:60:13: SIM108 Use ternary operator instead of if-else-block'
+            - Found 7 errors.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=ruff --args='ruff check src/' --exit=1 --level=ultra < plugins/uv/uv-compact/samples/uv-run-ruff.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 8
+            - bytes 499
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/uv/uv-compact/tests.cue \ uv-compact \ samples/uv-sync.txt lite
+  commands:
+    - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=sync --args='sync' --exit=0 --level=lite < plugins/uv/uv-compact/samples/uv-sync.txt
+      checks:
+        - name: stdout
+          data:
+            - Resolved 41 packages in 312ms
+            - '      Built checkout-service @ file:///repo'
+            - Prepared 18 packages in 1.21s
+            - Installed 41 packages in 96ms
+            - ' + annotated-types==0.7.0'
+            - ' + anyio==4.4.0'
+            - ' + certifi==2024.7.4'
+            - ' + click==8.1.7'
+            - ' + fastapi==0.111.1'
+            - ' + httpx==0.27.0'
+            - ' + idna==3.7'
+            - ' + pydantic==2.8.2'
+            - ' + sqlalchemy==2.0.31'
+            - ' + starlette==0.37.2'
+            - ' + uvicorn==0.30.3'
+            - Audited 41 packages in 0.04ms
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=sync --args='sync' --exit=0 --level=lite < plugins/uv/uv-compact/samples/uv-sync.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 16
+            - bytes 374
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/uv/uv-compact/tests.cue \ uv-compact \ samples/uv-sync.txt full
+  commands:
+    - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=sync --args='sync' --exit=0 --level=full < plugins/uv/uv-compact/samples/uv-sync.txt
+      checks:
+        - name: stdout
+          data:
+            - Resolved 41 packages in 312ms
+            - '      Built checkout-service @ file:///repo'
+            - Prepared 18 packages in 1.21s
+            - Installed 41 packages in 96ms
+            - ' + annotated-types==0.7.0'
+            - ' + anyio==4.4.0'
+            - ' + certifi==2024.7.4'
+            - ' + click==8.1.7'
+            - ' + fastapi==0.111.1'
+            - ' + httpx==0.27.0'
+            - ' + idna==3.7'
+            - ' + pydantic==2.8.2'
+            - ' + sqlalchemy==2.0.31'
+            - ' + starlette==0.37.2'
+            - ' + uvicorn==0.30.3'
+            - Audited 41 packages in 0.04ms
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=sync --args='sync' --exit=0 --level=full < plugins/uv/uv-compact/samples/uv-sync.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 16
+            - bytes 374
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/uv/uv-compact/tests.cue \ uv-compact \ samples/uv-sync.txt ultra
+  commands:
+    - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=sync --args='sync' --exit=0 --level=ultra < plugins/uv/uv-compact/samples/uv-sync.txt
+      checks:
+        - name: stdout
+          data:
+            - Resolved 41 packages in 312ms
+            - '      Built checkout-service @ file:///repo'
+            - Prepared 18 packages in 1.21s
+            - Installed 41 packages in 96ms
+            - ' + annotated-types==0.7.0'
+            - ' + anyio==4.4.0'
+            - ' + certifi==2024.7.4'
+            - ' + click==8.1.7'
+            - ' + fastapi==0.111.1'
+            - ' + httpx==0.27.0'
+            - ' + idna==3.7'
+            - ' + pydantic==2.8.2'
+            - ' + sqlalchemy==2.0.31'
+            - ' + starlette==0.37.2'
+            - ' + uvicorn==0.30.3'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=sync --args='sync' --exit=0 --level=ultra < plugins/uv/uv-compact/samples/uv-sync.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 15
+            - bytes 344
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/uv/uv-compact/tests.cue \ uv-compact \ samples/uv-run-app.txt lite
+  commands:
+    - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=run --args='run uvicorn app:api' --exit=0 --level=lite < plugins/uv/uv-compact/samples/uv-run-app.txt
+      checks:
+        - name: stdout
+          data:
+            - 'INFO:     Started server process [48213]'
+            - 'INFO:     Waiting for application startup.'
+            - 'INFO:     Application startup complete.'
+            - 'INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)'
+            - 'INFO:     127.0.0.1:53120 - "GET /health HTTP/1.1" 200 OK'
+            - 'INFO:     127.0.0.1:53121 - "POST /checkout HTTP/1.1" 201 Created'
+            - 'INFO:     127.0.0.1:53122 - "GET /orders/7 HTTP/1.1" 200 OK'
+            - 'INFO:     Shutting down'
+            - 'INFO:     Application shutdown complete.'
+            - 'INFO:     Finished server process [48213]'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=run --args='run uvicorn app:api' --exit=0 --level=lite < plugins/uv/uv-compact/samples/uv-run-app.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 10
+            - bytes 489
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/uv/uv-compact/tests.cue \ uv-compact \ samples/uv-run-app.txt full
+  commands:
+    - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=run --args='run uvicorn app:api' --exit=0 --level=full < plugins/uv/uv-compact/samples/uv-run-app.txt
+      checks:
+        - name: stdout
+          data:
+            - 'INFO:     Started server process [48213]'
+            - 'INFO:     Waiting for application startup.'
+            - 'INFO:     Application startup complete.'
+            - 'INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)'
+            - 'INFO:     127.0.0.1:53120 - "GET /health HTTP/1.1" 200 OK'
+            - 'INFO:     127.0.0.1:53121 - "POST /checkout HTTP/1.1" 201 Created'
+            - 'INFO:     127.0.0.1:53122 - "GET /orders/7 HTTP/1.1" 200 OK'
+            - 'INFO:     Shutting down'
+            - 'INFO:     Application shutdown complete.'
+            - 'INFO:     Finished server process [48213]'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=run --args='run uvicorn app:api' --exit=0 --level=full < plugins/uv/uv-compact/samples/uv-run-app.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 10
+            - bytes 489
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/uv/uv-compact/tests.cue \ uv-compact \ samples/uv-run-app.txt ultra
+  commands:
+    - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=run --args='run uvicorn app:api' --exit=0 --level=ultra < plugins/uv/uv-compact/samples/uv-run-app.txt
+      checks:
+        - name: stdout
+          data:
+            - 'INFO:     Started server process [48213]'
+            - 'INFO:     Waiting for application startup.'
+            - 'INFO:     Application startup complete.'
+            - 'INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)'
+            - 'INFO:     127.0.0.1:53120 - "GET /health HTTP/1.1" 200 OK'
+            - 'INFO:     127.0.0.1:53121 - "POST /checkout HTTP/1.1" 201 Created'
+            - 'INFO:     127.0.0.1:53122 - "GET /orders/7 HTTP/1.1" 200 OK'
+            - 'INFO:     Shutting down'
+            - 'INFO:     Application shutdown complete.'
+            - 'INFO:     Finished server process [48213]'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=run --args='run uvicorn app:api' --exit=0 --level=ultra < plugins/uv/uv-compact/samples/uv-run-app.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 10
+            - bytes 489
+        - name: exitcode
+          data:
+            - "0"

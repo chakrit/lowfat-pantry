@@ -1,0 +1,336 @@
+- name: plugins/glab/glab-compact/tests.cue \ glab-compact \ samples/glab-mr-list.txt lite
+  commands:
+    - command: lowfat filter plugins/glab/glab-compact/filter.lf --sub=mr --args='list' --exit=0 --level=lite < plugins/glab/glab-compact/samples/glab-mr-list.txt
+      checks:
+        - name: stdout
+          data:
+            - Showing 5 open merge requests on chakrit/shop (page 1)
+            - ""
+            - "!214\tFix checkout 503 on gateway timeout\t(bug/checkout-503) → (main)"
+            - "!215\tAdd pantry cache layer\t(feat/pantry-cache) → (main)"
+            - "!216\tBump golangci-lint to 1.59\t(chore/lint-bump) → (main)"
+            - "!217\tRefactor payment client\t(refactor/payments) → (main)"
+            - "!218\tDocs: lowfat filter cookbook\t(docs/cookbook) → (main)"
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/glab/glab-compact/filter.lf --sub=mr --args='list' --exit=0 --level=lite < plugins/glab/glab-compact/samples/glab-mr-list.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 7
+            - bytes 368
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/glab/glab-compact/tests.cue \ glab-compact \ samples/glab-mr-list.txt full
+  commands:
+    - command: lowfat filter plugins/glab/glab-compact/filter.lf --sub=mr --args='list' --exit=0 --level=full < plugins/glab/glab-compact/samples/glab-mr-list.txt
+      checks:
+        - name: stdout
+          data:
+            - Showing 5 open merge requests on chakrit/shop (page 1)
+            - ""
+            - "!214\tFix checkout 503 on gateway timeout\t(bug/checkout-503) → (main)"
+            - "!215\tAdd pantry cache layer\t(feat/pantry-cache) → (main)"
+            - "!216\tBump golangci-lint to 1.59\t(chore/lint-bump) → (main)"
+            - "!217\tRefactor payment client\t(refactor/payments) → (main)"
+            - "!218\tDocs: lowfat filter cookbook\t(docs/cookbook) → (main)"
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/glab/glab-compact/filter.lf --sub=mr --args='list' --exit=0 --level=full < plugins/glab/glab-compact/samples/glab-mr-list.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 7
+            - bytes 368
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/glab/glab-compact/tests.cue \ glab-compact \ samples/glab-mr-list.txt ultra
+  commands:
+    - command: lowfat filter plugins/glab/glab-compact/filter.lf --sub=mr --args='list' --exit=0 --level=ultra < plugins/glab/glab-compact/samples/glab-mr-list.txt
+      checks:
+        - name: stdout
+          data:
+            - Showing 5 open merge requests on chakrit/shop (page 1)
+            - ""
+            - "!214\tFix checkout 503 on gateway timeout\t(bug/checkout-503) → (main)"
+            - "!215\tAdd pantry cache layer\t(feat/pantry-cache) → (main)"
+            - "!216\tBump golangci-lint to 1.59\t(chore/lint-bump) → (main)"
+            - "!217\tRefactor payment client\t(refactor/payments) → (main)"
+            - "!218\tDocs: lowfat filter cookbook\t(docs/cookbook) → (main)"
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/glab/glab-compact/filter.lf --sub=mr --args='list' --exit=0 --level=ultra < plugins/glab/glab-compact/samples/glab-mr-list.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 7
+            - bytes 368
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/glab/glab-compact/tests.cue \ glab-compact \ samples/glab-ci-trace.txt lite
+  commands:
+    - command: lowfat filter plugins/glab/glab-compact/filter.lf --sub=ci --args='trace --trace' --exit=0 --level=lite < plugins/glab/glab-compact/samples/glab-ci-trace.txt
+      checks:
+        - name: stdout
+          data:
+            - Getting pipeline trace for job 99421...
+            - $ go test ./internal/checkout step 1
+            - $ go test ./internal/checkout step 2
+            - $ go test ./internal/checkout step 3
+            - $ go test ./internal/checkout step 4
+            - $ go test ./internal/checkout step 5
+            - $ go test ./internal/checkout step 6
+            - $ go test ./internal/checkout step 7
+            - $ go test ./internal/checkout step 8
+            - $ go test ./internal/checkout step 9
+            - $ go test ./internal/checkout step 10
+            - $ go test ./internal/checkout step 11
+            - $ go test ./internal/checkout step 12
+            - $ go test ./internal/checkout step 13
+            - $ go test ./internal/checkout step 14
+            - $ go test ./internal/checkout step 15
+            - $ go test ./internal/checkout step 16
+            - $ go test ./internal/checkout step 17
+            - $ go test ./internal/checkout step 18
+            - $ go test ./internal/checkout step 19
+            - $ go test ./internal/checkout step 20
+            - $ go test ./internal/checkout step 21
+            - $ go test ./internal/checkout step 22
+            - $ go test ./internal/checkout step 23
+            - $ go test ./internal/checkout step 24
+            - $ go test ./internal/checkout step 25
+            - $ go test ./internal/checkout step 26
+            - $ go test ./internal/checkout step 27
+            - $ go test ./internal/checkout step 28
+            - $ go test ./internal/checkout step 29
+            - $ go test ./internal/checkout step 30
+            - $ go test ./internal/checkout step 31
+            - $ go test ./internal/checkout step 32
+            - $ go test ./internal/checkout step 33
+            - $ go test ./internal/checkout step 34
+            - $ go test ./internal/checkout step 35
+            - $ go test ./internal/checkout step 36
+            - $ go test ./internal/checkout step 37
+            - $ go test ./internal/checkout step 38
+            - $ go test ./internal/checkout step 39
+            - $ go test ./internal/checkout step 40
+            - $ go test ./internal/checkout step 41
+            - $ go test ./internal/checkout step 42
+            - $ go test ./internal/checkout step 43
+            - $ go test ./internal/checkout step 44
+            - $ go test ./internal/checkout step 45
+            - $ go test ./internal/checkout step 46
+            - $ go test ./internal/checkout step 47
+            - $ go test ./internal/checkout step 48
+            - $ go test ./internal/checkout step 49
+            - $ go test ./internal/checkout step 50
+            - '--- FAIL: TestCheckoutRetriesGateway (0.04s)'
+            - '    api_test.go:142: expected 200, got 503'
+            - "FAIL\tchakrit/shop/internal/checkout\t0.12s"
+            - 'ERROR: Job failed: exit code 1'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/glab/glab-compact/filter.lf --sub=ci --args='trace --trace' --exit=0 --level=lite < plugins/glab/glab-compact/samples/glab-ci-trace.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 55
+            - bytes 2092
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/glab/glab-compact/tests.cue \ glab-compact \ samples/glab-ci-trace.txt full
+  commands:
+    - command: lowfat filter plugins/glab/glab-compact/filter.lf --sub=ci --args='trace --trace' --exit=0 --level=full < plugins/glab/glab-compact/samples/glab-ci-trace.txt
+      checks:
+        - name: stdout
+          data:
+            - Getting pipeline trace for job 99421...
+            - $ go test ./internal/checkout step 1
+            - $ go test ./internal/checkout step 2
+            - $ go test ./internal/checkout step 3
+            - $ go test ./internal/checkout step 4
+            - $ go test ./internal/checkout step 5
+            - $ go test ./internal/checkout step 6
+            - $ go test ./internal/checkout step 7
+            - $ go test ./internal/checkout step 8
+            - $ go test ./internal/checkout step 9
+            - $ go test ./internal/checkout step 10
+            - $ go test ./internal/checkout step 11
+            - $ go test ./internal/checkout step 12
+            - $ go test ./internal/checkout step 13
+            - $ go test ./internal/checkout step 14
+            - $ go test ./internal/checkout step 15
+            - $ go test ./internal/checkout step 16
+            - $ go test ./internal/checkout step 17
+            - $ go test ./internal/checkout step 18
+            - $ go test ./internal/checkout step 19
+            - $ go test ./internal/checkout step 20
+            - $ go test ./internal/checkout step 21
+            - $ go test ./internal/checkout step 22
+            - $ go test ./internal/checkout step 23
+            - $ go test ./internal/checkout step 24
+            - $ go test ./internal/checkout step 25
+            - $ go test ./internal/checkout step 26
+            - $ go test ./internal/checkout step 27
+            - $ go test ./internal/checkout step 28
+            - $ go test ./internal/checkout step 29
+            - $ go test ./internal/checkout step 30
+            - $ go test ./internal/checkout step 31
+            - $ go test ./internal/checkout step 32
+            - $ go test ./internal/checkout step 33
+            - $ go test ./internal/checkout step 34
+            - $ go test ./internal/checkout step 35
+            - $ go test ./internal/checkout step 36
+            - $ go test ./internal/checkout step 37
+            - $ go test ./internal/checkout step 38
+            - $ go test ./internal/checkout step 39
+            - $ go test ./internal/checkout step 40
+            - $ go test ./internal/checkout step 41
+            - $ go test ./internal/checkout step 42
+            - $ go test ./internal/checkout step 43
+            - $ go test ./internal/checkout step 44
+            - $ go test ./internal/checkout step 45
+            - $ go test ./internal/checkout step 46
+            - $ go test ./internal/checkout step 47
+            - $ go test ./internal/checkout step 48
+            - $ go test ./internal/checkout step 49
+            - $ go test ./internal/checkout step 50
+            - '--- FAIL: TestCheckoutRetriesGateway (0.04s)'
+            - '    api_test.go:142: expected 200, got 503'
+            - "FAIL\tchakrit/shop/internal/checkout\t0.12s"
+            - 'ERROR: Job failed: exit code 1'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/glab/glab-compact/filter.lf --sub=ci --args='trace --trace' --exit=0 --level=full < plugins/glab/glab-compact/samples/glab-ci-trace.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 55
+            - bytes 2092
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/glab/glab-compact/tests.cue \ glab-compact \ samples/glab-ci-trace.txt ultra
+  commands:
+    - command: lowfat filter plugins/glab/glab-compact/filter.lf --sub=ci --args='trace --trace' --exit=0 --level=ultra < plugins/glab/glab-compact/samples/glab-ci-trace.txt
+      checks:
+        - name: stdout
+          data:
+            - $ go test ./internal/checkout step 15
+            - $ go test ./internal/checkout step 16
+            - $ go test ./internal/checkout step 17
+            - $ go test ./internal/checkout step 18
+            - $ go test ./internal/checkout step 19
+            - $ go test ./internal/checkout step 20
+            - $ go test ./internal/checkout step 21
+            - $ go test ./internal/checkout step 22
+            - $ go test ./internal/checkout step 23
+            - $ go test ./internal/checkout step 24
+            - $ go test ./internal/checkout step 25
+            - $ go test ./internal/checkout step 26
+            - $ go test ./internal/checkout step 27
+            - $ go test ./internal/checkout step 28
+            - $ go test ./internal/checkout step 29
+            - $ go test ./internal/checkout step 30
+            - $ go test ./internal/checkout step 31
+            - $ go test ./internal/checkout step 32
+            - $ go test ./internal/checkout step 33
+            - $ go test ./internal/checkout step 34
+            - $ go test ./internal/checkout step 35
+            - $ go test ./internal/checkout step 36
+            - $ go test ./internal/checkout step 37
+            - $ go test ./internal/checkout step 38
+            - $ go test ./internal/checkout step 39
+            - $ go test ./internal/checkout step 40
+            - $ go test ./internal/checkout step 41
+            - $ go test ./internal/checkout step 42
+            - $ go test ./internal/checkout step 43
+            - $ go test ./internal/checkout step 44
+            - $ go test ./internal/checkout step 45
+            - $ go test ./internal/checkout step 46
+            - $ go test ./internal/checkout step 47
+            - $ go test ./internal/checkout step 48
+            - $ go test ./internal/checkout step 49
+            - $ go test ./internal/checkout step 50
+            - '--- FAIL: TestCheckoutRetriesGateway (0.04s)'
+            - '    api_test.go:142: expected 200, got 503'
+            - "FAIL\tchakrit/shop/internal/checkout\t0.12s"
+            - 'ERROR: Job failed: exit code 1'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/glab/glab-compact/filter.lf --sub=ci --args='trace --trace' --exit=0 --level=ultra < plugins/glab/glab-compact/samples/glab-ci-trace.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 40
+            - bytes 1529
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/glab/glab-compact/tests.cue \ glab-compact \ samples/glab-mr-json.txt lite
+  commands:
+    - command: lowfat filter plugins/glab/glab-compact/filter.lf --sub=mr --args='view 214 -F json' --exit=0 --level=lite < plugins/glab/glab-compact/samples/glab-mr-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{"iid":214,"state":"opened","title":"Fix checkout 503 on gateway timeout","source_branch":"bug/checkout-503"}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/glab/glab-compact/filter.lf --sub=mr --args='view 214 -F json' --exit=0 --level=lite < plugins/glab/glab-compact/samples/glab-mr-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 110
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/glab/glab-compact/tests.cue \ glab-compact \ samples/glab-mr-json.txt full
+  commands:
+    - command: lowfat filter plugins/glab/glab-compact/filter.lf --sub=mr --args='view 214 -F json' --exit=0 --level=full < plugins/glab/glab-compact/samples/glab-mr-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{"iid":214,"state":"opened","title":"Fix checkout 503 on gateway timeout","source_branch":"bug/checkout-503"}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/glab/glab-compact/filter.lf --sub=mr --args='view 214 -F json' --exit=0 --level=full < plugins/glab/glab-compact/samples/glab-mr-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 110
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/glab/glab-compact/tests.cue \ glab-compact \ samples/glab-mr-json.txt ultra
+  commands:
+    - command: lowfat filter plugins/glab/glab-compact/filter.lf --sub=mr --args='view 214 -F json' --exit=0 --level=ultra < plugins/glab/glab-compact/samples/glab-mr-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{"iid":214,"state":"opened","title":"Fix checkout 503 on gateway timeout","source_branch":"bug/checkout-503"}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/glab/glab-compact/filter.lf --sub=mr --args='view 214 -F json' --exit=0 --level=ultra < plugins/glab/glab-compact/samples/glab-mr-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 110
+        - name: exitcode
+          data:
+            - "0"

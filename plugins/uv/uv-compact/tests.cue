@@ -1,19 +1,19 @@
-// Golden-file drift tests for go-compact, run by chakrit/smoke (>= v0.3.0).
+// Golden-file drift tests for uv-compact, run by chakrit/smoke (>= v0.3.0).
 // Migrated once from tests.yml; this file is now the source of truth.
 // Invoke from the REPO ROOT (smoke runs commands in the invocation cwd):
-//   smoke plugins/go/go-compact/tests.cue        # UNCHANGED/0 = no drift
-//   smoke -c plugins/go/go-compact/tests.cue     # re-lock intentionally
+//   smoke plugins/uv/uv-compact/tests.cue        # UNCHANGED/0 = no drift
+//   smoke -c plugins/uv/uv-compact/tests.cue     # re-lock intentionally
 //
 // `_`-hidden fields template the case x level matrix and never reach
 // smoke's closed schema. Each case locks the raw filter output (literal
 // golden) and the same piped through scripts/measure.py (size metrics);
 // smoke is the sole judge, measure.py only emits.
-_dir: "plugins/go/go-compact"
+_dir: "plugins/uv/uv-compact"
 _cases: [
-	{sample: "samples/go-test-fail.txt", sub: "test", args: "./...", exit: 1, levels: ["lite", "full", "ultra"]},
-	{sample: "samples/go-build-error.txt", sub: "build", args: "./cmd/api", exit: 1, levels: ["lite", "full", "ultra"]},
-	{sample: "samples/go-mod-download.txt", sub: "mod", args: "download", exit: 0, levels: ["lite", "full", "ultra"]},
-	{sample: "samples/go-test-pass.txt", sub: "test", args: "test -v ./...", exit: 0, levels: ["lite", "full", "ultra"]},
+	{sample: "samples/uv-run-pytest-fail.txt", sub: "run", args: "run pytest tests/", exit: 1, levels: ["lite", "full", "ultra"]},
+	{sample: "samples/uv-run-ruff.txt", sub: "ruff", args: "ruff check src/", exit: 1, levels: ["lite", "full", "ultra"]},
+	{sample: "samples/uv-sync.txt", sub: "sync", args: "sync", exit: 0, levels: ["lite", "full", "ultra"]},
+	{sample: "samples/uv-run-app.txt", sub: "run", args: "run uvicorn app:api", exit: 0, levels: ["lite", "full", "ultra"]},
 ]
 
 config: {
@@ -21,7 +21,7 @@ config: {
 	timeout:     "10s"
 }
 tests: [{
-	name: "go-compact"
+	name: "uv-compact"
 	checks: ["stdout", "exitcode"]
 	tests: [
 		for c in _cases for l in c.levels {

@@ -1,0 +1,260 @@
+- name: plugins/gcloud/gcloud-compact/tests.cue \ gcloud-compact \ samples/gcloud-list.txt lite
+  commands:
+    - command: lowfat filter plugins/gcloud/gcloud-compact/filter.lf --sub=compute --args='compute instances list' --exit=0 --level=lite < plugins/gcloud/gcloud-compact/samples/gcloud-list.txt
+      checks:
+        - name: stdout
+          data:
+            - NAME       ZONE           MACHINE_TYPE  PREEMPTIBLE  INTERNAL_IP  EXTERNAL_IP    STATUS
+            - web-01     us-central1-a  e2-medium                  10.0.0.1     34.10.20.1     RUNNING
+            - web-02     us-central1-a  e2-medium                  10.0.0.2     34.10.20.2     RUNNING
+            - web-03     us-central1-a  e2-medium                  10.0.0.3     34.10.20.3     RUNNING
+            - web-04     us-central1-a  e2-medium                  10.0.0.4     34.10.20.4     RUNNING
+            - web-05     us-central1-a  e2-medium                  10.0.0.5     34.10.20.5     RUNNING
+            - web-06     us-central1-a  e2-medium                  10.0.0.6     34.10.20.6     RUNNING
+            - web-07     us-central1-a  e2-medium                  10.0.0.7     34.10.20.7     RUNNING
+            - web-08     us-central1-a  e2-medium                  10.0.0.8     34.10.20.8     RUNNING
+            - web-09     us-central1-a  e2-medium                  10.0.0.9     34.10.20.9     RUNNING
+            - web-10     us-central1-a  e2-medium                  10.0.0.10    34.10.20.10    RUNNING
+            - web-11     us-central1-a  e2-medium                  10.0.0.11    34.10.20.11    RUNNING
+            - web-12     us-central1-a  e2-medium                  10.0.0.12    34.10.20.12    RUNNING
+            - web-13     us-central1-a  e2-medium                  10.0.0.13    34.10.20.13    RUNNING
+            - web-14     us-central1-a  e2-medium                  10.0.0.14    34.10.20.14    RUNNING
+            - web-15     us-central1-a  e2-medium                  10.0.0.15    34.10.20.15    RUNNING
+            - web-16     us-central1-a  e2-medium                  10.0.0.16    34.10.20.16    RUNNING
+            - web-17     us-central1-a  e2-medium                  10.0.0.17    34.10.20.17    RUNNING
+            - web-18     us-central1-a  e2-medium                  10.0.0.18    34.10.20.18    RUNNING
+            - web-19     us-central1-a  e2-medium                  10.0.0.19    34.10.20.19    RUNNING
+            - web-20     us-central1-a  e2-medium                  10.0.0.20    34.10.20.20    RUNNING
+            - web-21     us-central1-a  e2-medium                  10.0.0.21    34.10.20.21    RUNNING
+            - web-22     us-central1-a  e2-medium                  10.0.0.22    34.10.20.22    RUNNING
+            - web-23     us-central1-a  e2-medium                  10.0.0.23    34.10.20.23    RUNNING
+            - web-24     us-central1-a  e2-medium                  10.0.0.24    34.10.20.24    RUNNING
+            - web-25     us-central1-a  e2-medium                  10.0.0.25    34.10.20.25    RUNNING
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/gcloud/gcloud-compact/filter.lf --sub=compute --args='compute instances list' --exit=0 --level=lite < plugins/gcloud/gcloud-compact/samples/gcloud-list.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 26
+            - bytes 2313
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/gcloud/gcloud-compact/tests.cue \ gcloud-compact \ samples/gcloud-list.txt full
+  commands:
+    - command: lowfat filter plugins/gcloud/gcloud-compact/filter.lf --sub=compute --args='compute instances list' --exit=0 --level=full < plugins/gcloud/gcloud-compact/samples/gcloud-list.txt
+      checks:
+        - name: stdout
+          data:
+            - NAME       ZONE           MACHINE_TYPE  PREEMPTIBLE  INTERNAL_IP  EXTERNAL_IP    STATUS
+            - web-01     us-central1-a  e2-medium                  10.0.0.1     34.10.20.1     RUNNING
+            - web-02     us-central1-a  e2-medium                  10.0.0.2     34.10.20.2     RUNNING
+            - web-03     us-central1-a  e2-medium                  10.0.0.3     34.10.20.3     RUNNING
+            - web-04     us-central1-a  e2-medium                  10.0.0.4     34.10.20.4     RUNNING
+            - web-05     us-central1-a  e2-medium                  10.0.0.5     34.10.20.5     RUNNING
+            - web-06     us-central1-a  e2-medium                  10.0.0.6     34.10.20.6     RUNNING
+            - web-07     us-central1-a  e2-medium                  10.0.0.7     34.10.20.7     RUNNING
+            - web-08     us-central1-a  e2-medium                  10.0.0.8     34.10.20.8     RUNNING
+            - web-09     us-central1-a  e2-medium                  10.0.0.9     34.10.20.9     RUNNING
+            - web-10     us-central1-a  e2-medium                  10.0.0.10    34.10.20.10    RUNNING
+            - web-11     us-central1-a  e2-medium                  10.0.0.11    34.10.20.11    RUNNING
+            - web-12     us-central1-a  e2-medium                  10.0.0.12    34.10.20.12    RUNNING
+            - web-13     us-central1-a  e2-medium                  10.0.0.13    34.10.20.13    RUNNING
+            - web-14     us-central1-a  e2-medium                  10.0.0.14    34.10.20.14    RUNNING
+            - web-15     us-central1-a  e2-medium                  10.0.0.15    34.10.20.15    RUNNING
+            - web-16     us-central1-a  e2-medium                  10.0.0.16    34.10.20.16    RUNNING
+            - web-17     us-central1-a  e2-medium                  10.0.0.17    34.10.20.17    RUNNING
+            - web-18     us-central1-a  e2-medium                  10.0.0.18    34.10.20.18    RUNNING
+            - web-19     us-central1-a  e2-medium                  10.0.0.19    34.10.20.19    RUNNING
+            - web-20     us-central1-a  e2-medium                  10.0.0.20    34.10.20.20    RUNNING
+            - web-21     us-central1-a  e2-medium                  10.0.0.21    34.10.20.21    RUNNING
+            - web-22     us-central1-a  e2-medium                  10.0.0.22    34.10.20.22    RUNNING
+            - web-23     us-central1-a  e2-medium                  10.0.0.23    34.10.20.23    RUNNING
+            - web-24     us-central1-a  e2-medium                  10.0.0.24    34.10.20.24    RUNNING
+            - web-25     us-central1-a  e2-medium                  10.0.0.25    34.10.20.25    RUNNING
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/gcloud/gcloud-compact/filter.lf --sub=compute --args='compute instances list' --exit=0 --level=full < plugins/gcloud/gcloud-compact/samples/gcloud-list.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 26
+            - bytes 2313
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/gcloud/gcloud-compact/tests.cue \ gcloud-compact \ samples/gcloud-list.txt ultra
+  commands:
+    - command: lowfat filter plugins/gcloud/gcloud-compact/filter.lf --sub=compute --args='compute instances list' --exit=0 --level=ultra < plugins/gcloud/gcloud-compact/samples/gcloud-list.txt
+      checks:
+        - name: stdout
+          data:
+            - NAME       ZONE           MACHINE_TYPE  PREEMPTIBLE  INTERNAL_IP  EXTERNAL_IP    STATUS
+            - web-01     us-central1-a  e2-medium                  10.0.0.1     34.10.20.1     RUNNING
+            - web-02     us-central1-a  e2-medium                  10.0.0.2     34.10.20.2     RUNNING
+            - web-03     us-central1-a  e2-medium                  10.0.0.3     34.10.20.3     RUNNING
+            - web-04     us-central1-a  e2-medium                  10.0.0.4     34.10.20.4     RUNNING
+            - web-05     us-central1-a  e2-medium                  10.0.0.5     34.10.20.5     RUNNING
+            - web-06     us-central1-a  e2-medium                  10.0.0.6     34.10.20.6     RUNNING
+            - web-07     us-central1-a  e2-medium                  10.0.0.7     34.10.20.7     RUNNING
+            - web-08     us-central1-a  e2-medium                  10.0.0.8     34.10.20.8     RUNNING
+            - web-09     us-central1-a  e2-medium                  10.0.0.9     34.10.20.9     RUNNING
+            - web-10     us-central1-a  e2-medium                  10.0.0.10    34.10.20.10    RUNNING
+            - web-11     us-central1-a  e2-medium                  10.0.0.11    34.10.20.11    RUNNING
+            - web-12     us-central1-a  e2-medium                  10.0.0.12    34.10.20.12    RUNNING
+            - web-13     us-central1-a  e2-medium                  10.0.0.13    34.10.20.13    RUNNING
+            - web-14     us-central1-a  e2-medium                  10.0.0.14    34.10.20.14    RUNNING
+            - web-15     us-central1-a  e2-medium                  10.0.0.15    34.10.20.15    RUNNING
+            - web-16     us-central1-a  e2-medium                  10.0.0.16    34.10.20.16    RUNNING
+            - web-17     us-central1-a  e2-medium                  10.0.0.17    34.10.20.17    RUNNING
+            - web-18     us-central1-a  e2-medium                  10.0.0.18    34.10.20.18    RUNNING
+            - web-19     us-central1-a  e2-medium                  10.0.0.19    34.10.20.19    RUNNING
+            - web-20     us-central1-a  e2-medium                  10.0.0.20    34.10.20.20    RUNNING
+            - web-21     us-central1-a  e2-medium                  10.0.0.21    34.10.20.21    RUNNING
+            - web-22     us-central1-a  e2-medium                  10.0.0.22    34.10.20.22    RUNNING
+            - web-23     us-central1-a  e2-medium                  10.0.0.23    34.10.20.23    RUNNING
+            - web-24     us-central1-a  e2-medium                  10.0.0.24    34.10.20.24    RUNNING
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/gcloud/gcloud-compact/filter.lf --sub=compute --args='compute instances list' --exit=0 --level=ultra < plugins/gcloud/gcloud-compact/samples/gcloud-list.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 25
+            - bytes 2224
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/gcloud/gcloud-compact/tests.cue \ gcloud-compact \ samples/gcloud-json.txt lite
+  commands:
+    - command: lowfat filter plugins/gcloud/gcloud-compact/filter.lf --sub=compute --args='compute instances describe web-01 --format json' --exit=0 --level=lite < plugins/gcloud/gcloud-compact/samples/gcloud-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{'
+            - '  "name": "web-01",'
+            - '  "status": "RUNNING",'
+            - '  "machineType": "e2-medium"'
+            - '}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/gcloud/gcloud-compact/filter.lf --sub=compute --args='compute instances describe web-01 --format json' --exit=0 --level=lite < plugins/gcloud/gcloud-compact/samples/gcloud-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 5
+            - bytes 76
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/gcloud/gcloud-compact/tests.cue \ gcloud-compact \ samples/gcloud-json.txt full
+  commands:
+    - command: lowfat filter plugins/gcloud/gcloud-compact/filter.lf --sub=compute --args='compute instances describe web-01 --format json' --exit=0 --level=full < plugins/gcloud/gcloud-compact/samples/gcloud-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{'
+            - '  "name": "web-01",'
+            - '  "status": "RUNNING",'
+            - '  "machineType": "e2-medium"'
+            - '}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/gcloud/gcloud-compact/filter.lf --sub=compute --args='compute instances describe web-01 --format json' --exit=0 --level=full < plugins/gcloud/gcloud-compact/samples/gcloud-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 5
+            - bytes 76
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/gcloud/gcloud-compact/tests.cue \ gcloud-compact \ samples/gcloud-json.txt ultra
+  commands:
+    - command: lowfat filter plugins/gcloud/gcloud-compact/filter.lf --sub=compute --args='compute instances describe web-01 --format json' --exit=0 --level=ultra < plugins/gcloud/gcloud-compact/samples/gcloud-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{'
+            - '  "name": "web-01",'
+            - '  "status": "RUNNING",'
+            - '  "machineType": "e2-medium"'
+            - '}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/gcloud/gcloud-compact/filter.lf --sub=compute --args='compute instances describe web-01 --format json' --exit=0 --level=ultra < plugins/gcloud/gcloud-compact/samples/gcloud-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 5
+            - bytes 76
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/gcloud/gcloud-compact/tests.cue \ gcloud-compact \ samples/gcloud-error.txt lite
+  commands:
+    - command: lowfat filter plugins/gcloud/gcloud-compact/filter.lf --sub=compute --args='compute instances describe nope' --exit=1 --level=lite < plugins/gcloud/gcloud-compact/samples/gcloud-error.txt
+      checks:
+        - name: stdout
+          data:
+            - 'ERROR: (gcloud.compute.instances.describe) Could not fetch resource:'
+            - ' - The resource ''projects/p/zones/us-central1-a/instances/nope'' was not found'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/gcloud/gcloud-compact/filter.lf --sub=compute --args='compute instances describe nope' --exit=1 --level=lite < plugins/gcloud/gcloud-compact/samples/gcloud-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 2
+            - bytes 147
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/gcloud/gcloud-compact/tests.cue \ gcloud-compact \ samples/gcloud-error.txt full
+  commands:
+    - command: lowfat filter plugins/gcloud/gcloud-compact/filter.lf --sub=compute --args='compute instances describe nope' --exit=1 --level=full < plugins/gcloud/gcloud-compact/samples/gcloud-error.txt
+      checks:
+        - name: stdout
+          data:
+            - 'ERROR: (gcloud.compute.instances.describe) Could not fetch resource:'
+            - ' - The resource ''projects/p/zones/us-central1-a/instances/nope'' was not found'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/gcloud/gcloud-compact/filter.lf --sub=compute --args='compute instances describe nope' --exit=1 --level=full < plugins/gcloud/gcloud-compact/samples/gcloud-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 2
+            - bytes 147
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/gcloud/gcloud-compact/tests.cue \ gcloud-compact \ samples/gcloud-error.txt ultra
+  commands:
+    - command: lowfat filter plugins/gcloud/gcloud-compact/filter.lf --sub=compute --args='compute instances describe nope' --exit=1 --level=ultra < plugins/gcloud/gcloud-compact/samples/gcloud-error.txt
+      checks:
+        - name: stdout
+          data:
+            - 'ERROR: (gcloud.compute.instances.describe) Could not fetch resource:'
+            - ' - The resource ''projects/p/zones/us-central1-a/instances/nope'' was not found'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/gcloud/gcloud-compact/filter.lf --sub=compute --args='compute instances describe nope' --exit=1 --level=ultra < plugins/gcloud/gcloud-compact/samples/gcloud-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 2
+            - bytes 147
+        - name: exitcode
+          data:
+            - "0"

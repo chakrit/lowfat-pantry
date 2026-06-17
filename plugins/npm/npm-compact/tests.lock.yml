@@ -1,0 +1,273 @@
+- name: plugins/npm/npm-compact/tests.cue \ npm-compact \ samples/npm-install.txt lite
+  commands:
+    - command: lowfat filter plugins/npm/npm-compact/filter.lf --sub=install --args='' --exit=0 --level=lite < plugins/npm/npm-compact/samples/npm-install.txt
+      checks:
+        - name: stdout
+          data:
+            - 'npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory.'
+            - 'npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported'
+            - added 326 packages, and audited 327 packages in 4s
+            - 74 packages are looking for funding
+            - 3 moderate severity vulnerabilities
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/npm/npm-compact/filter.lf --sub=install --args='' --exit=0 --level=lite < plugins/npm/npm-compact/samples/npm-install.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 5
+            - bytes 289
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/npm/npm-compact/tests.cue \ npm-compact \ samples/npm-install.txt full
+  commands:
+    - command: lowfat filter plugins/npm/npm-compact/filter.lf --sub=install --args='' --exit=0 --level=full < plugins/npm/npm-compact/samples/npm-install.txt
+      checks:
+        - name: stdout
+          data:
+            - 'npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory.'
+            - 'npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported'
+            - added 326 packages, and audited 327 packages in 4s
+            - 74 packages are looking for funding
+            - 3 moderate severity vulnerabilities
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/npm/npm-compact/filter.lf --sub=install --args='' --exit=0 --level=full < plugins/npm/npm-compact/samples/npm-install.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 5
+            - bytes 289
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/npm/npm-compact/tests.cue \ npm-compact \ samples/npm-install.txt ultra
+  commands:
+    - command: lowfat filter plugins/npm/npm-compact/filter.lf --sub=install --args='' --exit=0 --level=ultra < plugins/npm/npm-compact/samples/npm-install.txt
+      checks:
+        - name: stdout
+          data:
+            - 'npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory.'
+            - 'npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported'
+            - added 326 packages, and audited 327 packages in 4s
+            - 74 packages are looking for funding
+            - 3 moderate severity vulnerabilities
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/npm/npm-compact/filter.lf --sub=install --args='' --exit=0 --level=ultra < plugins/npm/npm-compact/samples/npm-install.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 5
+            - bytes 289
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/npm/npm-compact/tests.cue \ npm-compact \ samples/npm-test.txt lite
+  commands:
+    - command: lowfat filter plugins/npm/npm-compact/filter.lf --sub=test --args='' --exit=0 --level=lite < plugins/npm/npm-compact/samples/npm-test.txt
+      checks:
+        - name: stdout
+          data:
+            - '> web@1.4.0 test'
+            - '> vitest run'
+            - ""
+            - ' RUN  v1.6.0 /repo/web'
+            - ""
+            - ' ✓ src/cart.test.ts (12 tests) 38ms'
+            - ' ✓ src/catalog.test.ts (9 tests) 22ms'
+            - ' ✓ src/checkout.test.ts (18 tests) 41ms'
+            - ' ✓ src/profile.test.ts (6 tests) 18ms'
+            - ""
+            - ' Test Files  4 passed (4)'
+            - '      Tests  45 passed (45)'
+            - '   Start at  10:12:09'
+            - '   Duration  1.42s (transform 222ms, setup 148ms, collect 390ms, tests 119ms, environment 1.02s, prepare 408ms)'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/npm/npm-compact/filter.lf --sub=test --args='' --exit=0 --level=lite < plugins/npm/npm-compact/samples/npm-test.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 15
+            - bytes 405
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/npm/npm-compact/tests.cue \ npm-compact \ samples/npm-test.txt full
+  commands:
+    - command: lowfat filter plugins/npm/npm-compact/filter.lf --sub=test --args='' --exit=0 --level=full < plugins/npm/npm-compact/samples/npm-test.txt
+      checks:
+        - name: stdout
+          data:
+            - '> web@1.4.0 test'
+            - '> vitest run'
+            - ""
+            - ' RUN  v1.6.0 /repo/web'
+            - ""
+            - ' ✓ src/cart.test.ts (12 tests) 38ms'
+            - ' ✓ src/catalog.test.ts (9 tests) 22ms'
+            - ' ✓ src/checkout.test.ts (18 tests) 41ms'
+            - ' ✓ src/profile.test.ts (6 tests) 18ms'
+            - ""
+            - ' Test Files  4 passed (4)'
+            - '      Tests  45 passed (45)'
+            - '   Start at  10:12:09'
+            - '   Duration  1.42s (transform 222ms, setup 148ms, collect 390ms, tests 119ms, environment 1.02s, prepare 408ms)'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/npm/npm-compact/filter.lf --sub=test --args='' --exit=0 --level=full < plugins/npm/npm-compact/samples/npm-test.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 15
+            - bytes 405
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/npm/npm-compact/tests.cue \ npm-compact \ samples/npm-test.txt ultra
+  commands:
+    - command: lowfat filter plugins/npm/npm-compact/filter.lf --sub=test --args='' --exit=0 --level=ultra < plugins/npm/npm-compact/samples/npm-test.txt
+      checks:
+        - name: stdout
+          data:
+            - '> web@1.4.0 test'
+            - '> vitest run'
+            - ""
+            - ' RUN  v1.6.0 /repo/web'
+            - ""
+            - ' ✓ src/cart.test.ts (12 tests) 38ms'
+            - ' ✓ src/catalog.test.ts (9 tests) 22ms'
+            - ' ✓ src/checkout.test.ts (18 tests) 41ms'
+            - ' ✓ src/profile.test.ts (6 tests) 18ms'
+            - ""
+            - ' Test Files  4 passed (4)'
+            - '      Tests  45 passed (45)'
+            - '   Start at  10:12:09'
+            - '   Duration  1.42s (transform 222ms, setup 148ms, collect 390ms, tests 119ms, environment 1.02s, prepare 408ms)'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/npm/npm-compact/filter.lf --sub=test --args='' --exit=0 --level=ultra < plugins/npm/npm-compact/samples/npm-test.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 15
+            - bytes 405
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/npm/npm-compact/tests.cue \ npm-compact \ samples/npm-error.txt lite
+  commands:
+    - command: lowfat filter plugins/npm/npm-compact/filter.lf --sub=install --args='' --exit=1 --level=lite < plugins/npm/npm-compact/samples/npm-error.txt
+      checks:
+        - name: stdout
+          data:
+            - npm error code ERESOLVE
+            - npm error ERESOLVE unable to resolve dependency tree
+            - npm error
+            - 'npm error While resolving: web@1.4.0'
+            - 'npm error Found: react@19.0.0'
+            - npm error node_modules/react
+            - npm error   react@"19.0.0" from the root project
+            - npm error
+            - 'npm error Could not resolve dependency:'
+            - npm error peer react@"^18.0.0" from legacy-widget@2.3.1
+            - npm error node_modules/legacy-widget
+            - npm error   legacy-widget@"2.3.1" from the root project
+            - npm error
+            - npm error Fix the upstream dependency conflict, or retry
+            - npm error this command with --force or --legacy-peer-deps
+            - npm error to accept an incorrect dependency resolution.
+            - npm error
+            - 'npm error A complete log of this run can be found in: /Users/dev/.npm/_logs/2026-06-08T03_04_11_905Z-debug-0.log'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/npm/npm-compact/filter.lf --sub=install --args='' --exit=1 --level=lite < plugins/npm/npm-compact/samples/npm-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 18
+            - bytes 735
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/npm/npm-compact/tests.cue \ npm-compact \ samples/npm-error.txt full
+  commands:
+    - command: lowfat filter plugins/npm/npm-compact/filter.lf --sub=install --args='' --exit=1 --level=full < plugins/npm/npm-compact/samples/npm-error.txt
+      checks:
+        - name: stdout
+          data:
+            - npm error code ERESOLVE
+            - npm error ERESOLVE unable to resolve dependency tree
+            - npm error
+            - 'npm error While resolving: web@1.4.0'
+            - 'npm error Found: react@19.0.0'
+            - npm error node_modules/react
+            - npm error   react@"19.0.0" from the root project
+            - npm error
+            - 'npm error Could not resolve dependency:'
+            - npm error peer react@"^18.0.0" from legacy-widget@2.3.1
+            - npm error node_modules/legacy-widget
+            - npm error   legacy-widget@"2.3.1" from the root project
+            - npm error
+            - npm error Fix the upstream dependency conflict, or retry
+            - npm error this command with --force or --legacy-peer-deps
+            - npm error to accept an incorrect dependency resolution.
+            - npm error
+            - 'npm error A complete log of this run can be found in: /Users/dev/.npm/_logs/2026-06-08T03_04_11_905Z-debug-0.log'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/npm/npm-compact/filter.lf --sub=install --args='' --exit=1 --level=full < plugins/npm/npm-compact/samples/npm-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 18
+            - bytes 735
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/npm/npm-compact/tests.cue \ npm-compact \ samples/npm-error.txt ultra
+  commands:
+    - command: lowfat filter plugins/npm/npm-compact/filter.lf --sub=install --args='' --exit=1 --level=ultra < plugins/npm/npm-compact/samples/npm-error.txt
+      checks:
+        - name: stdout
+          data:
+            - npm error code ERESOLVE
+            - npm error ERESOLVE unable to resolve dependency tree
+            - npm error
+            - 'npm error While resolving: web@1.4.0'
+            - 'npm error Found: react@19.0.0'
+            - npm error node_modules/react
+            - npm error   react@"19.0.0" from the root project
+            - npm error
+            - 'npm error Could not resolve dependency:'
+            - npm error peer react@"^18.0.0" from legacy-widget@2.3.1
+            - npm error node_modules/legacy-widget
+            - npm error   legacy-widget@"2.3.1" from the root project
+            - npm error
+            - npm error Fix the upstream dependency conflict, or retry
+            - npm error this command with --force or --legacy-peer-deps
+            - npm error to accept an incorrect dependency resolution.
+            - npm error
+            - 'npm error A complete log of this run can be found in: /Users/dev/.npm/_logs/2026-06-08T03_04_11_905Z-debug-0.log'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/npm/npm-compact/filter.lf --sub=install --args='' --exit=1 --level=ultra < plugins/npm/npm-compact/samples/npm-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 18
+            - bytes 735
+        - name: exitcode
+          data:
+            - "0"

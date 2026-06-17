@@ -1,0 +1,210 @@
+- name: plugins/dotnet/dotnet-compact/tests.cue \ dotnet-compact \ samples/dotnet-build-warning.txt lite
+  commands:
+    - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=build --args='' --exit=0 --level=lite < plugins/dotnet/dotnet-compact/samples/dotnet-build-warning.txt
+      checks:
+        - name: stdout
+          data:
+            - '/repo/src/Web/Controllers/OrdersController.cs(47,23): warning CS8602: Dereference of a possibly null reference. [/repo/src/Web/Web.csproj]'
+            - '/repo/src/Web/Program.cs(12,1): warning CS8321: The local function ''ConfigureLegacy'' is declared but never used [/repo/src/Web/Web.csproj]'
+            - Build succeeded.
+            - '/repo/src/Web/Controllers/OrdersController.cs(47,23): warning CS8602: Dereference of a possibly null reference. [/repo/src/Web/Web.csproj]'
+            - '/repo/src/Web/Program.cs(12,1): warning CS8321: The local function ''ConfigureLegacy'' is declared but never used [/repo/src/Web/Web.csproj]'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=build --args='' --exit=0 --level=lite < plugins/dotnet/dotnet-compact/samples/dotnet-build-warning.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 5
+            - bytes 573
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/dotnet/dotnet-compact/tests.cue \ dotnet-compact \ samples/dotnet-build-warning.txt full
+  commands:
+    - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=build --args='' --exit=0 --level=full < plugins/dotnet/dotnet-compact/samples/dotnet-build-warning.txt
+      checks:
+        - name: stdout
+          data:
+            - '/repo/src/Web/Controllers/OrdersController.cs(47,23): warning CS8602: Dereference of a possibly null reference. [/repo/src/Web/Web.csproj]'
+            - '/repo/src/Web/Program.cs(12,1): warning CS8321: The local function ''ConfigureLegacy'' is declared but never used [/repo/src/Web/Web.csproj]'
+            - Build succeeded.
+            - '/repo/src/Web/Controllers/OrdersController.cs(47,23): warning CS8602: Dereference of a possibly null reference. [/repo/src/Web/Web.csproj]'
+            - '/repo/src/Web/Program.cs(12,1): warning CS8321: The local function ''ConfigureLegacy'' is declared but never used [/repo/src/Web/Web.csproj]'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=build --args='' --exit=0 --level=full < plugins/dotnet/dotnet-compact/samples/dotnet-build-warning.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 5
+            - bytes 573
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/dotnet/dotnet-compact/tests.cue \ dotnet-compact \ samples/dotnet-build-warning.txt ultra
+  commands:
+    - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=build --args='' --exit=0 --level=ultra < plugins/dotnet/dotnet-compact/samples/dotnet-build-warning.txt
+      checks:
+        - name: stdout
+          data:
+            - '/repo/src/Web/Controllers/OrdersController.cs(47,23): warning CS8602: Dereference of a possibly null reference. [/repo/src/Web/Web.csproj]'
+            - '/repo/src/Web/Program.cs(12,1): warning CS8321: The local function ''ConfigureLegacy'' is declared but never used [/repo/src/Web/Web.csproj]'
+            - Build succeeded.
+            - '/repo/src/Web/Controllers/OrdersController.cs(47,23): warning CS8602: Dereference of a possibly null reference. [/repo/src/Web/Web.csproj]'
+            - '/repo/src/Web/Program.cs(12,1): warning CS8321: The local function ''ConfigureLegacy'' is declared but never used [/repo/src/Web/Web.csproj]'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=build --args='' --exit=0 --level=ultra < plugins/dotnet/dotnet-compact/samples/dotnet-build-warning.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 5
+            - bytes 573
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/dotnet/dotnet-compact/tests.cue \ dotnet-compact \ samples/dotnet-test-fail.txt lite
+  commands:
+    - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=test --args='' --exit=1 --level=lite < plugins/dotnet/dotnet-compact/samples/dotnet-test-fail.txt
+      checks:
+        - name: stdout
+          data:
+            - '  Failed Checkout_totals_round_tax [31 ms]'
+            - '  Error Message:'
+            - '   Expected value to be 10.82, but found 10.80.'
+            - '  Stack Trace:'
+            - '     at Core.Tests.CheckoutTests.Checkout_totals_round_tax() in /repo/tests/Core.Tests/CheckoutTests.cs:line 58'
+            - 'Failed!  - Failed:     1, Passed:    48, Skipped:     0, Total:    49, Duration: 1 s - Core.Tests.dll (net8.0)'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=test --args='' --exit=1 --level=lite < plugins/dotnet/dotnet-compact/samples/dotnet-test-fail.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 6
+            - bytes 346
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/dotnet/dotnet-compact/tests.cue \ dotnet-compact \ samples/dotnet-test-fail.txt full
+  commands:
+    - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=test --args='' --exit=1 --level=full < plugins/dotnet/dotnet-compact/samples/dotnet-test-fail.txt
+      checks:
+        - name: stdout
+          data:
+            - '  Failed Checkout_totals_round_tax [31 ms]'
+            - '  Error Message:'
+            - '   Expected value to be 10.82, but found 10.80.'
+            - '  Stack Trace:'
+            - '     at Core.Tests.CheckoutTests.Checkout_totals_round_tax() in /repo/tests/Core.Tests/CheckoutTests.cs:line 58'
+            - 'Failed!  - Failed:     1, Passed:    48, Skipped:     0, Total:    49, Duration: 1 s - Core.Tests.dll (net8.0)'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=test --args='' --exit=1 --level=full < plugins/dotnet/dotnet-compact/samples/dotnet-test-fail.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 6
+            - bytes 346
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/dotnet/dotnet-compact/tests.cue \ dotnet-compact \ samples/dotnet-test-fail.txt ultra
+  commands:
+    - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=test --args='' --exit=1 --level=ultra < plugins/dotnet/dotnet-compact/samples/dotnet-test-fail.txt
+      checks:
+        - name: stdout
+          data:
+            - '  Failed Checkout_totals_round_tax [31 ms]'
+            - '  Error Message:'
+            - '   Expected value to be 10.82, but found 10.80.'
+            - '  Stack Trace:'
+            - '     at Core.Tests.CheckoutTests.Checkout_totals_round_tax() in /repo/tests/Core.Tests/CheckoutTests.cs:line 58'
+            - 'Failed!  - Failed:     1, Passed:    48, Skipped:     0, Total:    49, Duration: 1 s - Core.Tests.dll (net8.0)'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=test --args='' --exit=1 --level=ultra < plugins/dotnet/dotnet-compact/samples/dotnet-test-fail.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 6
+            - bytes 346
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/dotnet/dotnet-compact/tests.cue \ dotnet-compact \ samples/dotnet-build-error.txt lite
+  commands:
+    - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=build --args='' --exit=1 --level=lite < plugins/dotnet/dotnet-compact/samples/dotnet-build-error.txt
+      checks:
+        - name: stdout
+          data:
+            - '/repo/src/Web/Controllers/OrdersController.cs(38,17): error CS0103: The name ''orderTotal'' does not exist in the current context [/repo/src/Web/Web.csproj]'
+            - '/repo/src/Web/Controllers/OrdersController.cs(39,24): warning CS8604: Possible null reference argument for parameter ''source''. [/repo/src/Web/Web.csproj]'
+            - Build FAILED.
+            - '/repo/src/Web/Controllers/OrdersController.cs(39,24): warning CS8604: Possible null reference argument for parameter ''source''. [/repo/src/Web/Web.csproj]'
+            - '/repo/src/Web/Controllers/OrdersController.cs(38,17): error CS0103: The name ''orderTotal'' does not exist in the current context [/repo/src/Web/Web.csproj]'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=build --args='' --exit=1 --level=lite < plugins/dotnet/dotnet-compact/samples/dotnet-build-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 5
+            - bytes 632
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/dotnet/dotnet-compact/tests.cue \ dotnet-compact \ samples/dotnet-build-error.txt full
+  commands:
+    - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=build --args='' --exit=1 --level=full < plugins/dotnet/dotnet-compact/samples/dotnet-build-error.txt
+      checks:
+        - name: stdout
+          data:
+            - '/repo/src/Web/Controllers/OrdersController.cs(38,17): error CS0103: The name ''orderTotal'' does not exist in the current context [/repo/src/Web/Web.csproj]'
+            - '/repo/src/Web/Controllers/OrdersController.cs(39,24): warning CS8604: Possible null reference argument for parameter ''source''. [/repo/src/Web/Web.csproj]'
+            - Build FAILED.
+            - '/repo/src/Web/Controllers/OrdersController.cs(39,24): warning CS8604: Possible null reference argument for parameter ''source''. [/repo/src/Web/Web.csproj]'
+            - '/repo/src/Web/Controllers/OrdersController.cs(38,17): error CS0103: The name ''orderTotal'' does not exist in the current context [/repo/src/Web/Web.csproj]'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=build --args='' --exit=1 --level=full < plugins/dotnet/dotnet-compact/samples/dotnet-build-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 5
+            - bytes 632
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/dotnet/dotnet-compact/tests.cue \ dotnet-compact \ samples/dotnet-build-error.txt ultra
+  commands:
+    - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=build --args='' --exit=1 --level=ultra < plugins/dotnet/dotnet-compact/samples/dotnet-build-error.txt
+      checks:
+        - name: stdout
+          data:
+            - '/repo/src/Web/Controllers/OrdersController.cs(38,17): error CS0103: The name ''orderTotal'' does not exist in the current context [/repo/src/Web/Web.csproj]'
+            - '/repo/src/Web/Controllers/OrdersController.cs(39,24): warning CS8604: Possible null reference argument for parameter ''source''. [/repo/src/Web/Web.csproj]'
+            - Build FAILED.
+            - '/repo/src/Web/Controllers/OrdersController.cs(39,24): warning CS8604: Possible null reference argument for parameter ''source''. [/repo/src/Web/Web.csproj]'
+            - '/repo/src/Web/Controllers/OrdersController.cs(38,17): error CS0103: The name ''orderTotal'' does not exist in the current context [/repo/src/Web/Web.csproj]'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=build --args='' --exit=1 --level=ultra < plugins/dotnet/dotnet-compact/samples/dotnet-build-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 5
+            - bytes 632
+        - name: exitcode
+          data:
+            - "0"

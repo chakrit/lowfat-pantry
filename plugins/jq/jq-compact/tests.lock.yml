@@ -1,0 +1,462 @@
+- name: plugins/jq/jq-compact/tests.cue \ jq-compact \ samples/jq-array.txt lite
+  commands:
+    - command: lowfat filter plugins/jq/jq-compact/filter.lf --sub= --args='.' --exit=0 --level=lite < plugins/jq/jq-compact/samples/jq-array.txt
+      checks:
+        - name: stdout
+          data:
+            - '['
+            - '  {'
+            - '    "id": 1,'
+            - '    "name": "item-01",'
+            - '    "enabled": true'
+            - '  },'
+            - '  {'
+            - '    "id": 2,'
+            - '    "name": "item-02",'
+            - '    "enabled": false'
+            - '  },'
+            - '  {'
+            - '    "id": 3,'
+            - '    "name": "item-03",'
+            - '    "enabled": true'
+            - '  },'
+            - '  {'
+            - '    "id": 4,'
+            - '    "name": "item-04",'
+            - '    "enabled": false'
+            - '  },'
+            - '  {'
+            - '    "id": 5,'
+            - '    "name": "item-05",'
+            - '    "enabled": true'
+            - '  },'
+            - '  {'
+            - '    "id": 6,'
+            - '    "name": "item-06",'
+            - '    "enabled": false'
+            - '  },'
+            - '  {'
+            - '    "id": 7,'
+            - '    "name": "item-07",'
+            - '    "enabled": true'
+            - '  },'
+            - '  {'
+            - '    "id": 8,'
+            - '    "name": "item-08",'
+            - '    "enabled": false'
+            - '  },'
+            - '  {'
+            - '    "id": 9,'
+            - '    "name": "item-09",'
+            - '    "enabled": true'
+            - '  },'
+            - '  {'
+            - '    "id": 10,'
+            - '    "name": "item-10",'
+            - '    "enabled": false'
+            - '  },'
+            - '  {'
+            - '    "id": 11,'
+            - '    "name": "item-11",'
+            - '    "enabled": true'
+            - '  },'
+            - '  {'
+            - '    "id": 12,'
+            - '    "name": "item-12",'
+            - '    "enabled": false'
+            - '  },'
+            - '  {'
+            - '    "id": 13,'
+            - '    "name": "item-13",'
+            - '    "enabled": true'
+            - '  },'
+            - '  {'
+            - '    "id": 14,'
+            - '    "name": "item-14",'
+            - '    "enabled": false'
+            - '  },'
+            - '  {'
+            - '    "id": 15,'
+            - '    "name": "item-15",'
+            - '    "enabled": true'
+            - '  }'
+            - ']'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/jq/jq-compact/filter.lf --sub= --args='.' --exit=0 --level=lite < plugins/jq/jq-compact/samples/jq-array.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 77
+            - bytes 991
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/jq/jq-compact/tests.cue \ jq-compact \ samples/jq-array.txt full
+  commands:
+    - command: lowfat filter plugins/jq/jq-compact/filter.lf --sub= --args='.' --exit=0 --level=full < plugins/jq/jq-compact/samples/jq-array.txt
+      checks:
+        - name: stdout
+          data:
+            - '['
+            - '  {'
+            - '    "id": 1,'
+            - '    "name": "item-01",'
+            - '    "enabled": true'
+            - '  },'
+            - '  {'
+            - '    "id": 2,'
+            - '    "name": "item-02",'
+            - '    "enabled": false'
+            - '  },'
+            - '  {'
+            - '    "id": 3,'
+            - '    "name": "item-03",'
+            - '    "enabled": true'
+            - '  },'
+            - '  {'
+            - '    "id": 4,'
+            - '    "name": "item-04",'
+            - '    "enabled": false'
+            - '  },'
+            - '  {'
+            - '    "id": 5,'
+            - '    "name": "item-05",'
+            - '    "enabled": true'
+            - '  },'
+            - '  {'
+            - '    "id": 6,'
+            - '    "name": "item-06",'
+            - '    "enabled": false'
+            - '  },'
+            - '  {'
+            - '    "id": 7,'
+            - '    "name": "item-07",'
+            - '    "enabled": true'
+            - '  },'
+            - '  {'
+            - '    "id": 8,'
+            - '    "name": "item-08",'
+            - '    "enabled": false'
+            - '  },'
+            - '  {'
+            - '    "id": 9,'
+            - '    "name": "item-09",'
+            - '    "enabled": true'
+            - '  },'
+            - '  {'
+            - '    "id": 10,'
+            - '    "name": "item-10",'
+            - '    "enabled": false'
+            - '  },'
+            - '  {'
+            - '    "id": 11,'
+            - '    "name": "item-11",'
+            - '    "enabled": true'
+            - '  },'
+            - '  {'
+            - '    "id": 12,'
+            - '    "name": "item-12",'
+            - '    "enabled": false'
+            - '  },'
+            - '  {'
+            - '    "id": 13,'
+            - '    "name": "item-13",'
+            - '    "enabled": true'
+            - '  },'
+            - '  {'
+            - '    "id": 14,'
+            - '    "name": "item-14",'
+            - '    "enabled": false'
+            - '  },'
+            - '  {'
+            - '    "id": 15,'
+            - '    "name": "item-15",'
+            - '    "enabled": true'
+            - '  }'
+            - ']'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/jq/jq-compact/filter.lf --sub= --args='.' --exit=0 --level=full < plugins/jq/jq-compact/samples/jq-array.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 77
+            - bytes 991
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/jq/jq-compact/tests.cue \ jq-compact \ samples/jq-array.txt ultra
+  commands:
+    - command: lowfat filter plugins/jq/jq-compact/filter.lf --sub= --args='.' --exit=0 --level=ultra < plugins/jq/jq-compact/samples/jq-array.txt
+      checks:
+        - name: stdout
+          data:
+            - '['
+            - '  {'
+            - '    "id": 1,'
+            - '    "name": "item-01",'
+            - '    "enabled": true'
+            - '  },'
+            - '  {'
+            - '    "id": 2,'
+            - '    "name": "item-02",'
+            - '    "enabled": false'
+            - '  },'
+            - '  {'
+            - '    "id": 3,'
+            - '    "name": "item-03",'
+            - '    "enabled": true'
+            - '  },'
+            - '  {'
+            - '    "id": 4,'
+            - '    "name": "item-04",'
+            - '    "enabled": false'
+            - '  },'
+            - '  {'
+            - '    "id": 5,'
+            - '    "name": "item-05",'
+            - '    "enabled": true'
+            - '  },'
+            - '  {'
+            - '    "id": 6,'
+            - '    "name": "item-06",'
+            - '    "enabled": false'
+            - '  },'
+            - '  {'
+            - '    "id": 7,'
+            - '    "name": "item-07",'
+            - '    "enabled": true'
+            - '  },'
+            - '  {'
+            - '    "id": 8,'
+            - '    "name": "item-08",'
+            - '    "enabled": false'
+            - '  },'
+            - '  {'
+            - '    "id": 9,'
+            - '    "name": "item-09",'
+            - '    "enabled": true'
+            - '  },'
+            - '  {'
+            - '    "id": 10,'
+            - '    "name": "item-10",'
+            - '    "enabled": false'
+            - '  },'
+            - '  {'
+            - '    "id": 11,'
+            - '    "name": "item-11",'
+            - '    "enabled": true'
+            - '  },'
+            - '  {'
+            - '    "id": 12,'
+            - '    "name": "item-12",'
+            - '    "enabled": false'
+            - '  },'
+            - '  {'
+            - '    "lowfat_truncated": "3 more elements"'
+            - '  }'
+            - ']'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/jq/jq-compact/filter.lf --sub= --args='.' --exit=0 --level=ultra < plugins/jq/jq-compact/samples/jq-array.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 65
+            - bytes 843
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/jq/jq-compact/tests.cue \ jq-compact \ samples/jq-raw.txt lite
+  commands:
+    - command: lowfat filter plugins/jq/jq-compact/filter.lf --sub= --args='-r .name' --exit=0 --level=lite < plugins/jq/jq-compact/samples/jq-raw.txt
+      checks:
+        - name: stdout
+          data:
+            - alpha
+            - bravo
+            - charlie
+            - delta
+            - echo
+            - foxtrot
+            - golf
+            - hotel
+            - india
+            - juliet
+            - kilo
+            - lima
+            - mike
+            - november
+            - oscar
+            - papa
+            - quebec
+            - romeo
+            - sierra
+            - tango
+            - uniform
+            - victor
+            - whiskey
+            - xray
+            - yankee
+            - zulu
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/jq/jq-compact/filter.lf --sub= --args='-r .name' --exit=0 --level=lite < plugins/jq/jq-compact/samples/jq-raw.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 26
+            - bytes 164
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/jq/jq-compact/tests.cue \ jq-compact \ samples/jq-raw.txt full
+  commands:
+    - command: lowfat filter plugins/jq/jq-compact/filter.lf --sub= --args='-r .name' --exit=0 --level=full < plugins/jq/jq-compact/samples/jq-raw.txt
+      checks:
+        - name: stdout
+          data:
+            - alpha
+            - bravo
+            - charlie
+            - delta
+            - echo
+            - foxtrot
+            - golf
+            - hotel
+            - india
+            - juliet
+            - kilo
+            - lima
+            - mike
+            - november
+            - oscar
+            - papa
+            - quebec
+            - romeo
+            - sierra
+            - tango
+            - uniform
+            - victor
+            - whiskey
+            - xray
+            - yankee
+            - zulu
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/jq/jq-compact/filter.lf --sub= --args='-r .name' --exit=0 --level=full < plugins/jq/jq-compact/samples/jq-raw.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 26
+            - bytes 164
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/jq/jq-compact/tests.cue \ jq-compact \ samples/jq-raw.txt ultra
+  commands:
+    - command: lowfat filter plugins/jq/jq-compact/filter.lf --sub= --args='-r .name' --exit=0 --level=ultra < plugins/jq/jq-compact/samples/jq-raw.txt
+      checks:
+        - name: stdout
+          data:
+            - alpha
+            - bravo
+            - charlie
+            - delta
+            - echo
+            - foxtrot
+            - golf
+            - hotel
+            - india
+            - juliet
+            - kilo
+            - lima
+            - mike
+            - november
+            - oscar
+            - papa
+            - quebec
+            - romeo
+            - sierra
+            - tango
+            - uniform
+            - victor
+            - whiskey
+            - xray
+            - yankee
+            - zulu
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/jq/jq-compact/filter.lf --sub= --args='-r .name' --exit=0 --level=ultra < plugins/jq/jq-compact/samples/jq-raw.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 26
+            - bytes 164
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/jq/jq-compact/tests.cue \ jq-compact \ samples/jq-error.txt lite
+  commands:
+    - command: lowfat filter plugins/jq/jq-compact/filter.lf --sub= --args='.' --exit=4 --level=lite < plugins/jq/jq-compact/samples/jq-error.txt
+      checks:
+        - name: stdout
+          data:
+            - 'jq: parse error: Invalid numeric literal at line 1, column 9'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/jq/jq-compact/filter.lf --sub= --args='.' --exit=4 --level=lite < plugins/jq/jq-compact/samples/jq-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 61
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/jq/jq-compact/tests.cue \ jq-compact \ samples/jq-error.txt full
+  commands:
+    - command: lowfat filter plugins/jq/jq-compact/filter.lf --sub= --args='.' --exit=4 --level=full < plugins/jq/jq-compact/samples/jq-error.txt
+      checks:
+        - name: stdout
+          data:
+            - 'jq: parse error: Invalid numeric literal at line 1, column 9'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/jq/jq-compact/filter.lf --sub= --args='.' --exit=4 --level=full < plugins/jq/jq-compact/samples/jq-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 61
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/jq/jq-compact/tests.cue \ jq-compact \ samples/jq-error.txt ultra
+  commands:
+    - command: lowfat filter plugins/jq/jq-compact/filter.lf --sub= --args='.' --exit=4 --level=ultra < plugins/jq/jq-compact/samples/jq-error.txt
+      checks:
+        - name: stdout
+          data:
+            - 'jq: parse error: Invalid numeric literal at line 1, column 9'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/jq/jq-compact/filter.lf --sub= --args='.' --exit=4 --level=ultra < plugins/jq/jq-compact/samples/jq-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 61
+        - name: exitcode
+          data:
+            - "0"

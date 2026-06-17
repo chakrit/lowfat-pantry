@@ -1,0 +1,175 @@
+- name: plugins/tsc/tsc-compact/tests.cue \ tsc-compact \ samples/tsc-errors.txt lite
+  commands:
+    - command: lowfat filter plugins/tsc/tsc-compact/filter.lf --sub= --args='--noEmit' --exit=2 --level=lite < plugins/tsc/tsc-compact/samples/tsc-errors.txt
+      checks:
+        - name: stdout
+          data:
+            - 'src/checkout/api.ts:41:5 - error TS2322: Type ''string'' is not assignable to type ''number''.'
+            - ""
+            - '41     timeout: "30",'
+            - '       ~~~~~~~'
+            - ""
+            - '  src/checkout/types.ts:8:3'
+            - '    8   timeout: number;'
+            - '        ~~~~~~~'
+            - '    The expected type comes from property ''timeout'' which is declared here on type ''ClientOptions''.'
+            - ""
+            - 'src/checkout/cart.ts:88:12 - error TS18047: ''user'' is possibly ''null''.'
+            - ""
+            - 88     return user.id;
+            - '              ~~~~'
+            - ""
+            - 'src/checkout/config.ts:29:3 - error TS2554: Expected 1 arguments, but got 0.'
+            - ""
+            - 29   loadSettings();
+            - '     ~~~~~~~~~~~~~'
+            - ""
+            - Found 3 errors in 3 files.
+            - ""
+            - Errors  Files
+            - '     1  src/checkout/api.ts:41'
+            - '     1  src/checkout/cart.ts:88'
+            - '     1  src/checkout/config.ts:29'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/tsc/tsc-compact/filter.lf --sub= --args='--noEmit' --exit=2 --level=lite < plugins/tsc/tsc-compact/samples/tsc-errors.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 26
+            - bytes 673
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/tsc/tsc-compact/tests.cue \ tsc-compact \ samples/tsc-errors.txt full
+  commands:
+    - command: lowfat filter plugins/tsc/tsc-compact/filter.lf --sub= --args='--noEmit' --exit=2 --level=full < plugins/tsc/tsc-compact/samples/tsc-errors.txt
+      checks:
+        - name: stdout
+          data:
+            - 'src/checkout/api.ts:41:5 - error TS2322: Type ''string'' is not assignable to type ''number''.'
+            - ""
+            - '41     timeout: "30",'
+            - '       ~~~~~~~'
+            - ""
+            - '  src/checkout/types.ts:8:3'
+            - '    8   timeout: number;'
+            - '        ~~~~~~~'
+            - '    The expected type comes from property ''timeout'' which is declared here on type ''ClientOptions''.'
+            - ""
+            - 'src/checkout/cart.ts:88:12 - error TS18047: ''user'' is possibly ''null''.'
+            - ""
+            - 88     return user.id;
+            - '              ~~~~'
+            - ""
+            - 'src/checkout/config.ts:29:3 - error TS2554: Expected 1 arguments, but got 0.'
+            - ""
+            - 29   loadSettings();
+            - '     ~~~~~~~~~~~~~'
+            - ""
+            - Found 3 errors in 3 files.
+            - ""
+            - Errors  Files
+            - '     1  src/checkout/api.ts:41'
+            - '     1  src/checkout/cart.ts:88'
+            - '     1  src/checkout/config.ts:29'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/tsc/tsc-compact/filter.lf --sub= --args='--noEmit' --exit=2 --level=full < plugins/tsc/tsc-compact/samples/tsc-errors.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 26
+            - bytes 673
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/tsc/tsc-compact/tests.cue \ tsc-compact \ samples/tsc-errors.txt ultra
+  commands:
+    - command: lowfat filter plugins/tsc/tsc-compact/filter.lf --sub= --args='--noEmit' --exit=2 --level=ultra < plugins/tsc/tsc-compact/samples/tsc-errors.txt
+      checks:
+        - name: stdout
+          data:
+            - 'src/checkout/api.ts:41:5 - error TS2322: Type ''string'' is not assignable to type ''number''.'
+            - '41     timeout: "30",'
+            - '    8   timeout: number;'
+            - 'src/checkout/cart.ts:88:12 - error TS18047: ''user'' is possibly ''null''.'
+            - 88     return user.id;
+            - 'src/checkout/config.ts:29:3 - error TS2554: Expected 1 arguments, but got 0.'
+            - 29   loadSettings();
+            - Found 3 errors in 3 files.
+            - Errors  Files
+            - '     1  src/checkout/api.ts:41'
+            - '     1  src/checkout/cart.ts:88'
+            - '     1  src/checkout/config.ts:29'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/tsc/tsc-compact/filter.lf --sub= --args='--noEmit' --exit=2 --level=ultra < plugins/tsc/tsc-compact/samples/tsc-errors.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 12
+            - bytes 468
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/tsc/tsc-compact/tests.cue \ tsc-compact \ samples/tsc-clean.txt lite
+  commands:
+    - command: lowfat filter plugins/tsc/tsc-compact/filter.lf --sub= --args='--noEmit' --exit=0 --level=lite < plugins/tsc/tsc-compact/samples/tsc-clean.txt
+      checks:
+        - name: stdout
+          data:
+            - 'tsc: no errors'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/tsc/tsc-compact/filter.lf --sub= --args='--noEmit' --exit=0 --level=lite < plugins/tsc/tsc-compact/samples/tsc-clean.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 15
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/tsc/tsc-compact/tests.cue \ tsc-compact \ samples/tsc-clean.txt full
+  commands:
+    - command: lowfat filter plugins/tsc/tsc-compact/filter.lf --sub= --args='--noEmit' --exit=0 --level=full < plugins/tsc/tsc-compact/samples/tsc-clean.txt
+      checks:
+        - name: stdout
+          data:
+            - 'tsc: no errors'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/tsc/tsc-compact/filter.lf --sub= --args='--noEmit' --exit=0 --level=full < plugins/tsc/tsc-compact/samples/tsc-clean.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 15
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/tsc/tsc-compact/tests.cue \ tsc-compact \ samples/tsc-clean.txt ultra
+  commands:
+    - command: lowfat filter plugins/tsc/tsc-compact/filter.lf --sub= --args='--noEmit' --exit=0 --level=ultra < plugins/tsc/tsc-compact/samples/tsc-clean.txt
+      checks:
+        - name: stdout
+          data:
+            - 'tsc: no errors'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/tsc/tsc-compact/filter.lf --sub= --args='--noEmit' --exit=0 --level=ultra < plugins/tsc/tsc-compact/samples/tsc-clean.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 15
+        - name: exitcode
+          data:
+            - "0"

@@ -1,0 +1,249 @@
+- name: plugins/make/make-compact/tests.cue \ make-compact \ samples/make-success.txt lite
+  commands:
+    - command: lowfat filter plugins/make/make-compact/filter.lf --sub= --args='release' --exit=0 --level=lite < plugins/make/make-compact/samples/make-success.txt
+      checks:
+        - name: stdout
+          data:
+            - cc -O2 -Wall -Iinclude -c src/file01.c -o build/file01.o
+            - cc -O2 -Wall -Iinclude -c src/file02.c -o build/file02.o
+            - cc -O2 -Wall -Iinclude -c src/file03.c -o build/file03.o
+            - cc -O2 -Wall -Iinclude -c src/file04.c -o build/file04.o
+            - cc -O2 -Wall -Iinclude -c src/file05.c -o build/file05.o
+            - cc -O2 -Wall -Iinclude -c src/file06.c -o build/file06.o
+            - cc -O2 -Wall -Iinclude -c src/file07.c -o build/file07.o
+            - cc -O2 -Wall -Iinclude -c src/file08.c -o build/file08.o
+            - cc -O2 -Wall -Iinclude -c src/file09.c -o build/file09.o
+            - cc -O2 -Wall -Iinclude -c src/file10.c -o build/file10.o
+            - ar rcs build/libapp.a build/file01.o build/file02.o build/file03.o build/file04.o build/file05.o
+            - cc build/main.o build/libapp.a -lm -o build/app
+            - mkdir -p dist/bin
+            - cp build/app dist/bin/app
+            - strip dist/bin/app
+            - printf '%s\n' build/app > dist/manifest.txt
+            - 'make[1]: Entering directory ''/work/project/docs'''
+            - asciidoctor -o build/manual.html manual.adoc
+            - 'make[1]: Leaving directory ''/work/project/docs'''
+            - Built dist/bin/app
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/make/make-compact/filter.lf --sub= --args='release' --exit=0 --level=lite < plugins/make/make-compact/samples/make-success.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 20
+            - bytes 983
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/make/make-compact/tests.cue \ make-compact \ samples/make-success.txt full
+  commands:
+    - command: lowfat filter plugins/make/make-compact/filter.lf --sub= --args='release' --exit=0 --level=full < plugins/make/make-compact/samples/make-success.txt
+      checks:
+        - name: stdout
+          data:
+            - cc -O2 -Wall -Iinclude -c src/file01.c -o build/file01.o
+            - cc -O2 -Wall -Iinclude -c src/file02.c -o build/file02.o
+            - cc -O2 -Wall -Iinclude -c src/file03.c -o build/file03.o
+            - cc -O2 -Wall -Iinclude -c src/file04.c -o build/file04.o
+            - cc -O2 -Wall -Iinclude -c src/file05.c -o build/file05.o
+            - cc -O2 -Wall -Iinclude -c src/file06.c -o build/file06.o
+            - cc -O2 -Wall -Iinclude -c src/file07.c -o build/file07.o
+            - cc -O2 -Wall -Iinclude -c src/file08.c -o build/file08.o
+            - cc -O2 -Wall -Iinclude -c src/file09.c -o build/file09.o
+            - cc -O2 -Wall -Iinclude -c src/file10.c -o build/file10.o
+            - ar rcs build/libapp.a build/file01.o build/file02.o build/file03.o build/file04.o build/file05.o
+            - cc build/main.o build/libapp.a -lm -o build/app
+            - mkdir -p dist/bin
+            - cp build/app dist/bin/app
+            - strip dist/bin/app
+            - printf '%s\n' build/app > dist/manifest.txt
+            - 'make[1]: Entering directory ''/work/project/docs'''
+            - asciidoctor -o build/manual.html manual.adoc
+            - 'make[1]: Leaving directory ''/work/project/docs'''
+            - Built dist/bin/app
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/make/make-compact/filter.lf --sub= --args='release' --exit=0 --level=full < plugins/make/make-compact/samples/make-success.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 20
+            - bytes 983
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/make/make-compact/tests.cue \ make-compact \ samples/make-success.txt ultra
+  commands:
+    - command: lowfat filter plugins/make/make-compact/filter.lf --sub= --args='release' --exit=0 --level=ultra < plugins/make/make-compact/samples/make-success.txt
+      checks:
+        - name: stdout
+          data:
+            - cc -O2 -Wall -Iinclude -c src/file01.c -o build/file01.o
+            - cc -O2 -Wall -Iinclude -c src/file02.c -o build/file02.o
+            - cc -O2 -Wall -Iinclude -c src/file03.c -o build/file03.o
+            - cc -O2 -Wall -Iinclude -c src/file04.c -o build/file04.o
+            - cc -O2 -Wall -Iinclude -c src/file05.c -o build/file05.o
+            - cc -O2 -Wall -Iinclude -c src/file06.c -o build/file06.o
+            - cc -O2 -Wall -Iinclude -c src/file07.c -o build/file07.o
+            - cc -O2 -Wall -Iinclude -c src/file08.c -o build/file08.o
+            - cc -O2 -Wall -Iinclude -c src/file09.c -o build/file09.o
+            - cc -O2 -Wall -Iinclude -c src/file10.c -o build/file10.o
+            - ar rcs build/libapp.a build/file01.o build/file02.o build/file03.o build/file04.o build/file05.o
+            - cc build/main.o build/libapp.a -lm -o build/app
+            - mkdir -p dist/bin
+            - cp build/app dist/bin/app
+            - strip dist/bin/app
+            - printf '%s\n' build/app > dist/manifest.txt
+            - 'make[1]: Entering directory ''/work/project/docs'''
+            - asciidoctor -o build/manual.html manual.adoc
+            - 'make[1]: Leaving directory ''/work/project/docs'''
+            - Built dist/bin/app
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/make/make-compact/filter.lf --sub= --args='release' --exit=0 --level=ultra < plugins/make/make-compact/samples/make-success.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 20
+            - bytes 983
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/make/make-compact/tests.cue \ make-compact \ samples/make-failure.txt lite
+  commands:
+    - command: lowfat filter plugins/make/make-compact/filter.lf --sub= --args='release' --exit=2 --level=lite < plugins/make/make-compact/samples/make-failure.txt
+      checks:
+        - name: stdout
+          data:
+            - cc -O2 -Wall -Iinclude -c src/file01.c -o build/file01.o
+            - cc -O2 -Wall -Iinclude -c src/file02.c -o build/file02.o
+            - cc -O2 -Wall -Iinclude -c src/file03.c -o build/file03.o
+            - cc -O2 -Wall -Iinclude -c src/file04.c -o build/file04.o
+            - cc -O2 -Wall -Iinclude -c src/file05.c -o build/file05.o
+            - cc -O2 -Wall -Iinclude -c src/file06.c -o build/file06.o
+            - cc -O2 -Wall -Iinclude -c src/file07.c -o build/file07.o
+            - cc -O2 -Wall -Iinclude -c src/file08.c -o build/file08.o
+            - cc -O2 -Wall -Iinclude -c src/parser.c -o build/parser.o
+            - 'src/parser.c: In function ''parse_item'':'
+            - 'src/parser.c:214:17: warning: unused variable ''start'' [-Wunused-variable]'
+            - '  214 |     const char *start = cursor;'
+            - '      |                 ^~~~~'
+            - 'src/parser.c:231:12: error: ''Token'' has no member named ''lexeme'''
+            - '  231 |     if (tok.lexeme == NULL) {'
+            - '      |            ^'
+            - 'src/parser.c:232:16: error: incompatible type for argument 1 of ''strlen'''
+            - '  232 |         return strlen(tok);'
+            - '      |                ^~~~~~'
+            - 'In file included from src/parser.c:3:'
+            - '/usr/include/string.h:407:35: note: expected ''const char *'' but argument is of type ''Token'''
+            - '  407 | extern size_t strlen (const char *__s)'
+            - '      |                       ~~~~~~~~~~~~^~~'
+            - 'make[2]: *** [Makefile:87: build/parser.o] Error 1'
+            - 'make[2]: Leaving directory ''/work/project/src'''
+            - 'make[1]: *** [Makefile:41: all] Error 2'
+            - 'make: *** [Makefile:12: release] Error 2'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/make/make-compact/filter.lf --sub= --args='release' --exit=2 --level=lite < plugins/make/make-compact/samples/make-failure.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 27
+            - bytes 1362
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/make/make-compact/tests.cue \ make-compact \ samples/make-failure.txt full
+  commands:
+    - command: lowfat filter plugins/make/make-compact/filter.lf --sub= --args='release' --exit=2 --level=full < plugins/make/make-compact/samples/make-failure.txt
+      checks:
+        - name: stdout
+          data:
+            - cc -O2 -Wall -Iinclude -c src/file01.c -o build/file01.o
+            - cc -O2 -Wall -Iinclude -c src/file02.c -o build/file02.o
+            - cc -O2 -Wall -Iinclude -c src/file03.c -o build/file03.o
+            - cc -O2 -Wall -Iinclude -c src/file04.c -o build/file04.o
+            - cc -O2 -Wall -Iinclude -c src/file05.c -o build/file05.o
+            - cc -O2 -Wall -Iinclude -c src/file06.c -o build/file06.o
+            - cc -O2 -Wall -Iinclude -c src/file07.c -o build/file07.o
+            - cc -O2 -Wall -Iinclude -c src/file08.c -o build/file08.o
+            - cc -O2 -Wall -Iinclude -c src/parser.c -o build/parser.o
+            - 'src/parser.c: In function ''parse_item'':'
+            - 'src/parser.c:214:17: warning: unused variable ''start'' [-Wunused-variable]'
+            - '  214 |     const char *start = cursor;'
+            - '      |                 ^~~~~'
+            - 'src/parser.c:231:12: error: ''Token'' has no member named ''lexeme'''
+            - '  231 |     if (tok.lexeme == NULL) {'
+            - '      |            ^'
+            - 'src/parser.c:232:16: error: incompatible type for argument 1 of ''strlen'''
+            - '  232 |         return strlen(tok);'
+            - '      |                ^~~~~~'
+            - 'In file included from src/parser.c:3:'
+            - '/usr/include/string.h:407:35: note: expected ''const char *'' but argument is of type ''Token'''
+            - '  407 | extern size_t strlen (const char *__s)'
+            - '      |                       ~~~~~~~~~~~~^~~'
+            - 'make[2]: *** [Makefile:87: build/parser.o] Error 1'
+            - 'make[2]: Leaving directory ''/work/project/src'''
+            - 'make[1]: *** [Makefile:41: all] Error 2'
+            - 'make: *** [Makefile:12: release] Error 2'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/make/make-compact/filter.lf --sub= --args='release' --exit=2 --level=full < plugins/make/make-compact/samples/make-failure.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 27
+            - bytes 1362
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/make/make-compact/tests.cue \ make-compact \ samples/make-failure.txt ultra
+  commands:
+    - command: lowfat filter plugins/make/make-compact/filter.lf --sub= --args='release' --exit=2 --level=ultra < plugins/make/make-compact/samples/make-failure.txt
+      checks:
+        - name: stdout
+          data:
+            - cc -O2 -Wall -Iinclude -c src/file01.c -o build/file01.o
+            - cc -O2 -Wall -Iinclude -c src/file02.c -o build/file02.o
+            - cc -O2 -Wall -Iinclude -c src/file03.c -o build/file03.o
+            - cc -O2 -Wall -Iinclude -c src/file04.c -o build/file04.o
+            - cc -O2 -Wall -Iinclude -c src/file05.c -o build/file05.o
+            - cc -O2 -Wall -Iinclude -c src/file06.c -o build/file06.o
+            - cc -O2 -Wall -Iinclude -c src/file07.c -o build/file07.o
+            - cc -O2 -Wall -Iinclude -c src/file08.c -o build/file08.o
+            - cc -O2 -Wall -Iinclude -c src/parser.c -o build/parser.o
+            - 'src/parser.c: In function ''parse_item'':'
+            - 'src/parser.c:214:17: warning: unused variable ''start'' [-Wunused-variable]'
+            - '  214 |     const char *start = cursor;'
+            - '      |                 ^~~~~'
+            - 'src/parser.c:231:12: error: ''Token'' has no member named ''lexeme'''
+            - '  231 |     if (tok.lexeme == NULL) {'
+            - '      |            ^'
+            - 'src/parser.c:232:16: error: incompatible type for argument 1 of ''strlen'''
+            - '  232 |         return strlen(tok);'
+            - '      |                ^~~~~~'
+            - 'In file included from src/parser.c:3:'
+            - '/usr/include/string.h:407:35: note: expected ''const char *'' but argument is of type ''Token'''
+            - '  407 | extern size_t strlen (const char *__s)'
+            - '      |                       ~~~~~~~~~~~~^~~'
+            - 'make[2]: *** [Makefile:87: build/parser.o] Error 1'
+            - 'make[2]: Leaving directory ''/work/project/src'''
+            - 'make[1]: *** [Makefile:41: all] Error 2'
+            - 'make: *** [Makefile:12: release] Error 2'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/make/make-compact/filter.lf --sub= --args='release' --exit=2 --level=ultra < plugins/make/make-compact/samples/make-failure.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 27
+            - bytes 1362
+        - name: exitcode
+          data:
+            - "0"

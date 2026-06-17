@@ -1,0 +1,390 @@
+- name: plugins/terraform/terraform-compact/tests.cue \ terraform-compact \ samples/terraform-plan.txt lite
+  commands:
+    - command: lowfat filter plugins/terraform/terraform-compact/filter.lf --sub=plan --args='-out=tfplan' --exit=0 --level=lite < plugins/terraform/terraform-compact/samples/terraform-plan.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Terraform will perform the following actions:'
+            - '  # aws_instance.web[0] will be created'
+            - '      + ami                                  = "ami-0b5eea76982371e91"'
+            - '      + arn                                  = (known after apply)'
+            - '      + associate_public_ip_address          = true'
+            - '      + availability_zone                    = (known after apply)'
+            - '      + cpu_core_count                       = (known after apply)'
+            - '      + cpu_threads_per_core                 = (known after apply)'
+            - '      + disable_api_stop                     = (known after apply)'
+            - '      + disable_api_termination              = false'
+            - '      + ebs_optimized                        = (known after apply)'
+            - '      + get_password_data                    = false'
+            - '      + host_id                              = (known after apply)'
+            - '      + id                                   = (known after apply)'
+            - '      + instance_initiated_shutdown_behavior = (known after apply)'
+            - '      + instance_state                       = (known after apply)'
+            - '      + instance_type                        = "t3.micro"'
+            - '      + ipv6_address_count                   = (known after apply)'
+            - '      + ipv6_addresses                       = (known after apply)'
+            - '      + key_name                             = "deploy"'
+            - '      + monitoring                           = false'
+            - '      + outpost_arn                          = (known after apply)'
+            - '      + password_data                        = (known after apply)'
+            - '      + placement_group                      = (known after apply)'
+            - '      + placement_partition_number           = (known after apply)'
+            - '      + primary_network_interface_id         = (known after apply)'
+            - '      + private_dns                          = (known after apply)'
+            - '      + private_ip                           = (known after apply)'
+            - '      + public_dns                           = (known after apply)'
+            - '      + public_ip                            = (known after apply)'
+            - '      + secondary_private_ips                = (known after apply)'
+            - '      + security_groups                      = (known after apply)'
+            - '      + source_dest_check                    = true'
+            - '      + subnet_id                            = "subnet-0abc123"'
+            - '      + tags                                 = {'
+            - '          + "Environment" = "staging"'
+            - '          + "Name"        = "web-0"'
+            - '  # aws_instance.web[1] will be created'
+            - '      + ami                                  = "ami-0b5eea76982371e91"'
+            - '      + arn                                  = (known after apply)'
+            - '      + associate_public_ip_address          = true'
+            - '      + availability_zone                    = (known after apply)'
+            - '      + cpu_core_count                       = (known after apply)'
+            - '      + cpu_threads_per_core                 = (known after apply)'
+            - '      + disable_api_stop                     = (known after apply)'
+            - '      + disable_api_termination              = false'
+            - '      + ebs_optimized                        = (known after apply)'
+            - '      + get_password_data                    = false'
+            - '      + id                                   = (known after apply)'
+            - '      + instance_type                        = "t3.micro"'
+            - '      + monitoring                           = false'
+            - '      + primary_network_interface_id         = (known after apply)'
+            - '      + private_dns                          = (known after apply)'
+            - '      + private_ip                           = (known after apply)'
+            - '      + public_dns                           = (known after apply)'
+            - '      + public_ip                            = (known after apply)'
+            - '      + subnet_id                            = "subnet-0def456"'
+            - '      + tags                                 = {'
+            - '          + "Environment" = "staging"'
+            - '          + "Name"        = "web-1"'
+            - '  # aws_security_group.web will be updated in-place'
+            - '      ~ description = "web ingress" -> "web ingress and egress"'
+            - '      + tags        = {'
+            - '          + "Owner" = "platform"'
+            - '  # aws_s3_bucket.logs will be destroyed'
+            - '      - acl                         = "private" -> null'
+            - '      - arn                         = "arn:aws:s3:::old-logs" -> null'
+            - '      - bucket                      = "old-logs" -> null'
+            - '      - bucket_domain_name          = "old-logs.s3.amazonaws.com" -> null'
+            - '      - force_destroy               = false -> null'
+            - '      - hosted_zone_id              = "Z3AQBSTGFYJSTF" -> null'
+            - '      - id                          = "old-logs" -> null'
+            - '      - object_lock_enabled         = false -> null'
+            - '      - region                      = "us-east-1" -> null'
+            - '      - request_payer               = "BucketOwner" -> null'
+            - '      - tags                        = {} -> null'
+            - 'Plan: 2 to add, 1 to change, 1 to destroy.'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/terraform/terraform-compact/filter.lf --sub=plan --args='-out=tfplan' --exit=0 --level=lite < plugins/terraform/terraform-compact/samples/terraform-plan.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 77
+            - bytes 4538
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/terraform/terraform-compact/tests.cue \ terraform-compact \ samples/terraform-plan.txt full
+  commands:
+    - command: lowfat filter plugins/terraform/terraform-compact/filter.lf --sub=plan --args='-out=tfplan' --exit=0 --level=full < plugins/terraform/terraform-compact/samples/terraform-plan.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Terraform will perform the following actions:'
+            - '  # aws_instance.web[0] will be created'
+            - '      + ami                                  = "ami-0b5eea76982371e91"'
+            - '      + arn                                  = (known after apply)'
+            - '      + associate_public_ip_address          = true'
+            - '      + availability_zone                    = (known after apply)'
+            - '      + cpu_core_count                       = (known after apply)'
+            - '      + cpu_threads_per_core                 = (known after apply)'
+            - '      + disable_api_stop                     = (known after apply)'
+            - '      + disable_api_termination              = false'
+            - '      + ebs_optimized                        = (known after apply)'
+            - '      + get_password_data                    = false'
+            - '      + host_id                              = (known after apply)'
+            - '      + id                                   = (known after apply)'
+            - '      + instance_initiated_shutdown_behavior = (known after apply)'
+            - '      + instance_state                       = (known after apply)'
+            - '      + instance_type                        = "t3.micro"'
+            - '      + ipv6_address_count                   = (known after apply)'
+            - '      + ipv6_addresses                       = (known after apply)'
+            - '      + key_name                             = "deploy"'
+            - '      + monitoring                           = false'
+            - '      + outpost_arn                          = (known after apply)'
+            - '      + password_data                        = (known after apply)'
+            - '      + placement_group                      = (known after apply)'
+            - '      + placement_partition_number           = (known after apply)'
+            - '      + primary_network_interface_id         = (known after apply)'
+            - '      + private_dns                          = (known after apply)'
+            - '      + private_ip                           = (known after apply)'
+            - '      + public_dns                           = (known after apply)'
+            - '      + public_ip                            = (known after apply)'
+            - '      + secondary_private_ips                = (known after apply)'
+            - '      + security_groups                      = (known after apply)'
+            - '      + source_dest_check                    = true'
+            - '      + subnet_id                            = "subnet-0abc123"'
+            - '      + tags                                 = {'
+            - '          + "Environment" = "staging"'
+            - '          + "Name"        = "web-0"'
+            - '  # aws_instance.web[1] will be created'
+            - '      + ami                                  = "ami-0b5eea76982371e91"'
+            - '      + arn                                  = (known after apply)'
+            - '      + associate_public_ip_address          = true'
+            - '      + availability_zone                    = (known after apply)'
+            - '      + cpu_core_count                       = (known after apply)'
+            - '      + cpu_threads_per_core                 = (known after apply)'
+            - '      + disable_api_stop                     = (known after apply)'
+            - '      + disable_api_termination              = false'
+            - '      + ebs_optimized                        = (known after apply)'
+            - '      + get_password_data                    = false'
+            - '      + id                                   = (known after apply)'
+            - '      + instance_type                        = "t3.micro"'
+            - '      + monitoring                           = false'
+            - '      + primary_network_interface_id         = (known after apply)'
+            - '      + private_dns                          = (known after apply)'
+            - '      + private_ip                           = (known after apply)'
+            - '      + public_dns                           = (known after apply)'
+            - '      + public_ip                            = (known after apply)'
+            - '      + subnet_id                            = "subnet-0def456"'
+            - '      + tags                                 = {'
+            - '          + "Environment" = "staging"'
+            - '          + "Name"        = "web-1"'
+            - '  # aws_security_group.web will be updated in-place'
+            - '      ~ description = "web ingress" -> "web ingress and egress"'
+            - '      + tags        = {'
+            - '          + "Owner" = "platform"'
+            - '  # aws_s3_bucket.logs will be destroyed'
+            - '      - acl                         = "private" -> null'
+            - '      - arn                         = "arn:aws:s3:::old-logs" -> null'
+            - '      - bucket                      = "old-logs" -> null'
+            - '      - bucket_domain_name          = "old-logs.s3.amazonaws.com" -> null'
+            - '      - force_destroy               = false -> null'
+            - '      - hosted_zone_id              = "Z3AQBSTGFYJSTF" -> null'
+            - '      - id                          = "old-logs" -> null'
+            - '      - object_lock_enabled         = false -> null'
+            - '      - region                      = "us-east-1" -> null'
+            - '      - request_payer               = "BucketOwner" -> null'
+            - '      - tags                        = {} -> null'
+            - 'Plan: 2 to add, 1 to change, 1 to destroy.'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/terraform/terraform-compact/filter.lf --sub=plan --args='-out=tfplan' --exit=0 --level=full < plugins/terraform/terraform-compact/samples/terraform-plan.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 77
+            - bytes 4538
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/terraform/terraform-compact/tests.cue \ terraform-compact \ samples/terraform-plan.txt ultra
+  commands:
+    - command: lowfat filter plugins/terraform/terraform-compact/filter.lf --sub=plan --args='-out=tfplan' --exit=0 --level=ultra < plugins/terraform/terraform-compact/samples/terraform-plan.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Terraform will perform the following actions:'
+            - '  # aws_instance.web[0] will be created'
+            - '  # aws_instance.web[1] will be created'
+            - '  # aws_security_group.web will be updated in-place'
+            - '  # aws_s3_bucket.logs will be destroyed'
+            - 'Plan: 2 to add, 1 to change, 1 to destroy.'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/terraform/terraform-compact/filter.lf --sub=plan --args='-out=tfplan' --exit=0 --level=ultra < plugins/terraform/terraform-compact/samples/terraform-plan.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 6
+            - bytes 262
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/terraform/terraform-compact/tests.cue \ terraform-compact \ samples/terraform-apply.txt lite
+  commands:
+    - command: lowfat filter plugins/terraform/terraform-compact/filter.lf --sub=apply --args='-auto-approve tfplan' --exit=0 --level=lite < plugins/terraform/terraform-compact/samples/terraform-apply.txt
+      checks:
+        - name: stdout
+          data:
+            - 'aws_instance.web[0]: Creating...'
+            - 'aws_instance.web[0]: Creation complete after 34s [id=i-0abc123]'
+            - 'aws_instance.web[1]: Creating...'
+            - 'aws_instance.web[1]: Creation complete after 38s [id=i-0def456]'
+            - 'aws_security_group.web: Modifying... [id=sg-123456]'
+            - 'aws_security_group.web: Modifications complete after 22s [id=sg-123456]'
+            - 'aws_s3_bucket.logs: Destroying... [id=old-logs]'
+            - 'aws_s3_bucket.logs: Destruction complete after 13s'
+            - ""
+            - 'Apply complete! Resources: 2 added, 1 changed, 1 destroyed.'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/terraform/terraform-compact/filter.lf --sub=apply --args='-auto-approve tfplan' --exit=0 --level=lite < plugins/terraform/terraform-compact/samples/terraform-apply.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 10
+            - bytes 478
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/terraform/terraform-compact/tests.cue \ terraform-compact \ samples/terraform-apply.txt full
+  commands:
+    - command: lowfat filter plugins/terraform/terraform-compact/filter.lf --sub=apply --args='-auto-approve tfplan' --exit=0 --level=full < plugins/terraform/terraform-compact/samples/terraform-apply.txt
+      checks:
+        - name: stdout
+          data:
+            - 'aws_instance.web[0]: Creating...'
+            - 'aws_instance.web[0]: Creation complete after 34s [id=i-0abc123]'
+            - 'aws_instance.web[1]: Creating...'
+            - 'aws_instance.web[1]: Creation complete after 38s [id=i-0def456]'
+            - 'aws_security_group.web: Modifying... [id=sg-123456]'
+            - 'aws_security_group.web: Modifications complete after 22s [id=sg-123456]'
+            - 'aws_s3_bucket.logs: Destroying... [id=old-logs]'
+            - 'aws_s3_bucket.logs: Destruction complete after 13s'
+            - ""
+            - 'Apply complete! Resources: 2 added, 1 changed, 1 destroyed.'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/terraform/terraform-compact/filter.lf --sub=apply --args='-auto-approve tfplan' --exit=0 --level=full < plugins/terraform/terraform-compact/samples/terraform-apply.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 10
+            - bytes 478
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/terraform/terraform-compact/tests.cue \ terraform-compact \ samples/terraform-apply.txt ultra
+  commands:
+    - command: lowfat filter plugins/terraform/terraform-compact/filter.lf --sub=apply --args='-auto-approve tfplan' --exit=0 --level=ultra < plugins/terraform/terraform-compact/samples/terraform-apply.txt
+      checks:
+        - name: stdout
+          data:
+            - 'aws_instance.web[0]: Creating...'
+            - 'aws_instance.web[0]: Creation complete after 34s [id=i-0abc123]'
+            - 'aws_instance.web[1]: Creating...'
+            - 'aws_instance.web[1]: Creation complete after 38s [id=i-0def456]'
+            - 'aws_security_group.web: Modifying... [id=sg-123456]'
+            - 'aws_security_group.web: Modifications complete after 22s [id=sg-123456]'
+            - 'aws_s3_bucket.logs: Destroying... [id=old-logs]'
+            - 'aws_s3_bucket.logs: Destruction complete after 13s'
+            - 'Apply complete! Resources: 2 added, 1 changed, 1 destroyed.'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/terraform/terraform-compact/filter.lf --sub=apply --args='-auto-approve tfplan' --exit=0 --level=ultra < plugins/terraform/terraform-compact/samples/terraform-apply.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 9
+            - bytes 477
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/terraform/terraform-compact/tests.cue \ terraform-compact \ samples/terraform-init-error.txt lite
+  commands:
+    - command: lowfat filter plugins/terraform/terraform-compact/filter.lf --sub=init --args='-upgrade' --exit=1 --level=lite < plugins/terraform/terraform-compact/samples/terraform-init-error.txt
+      checks:
+        - name: stdout
+          data:
+            - Initializing the backend...
+            - Initializing provider plugins...
+            - '- Reusing previous version of hashicorp/aws from the dependency lock file'
+            - '- Finding latest version of hashicorp/random...'
+            - '- Installing hashicorp/random v3.6.2...'
+            - '- Installed hashicorp/random v3.6.2 (signed by HashiCorp)'
+            - ""
+            - 'Error: Failed to query available provider packages'
+            - ""
+            - 'Could not retrieve the list of available versions for provider hashicorp/aws:'
+            - 'could not connect to registry.terraform.io: failed to request discovery'
+            - 'document: Get "https://registry.terraform.io/.well-known/terraform.json":'
+            - 'dial tcp: lookup registry.terraform.io: no such host'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/terraform/terraform-compact/filter.lf --sub=init --args='-upgrade' --exit=1 --level=lite < plugins/terraform/terraform-compact/samples/terraform-init-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 13
+            - bytes 611
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/terraform/terraform-compact/tests.cue \ terraform-compact \ samples/terraform-init-error.txt full
+  commands:
+    - command: lowfat filter plugins/terraform/terraform-compact/filter.lf --sub=init --args='-upgrade' --exit=1 --level=full < plugins/terraform/terraform-compact/samples/terraform-init-error.txt
+      checks:
+        - name: stdout
+          data:
+            - Initializing the backend...
+            - Initializing provider plugins...
+            - '- Reusing previous version of hashicorp/aws from the dependency lock file'
+            - '- Finding latest version of hashicorp/random...'
+            - '- Installing hashicorp/random v3.6.2...'
+            - '- Installed hashicorp/random v3.6.2 (signed by HashiCorp)'
+            - ""
+            - 'Error: Failed to query available provider packages'
+            - ""
+            - 'Could not retrieve the list of available versions for provider hashicorp/aws:'
+            - 'could not connect to registry.terraform.io: failed to request discovery'
+            - 'document: Get "https://registry.terraform.io/.well-known/terraform.json":'
+            - 'dial tcp: lookup registry.terraform.io: no such host'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/terraform/terraform-compact/filter.lf --sub=init --args='-upgrade' --exit=1 --level=full < plugins/terraform/terraform-compact/samples/terraform-init-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 13
+            - bytes 611
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/terraform/terraform-compact/tests.cue \ terraform-compact \ samples/terraform-init-error.txt ultra
+  commands:
+    - command: lowfat filter plugins/terraform/terraform-compact/filter.lf --sub=init --args='-upgrade' --exit=1 --level=ultra < plugins/terraform/terraform-compact/samples/terraform-init-error.txt
+      checks:
+        - name: stdout
+          data:
+            - Initializing the backend...
+            - Initializing provider plugins...
+            - '- Reusing previous version of hashicorp/aws from the dependency lock file'
+            - '- Finding latest version of hashicorp/random...'
+            - '- Installing hashicorp/random v3.6.2...'
+            - '- Installed hashicorp/random v3.6.2 (signed by HashiCorp)'
+            - ""
+            - 'Error: Failed to query available provider packages'
+            - ""
+            - 'Could not retrieve the list of available versions for provider hashicorp/aws:'
+            - 'could not connect to registry.terraform.io: failed to request discovery'
+            - 'document: Get "https://registry.terraform.io/.well-known/terraform.json":'
+            - 'dial tcp: lookup registry.terraform.io: no such host'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/terraform/terraform-compact/filter.lf --sub=init --args='-upgrade' --exit=1 --level=ultra < plugins/terraform/terraform-compact/samples/terraform-init-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 13
+            - bytes 611
+        - name: exitcode
+          data:
+            - "0"

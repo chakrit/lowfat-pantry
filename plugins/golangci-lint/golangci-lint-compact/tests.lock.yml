@@ -1,0 +1,199 @@
+- name: plugins/golangci-lint/golangci-lint-compact/tests.cue \ golangci-lint-compact \ samples/golangci-issues.txt lite
+  commands:
+    - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run ./...' --exit=1 --level=lite < plugins/golangci-lint/golangci-lint-compact/samples/golangci-issues.txt
+      checks:
+        - name: stdout
+          data:
+            - 'internal/handler.go:42:2: ineffectual assignment to err (ineffassign)'
+            - "\terr := db.Save(ctx, order)"
+            - "\t^"
+            - 'internal/handler.go:88:1: cyclomatic complexity 18 of func `Handle` is high (gocyclo)'
+            - func Handle(w http.ResponseWriter, r *http.Request) {
+            - ^
+            - 'internal/db.go:15:6: exported type `Store` should have comment or be unexported (revive)'
+            - type Store struct {
+            - '     ^'
+            - 'internal/db.go:51:2: SA4006: this value of `rows` is never used (staticcheck)'
+            - "\trows, err := q.Query(ctx)"
+            - "\t^"
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run ./...' --exit=1 --level=lite < plugins/golangci-lint/golangci-lint-compact/samples/golangci-issues.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 12
+            - bytes 467
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/golangci-lint/golangci-lint-compact/tests.cue \ golangci-lint-compact \ samples/golangci-issues.txt full
+  commands:
+    - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run ./...' --exit=1 --level=full < plugins/golangci-lint/golangci-lint-compact/samples/golangci-issues.txt
+      checks:
+        - name: stdout
+          data:
+            - 'internal/handler.go:42:2: ineffectual assignment to err (ineffassign)'
+            - "\terr := db.Save(ctx, order)"
+            - "\t^"
+            - 'internal/handler.go:88:1: cyclomatic complexity 18 of func `Handle` is high (gocyclo)'
+            - func Handle(w http.ResponseWriter, r *http.Request) {
+            - ^
+            - 'internal/db.go:15:6: exported type `Store` should have comment or be unexported (revive)'
+            - type Store struct {
+            - '     ^'
+            - 'internal/db.go:51:2: SA4006: this value of `rows` is never used (staticcheck)'
+            - "\trows, err := q.Query(ctx)"
+            - "\t^"
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run ./...' --exit=1 --level=full < plugins/golangci-lint/golangci-lint-compact/samples/golangci-issues.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 12
+            - bytes 467
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/golangci-lint/golangci-lint-compact/tests.cue \ golangci-lint-compact \ samples/golangci-issues.txt ultra
+  commands:
+    - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run ./...' --exit=1 --level=ultra < plugins/golangci-lint/golangci-lint-compact/samples/golangci-issues.txt
+      checks:
+        - name: stdout
+          data:
+            - 'internal/handler.go:42:2: ineffectual assignment to err (ineffassign)'
+            - 'internal/handler.go:88:1: cyclomatic complexity 18 of func `Handle` is high (gocyclo)'
+            - 'internal/db.go:15:6: exported type `Store` should have comment or be unexported (revive)'
+            - 'internal/db.go:51:2: SA4006: this value of `rows` is never used (staticcheck)'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run ./...' --exit=1 --level=ultra < plugins/golangci-lint/golangci-lint-compact/samples/golangci-issues.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 4
+            - bytes 323
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/golangci-lint/golangci-lint-compact/tests.cue \ golangci-lint-compact \ samples/golangci-clean.txt lite
+  commands:
+    - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run ./...' --exit=0 --level=lite < plugins/golangci-lint/golangci-lint-compact/samples/golangci-clean.txt
+      checks:
+        - name: stdout
+          data:
+            - 'golangci-lint: clean'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run ./...' --exit=0 --level=lite < plugins/golangci-lint/golangci-lint-compact/samples/golangci-clean.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 21
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/golangci-lint/golangci-lint-compact/tests.cue \ golangci-lint-compact \ samples/golangci-clean.txt full
+  commands:
+    - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run ./...' --exit=0 --level=full < plugins/golangci-lint/golangci-lint-compact/samples/golangci-clean.txt
+      checks:
+        - name: stdout
+          data:
+            - 'golangci-lint: clean'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run ./...' --exit=0 --level=full < plugins/golangci-lint/golangci-lint-compact/samples/golangci-clean.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 21
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/golangci-lint/golangci-lint-compact/tests.cue \ golangci-lint-compact \ samples/golangci-clean.txt ultra
+  commands:
+    - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run ./...' --exit=0 --level=ultra < plugins/golangci-lint/golangci-lint-compact/samples/golangci-clean.txt
+      checks:
+        - name: stdout
+          data:
+            - 'golangci-lint: clean'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run ./...' --exit=0 --level=ultra < plugins/golangci-lint/golangci-lint-compact/samples/golangci-clean.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 21
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/golangci-lint/golangci-lint-compact/tests.cue \ golangci-lint-compact \ samples/golangci-configerr.txt lite
+  commands:
+    - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run ./...' --exit=3 --level=lite < plugins/golangci-lint/golangci-lint-compact/samples/golangci-configerr.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Error: can''t load config: unsupported version of the configuration: ""'
+            - 'Failed executing command with error: can''t load config'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run ./...' --exit=3 --level=lite < plugins/golangci-lint/golangci-lint-compact/samples/golangci-configerr.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 2
+            - bytes 126
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/golangci-lint/golangci-lint-compact/tests.cue \ golangci-lint-compact \ samples/golangci-configerr.txt full
+  commands:
+    - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run ./...' --exit=3 --level=full < plugins/golangci-lint/golangci-lint-compact/samples/golangci-configerr.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Error: can''t load config: unsupported version of the configuration: ""'
+            - 'Failed executing command with error: can''t load config'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run ./...' --exit=3 --level=full < plugins/golangci-lint/golangci-lint-compact/samples/golangci-configerr.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 2
+            - bytes 126
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/golangci-lint/golangci-lint-compact/tests.cue \ golangci-lint-compact \ samples/golangci-configerr.txt ultra
+  commands:
+    - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run ./...' --exit=3 --level=ultra < plugins/golangci-lint/golangci-lint-compact/samples/golangci-configerr.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Error: can''t load config: unsupported version of the configuration: ""'
+            - 'Failed executing command with error: can''t load config'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run ./...' --exit=3 --level=ultra < plugins/golangci-lint/golangci-lint-compact/samples/golangci-configerr.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 2
+            - bytes 126
+        - name: exitcode
+          data:
+            - "0"
