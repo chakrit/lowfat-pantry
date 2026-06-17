@@ -6,6 +6,17 @@ demand-driven build rule. Bundled lowfat plugins (`git` `docker` `grep` `find` `
 are not pantry plugins — a pantry override *replaces* a bundled filter wholesale (lowfat
 merges nothing) and needs trust.
 
+## Testing posture
+
+All 52 plugins have a smoke golden-file spec (`tests.cue` + committed `tests.lock.yml`);
+`scripts/test.sh` runs the suite. smoke is the sole judge; `scripts/measure.py` emits size
+metrics it locks. Harness detail: `smoke-golden-tests.md`.
+
+**Open — retire the legacy test path.** `tests.cue` is now source of truth and smoke+measure
+cover validate.py's role as drift detection. Pending an explicit OK, delete the 52 legacy
+`tests.yml` and `scripts/validate.py` (keep `scripts/gen-smoke-spec.py` as historical
+migration tooling). Not yet executed — removing a working validator wants a nod.
+
 ## Built (52 community plugins)
 
 VCS/CI: `rg` `gh` `glab` · Rust: `cargo` · TS/JS: `tsc` `eslint` `prettier` `npm` `pnpm`
