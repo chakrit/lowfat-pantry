@@ -71,9 +71,8 @@ repo's:
 [`docs/PLUGINS.md`](https://github.com/zdk/lowfat/blob/main/docs/PLUGINS.md);
 the repo-local authoring spec is `docs/spec/lowfat-filter-dsl.md`.
 
-## Migration provenance
+## Provenance
 
-`tests.cue` files were migrated once from the legacy `tests.yml` via
-`scripts/gen-smoke-spec.py` (kept as historical tooling). The old `tests.yml`
-case lists and `scripts/validate.py` were retired once the smoke suite covered
-every plugin; `tests.cue` is the source of truth now.
+`tests.cue` is the source of truth. It replaced an earlier `tests.yml` +
+`scripts/validate.py` setup, which was retired once the smoke suite covered
+every plugin (2026-06-17).

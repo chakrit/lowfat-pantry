@@ -13,7 +13,7 @@ All 52 plugins have a smoke golden-file spec (`tests.cue` + committed `tests.loc
 metrics it locks. Harness detail: `smoke-golden-tests.md`.
 
 The legacy test path was retired (2026-06-17): the 52 `tests.yml` and `scripts/validate.py`
-are gone; `scripts/gen-smoke-spec.py` is kept as historical migration tooling.
+are gone, replaced by the smoke golden suite.
 
 ## Built (52 community plugins)
 

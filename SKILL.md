@@ -234,5 +234,4 @@ one rule prevents the most damaging class of bug (silently corrupted JSON / hidd
 - `plugins/README.md` — pantry layout and conventions; `plugins/CATALOG.md` — per-plugin
   inventory + gotchas.
 - `scripts/test.sh` — run the whole smoke golden suite. `scripts/measure.py` — size-metric
-  emitter locked alongside each golden. `scripts/gen-smoke-spec.py` — historical one-time
-  `tests.yml`→`tests.cue` migration tool.
+  emitter locked alongside each golden.

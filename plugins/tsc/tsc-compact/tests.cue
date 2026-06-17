@@ -1,5 +1,5 @@
 // Golden-file drift tests for tsc-compact, run by chakrit/smoke (>= v0.3.0).
-// Migrated once from tests.yml; this file is now the source of truth.
+// Source of truth: the smoke golden spec for this plugin.
 // Invoke from the REPO ROOT (smoke runs commands in the invocation cwd):
 //   smoke plugins/tsc/tsc-compact/tests.cue        # UNCHANGED/0 = no drift
 //   smoke -c plugins/tsc/tsc-compact/tests.cue     # re-lock intentionally
