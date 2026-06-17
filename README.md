@@ -25,9 +25,9 @@ the community plugins that teach it how to compact each tool.
 ## What's here
 
     SKILL.md                     the /lowfat-pantry skill (setup + pantry sync as agent steps)
-    plugins/<category>/<name>/   a pantry plugin: lowfat.toml · filter.lf · samples/ · tests.yml
+    plugins/<category>/<name>/   a pantry plugin: lowfat.toml · filter.lf · samples/ · tests.cue · tests.lock.yml
     templates/lowfat             seed project config (copied to .lowfat)
-    scripts/validate.py          validate filters (tests.yml-aware) via `lowfat filter`
+    scripts/test.sh              run the smoke golden-test suite over every plugin
     docs/                        design + reference (see below)
 
 ## Plugins
@@ -67,22 +67,26 @@ correct filter without the full spec. Doing it by hand: read
 `docs/spec/lowfat-filter-dsl.md` (the full `.lf` reference + cookbook), mirror an existing
 plugin (`plugins/rg` is the simplest, `plugins/gh` shows flag guards), then:
 
-    ./scripts/validate.py plugins/<your-plugin>
+    smoke -c plugins/<your-plugin>/tests.cue   # lock the golden, REVIEW the diff
+    scripts/test.sh                            # whole suite, exit 0 = no drift
 
-validates parse + per-level reduction (honoring each `tests.yml` case's real `exit`) via the
-pure `lowfat filter` runner (no install, no trust, no global state). Samples are byte-faithful
-to real command output; mark synthesized ones with `synthetic: true` in `tests.yml`.
+The golden lock is the correctness gate — a NEW/CHANGED golden is only trustworthy because a
+human read the diff. Each case runs the pure `lowfat filter` runner (no install, no trust, no
+global state) and locks the compacted output plus `measure.py` size metrics. Filters must be
+deterministic; samples are byte-faithful to real command output. Full harness:
+`docs/spec/smoke-golden-tests.md`.
 
 ## Docs
 
 - `docs/spec/lowfat-filter-dsl.md` — `.lf` DSL authoring spec.
 - `docs/notes/lowfat-internals.md` — how lowfat works (home/trust/levels/pipeline/CLI).
+- `docs/spec/smoke-golden-tests.md` — the smoke golden-test harness.
 - `docs/spec/lowfat-skill.md` — the skill's design arc.
 - `docs/spec/pantry-plugin-backlog.md` — remaining plugin candidates.
 - `docs/decisions/` — distribution + design rulings.
 
 ## Status
 
-Early — plugins are `v0.1.0`, samples are largely synthetic (validated via `lowfat filter`),
-and the golden test harness (`chakrit/smoke`) wiring is pending. `tests.yml` is authored per
-plugin in a provisional format ready for that harness.
+Early — plugins are `v0.1.0` and samples are largely synthetic. Every plugin has a
+`chakrit/smoke` golden-file test (`tests.cue` + committed `tests.lock.yml`); `scripts/test.sh`
+runs the 487-test suite. Real-sample backfill is ongoing (see the backlog).

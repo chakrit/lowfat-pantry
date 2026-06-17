@@ -13,8 +13,9 @@ built.
 - `docs/decisions/` — rulings
 - `docs/spec/pantry-plugin-backlog.md` — what's built + what's left
 
-Validate filters with `./scripts/validate.py` (run as executable). Session resume
-breadcrumb: `.tasks.md`.
+Test filters with `scripts/test.sh` (smoke golden suite) or `smoke -c
+plugins/<cmd>/<plugin>/tests.cue` for one plugin; see `docs/spec/smoke-golden-tests.md`.
+Session resume breadcrumb: `.tasks.md`.
 
 ## Durable artifacts
 

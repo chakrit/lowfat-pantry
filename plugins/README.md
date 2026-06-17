@@ -11,7 +11,8 @@ here into the resolved lowfat home (`<LOWFAT_HOME>/plugins/<category>/<name>/`, 
       lowfat.toml    plugin manifest ([plugin] name/commands/subcommands/…)
       filter.lf      the filter rules (the DSL; see docs/spec/lowfat-filter-dsl.md)
       samples/       real or representative command output, one file per case
-      tests.yml      golden/invariant cases over (sample × level)
+      tests.cue      smoke golden spec: case matrix over (sample × level)
+      tests.lock.yml committed golden output (written by `smoke -c`)
 
 `<category>` is the primary command (e.g. `rg`); `<name>` is `<command>-compact`,
 matching lowfat's bundled convention (`git/git-compact`). Disk plugins shadow bundled
@@ -25,38 +26,36 @@ ones of the same name.
 Prefer **real** captured output (`<cmd> … > sample.txt 2>&1`); synthesize only when the
 tool/environment isn't available here. Sample files must be **byte-faithful** to real
 command output — no inline annotations (they would leak into filtered output and distort
-line counts). Mark a sample as synthesized in `tests.yml` with `synthetic: true` on the
-case.
+line counts).
 
-## tests.yml (provisional)
+## tests.cue
 
-The format below is provisional pending the `chakrit/smoke` golden harness upgrade. Each
-case names a sample and the contexts to run it through; the harness will snapshot
-`lowfat filter filter.lf --sub=<sub> --args=<args> --level=<level> < sample` per level.
+The smoke golden spec for a plugin. Each case names a sample and the contexts to run it
+through; smoke snapshots `lowfat filter filter.lf --sub=<sub> --args=<args> --exit=<exit>
+--level=<level> < sample` per level and locks the output as the golden. `_`-hidden CUE
+fields template the case×level matrix:
 
-```yaml
-command: cargo
-cases:
-  - sample: samples/cargo-build-full.txt
-    sub: build
-    args: ""
-    levels: [lite, full, ultra]
+```cue
+_dir: "plugins/cargo/cargo-compact"
+_cases: [
+	{sample: "samples/cargo-build-full.txt", sub: "build", args: "", exit: 0, levels: ["lite", "full", "ultra"]},
+]
 ```
 
-## Authoring & validating
+See `go-compact/tests.cue` for the annotated reference and
+`docs/spec/smoke-golden-tests.md` for the full harness.
 
-Author against `docs/spec/lowfat-filter-dsl.md`. Validate purely (no global state, no
-trust, no install) with the `tests.yml`-aware validator, which wraps `lowfat filter
-<filter.lf> --sub … --level … < sample`, honors each case's real `exit` code (so failure
-samples are tested as failures), and flags over-prune (`EMPTY`) and non-compacting
-(`NOSHR`) cases:
+## Authoring & testing
 
-    ./scripts/validate.py               # all plugins (run as executable)
-    ./scripts/validate.py plugins/mvn   # one plugin
+Author against `docs/spec/lowfat-filter-dsl.md`. Test with smoke (no global state, no trust,
+no install — each case wraps `lowfat filter <filter.lf> --sub … --exit … --level … < sample`,
+honoring the case's real `exit` so failure samples are tested as failures):
 
-Run it as an executable (`./scripts/validate.py`) so its `env python3` shebang finds
-the real interpreter — invoking `python3 scripts/validate.py` can hit a shell-function
-shadow in some dev environments.
+    smoke -c plugins/<cmd>/<plugin>/tests.cue   # lock the golden, REVIEW the diff
+    scripts/test.sh                             # whole suite, exit 0 = no drift
+
+The lock diff is the correctness gate. A regression like over-prune-to-empty surfaces as
+drift on the `measure.py` `lines`/`bytes` metric locked alongside each golden.
 
 ## Design principles (vs RTK)
 

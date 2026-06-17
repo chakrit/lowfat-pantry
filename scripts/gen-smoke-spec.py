@@ -17,9 +17,8 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 def parse_tests_yml(path):
-    """Minimal parser for the pantry's uniform tests.yml schema (mirrors
-    validate.py): top-level `command:` plus a `cases:` list of
-    sample/sub/args/exit/levels."""
+    """Minimal parser for the pantry's (now-retired) tests.yml schema:
+    top-level `command:` plus a `cases:` list of sample/sub/args/exit/levels."""
     command = None
     cases = []
     cur = None

@@ -153,7 +153,6 @@ A pantry plugin is a directory `plugins/<command>/<command>-compact/` holding:
     filter.lf      # the filter (below)
     tests.cue      # smoke golden spec: case matrix (source of truth)
     tests.lock.yml # committed golden output (smoke -c writes it)
-    tests.yml      # legacy case list (pending retirement; still read by validate.py)
     samples/       # byte-faithful captured output, one file per case
 
 Mirror `plugins/rg/rg-compact/` (simplest) or `plugins/gh/` (flag guards). Copy its
@@ -203,28 +202,25 @@ Add a structured-output guard arm above it when step 1 applies; split into per-s
 rules (`status:`, `diff:`, …) when subcommands need different treatment.
 
 ### Test (always, before declaring done)
-Golden-file drift is the primary gate — `chakrit/smoke` (>= v0.3.0) over `tests.cue`:
+Golden-file drift is the gate — `chakrit/smoke` (>= v0.3.0) over `tests.cue`:
 
     smoke -c plugins/<command>/<plugin>/tests.cue   # lock; REVIEW the diff
     scripts/test.sh                                  # whole suite, exit 0 = no drift
 
 The lock diff is the correctness gate: a NEW/CHANGED golden is only trustworthy because a
-human read it. Full harness: `docs/spec/smoke-golden-tests.md`. The quick reduction sanity
-check still works too:
+human read it. Each case locks the compacted output plus `measure.py` size metrics, so an
+over-prune or growth regression surfaces as drift. Full harness:
+`docs/spec/smoke-golden-tests.md`.
 
-    ./scripts/validate.py plugins/<command>
-
-Checks parse + per-level reduction against each `tests.yml` case, purely via `lowfat filter`.
 Samples must be **byte-faithful** to real command output; never add inline `# synthetic`
-annotations (they leak into filtered output and skew line counts) — mark synthesized samples
-`synthetic: true`. Filters must be deterministic (smoke compares bytes).
+annotations (they leak into filtered output and skew line counts). Filters must be
+deterministic (smoke compares bytes).
 
 ### Prompting another model to build one
 Hand it: this section + the target plugin dir + 2-3 real captured samples (`<command> … |
 tee samples/<case>.txt`). Tell it to (1) classify each subcommand via the decision tree
-above, (2) write `filter.lf` + `lowfat.toml` + `tests.cue` (cases; `tests.yml` is legacy),
-(3) lock with `smoke -c …` and review the golden, plus `./scripts/validate.py` for reduction,
-and iterate until green. The single highest-leverage instruction: **"structured and
+above, (2) write `filter.lf` + `lowfat.toml` + `tests.cue` (cases), (3) lock with
+`smoke -c …`, review the golden diff, and iterate until green. The single highest-leverage instruction: **"structured and
 passthrough output must survive byte-exact — branch and `raw` it, never filter it."** That
 one rule prevents the most damaging class of bug (silently corrupted JSON / hidden results).
 
@@ -237,6 +233,6 @@ one rule prevents the most damaging class of bug (silently corrupted JSON / hidd
   `measure.py`).
 - `plugins/README.md` — pantry layout and conventions; `plugins/CATALOG.md` — per-plugin
   inventory + gotchas.
-- `scripts/test.sh` — run the whole smoke golden suite. `scripts/gen-smoke-spec.py` —
-  one-time `tests.yml`→`tests.cue` migration. `scripts/validate.py` — reduction sanity
-  check (run as an executable).
+- `scripts/test.sh` — run the whole smoke golden suite. `scripts/measure.py` — size-metric
+  emitter locked alongside each golden. `scripts/gen-smoke-spec.py` — historical one-time
+  `tests.yml`→`tests.cue` migration tool.

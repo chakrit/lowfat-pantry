@@ -524,5 +524,6 @@ pantry plugins — distinct from the parser/engine gotchas above:
    2=crash), prefer a robust non-keyword approach (drop-blanks + head) so a crash
    is never silently dropped to "clean".
 8. **Samples must be byte-faithful.** No inline `# synthetic:` annotations — they
-   leak into filtered output and distort line counts. Record synthetic-ness in
-   `tests.yml` (`synthetic: true`).
+   leak into filtered output and distort line counts. Sample provenance (real vs
+   synthesized) is tracked at the backlog level (`pantry-plugin-backlog.md`), not
+   in the sample or the test spec.

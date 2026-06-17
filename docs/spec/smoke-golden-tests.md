@@ -64,9 +64,9 @@ suite.
 ## How it relates to `lowfat filter`
 
 Each command shells out to `lowfat filter <f.lf> --sub= --args= --exit= --level=`
-— the same single-shot invocation `scripts/validate.py` uses, with no install or
-trust step. For the flag semantics and the `.lf` language itself, see lowfat's
-own docs, not just this repo's:
+— a single-shot invocation with no install or trust step. For the flag
+semantics and the `.lf` language itself, see lowfat's own docs, not just this
+repo's:
 [`zdk/lowfat` README](https://github.com/zdk/lowfat/blob/main/README.md) and
 [`docs/PLUGINS.md`](https://github.com/zdk/lowfat/blob/main/docs/PLUGINS.md);
 the repo-local authoring spec is `docs/spec/lowfat-filter-dsl.md`.
@@ -74,6 +74,6 @@ the repo-local authoring spec is `docs/spec/lowfat-filter-dsl.md`.
 ## Migration provenance
 
 `tests.cue` files were migrated once from the legacy `tests.yml` via
-`scripts/gen-smoke-spec.py`; `tests.cue` is the source of truth now. `tests.yml`
-and `scripts/validate.py` remain in place pending retirement — see
-`docs/spec/pantry-plugin-backlog.md`.
+`scripts/gen-smoke-spec.py` (kept as historical tooling). The old `tests.yml`
+case lists and `scripts/validate.py` were retired once the smoke suite covered
+every plugin; `tests.cue` is the source of truth now.

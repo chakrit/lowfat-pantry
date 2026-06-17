@@ -2,7 +2,7 @@
 
 What each plugin actually does beyond a dumb head-cap, and the gotchas to know before
 trusting it. Grouped by area; every plugin scales across `ultra`/`full`/`lite` and ships
-samples + `tests.yml`. Conventions and layout: [README.md](README.md). Bundled lowfat
+samples + a `tests.cue` smoke golden spec. Conventions and layout: [README.md](README.md). Bundled lowfat
 plugins (git, docker, grep, find, ls, tree) are not listed here.
 
 ## VCS / forges

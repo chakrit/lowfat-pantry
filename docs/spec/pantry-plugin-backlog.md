@@ -12,10 +12,8 @@ All 52 plugins have a smoke golden-file spec (`tests.cue` + committed `tests.loc
 `scripts/test.sh` runs the suite. smoke is the sole judge; `scripts/measure.py` emits size
 metrics it locks. Harness detail: `smoke-golden-tests.md`.
 
-**Open — retire the legacy test path.** `tests.cue` is now source of truth and smoke+measure
-cover validate.py's role as drift detection. Pending an explicit OK, delete the 52 legacy
-`tests.yml` and `scripts/validate.py` (keep `scripts/gen-smoke-spec.py` as historical
-migration tooling). Not yet executed — removing a working validator wants a nod.
+The legacy test path was retired (2026-06-17): the 52 `tests.yml` and `scripts/validate.py`
+are gone; `scripts/gen-smoke-spec.py` is kept as historical migration tooling.
 
 ## Built (52 community plugins)
 

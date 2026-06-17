@@ -19,7 +19,7 @@ symlink source — already covered below.
 Layout:
 
     SKILL.md             the /lowfat-pantry skill (carries the sync logic as agent steps)
-    plugins/<cat>/<p>/   pantry — lowfat.toml · filter.lf · samples/ · tests.yml
+    plugins/<cat>/<p>/   pantry — lowfat.toml · filter.lf · samples/ · tests.cue · tests.lock.yml
     templates/lowfat     seed project config (NO dot — it's a template, not active config)
     docs/                durable docs
 
