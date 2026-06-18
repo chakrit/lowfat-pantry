@@ -13,6 +13,11 @@ define compact-pnpm-install(limit):
     shell: head -$1
     or-shell: awk 'NF' | tail -$1
 
+# cap that announces itself — a silently head-capped script body looks complete;
+# the hint tells the agent output was truncated.
+define cap(limit):
+    shell: awk -v lim=$1 'NR<=lim; END { if (NR>lim) printf "... (%d lines total)\n", NR }'
+
 install|i:
     if exit failed:
         raw
@@ -29,9 +34,9 @@ run|test:
         raw
     else:
         match level:
-            ultra: head 30
-            full:  head 80
-            lite:  head 160
+            ultra: cap 30
+            full:  cap 80
+            lite:  cap 160
 
 *:
     if exit failed:

@@ -15,6 +15,8 @@ _cases: [
 	{sample: "samples/pnpm-error.txt", sub: "install", args: "", exit: 1, levels: ["lite", "full", "ultra"]},
 	// invariant 1: --json is byte-exact machine output; the guard must pass it raw.
 	{sample: "samples/pnpm-ls-json.txt", sub: "ls", args: "ls --json --depth=Infinity", exit: 0, levels: ["lite", "full", "ultra"]},
+	// recovery hint: a capped `pnpm run` script body announces "... (N lines total)".
+	{sample: "samples/pnpm-run-capped.txt", sub: "run", args: "run build", exit: 0, levels: ["lite", "full", "ultra"]},
 ]
 
 config: {
