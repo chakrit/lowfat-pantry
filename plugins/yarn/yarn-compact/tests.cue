@@ -13,6 +13,8 @@ _cases: [
 	{sample: "samples/yarn-install.txt", sub: "install", args: "install", exit: 0, levels: ["lite", "full", "ultra"]},
 	{sample: "samples/yarn-install-error.txt", sub: "install", args: "install", exit: 1, levels: ["lite", "full", "ultra"]},
 	{sample: "samples/yarn-test.txt", sub: "test", args: "test", exit: 1, levels: ["lite", "full", "ultra"]},
+	// recovery hint: a capped `yarn run` script body announces "... (N lines total)".
+	{sample: "samples/yarn-run-capped.txt", sub: "run", args: "run build", exit: 0, levels: ["lite", "full", "ultra"]},
 ]
 
 config: {

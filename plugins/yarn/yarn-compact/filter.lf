@@ -12,6 +12,11 @@ define drop-steps:
     drop /^\[[0-9]+\/[0-9]+\] /
     drop /^(\$ |info |verbose )/
 
+# cap that announces itself — a silently head-capped script body looks complete;
+# the hint tells the agent output was truncated.
+define cap(limit):
+    shell: awk -v lim=$1 'NR<=lim; END { if (NR>lim) printf "... (%d lines total)\n", NR }'
+
 # ── install / dependency mutation ─────────────────────────────────────────
 install|add|remove|upgrade|why|dedupe:
     if exit failed:
@@ -44,13 +49,13 @@ run|test|build|exec|dlx|node:
         match level:
             ultra:
                 drop-steps
-                head 25
+                cap 25
             lite:
                 drop-steps
-                head 200
+                cap 200
             else:
                 drop-steps
-                head 60
+                cap 60
 
 *:
     if exit failed:

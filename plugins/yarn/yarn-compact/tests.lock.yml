@@ -225,3 +225,165 @@
         - name: exitcode
           data:
             - "0"
+- name: plugins/yarn/yarn-compact/tests.cue \ yarn-compact \ samples/yarn-run-capped.txt lite
+  commands:
+    - command: lowfat filter plugins/yarn/yarn-compact/filter.lf --sub=run --args='run build' --exit=0 --level=lite < plugins/yarn/yarn-compact/samples/yarn-run-capped.txt
+      checks:
+        - name: stdout
+          data:
+            - bundling chunk 1
+            - bundling chunk 2
+            - bundling chunk 3
+            - bundling chunk 4
+            - bundling chunk 5
+            - bundling chunk 6
+            - bundling chunk 7
+            - bundling chunk 8
+            - bundling chunk 9
+            - bundling chunk 10
+            - bundling chunk 11
+            - bundling chunk 12
+            - bundling chunk 13
+            - bundling chunk 14
+            - bundling chunk 15
+            - bundling chunk 16
+            - bundling chunk 17
+            - bundling chunk 18
+            - bundling chunk 19
+            - bundling chunk 20
+            - bundling chunk 21
+            - bundling chunk 22
+            - bundling chunk 23
+            - bundling chunk 24
+            - bundling chunk 25
+            - bundling chunk 26
+            - bundling chunk 27
+            - bundling chunk 28
+            - bundling chunk 29
+            - bundling chunk 30
+            - bundling chunk 31
+            - bundling chunk 32
+            - bundling chunk 33
+            - bundling chunk 34
+            - bundling chunk 35
+            - bundling chunk 36
+            - bundling chunk 37
+            - bundling chunk 38
+            - bundling chunk 39
+            - bundling chunk 40
+            - Done in 4.2s.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/yarn/yarn-compact/filter.lf --sub=run --args='run build' --exit=0 --level=lite < plugins/yarn/yarn-compact/samples/yarn-run-capped.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 41
+            - bytes 725
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/yarn/yarn-compact/tests.cue \ yarn-compact \ samples/yarn-run-capped.txt full
+  commands:
+    - command: lowfat filter plugins/yarn/yarn-compact/filter.lf --sub=run --args='run build' --exit=0 --level=full < plugins/yarn/yarn-compact/samples/yarn-run-capped.txt
+      checks:
+        - name: stdout
+          data:
+            - bundling chunk 1
+            - bundling chunk 2
+            - bundling chunk 3
+            - bundling chunk 4
+            - bundling chunk 5
+            - bundling chunk 6
+            - bundling chunk 7
+            - bundling chunk 8
+            - bundling chunk 9
+            - bundling chunk 10
+            - bundling chunk 11
+            - bundling chunk 12
+            - bundling chunk 13
+            - bundling chunk 14
+            - bundling chunk 15
+            - bundling chunk 16
+            - bundling chunk 17
+            - bundling chunk 18
+            - bundling chunk 19
+            - bundling chunk 20
+            - bundling chunk 21
+            - bundling chunk 22
+            - bundling chunk 23
+            - bundling chunk 24
+            - bundling chunk 25
+            - bundling chunk 26
+            - bundling chunk 27
+            - bundling chunk 28
+            - bundling chunk 29
+            - bundling chunk 30
+            - bundling chunk 31
+            - bundling chunk 32
+            - bundling chunk 33
+            - bundling chunk 34
+            - bundling chunk 35
+            - bundling chunk 36
+            - bundling chunk 37
+            - bundling chunk 38
+            - bundling chunk 39
+            - bundling chunk 40
+            - Done in 4.2s.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/yarn/yarn-compact/filter.lf --sub=run --args='run build' --exit=0 --level=full < plugins/yarn/yarn-compact/samples/yarn-run-capped.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 41
+            - bytes 725
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/yarn/yarn-compact/tests.cue \ yarn-compact \ samples/yarn-run-capped.txt ultra
+  commands:
+    - command: lowfat filter plugins/yarn/yarn-compact/filter.lf --sub=run --args='run build' --exit=0 --level=ultra < plugins/yarn/yarn-compact/samples/yarn-run-capped.txt
+      checks:
+        - name: stdout
+          data:
+            - bundling chunk 1
+            - bundling chunk 2
+            - bundling chunk 3
+            - bundling chunk 4
+            - bundling chunk 5
+            - bundling chunk 6
+            - bundling chunk 7
+            - bundling chunk 8
+            - bundling chunk 9
+            - bundling chunk 10
+            - bundling chunk 11
+            - bundling chunk 12
+            - bundling chunk 13
+            - bundling chunk 14
+            - bundling chunk 15
+            - bundling chunk 16
+            - bundling chunk 17
+            - bundling chunk 18
+            - bundling chunk 19
+            - bundling chunk 20
+            - bundling chunk 21
+            - bundling chunk 22
+            - bundling chunk 23
+            - bundling chunk 24
+            - bundling chunk 25
+            - '... (41 lines total)'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/yarn/yarn-compact/filter.lf --sub=run --args='run build' --exit=0 --level=ultra < plugins/yarn/yarn-compact/samples/yarn-run-capped.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 26
+            - bytes 462
+        - name: exitcode
+          data:
+            - "0"
