@@ -112,7 +112,9 @@ plugins (git, docker, grep, find, ls, tree) are not listed here.
   location lines; passing verbose runs collapse to `ok` lines.
 - **golangci-lint** — keeps `file:line:col: message (linter)` lines, drops the source/
   caret bloat at ultra. Gotcha: a config error empties the keep-list, so a raw-head
-  fallback fires — the error is never hidden.
+  fallback fires — the error is never hidden. `--output.json.path` (v2) / `--out-format`
+  (v1) pass byte-exact to the raw path by design (invariant 1); other v2
+  `--output.<fmt>.path` machine formats are residual.
 - **mvn** — drops transfer/plugin noise; extraction runs on failure too (a failed build
   is exactly when `[ERROR]` needs pulling out of hundreds of progress lines).
 - **gradlew** — drops task/download progress; failures run an awk state machine that
@@ -121,17 +123,20 @@ plugins (git, docker, grep, find, ls, tree) are not listed here.
   build verdicts, and vstest failure blocks (test name + Error Message/Stack Trace).
   Extraction runs on failure too. `publish`/`pack` share the build output shape and route
   through the same extraction (`pack`'s `Successfully created package` verdict is kept).
+  `dotnet list … --format json` passes byte-exact in the `*` arm (invariant 1).
 
 ## Infra / ops
 
 - **kubectl** — compacts get/describe/logs/apply/rollout per subcommand shape. `-o json`/
   `-o yaml` pass byte-exact (invariant 1; without the guard the get/describe awk shredded
   structured output). `-o jsonpath`/`go-template` are residual, not yet guarded.
-- **helm** — preserves release metadata; caps bulky NOTES/tables. Gotcha: `-o json`/`-o
-  yaml` are currently byte-mangled — see `docs/notes/2026-06-18-invariant1-structured-
-  output-audit.md`.
-- **terraform** — keeps plan/apply signal, drops repetitive diff/progress lines. Gotcha:
-  `-json` is currently dropped to empty — see the invariant-1 audit note.
+- **helm** — preserves release metadata; caps bulky NOTES/tables. `-o json`/`-o yaml`
+  (+ `--output` long form) pass byte-exact in every compacting rule (invariant 1; without
+  the guard the summary/table awk collapsed their whitespace). The `list` rule's guard is
+  mechanical — its `-o json` needs a live cluster, so the golden is install-based.
+- **terraform** — keeps plan/apply signal, drops repetitive diff/progress lines. `-json`
+  passes byte-exact in plan/apply/init/* (invariant 1; without the guard `compact-plan`
+  matched none of the ndjson stream → empty output).
 - **ansible-playbook** — drops per-host `ok:`/`skipping:` chatter and `TASK [...]`
   banners; keeps `changed:`/`fatal:` and the `PLAY RECAP` tallies. Gotcha: failed runs
   tail to the recap — the recap block is the anchor, not the head of the stream.
@@ -155,7 +160,8 @@ plugins (git, docker, grep, find, ls, tree) are not listed here.
 - **pulumi** — tail-anchored: the verdict (Outputs/Resources counts, Duration,
   Diagnostics) sits at the END, and `up` emits TWO `Resources:` sections (preview +
   update phase). Gotcha: errors surface in Diagnostics even on exit 1, so failures are
-  compacted too, never raw.
+  compacted too, never raw. `--json` passes byte-exact in the up/preview/destroy/refresh
+  rules and `*` (invariant 1; without the guard the tail-cap truncated multi-line JSON).
 - **wrangler** — strips the uniform banner/telemetry/log-path boilerplate (~8 lines per
   invocation); the payload is already terse. esbuild ERROR blocks survive untouched.
 
