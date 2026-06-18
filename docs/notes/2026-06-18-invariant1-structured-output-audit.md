@@ -119,16 +119,17 @@ filter`):
 
 | plugin | flag | effect | status |
 | ------ | ---- | ------ | ------ |
-| go | `-json` (`go test -json`, `go list -json`, `go mod … -json`) | test@ultra exit0 → keep-miss → `or "go test: ok"` (**JSON destroyed**); list→`*` head; mod→head — truncate | open |
-| cargo | `--message-format json` | build@ultra → keep-miss → `or "cargo: ok"` (**JSON destroyed**) | open |
-| ruff | `--output-format json` / `--format json` | clean run (`[]`, exit 0) → `or "ruff: clean"` (**`[]` destroyed**); issues (exit≠0) survive via the raw-fallback END arm | open |
-| rg | `--json` | exit 0 → `head N` truncates the ndjson match stream | open |
-| pnpm | `--json` (`ls`/`audit`/`outdated --json`) | `*` → `head auto` truncates | open |
-| bun | `--json` (`bun pm … --json`) | install/pm@ultra keep-miss → `or "bun: ok"`; `*` head | open |
-| deno | `--json` (`deno info --json`, `deno lint --json`) | info→`*` head; lint→check/lint head — truncate | open |
-| docker-compose | `--format json` (`ps`/`config --format json`) | ps→`compact-ps` awk reshape; config→`*` drop-blank+head — corrupt | open |
-| playwright | `--reporter=json` / `--reporter json` | test rule keyword-filter/tail → corrupt JSON | open (see design note) |
-| uv | `--format json` (`uv pip list`), inherited ruff `--output-format json` | native keep-miss → `or "uv pip: ok"`; ruff branch inherits the ruff bug via the drift-copy | open (see design note) |
+| go | `-json` (`go test -json`, `go list -json`, `go mod … -json`) | test@ultra exit0 → keep-miss → `or "go test: ok"` (**JSON destroyed**); list→`*` head; mod→head — truncate | **FIXED** (real golden) |
+| cargo | `--message-format json` | build@ultra → keep-miss → `or "cargo: ok"` (**JSON destroyed**) | **FIXED** (real golden; + metadata→raw) |
+| ruff | `--output-format json` / `--format json` | clean run (`[]`, exit 0) → `or "ruff: clean"` (**`[]` destroyed**); issues (exit≠0) survive via the raw-fallback END arm | **FIXED** (real golden) |
+| rg | `--json` | exit 0 → `head N` truncates the ndjson match stream | **FIXED** (real golden) |
+| pnpm | `--json` (`ls`/`audit`/`outdated --json`) | `*` → `head auto` truncates (24-line `ls --json` → 15) | **FIXED** (real golden) |
+| bun | `--json` (`bun pm … --json`) | — | **N/A** (verified: bun ignores `--json` on these, emits text) |
+| deno | `--json` (`deno info --json`, `deno lint --json`) | info→`*` head; lint→check/lint head — truncate (99-line `lint --json` → 40) | **FIXED** (real golden) |
+| docker-compose | `--format json` (`ps`/`config --format json`) | ps→`compact-ps` awk reshape; config→`*` drop-blank+head (53→15) | **FIXED** (real golden) |
+| playwright | `--reporter=json` / `--reporter json` | test rule tail-cap → corrupt JSON (177→100) | **FIXED** (real golden; config-set reporter residual) |
+| uv | `--format json` (`uv pip list`), inherited ruff `--output-format json` | native keep-miss → `or "uv pip: ok"`; ruff branch inherits the ruff bug via the drift-copy | **FIXED** (both arms; real golden) |
+| curl | (no flag — server body) | multi-line JSON/structured body → `compact-curl` caps to 18/36/72 | **open — design-call** |
 
 **Doc-vs-filter discrepancy found:** Round 1 listed cargo as *already-guarded*
 (`--message-format`, "per CATALOG.md"). False — CATALOG never said that and the
@@ -138,23 +139,24 @@ filter has no such guard. cargo was never guarded; corrected below.
 design note. The Round-1 already-guarded set (gh/glab, aws/az, eslint/prettier/
 tsc, jq/json, journalctl, gcloud) re-confirmed.
 
-### Fix posture — mechanical vs design-call
+### Fix posture — RESOLVED (2026-06-18, AFK)
 
-Mechanical (direct terraform `-json` / rspec `--format` precedent — guard the
-flag → raw, capture a real golden): **go, cargo, ruff, rg, pnpm, bun, deno,
-docker-compose**.
+All mechanical Round-2 violations fixed, each with a real golden (no
+guard-without-test). Cheap captures: **ruff**/**rg** ran locally (tmpdir,
+`--no-cache`/read-only — no global-state mutation); **pnpm** (node:22 +
+corepack), **docker-compose** (`config --format json` is a read-only yaml→json
+parse, run locally), **uv** (python:3.12-slim + uv), **playwright** (node:22 +
+@playwright/test, pure-assertion tests → no browser binaries). Isolated Docker
+pulls (to avoid mutating local build caches): **go** (golang:alpine),
+**cargo** (rust:alpine), **deno** (denoland/deno). **uv** also mirrored the
+ruff guard into its drift-copy `do_ruff` branch (`uvx ruff --output-format json`
+had inherited the bug). **bun** verified N/A (ignores `--json`).
 
-Design-calls (logged for chakrit, NOT fixed unilaterally):
+**Still open — one design-call (NOT fixed; chakrit's call):**
 - **curl** — there is **no flag to key on**. The body is whatever the server
   returns (JSON/HTML/binary/text), and the filter deliberately caps it
-  ("passthrough body, cap only"). Guarding would mean *sniffing* the body
-  (starts with `{`/`[`) and raw-ing it — a real design decision, not a
-  mechanical guard. A `curl -s api | jq` of a multi-line JSON body IS truncated
-  today; whether that's a bug or accepted passthrough-cap behavior is chakrit's
-  call.
-- **playwright** — `--reporter=json`/`junit` are flag-guardable, but the reporter
-  is just as often set in `playwright.config.ts`, which the filter can't see.
-  Guarding the flag is correct-but-partial; worth a note in the header.
-- **uv** — the dispatcher's ruff branch is a deliberate drift-copy of
-  ruff-compact, so the ruff fix must be **mirrored** here; plus `uv pip list
-  --format json` hits the native arm. Mechanical but couples to the ruff fix.
+  ("passthrough body, cap only"). A `curl -s api | jq` of a multi-line JSON body
+  IS truncated today. Proposed fix (one-liner, needs a yes): sniff the first
+  body line after the headers — if it starts with `{` or `[`, `raw` the whole
+  body; else cap as today. Whether that heuristic is wanted, or body-capping is
+  accepted behavior, is the open question.
