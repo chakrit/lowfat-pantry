@@ -32,6 +32,12 @@ annotated reference. The shape:
   exit 65). This is why specs are CUE, not YAML: the matrix templates cleanly
   while the validated surface stays closed.
 - A comprehension expands `_cases × levels` into one smoke test each.
+- **Test names must be unique.** The default name is `"\(c.sample) \(l)"`. If two
+  cases reuse the *same sample* (e.g. one filter invoked two ways over one
+  fixture), that name collides → duplicate test → smoke **exit 65**, but *only
+  when the spec runs standalone* — the full-suite run masks it (one case is
+  silently deduped, a coverage gap). When a sample is reused, include sub+args:
+  `name: "\(c.sample) \(c.sub) \(c.args) \(l)"`. (npx, redis-cli hit this.)
 - Each test locks **two commands**:
   1. the raw `lowfat filter … < sample` — the literal golden, catches any
      content drift;

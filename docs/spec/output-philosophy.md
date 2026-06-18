@@ -20,8 +20,13 @@ contract (`docs/PLUGINS.md`):
   invented headers or markers in default output. (RTK)
 - **Never block.** A filter that can't run falls back to raw — never errors, never eats the
   command. Every filter has a fallback arm. (RTK)
-- **Recovery hint on truncation.** A capped list must say what it hid (`... (N lines
-  total)`, "use `LOWFAT_LEVEL=lite` for the rest") so the agent can recover it. (RTK)
+- **Recovery hint on truncation.** A capped list *or passthrough body* must say what it
+  hid (`... (N lines total)`, "use `LOWFAT_LEVEL=lite` for the rest") so the agent can
+  recover it. This bites hardest on bodies that *look complete* — a curl JSON response or
+  a `<tool> run` program body head-capped silently reads as the whole output; the agent
+  acts on partial data without knowing. Every length-cap of such content emits the hint
+  (the shared `cap(N)` awk macro); only deliberate noise-drops the agent expects (logs
+  `tail`, test pass-noise) may stay silent. (RTK)
 - **Level contract.** `ultra` = verdict line(s) only · `full` = strip chatter, keep
   diffs/errors/structure · `lite` = gentle trim, higher caps · `exit≠0` = conservative,
   preserve error blocks · empty = passthrough. Target ≥80% savings at `full` on noisy
