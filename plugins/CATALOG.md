@@ -9,7 +9,8 @@ plugins (git, docker, grep, find, ls, tree) are not listed here.
 
 - **rg** — caps recursive match lists (piped rg emits one `path:line:text` per line).
   Gotcha: exit 1 means *no matches*, not failure — you get a "no matches" verdict, while
-  exit 2 (bad regex/path) passes the error through raw.
+  exit 2 (bad regex/path) passes the error through raw. `--json` (ndjson stream) passes
+  byte-exact (invariant 1).
 - **gh** — compacts list tables and view/log bodies; one rule covers all resource
   subcommands (`pr`/`issue`/`run`/…). Gotchas: `--json` passes byte-exact; CI `--log`
   is tail-anchored (failures sit at the end); non-zero exits stay raw.
@@ -21,7 +22,8 @@ plugins (git, docker, grep, find, ls, tree) are not listed here.
 - **cargo** — drops per-crate `Compiling`/`Downloading` progress; keeps diagnostics with
   their `-->` location and `help:`/`note:` context, `Finished`, test failures +
   `test result:`. Gotcha: `cargo run` output is your program's stdout — only capped,
-  never keyword-filtered.
+  never keyword-filtered. `--message-format json` and `metadata` pass byte-exact
+  (invariant 1; `--message-format short`/`human` still compact).
 
 ## TypeScript / JavaScript
 
@@ -39,10 +41,12 @@ plugins (git, docker, grep, find, ls, tree) are not listed here.
   `--json` passes byte-exact on any subcommand (invariant 1).
 - **pnpm** / **yarn** — same shape as npm for their own progress formats. Gotcha (yarn):
   `run`/`test` bodies are your script's output — only the `$ <cmd>` echo is dropped,
-  failures tail (errors land at the end).
+  failures tail (errors land at the end). pnpm `--json` (`ls`/`audit`/`outdated`) passes
+  byte-exact (invariant 1).
 - **bun** — install keeps the `N packages installed` summary over the `+ pkg@ver` list;
   test keeps failing specs + tallies, drops `✓` lines at ultra. `run`/`build`/`x` bodies
-  are never keyword-filtered.
+  are never keyword-filtered. (No `--json` guard: bun ignores `--json` on these and emits
+  text — verified, not applicable.)
 - **npx** — wrapper-aware (like `uv`): strips npm install/fetch preamble, detects the
   wrapped tool from args (handling `-y`, `-p typescript`), and dispatches — eslint/prettier/
   tsc logic **ported** from their standalone filters under a drift contract (filter header).
@@ -52,9 +56,12 @@ plugins (git, docker, grep, find, ls, tree) are not listed here.
 - **next** — keeps build warnings/errors and summaries; trims the route table at ultra.
 - **prisma** — strips banner/box art; keeps migration progress, client-generation
   markers, and `Error:` lines.
-- **playwright** — keeps failing specs, diagnostics, and the run summary.
+- **playwright** — keeps failing specs, diagnostics, and the run summary. `--reporter=json`
+  /`junit` passes byte-exact (invariant 1; a reporter set in playwright.config isn't
+  visible to the filter — residual).
 - **deno** — test keeps `FAILED`/`failures:`/`test result:` and assertion lines, drops
-  per-test `... ok`; `run`/`task` bodies only capped, tail on failure.
+  per-test `... ok`; `run`/`task` bodies only capped, tail on failure. `--json`
+  (`lint --json`, `info --json`) passes byte-exact (invariant 1).
 
 ## Python
 
@@ -62,6 +69,8 @@ plugins (git, docker, grep, find, ls, tree) are not listed here.
   collapse to a one-line `pytest: N passed` verdict. Ultra trims to failure headers +
   assertion (`E `) lines.
 - **ruff** — keeps default text findings, caps long lists, clean runs get a verdict.
+  `--output-format json`/`--format` passes byte-exact (invariant 1; without it a clean
+  `--output-format json` run collapsed `[]` to "ruff: clean").
 - **mypy** — keeps errors and the final summary; drops `note:` lines at ultra only.
 - **black** — keeps which files changed + the summary. Gotcha: exit 1 just means
   `--check` found unformatted files; exit 123 (parse error) is guarded so it's never
@@ -76,6 +85,8 @@ plugins (git, docker, grep, find, ls, tree) are not listed here.
   their standalone filters under a drift contract (filter header). uv's own
   `sync`/`lock`/`pip`/`add` collapse to the install summary (`+ pkg==ver`, `Resolved`/
   `Installed`/`Audited`); arbitrary `uv run <prog>` is head-capped, never keyword-filtered.
+  `uv pip list --format json` and wrapped `uvx ruff --output-format json` pass byte-exact
+  (invariant 1; the ruff guard is mirrored into the drift-copy per the contract).
   Gotcha: the copied bodies drift if pytest/ruff change — the real fix is wrapper-unwrap in
   lowfat-core (see backlog "Wrapper commands"). `npx` chose generic-cap instead of dispatch.
 
@@ -109,7 +120,9 @@ plugins (git, docker, grep, find, ls, tree) are not listed here.
 ## Go / JVM / .NET
 
 - **go** — build errors raw (already terse); test failures keep `--- FAIL`/panic/
-  location lines; passing verbose runs collapse to `ok` lines.
+  location lines; passing verbose runs collapse to `ok` lines. `-json` (`go test -json`,
+  `go list -json`, `go mod … -json`, `go vet -json`) passes byte-exact (invariant 1;
+  without it `go test -json` on a passing run collapsed to "go test: ok").
 - **golangci-lint** — keeps `file:line:col: message (linter)` lines, drops the source/
   caret bloat at ultra. Gotcha: a config error empties the keep-list, so a raw-head
   fallback fires — the error is never hidden. `--output.json.path` (v2) / `--out-format`
@@ -182,7 +195,9 @@ plugins (git, docker, grep, find, ls, tree) are not listed here.
 
 - **curl** — strips progress meters and `\r` artifacts; keeps the HTTP exchange
   (`>`/`<`/headers) and a capped body. Response bodies are the point — capped, never
-  keyword-filtered.
+  keyword-filtered. CAVEAT (invariant 1, open design-call): a multi-line JSON body IS
+  truncated by the body cap, and there's no flag to key on — see the invariant-1 audit
+  note for the proposed body-sniff fix.
 - **wget** — strips progress bars/dots; keeps connection, HTTP status, and the final
   `saved` line (tail-anchored).
 - **jq** / **json** — full/lite pass JSON byte-exact; ultra summarizes huge arrays via
