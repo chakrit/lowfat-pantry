@@ -107,3 +107,54 @@ real golden** — no guard shipped without a test:
 
 All 57 plugins' smoke goldens stay UNCHANGED (`scripts/test.sh` green); every new
 case locks the raw path, so a future narrowing of any guard surfaces as drift.
+
+## Round 2 (2026-06-18, AFK) — the audit was NOT exhaustive
+
+Round 1 was triggered mid-work and only covered cloud/infra/CI tools. A full
+sweep of all 57 filters found that an **entire category was never checked** —
+build tools, package managers, and search tools — and several corrupt structured
+output **severely** (the data is replaced by an "ok" verdict, not just
+truncated). Empirically reproduced (synthetic structured input through `lowfat
+filter`):
+
+| plugin | flag | effect | status |
+| ------ | ---- | ------ | ------ |
+| go | `-json` (`go test -json`, `go list -json`, `go mod … -json`) | test@ultra exit0 → keep-miss → `or "go test: ok"` (**JSON destroyed**); list→`*` head; mod→head — truncate | open |
+| cargo | `--message-format json` | build@ultra → keep-miss → `or "cargo: ok"` (**JSON destroyed**) | open |
+| ruff | `--output-format json` / `--format json` | clean run (`[]`, exit 0) → `or "ruff: clean"` (**`[]` destroyed**); issues (exit≠0) survive via the raw-fallback END arm | open |
+| rg | `--json` | exit 0 → `head N` truncates the ndjson match stream | open |
+| pnpm | `--json` (`ls`/`audit`/`outdated --json`) | `*` → `head auto` truncates | open |
+| bun | `--json` (`bun pm … --json`) | install/pm@ultra keep-miss → `or "bun: ok"`; `*` head | open |
+| deno | `--json` (`deno info --json`, `deno lint --json`) | info→`*` head; lint→check/lint head — truncate | open |
+| docker-compose | `--format json` (`ps`/`config --format json`) | ps→`compact-ps` awk reshape; config→`*` drop-blank+head — corrupt | open |
+| playwright | `--reporter=json` / `--reporter json` | test rule keyword-filter/tail → corrupt JSON | open (see design note) |
+| uv | `--format json` (`uv pip list`), inherited ruff `--output-format json` | native keep-miss → `or "uv pip: ok"`; ruff branch inherits the ruff bug via the drift-copy | open (see design note) |
+
+**Doc-vs-filter discrepancy found:** Round 1 listed cargo as *already-guarded*
+(`--message-format`, "per CATALOG.md"). False — CATALOG never said that and the
+filter has no such guard. cargo was never guarded; corrected below.
+
+**Already-correct (verified this round):** curl raws on the body path? No — see
+design note. The Round-1 already-guarded set (gh/glab, aws/az, eslint/prettier/
+tsc, jq/json, journalctl, gcloud) re-confirmed.
+
+### Fix posture — mechanical vs design-call
+
+Mechanical (direct terraform `-json` / rspec `--format` precedent — guard the
+flag → raw, capture a real golden): **go, cargo, ruff, rg, pnpm, bun, deno,
+docker-compose**.
+
+Design-calls (logged for chakrit, NOT fixed unilaterally):
+- **curl** — there is **no flag to key on**. The body is whatever the server
+  returns (JSON/HTML/binary/text), and the filter deliberately caps it
+  ("passthrough body, cap only"). Guarding would mean *sniffing* the body
+  (starts with `{`/`[`) and raw-ing it — a real design decision, not a
+  mechanical guard. A `curl -s api | jq` of a multi-line JSON body IS truncated
+  today; whether that's a bug or accepted passthrough-cap behavior is chakrit's
+  call.
+- **playwright** — `--reporter=json`/`junit` are flag-guardable, but the reporter
+  is just as often set in `playwright.config.ts`, which the filter can't see.
+  Guarding the flag is correct-but-partial; worth a note in the header.
+- **uv** — the dispatcher's ruff branch is a deliberate drift-copy of
+  ruff-compact, so the ruff fix must be **mirrored** here; plus `uv pip list
+  --format json` hits the native arm. Mechanical but couples to the ruff fix.
