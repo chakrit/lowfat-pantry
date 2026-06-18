@@ -16,6 +16,8 @@ _cases: [
 	// invariant 1: --message-format json (ndjson) and metadata (JSON) pass raw.
 	{sample: "samples/cargo-build-json.txt", sub: "build", args: "build --message-format json", exit: 0, levels: ["lite", "full", "ultra"]},
 	{sample: "samples/cargo-metadata-json.txt", sub: "metadata", args: "metadata --format-version 1", exit: 0, levels: ["lite", "full", "ultra"]},
+	// recovery hint: a capped `cargo run` program body announces "... (N lines total)".
+	{sample: "samples/cargo-run.txt", sub: "run", args: "run", exit: 0, levels: ["lite", "full", "ultra"]},
 ]
 
 config: {

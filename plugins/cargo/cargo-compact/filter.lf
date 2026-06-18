@@ -22,6 +22,11 @@
 define drop-progress:
     drop /^[[:space:]]*(Compiling|Checking|Downloading|Downloaded|Updating|Adding|Locking|Blocking|Waiting|Installing|Removing|Fresh|Ignored|Packaging|Verifying|Uploading) /
 
+# cap that announces itself (recovery hint) — a silently head-capped program
+# body looks complete; the hint tells the agent to re-run for the full output.
+define cap(limit):
+    shell: awk -v lim=$1 'NR<=lim; END { if (NR>lim) printf "... (%d lines total)\n", NR }'
+
 # ── build / check / clippy — keep diagnostics, drop crate progress ────────
 build|check|clippy:
     if --message-format json:
@@ -62,13 +67,13 @@ run:
     match level:
         ultra:
             drop-progress
-            head 30
+            cap 30
         lite:
             drop-progress
-            head 200
+            cap 200
         else:
             drop-progress
-            head 60
+            cap 60
 
 # ── metadata — always emits a single JSON object; raw (invariant 1) ───────
 metadata:
