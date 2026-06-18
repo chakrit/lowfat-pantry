@@ -1,6 +1,12 @@
 #!/usr/bin/env lowfat-filter
 # ruff-compact — keep default text findings, cap long lint lists, report clean runs.
 # env: $sub $level $exit $args
+#
+# `--output-format` (and the deprecated `--format`) selects machine output
+# (json, json-lines, junit, sarif, gitlab, …) — pass byte-exact (invariant 1).
+# compact-ruff only understands the default text format; without the guard a
+# clean `--output-format json` run (`[]`, exit 0) collapses to "ruff: clean".
+# Any explicit format -> raw (same posture as rspec/rubocop).
 
 define compact-ruff(limit):
     shell: |
@@ -25,8 +31,13 @@ define compact-ruff(limit):
         '
 
 *:
-    match level:
-        ultra: compact-ruff 15
-        full:  compact-ruff 35
-        lite:  compact-ruff 70
+    if --output-format:
+        raw
+    elif --format:
+        raw
+    else:
+        match level:
+            ultra: compact-ruff 15
+            full:  compact-ruff 35
+            lite:  compact-ruff 70
 

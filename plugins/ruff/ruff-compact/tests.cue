@@ -13,6 +13,9 @@ _cases: [
 	{sample: "samples/ruff-findings.txt", sub: "check", args: ".", exit: 1, levels: ["lite", "full", "ultra"]},
 	{sample: "samples/ruff-clean.txt", sub: "check", args: ".", exit: 0, levels: ["lite", "full", "ultra"]},
 	{sample: "samples/ruff-error.txt", sub: "check", args: "--config missing.toml .", exit: 2, levels: ["lite", "full", "ultra"]},
+	// invariant 1: --output-format json is machine output; the guard must pass it raw.
+	{sample: "samples/ruff-json-clean.txt", sub: "check", args: "check --output-format json .", exit: 0, levels: ["lite", "full", "ultra"]},
+	{sample: "samples/ruff-json-issues.txt", sub: "check", args: "check --output-format json .", exit: 1, levels: ["lite", "full", "ultra"]},
 ]
 
 config: {
