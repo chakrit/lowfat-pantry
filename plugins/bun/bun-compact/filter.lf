@@ -8,6 +8,11 @@
 # lines at ultra. run/build/x: the body is the program's own output — never
 # keyword-filter it; cap, and tail on failure (errors land at the end).
 
+# cap that announces itself — a silently head-capped program body looks
+# complete; the hint tells the agent output was truncated.
+define cap(limit):
+    shell: awk -v lim=$1 'NR<=lim; END { if (NR>lim) printf "... (%d lines total)\n", NR }'
+
 # ── install / dependency mutation ─────────────────────────────────────────
 install|add|remove|update|pm|link|unlink:
     if exit failed:
@@ -47,9 +52,9 @@ run|build|x|exec:
             else:  tail 80
     else:
         match level:
-            ultra: head 25
-            lite:  head 200
-            else:  head 60
+            ultra: cap 25
+            lite:  cap 200
+            else:  cap 60
 
 *:
     if exit failed:

@@ -12,6 +12,8 @@ _dir: "plugins/bun/bun-compact"
 _cases: [
 	{sample: "samples/bun-install.txt", sub: "add", args: "add react", exit: 0, levels: ["lite", "full", "ultra"]},
 	{sample: "samples/bun-test-fail.txt", sub: "test", args: "test", exit: 1, levels: ["lite", "full", "ultra"]},
+	// recovery hint: a capped `bun run` program body announces "... (N lines total)".
+	{sample: "samples/bun-run-capped.txt", sub: "run", args: "run build", exit: 0, levels: ["lite", "full", "ultra"]},
 ]
 
 config: {
