@@ -12,6 +12,9 @@ _dir: "plugins/eslint/eslint-compact"
 _cases: [
 	{sample: "samples/eslint-problems.txt", sub: "", args: ".", exit: 1, levels: ["lite", "full", "ultra"]},
 	{sample: "samples/eslint-clean.txt", sub: "", args: ".", exit: 0, levels: ["lite", "full", "ultra"]},
+	// recovery hint: a capped findings list announces "... (N lines total)" (the
+	// `✖ N problems` summary can't be keyword-kept, so the hint is the only signal).
+	{sample: "samples/eslint-many.txt", sub: "", args: "src", exit: 1, levels: ["lite", "full", "ultra"]},
 ]
 
 config: {

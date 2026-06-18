@@ -14,6 +14,12 @@
 define dense:
     drop /^[[:space:]]*$/
 
+# cap that announces itself — eslint can't keyword-keep the `✖ N problems`
+# summary (no 1-vs-2 exit signal), so a head-cap of an enormous list drops the
+# summary too; the hint tells the agent the findings were truncated.
+define cap(limit):
+    shell: awk -v lim=$1 'NR<=lim; END { if (NR>lim) printf "... (%d lines total)\n", NR }'
+
 *:
     if --format json:
         raw
@@ -23,13 +29,13 @@ define dense:
         match level:
             ultra:
                 dense
-                head 25
+                cap 25
                 or "eslint: clean"
             lite:
                 dense
-                head 200
+                cap 200
                 or "eslint: clean"
             else:
                 dense
-                head 60
+                cap 60
                 or "eslint: clean"
