@@ -176,9 +176,13 @@ define uv-dispatch:
                 emit(lines[:limit])
 
         # --- arbitrary `uv run <prog>`: cap only, never keyword-filter ---
+        # a silently capped program body looks complete; announce the cap so the
+        # agent knows output was truncated (the curl/gem/rake/cap convention).
         def do_generic():
             limit = {"ultra": 20, "full": 40, "lite": 80}.get(level, 40)
             emit(lines[:limit])
+            if len(lines) > limit:
+                print("... (%d lines total)" % len(lines))
 
         if not wrapped:
             do_uv_native()

@@ -18,6 +18,8 @@ _cases: [
 	// --output-format json` (drift-copy) must both pass raw.
 	{sample: "samples/uv-pip-list-json.txt", sub: "pip", args: "pip list --format json", exit: 0, levels: ["lite", "full", "ultra"]},
 	{sample: "samples/uv-ruff-json-clean.txt", sub: "ruff", args: "ruff check --output-format json .", exit: 0, levels: ["lite", "full", "ultra"]},
+	// recovery hint: a capped `uv run <prog>` body announces "... (N lines total)".
+	{sample: "samples/uv-run-capped.txt", sub: "run", args: "run myapp", exit: 0, levels: ["lite", "full", "ultra"]},
 ]
 
 config: {
