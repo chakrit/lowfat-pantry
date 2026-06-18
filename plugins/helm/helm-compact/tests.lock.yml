@@ -244,3 +244,234 @@
         - name: exitcode
           data:
             - "0"
+- name: plugins/helm/helm-compact/tests.cue \ helm-compact \ samples/helm-install-json.txt lite
+  commands:
+    - command: lowfat filter plugins/helm/helm-compact/filter.lf --sub=install --args='api ./mychart -n production -o json' --exit=0 --level=lite < plugins/helm/helm-compact/samples/helm-install-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{"name":"api","info":{"first_deployed":"2026-06-18T16:04:50.403549651Z","last_deployed":"2026-06-18T16:04:50.403549651Z","description":"Dry run complete","status":"pending-install"},"chart":{"metadata":{"name":"mychart","version":"0.2.0","description":"Minimal chart for invariant-1 golden capture","apiVersion":"v2","appVersion":"1.4.0","type":"application"},"lock":null,"templates":[{"name":"templates/configmap.yaml","data":"YXBpVmVyc2lvbjogdjEKa2luZDogQ29uZmlnTWFwCm1ldGFkYXRhOgogIG5hbWU6IHt7IC5SZWxlYXNlLk5hbWUgfX0tY29uZmlnCmRhdGE6CiAgcmVwbGljYXM6ICJ7eyAuVmFsdWVzLnJlcGxpY2FzIH19IgogIGltYWdlOiB7eyAuVmFsdWVzLmltYWdlIH19Cg==","modtime":"2026-06-18T16:04:49.731392093Z"}],"values":{"image":"nginx:1.27","replicas":2},"schema":null,"schemamodtime":"0001-01-01T00:00:00Z","files":null,"modtime":"2026-06-18T16:04:49.723801499Z"},"manifest":"---\n# Source: mychart/templates/configmap.yaml\napiVersion: v1\nkind: ConfigMap\nmetadata:\n  name: api-config\ndata:\n  replicas: \"2\"\n  image: nginx:1.27\n\n","version":1,"namespace":"production","apply_method":"ssa"}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/helm/helm-compact/filter.lf --sub=install --args='api ./mychart -n production -o json' --exit=0 --level=lite < plugins/helm/helm-compact/samples/helm-install-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 1065
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/helm/helm-compact/tests.cue \ helm-compact \ samples/helm-install-json.txt full
+  commands:
+    - command: lowfat filter plugins/helm/helm-compact/filter.lf --sub=install --args='api ./mychart -n production -o json' --exit=0 --level=full < plugins/helm/helm-compact/samples/helm-install-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{"name":"api","info":{"first_deployed":"2026-06-18T16:04:50.403549651Z","last_deployed":"2026-06-18T16:04:50.403549651Z","description":"Dry run complete","status":"pending-install"},"chart":{"metadata":{"name":"mychart","version":"0.2.0","description":"Minimal chart for invariant-1 golden capture","apiVersion":"v2","appVersion":"1.4.0","type":"application"},"lock":null,"templates":[{"name":"templates/configmap.yaml","data":"YXBpVmVyc2lvbjogdjEKa2luZDogQ29uZmlnTWFwCm1ldGFkYXRhOgogIG5hbWU6IHt7IC5SZWxlYXNlLk5hbWUgfX0tY29uZmlnCmRhdGE6CiAgcmVwbGljYXM6ICJ7eyAuVmFsdWVzLnJlcGxpY2FzIH19IgogIGltYWdlOiB7eyAuVmFsdWVzLmltYWdlIH19Cg==","modtime":"2026-06-18T16:04:49.731392093Z"}],"values":{"image":"nginx:1.27","replicas":2},"schema":null,"schemamodtime":"0001-01-01T00:00:00Z","files":null,"modtime":"2026-06-18T16:04:49.723801499Z"},"manifest":"---\n# Source: mychart/templates/configmap.yaml\napiVersion: v1\nkind: ConfigMap\nmetadata:\n  name: api-config\ndata:\n  replicas: \"2\"\n  image: nginx:1.27\n\n","version":1,"namespace":"production","apply_method":"ssa"}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/helm/helm-compact/filter.lf --sub=install --args='api ./mychart -n production -o json' --exit=0 --level=full < plugins/helm/helm-compact/samples/helm-install-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 1065
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/helm/helm-compact/tests.cue \ helm-compact \ samples/helm-install-json.txt ultra
+  commands:
+    - command: lowfat filter plugins/helm/helm-compact/filter.lf --sub=install --args='api ./mychart -n production -o json' --exit=0 --level=ultra < plugins/helm/helm-compact/samples/helm-install-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{"name":"api","info":{"first_deployed":"2026-06-18T16:04:50.403549651Z","last_deployed":"2026-06-18T16:04:50.403549651Z","description":"Dry run complete","status":"pending-install"},"chart":{"metadata":{"name":"mychart","version":"0.2.0","description":"Minimal chart for invariant-1 golden capture","apiVersion":"v2","appVersion":"1.4.0","type":"application"},"lock":null,"templates":[{"name":"templates/configmap.yaml","data":"YXBpVmVyc2lvbjogdjEKa2luZDogQ29uZmlnTWFwCm1ldGFkYXRhOgogIG5hbWU6IHt7IC5SZWxlYXNlLk5hbWUgfX0tY29uZmlnCmRhdGE6CiAgcmVwbGljYXM6ICJ7eyAuVmFsdWVzLnJlcGxpY2FzIH19IgogIGltYWdlOiB7eyAuVmFsdWVzLmltYWdlIH19Cg==","modtime":"2026-06-18T16:04:49.731392093Z"}],"values":{"image":"nginx:1.27","replicas":2},"schema":null,"schemamodtime":"0001-01-01T00:00:00Z","files":null,"modtime":"2026-06-18T16:04:49.723801499Z"},"manifest":"---\n# Source: mychart/templates/configmap.yaml\napiVersion: v1\nkind: ConfigMap\nmetadata:\n  name: api-config\ndata:\n  replicas: \"2\"\n  image: nginx:1.27\n\n","version":1,"namespace":"production","apply_method":"ssa"}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/helm/helm-compact/filter.lf --sub=install --args='api ./mychart -n production -o json' --exit=0 --level=ultra < plugins/helm/helm-compact/samples/helm-install-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 1065
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/helm/helm-compact/tests.cue \ helm-compact \ samples/helm-install-yaml.txt lite
+  commands:
+    - command: lowfat filter plugins/helm/helm-compact/filter.lf --sub=install --args='api ./mychart -n production -o yaml' --exit=0 --level=lite < plugins/helm/helm-compact/samples/helm-install-yaml.txt
+      checks:
+        - name: stdout
+          data:
+            - 'apply_method: ssa'
+            - 'chart:'
+            - '  files: null'
+            - '  lock: null'
+            - '  metadata:'
+            - '    apiVersion: v2'
+            - '    appVersion: 1.4.0'
+            - '    description: Minimal chart for invariant-1 golden capture'
+            - '    name: mychart'
+            - '    type: application'
+            - '    version: 0.2.0'
+            - '  modtime: "2026-06-18T16:04:49.723801499Z"'
+            - '  schema: null'
+            - '  schemamodtime: "0001-01-01T00:00:00Z"'
+            - '  templates:'
+            - '  - data: YXBpVmVyc2lvbjogdjEKa2luZDogQ29uZmlnTWFwCm1ldGFkYXRhOgogIG5hbWU6IHt7IC5SZWxlYXNlLk5hbWUgfX0tY29uZmlnCmRhdGE6CiAgcmVwbGljYXM6ICJ7eyAuVmFsdWVzLnJlcGxpY2FzIH19IgogIGltYWdlOiB7eyAuVmFsdWVzLmltYWdlIH19Cg=='
+            - '    modtime: "2026-06-18T16:04:49.731392093Z"'
+            - '    name: templates/configmap.yaml'
+            - '  values:'
+            - '    image: nginx:1.27'
+            - '    replicas: 2'
+            - 'info:'
+            - '  description: Dry run complete'
+            - '  first_deployed: "2026-06-18T16:04:50.810291178Z"'
+            - '  last_deployed: "2026-06-18T16:04:50.810291178Z"'
+            - '  status: pending-install'
+            - 'manifest: |+'
+            - '  ---'
+            - '  # Source: mychart/templates/configmap.yaml'
+            - '  apiVersion: v1'
+            - '  kind: ConfigMap'
+            - '  metadata:'
+            - '    name: api-config'
+            - '  data:'
+            - '    replicas: "2"'
+            - '    image: nginx:1.27'
+            - ""
+            - 'name: api'
+            - 'namespace: production'
+            - 'version: 1'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/helm/helm-compact/filter.lf --sub=install --args='api ./mychart -n production -o yaml' --exit=0 --level=lite < plugins/helm/helm-compact/samples/helm-install-yaml.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 40
+            - bytes 1067
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/helm/helm-compact/tests.cue \ helm-compact \ samples/helm-install-yaml.txt full
+  commands:
+    - command: lowfat filter plugins/helm/helm-compact/filter.lf --sub=install --args='api ./mychart -n production -o yaml' --exit=0 --level=full < plugins/helm/helm-compact/samples/helm-install-yaml.txt
+      checks:
+        - name: stdout
+          data:
+            - 'apply_method: ssa'
+            - 'chart:'
+            - '  files: null'
+            - '  lock: null'
+            - '  metadata:'
+            - '    apiVersion: v2'
+            - '    appVersion: 1.4.0'
+            - '    description: Minimal chart for invariant-1 golden capture'
+            - '    name: mychart'
+            - '    type: application'
+            - '    version: 0.2.0'
+            - '  modtime: "2026-06-18T16:04:49.723801499Z"'
+            - '  schema: null'
+            - '  schemamodtime: "0001-01-01T00:00:00Z"'
+            - '  templates:'
+            - '  - data: YXBpVmVyc2lvbjogdjEKa2luZDogQ29uZmlnTWFwCm1ldGFkYXRhOgogIG5hbWU6IHt7IC5SZWxlYXNlLk5hbWUgfX0tY29uZmlnCmRhdGE6CiAgcmVwbGljYXM6ICJ7eyAuVmFsdWVzLnJlcGxpY2FzIH19IgogIGltYWdlOiB7eyAuVmFsdWVzLmltYWdlIH19Cg=='
+            - '    modtime: "2026-06-18T16:04:49.731392093Z"'
+            - '    name: templates/configmap.yaml'
+            - '  values:'
+            - '    image: nginx:1.27'
+            - '    replicas: 2'
+            - 'info:'
+            - '  description: Dry run complete'
+            - '  first_deployed: "2026-06-18T16:04:50.810291178Z"'
+            - '  last_deployed: "2026-06-18T16:04:50.810291178Z"'
+            - '  status: pending-install'
+            - 'manifest: |+'
+            - '  ---'
+            - '  # Source: mychart/templates/configmap.yaml'
+            - '  apiVersion: v1'
+            - '  kind: ConfigMap'
+            - '  metadata:'
+            - '    name: api-config'
+            - '  data:'
+            - '    replicas: "2"'
+            - '    image: nginx:1.27'
+            - ""
+            - 'name: api'
+            - 'namespace: production'
+            - 'version: 1'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/helm/helm-compact/filter.lf --sub=install --args='api ./mychart -n production -o yaml' --exit=0 --level=full < plugins/helm/helm-compact/samples/helm-install-yaml.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 40
+            - bytes 1067
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/helm/helm-compact/tests.cue \ helm-compact \ samples/helm-install-yaml.txt ultra
+  commands:
+    - command: lowfat filter plugins/helm/helm-compact/filter.lf --sub=install --args='api ./mychart -n production -o yaml' --exit=0 --level=ultra < plugins/helm/helm-compact/samples/helm-install-yaml.txt
+      checks:
+        - name: stdout
+          data:
+            - 'apply_method: ssa'
+            - 'chart:'
+            - '  files: null'
+            - '  lock: null'
+            - '  metadata:'
+            - '    apiVersion: v2'
+            - '    appVersion: 1.4.0'
+            - '    description: Minimal chart for invariant-1 golden capture'
+            - '    name: mychart'
+            - '    type: application'
+            - '    version: 0.2.0'
+            - '  modtime: "2026-06-18T16:04:49.723801499Z"'
+            - '  schema: null'
+            - '  schemamodtime: "0001-01-01T00:00:00Z"'
+            - '  templates:'
+            - '  - data: YXBpVmVyc2lvbjogdjEKa2luZDogQ29uZmlnTWFwCm1ldGFkYXRhOgogIG5hbWU6IHt7IC5SZWxlYXNlLk5hbWUgfX0tY29uZmlnCmRhdGE6CiAgcmVwbGljYXM6ICJ7eyAuVmFsdWVzLnJlcGxpY2FzIH19IgogIGltYWdlOiB7eyAuVmFsdWVzLmltYWdlIH19Cg=='
+            - '    modtime: "2026-06-18T16:04:49.731392093Z"'
+            - '    name: templates/configmap.yaml'
+            - '  values:'
+            - '    image: nginx:1.27'
+            - '    replicas: 2'
+            - 'info:'
+            - '  description: Dry run complete'
+            - '  first_deployed: "2026-06-18T16:04:50.810291178Z"'
+            - '  last_deployed: "2026-06-18T16:04:50.810291178Z"'
+            - '  status: pending-install'
+            - 'manifest: |+'
+            - '  ---'
+            - '  # Source: mychart/templates/configmap.yaml'
+            - '  apiVersion: v1'
+            - '  kind: ConfigMap'
+            - '  metadata:'
+            - '    name: api-config'
+            - '  data:'
+            - '    replicas: "2"'
+            - '    image: nginx:1.27'
+            - ""
+            - 'name: api'
+            - 'namespace: production'
+            - 'version: 1'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/helm/helm-compact/filter.lf --sub=install --args='api ./mychart -n production -o yaml' --exit=0 --level=ultra < plugins/helm/helm-compact/samples/helm-install-yaml.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 40
+            - bytes 1067
+        - name: exitcode
+          data:
+            - "0"

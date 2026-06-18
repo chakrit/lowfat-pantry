@@ -13,6 +13,9 @@ _cases: [
 	{sample: "samples/helm-install.txt", sub: "install", args: "api ./chart -n production", exit: 0, levels: ["lite", "full", "ultra"]},
 	{sample: "samples/helm-list.txt", sub: "list", args: "-A", exit: 0, levels: ["lite", "full", "ultra"]},
 	{sample: "samples/helm-upgrade-error.txt", sub: "upgrade", args: "api ./chart -n production --install", exit: 1, levels: ["lite", "full", "ultra"]},
+	// invariant 1: -o json/-o yaml is byte-exact; the guard must pass it raw.
+	{sample: "samples/helm-install-json.txt", sub: "install", args: "api ./mychart -n production -o json", exit: 0, levels: ["lite", "full", "ultra"]},
+	{sample: "samples/helm-install-yaml.txt", sub: "install", args: "api ./mychart -n production -o yaml", exit: 0, levels: ["lite", "full", "ultra"]},
 ]
 
 config: {

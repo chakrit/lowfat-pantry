@@ -1,0 +1,40 @@
+apply_method: ssa
+chart:
+  files: null
+  lock: null
+  metadata:
+    apiVersion: v2
+    appVersion: 1.4.0
+    description: Minimal chart for invariant-1 golden capture
+    name: mychart
+    type: application
+    version: 0.2.0
+  modtime: "2026-06-18T16:04:49.723801499Z"
+  schema: null
+  schemamodtime: "0001-01-01T00:00:00Z"
+  templates:
+  - data: YXBpVmVyc2lvbjogdjEKa2luZDogQ29uZmlnTWFwCm1ldGFkYXRhOgogIG5hbWU6IHt7IC5SZWxlYXNlLk5hbWUgfX0tY29uZmlnCmRhdGE6CiAgcmVwbGljYXM6ICJ7eyAuVmFsdWVzLnJlcGxpY2FzIH19IgogIGltYWdlOiB7eyAuVmFsdWVzLmltYWdlIH19Cg==
+    modtime: "2026-06-18T16:04:49.731392093Z"
+    name: templates/configmap.yaml
+  values:
+    image: nginx:1.27
+    replicas: 2
+info:
+  description: Dry run complete
+  first_deployed: "2026-06-18T16:04:50.810291178Z"
+  last_deployed: "2026-06-18T16:04:50.810291178Z"
+  status: pending-install
+manifest: |+
+  ---
+  # Source: mychart/templates/configmap.yaml
+  apiVersion: v1
+  kind: ConfigMap
+  metadata:
+    name: api-config
+  data:
+    replicas: "2"
+    image: nginx:1.27
+
+name: api
+namespace: production
+version: 1

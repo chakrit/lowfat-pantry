@@ -1,6 +1,12 @@
 #!/usr/bin/env lowfat-filter
 # helm-compact - preserve release metadata and cap bulky notes/tables.
 # env: $sub $level $exit $args
+#
+# `-o json`/`-o yaml` (and the `--output` long form) is machine output — pass
+# byte-exact (invariant 1). Without the guard, helm-summary/helm-table awk
+# collapses its whitespace and caps it (corrupt JSON/YAML). The guard repeats
+# per compacting rule because `.lf` has no top-level pre-filter and macros can't
+# wrap a cascade; the default (table) output still compacts.
 
 define helm-summary(limit):
     shell: |
@@ -28,6 +34,14 @@ define helm-table(limit):
 install|upgrade|status:
     if exit failed:
         raw
+    elif -o json:
+        raw
+    elif -o yaml:
+        raw
+    elif --output json:
+        raw
+    elif --output yaml:
+        raw
     else:
         match level:
             ultra: helm-summary 8
@@ -37,6 +51,14 @@ install|upgrade|status:
 list:
     if exit failed:
         raw
+    elif -o json:
+        raw
+    elif -o yaml:
+        raw
+    elif --output json:
+        raw
+    elif --output yaml:
+        raw
     else:
         match level:
             ultra: helm-table 12
@@ -45,6 +67,14 @@ list:
 
 *:
     if exit failed:
+        raw
+    elif -o json:
+        raw
+    elif -o yaml:
+        raw
+    elif --output json:
+        raw
+    elif --output yaml:
         raw
     else:
         head auto
