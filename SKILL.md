@@ -144,7 +144,9 @@ need trusting), hook wired or not. Mention `/lowfat-pantry` re-runs the sync.
 When the user wants a *new* filter, you don't need to read the full DSL spec or lowfat
 source — both were already distilled. Follow this. (Deep cases — `split`, macros, awk
 state machines — are in `docs/spec/lowfat-filter-dsl.md`; reach for it only when the
-skeleton below isn't enough.)
+skeleton below isn't enough.) The *why* behind these rules — the keep-vs-cut philosophy
+inherited from RTK and lowfat — is `docs/spec/output-philosophy.md`; read it when a call
+isn't obvious from the tree below.
 
 ### Plugin layout (exact)
 A pantry plugin is a directory `plugins/<command>/<command>-compact/` holding:
@@ -183,8 +185,13 @@ Mirror `plugins/rg/rg-compact/` (simplest) or `plugins/gh/` (flag guards). Copy 
    - Noisy builds (tsc/mvn/gradle/dotnet): a failed build is *exactly* when you want
      `[ERROR]` lines pulled from hundreds of progress lines — run your extraction on
      failure too, with `or-shell: tail 50` as the over-prune safety net.
+   - Caveat: exit code is a *signal*, not a failure proxy. `rg`/`diff`/`black` exit
+     non-zero as information (no match / files differ / unformatted); `redis-cli`/`sqlite3`
+     errors exit zero. Branch on output shape (error-line patterns), not `$exit` alone.
 3. **Otherwise, scale by level.** `match level:` with `head auto`, or explicit
    `ultra/full/lite` head/tail caps. Drop progress/spinner noise with `drop /re/` first.
+   When you cap a list, leave a recovery hint (`... (N lines total)`, "use
+   `LOWFAT_LEVEL=lite` for the rest") so the agent knows what was dropped and can get it.
 
 ### Skeleton to adapt (covers most tools)
 ```
@@ -225,6 +232,8 @@ passthrough output must survive byte-exact — branch and `raw` it, never filter
 one rule prevents the most damaging class of bug (silently corrupted JSON / hidden results).
 
 ## Reference
+- `docs/spec/output-philosophy.md` — keep-vs-cut philosophy (RTK + lowfat lineage, pantry
+  invariants); the *why* behind the decision tree above.
 - `docs/spec/lowfat-filter-dsl.md` — authoring `.lf` filters (for adding/editing plugins).
   For the engine and `.lf` language upstream, see lowfat's own docs:
   [`zdk/lowfat`](https://github.com/zdk/lowfat) README + `docs/PLUGINS.md` / `docs/CONFIG.md`.

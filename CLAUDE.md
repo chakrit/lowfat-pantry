@@ -9,6 +9,7 @@ built.
 
 - `SKILL.md` + `docs/spec/lowfat-skill.md` — skill design
 - `docs/spec/lowfat-filter-dsl.md` — `.lf` authoring spec; read before editing any filter
+- `docs/spec/output-philosophy.md` — keep-vs-cut philosophy; the *why* behind filter design
 - `docs/notes/lowfat-internals.md` — how lowfat works
 - `docs/decisions/` — rulings
 - `docs/spec/pantry-plugin-backlog.md` — what's built + what's left
