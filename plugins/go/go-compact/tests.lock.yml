@@ -312,3 +312,330 @@
         - name: exitcode
           data:
             - "0"
+- name: plugins/go/go-compact/tests.cue \ go-compact \ samples/go-test-json.txt lite
+  commands:
+    - command: lowfat filter plugins/go/go-compact/filter.lf --sub=test --args='test -json ./...' --exit=0 --level=lite < plugins/go/go-compact/samples/go-test-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{"Time":"2026-06-18T16:27:27.070424912Z","Action":"start","Package":"demo"}'
+            - '{"Time":"2026-06-18T16:27:27.071916877Z","Action":"run","Package":"demo","Test":"TestAdd"}'
+            - '{"Time":"2026-06-18T16:27:27.071944585Z","Action":"output","Package":"demo","Test":"TestAdd","Output":"=== RUN   TestAdd\n"}'
+            - '{"Time":"2026-06-18T16:27:27.07195046Z","Action":"output","Package":"demo","Test":"TestAdd","Output":"--- PASS: TestAdd (0.00s)\n"}'
+            - '{"Time":"2026-06-18T16:27:27.071952627Z","Action":"pass","Package":"demo","Test":"TestAdd","Elapsed":0}'
+            - '{"Time":"2026-06-18T16:27:27.071956377Z","Action":"run","Package":"demo","Test":"TestAddZero"}'
+            - '{"Time":"2026-06-18T16:27:27.071957419Z","Action":"output","Package":"demo","Test":"TestAddZero","Output":"=== RUN   TestAddZero\n"}'
+            - '{"Time":"2026-06-18T16:27:27.071959085Z","Action":"output","Package":"demo","Test":"TestAddZero","Output":"--- PASS: TestAddZero (0.00s)\n"}'
+            - '{"Time":"2026-06-18T16:27:27.071960294Z","Action":"pass","Package":"demo","Test":"TestAddZero","Elapsed":0}'
+            - '{"Time":"2026-06-18T16:27:27.071961419Z","Action":"output","Package":"demo","Output":"PASS\n"}'
+            - '{"Time":"2026-06-18T16:27:27.072027169Z","Action":"output","Package":"demo","Output":"ok  \tdemo\t0.001s\n"}'
+            - '{"Time":"2026-06-18T16:27:27.072556255Z","Action":"pass","Package":"demo","Elapsed":0.002}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/go/go-compact/filter.lf --sub=test --args='test -json ./...' --exit=0 --level=lite < plugins/go/go-compact/samples/go-test-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 12
+            - bytes 1300
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/go/go-compact/tests.cue \ go-compact \ samples/go-test-json.txt full
+  commands:
+    - command: lowfat filter plugins/go/go-compact/filter.lf --sub=test --args='test -json ./...' --exit=0 --level=full < plugins/go/go-compact/samples/go-test-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{"Time":"2026-06-18T16:27:27.070424912Z","Action":"start","Package":"demo"}'
+            - '{"Time":"2026-06-18T16:27:27.071916877Z","Action":"run","Package":"demo","Test":"TestAdd"}'
+            - '{"Time":"2026-06-18T16:27:27.071944585Z","Action":"output","Package":"demo","Test":"TestAdd","Output":"=== RUN   TestAdd\n"}'
+            - '{"Time":"2026-06-18T16:27:27.07195046Z","Action":"output","Package":"demo","Test":"TestAdd","Output":"--- PASS: TestAdd (0.00s)\n"}'
+            - '{"Time":"2026-06-18T16:27:27.071952627Z","Action":"pass","Package":"demo","Test":"TestAdd","Elapsed":0}'
+            - '{"Time":"2026-06-18T16:27:27.071956377Z","Action":"run","Package":"demo","Test":"TestAddZero"}'
+            - '{"Time":"2026-06-18T16:27:27.071957419Z","Action":"output","Package":"demo","Test":"TestAddZero","Output":"=== RUN   TestAddZero\n"}'
+            - '{"Time":"2026-06-18T16:27:27.071959085Z","Action":"output","Package":"demo","Test":"TestAddZero","Output":"--- PASS: TestAddZero (0.00s)\n"}'
+            - '{"Time":"2026-06-18T16:27:27.071960294Z","Action":"pass","Package":"demo","Test":"TestAddZero","Elapsed":0}'
+            - '{"Time":"2026-06-18T16:27:27.071961419Z","Action":"output","Package":"demo","Output":"PASS\n"}'
+            - '{"Time":"2026-06-18T16:27:27.072027169Z","Action":"output","Package":"demo","Output":"ok  \tdemo\t0.001s\n"}'
+            - '{"Time":"2026-06-18T16:27:27.072556255Z","Action":"pass","Package":"demo","Elapsed":0.002}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/go/go-compact/filter.lf --sub=test --args='test -json ./...' --exit=0 --level=full < plugins/go/go-compact/samples/go-test-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 12
+            - bytes 1300
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/go/go-compact/tests.cue \ go-compact \ samples/go-test-json.txt ultra
+  commands:
+    - command: lowfat filter plugins/go/go-compact/filter.lf --sub=test --args='test -json ./...' --exit=0 --level=ultra < plugins/go/go-compact/samples/go-test-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{"Time":"2026-06-18T16:27:27.070424912Z","Action":"start","Package":"demo"}'
+            - '{"Time":"2026-06-18T16:27:27.071916877Z","Action":"run","Package":"demo","Test":"TestAdd"}'
+            - '{"Time":"2026-06-18T16:27:27.071944585Z","Action":"output","Package":"demo","Test":"TestAdd","Output":"=== RUN   TestAdd\n"}'
+            - '{"Time":"2026-06-18T16:27:27.07195046Z","Action":"output","Package":"demo","Test":"TestAdd","Output":"--- PASS: TestAdd (0.00s)\n"}'
+            - '{"Time":"2026-06-18T16:27:27.071952627Z","Action":"pass","Package":"demo","Test":"TestAdd","Elapsed":0}'
+            - '{"Time":"2026-06-18T16:27:27.071956377Z","Action":"run","Package":"demo","Test":"TestAddZero"}'
+            - '{"Time":"2026-06-18T16:27:27.071957419Z","Action":"output","Package":"demo","Test":"TestAddZero","Output":"=== RUN   TestAddZero\n"}'
+            - '{"Time":"2026-06-18T16:27:27.071959085Z","Action":"output","Package":"demo","Test":"TestAddZero","Output":"--- PASS: TestAddZero (0.00s)\n"}'
+            - '{"Time":"2026-06-18T16:27:27.071960294Z","Action":"pass","Package":"demo","Test":"TestAddZero","Elapsed":0}'
+            - '{"Time":"2026-06-18T16:27:27.071961419Z","Action":"output","Package":"demo","Output":"PASS\n"}'
+            - '{"Time":"2026-06-18T16:27:27.072027169Z","Action":"output","Package":"demo","Output":"ok  \tdemo\t0.001s\n"}'
+            - '{"Time":"2026-06-18T16:27:27.072556255Z","Action":"pass","Package":"demo","Elapsed":0.002}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/go/go-compact/filter.lf --sub=test --args='test -json ./...' --exit=0 --level=ultra < plugins/go/go-compact/samples/go-test-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 12
+            - bytes 1300
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/go/go-compact/tests.cue \ go-compact \ samples/go-list-json.txt lite
+  commands:
+    - command: lowfat filter plugins/go/go-compact/filter.lf --sub=list --args='list -json ./...' --exit=0 --level=lite < plugins/go/go-compact/samples/go-list-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{'
+            - "\t\"Dir\": \"/work\","
+            - "\t\"ImportPath\": \"demo\","
+            - "\t\"Name\": \"main\","
+            - "\t\"Target\": \"/go/bin/demo\","
+            - "\t\"Root\": \"/work\","
+            - "\t\"Module\": {"
+            - "\t\t\"Path\": \"demo\","
+            - "\t\t\"Main\": true,"
+            - "\t\t\"Dir\": \"/work\","
+            - "\t\t\"GoMod\": \"/work/go.mod\","
+            - "\t\t\"GoVersion\": \"1.22\""
+            - "\t},"
+            - "\t\"Match\": ["
+            - "\t\t\"./...\""
+            - "\t],"
+            - "\t\"DefaultGODEBUG\": \"asynctimerchan=1,containermaxprocs=0,cryptocustomrand=1,decoratemappings=0,gotestjsonbuildtext=1,gotypesalias=0,httpcookiemaxnum=0,httpservecontentkeepheaders=1,multipathtcp=0,randseednop=0,rsa1024min=0,tls3des=1,tlsmlkem=0,tlssecpmlkem=0,tlssha1=1,updatemaxprocs=0,urlmaxqueryparams=0,urlstrictcolons=0,winreadlinkvolume=0,winsymlink=0,x509keypairleaf=0,x509negativeserial=1,x509rsacrt=0,x509sha256skid=0,x509usepolicies=0\","
+            - "\t\"Stale\": true,"
+            - "\t\"StaleReason\": \"stale dependency: internal/goarch\","
+            - "\t\"GoFiles\": ["
+            - "\t\t\"main.go\""
+            - "\t],"
+            - "\t\"Deps\": ["
+            - "\t\t\"internal/abi\","
+            - "\t\t\"internal/asan\","
+            - "\t\t\"internal/bytealg\","
+            - "\t\t\"internal/byteorder\","
+            - "\t\t\"internal/chacha8rand\","
+            - "\t\t\"internal/coverage/rtcov\","
+            - "\t\t\"internal/cpu\","
+            - "\t\t\"internal/goarch\","
+            - "\t\t\"internal/godebugs\","
+            - "\t\t\"internal/goexperiment\","
+            - "\t\t\"internal/goos\","
+            - "\t\t\"internal/msan\","
+            - "\t\t\"internal/profilerecord\","
+            - "\t\t\"internal/race\","
+            - "\t\t\"internal/runtime/atomic\","
+            - "\t\t\"internal/runtime/cgroup\","
+            - "\t\t\"internal/runtime/exithook\","
+            - "\t\t\"internal/runtime/gc\","
+            - "\t\t\"internal/runtime/gc/scan\","
+            - "\t\t\"internal/runtime/maps\","
+            - "\t\t\"internal/runtime/math\","
+            - "\t\t\"internal/runtime/pprof/label\","
+            - "\t\t\"internal/runtime/sys\","
+            - "\t\t\"internal/runtime/syscall/linux\","
+            - "\t\t\"internal/strconv\","
+            - "\t\t\"internal/stringslite\","
+            - "\t\t\"internal/trace/tracev2\","
+            - "\t\t\"math/bits\","
+            - "\t\t\"runtime\","
+            - "\t\t\"unsafe\""
+            - "\t],"
+            - "\t\"TestGoFiles\": ["
+            - "\t\t\"main_test.go\""
+            - "\t],"
+            - "\t\"TestImports\": ["
+            - "\t\t\"testing\""
+            - "\t]"
+            - '}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/go/go-compact/filter.lf --sub=list --args='list -json ./...' --exit=0 --level=lite < plugins/go/go-compact/samples/go-list-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 61
+            - bytes 1603
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/go/go-compact/tests.cue \ go-compact \ samples/go-list-json.txt full
+  commands:
+    - command: lowfat filter plugins/go/go-compact/filter.lf --sub=list --args='list -json ./...' --exit=0 --level=full < plugins/go/go-compact/samples/go-list-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{'
+            - "\t\"Dir\": \"/work\","
+            - "\t\"ImportPath\": \"demo\","
+            - "\t\"Name\": \"main\","
+            - "\t\"Target\": \"/go/bin/demo\","
+            - "\t\"Root\": \"/work\","
+            - "\t\"Module\": {"
+            - "\t\t\"Path\": \"demo\","
+            - "\t\t\"Main\": true,"
+            - "\t\t\"Dir\": \"/work\","
+            - "\t\t\"GoMod\": \"/work/go.mod\","
+            - "\t\t\"GoVersion\": \"1.22\""
+            - "\t},"
+            - "\t\"Match\": ["
+            - "\t\t\"./...\""
+            - "\t],"
+            - "\t\"DefaultGODEBUG\": \"asynctimerchan=1,containermaxprocs=0,cryptocustomrand=1,decoratemappings=0,gotestjsonbuildtext=1,gotypesalias=0,httpcookiemaxnum=0,httpservecontentkeepheaders=1,multipathtcp=0,randseednop=0,rsa1024min=0,tls3des=1,tlsmlkem=0,tlssecpmlkem=0,tlssha1=1,updatemaxprocs=0,urlmaxqueryparams=0,urlstrictcolons=0,winreadlinkvolume=0,winsymlink=0,x509keypairleaf=0,x509negativeserial=1,x509rsacrt=0,x509sha256skid=0,x509usepolicies=0\","
+            - "\t\"Stale\": true,"
+            - "\t\"StaleReason\": \"stale dependency: internal/goarch\","
+            - "\t\"GoFiles\": ["
+            - "\t\t\"main.go\""
+            - "\t],"
+            - "\t\"Deps\": ["
+            - "\t\t\"internal/abi\","
+            - "\t\t\"internal/asan\","
+            - "\t\t\"internal/bytealg\","
+            - "\t\t\"internal/byteorder\","
+            - "\t\t\"internal/chacha8rand\","
+            - "\t\t\"internal/coverage/rtcov\","
+            - "\t\t\"internal/cpu\","
+            - "\t\t\"internal/goarch\","
+            - "\t\t\"internal/godebugs\","
+            - "\t\t\"internal/goexperiment\","
+            - "\t\t\"internal/goos\","
+            - "\t\t\"internal/msan\","
+            - "\t\t\"internal/profilerecord\","
+            - "\t\t\"internal/race\","
+            - "\t\t\"internal/runtime/atomic\","
+            - "\t\t\"internal/runtime/cgroup\","
+            - "\t\t\"internal/runtime/exithook\","
+            - "\t\t\"internal/runtime/gc\","
+            - "\t\t\"internal/runtime/gc/scan\","
+            - "\t\t\"internal/runtime/maps\","
+            - "\t\t\"internal/runtime/math\","
+            - "\t\t\"internal/runtime/pprof/label\","
+            - "\t\t\"internal/runtime/sys\","
+            - "\t\t\"internal/runtime/syscall/linux\","
+            - "\t\t\"internal/strconv\","
+            - "\t\t\"internal/stringslite\","
+            - "\t\t\"internal/trace/tracev2\","
+            - "\t\t\"math/bits\","
+            - "\t\t\"runtime\","
+            - "\t\t\"unsafe\""
+            - "\t],"
+            - "\t\"TestGoFiles\": ["
+            - "\t\t\"main_test.go\""
+            - "\t],"
+            - "\t\"TestImports\": ["
+            - "\t\t\"testing\""
+            - "\t]"
+            - '}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/go/go-compact/filter.lf --sub=list --args='list -json ./...' --exit=0 --level=full < plugins/go/go-compact/samples/go-list-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 61
+            - bytes 1603
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/go/go-compact/tests.cue \ go-compact \ samples/go-list-json.txt ultra
+  commands:
+    - command: lowfat filter plugins/go/go-compact/filter.lf --sub=list --args='list -json ./...' --exit=0 --level=ultra < plugins/go/go-compact/samples/go-list-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{'
+            - "\t\"Dir\": \"/work\","
+            - "\t\"ImportPath\": \"demo\","
+            - "\t\"Name\": \"main\","
+            - "\t\"Target\": \"/go/bin/demo\","
+            - "\t\"Root\": \"/work\","
+            - "\t\"Module\": {"
+            - "\t\t\"Path\": \"demo\","
+            - "\t\t\"Main\": true,"
+            - "\t\t\"Dir\": \"/work\","
+            - "\t\t\"GoMod\": \"/work/go.mod\","
+            - "\t\t\"GoVersion\": \"1.22\""
+            - "\t},"
+            - "\t\"Match\": ["
+            - "\t\t\"./...\""
+            - "\t],"
+            - "\t\"DefaultGODEBUG\": \"asynctimerchan=1,containermaxprocs=0,cryptocustomrand=1,decoratemappings=0,gotestjsonbuildtext=1,gotypesalias=0,httpcookiemaxnum=0,httpservecontentkeepheaders=1,multipathtcp=0,randseednop=0,rsa1024min=0,tls3des=1,tlsmlkem=0,tlssecpmlkem=0,tlssha1=1,updatemaxprocs=0,urlmaxqueryparams=0,urlstrictcolons=0,winreadlinkvolume=0,winsymlink=0,x509keypairleaf=0,x509negativeserial=1,x509rsacrt=0,x509sha256skid=0,x509usepolicies=0\","
+            - "\t\"Stale\": true,"
+            - "\t\"StaleReason\": \"stale dependency: internal/goarch\","
+            - "\t\"GoFiles\": ["
+            - "\t\t\"main.go\""
+            - "\t],"
+            - "\t\"Deps\": ["
+            - "\t\t\"internal/abi\","
+            - "\t\t\"internal/asan\","
+            - "\t\t\"internal/bytealg\","
+            - "\t\t\"internal/byteorder\","
+            - "\t\t\"internal/chacha8rand\","
+            - "\t\t\"internal/coverage/rtcov\","
+            - "\t\t\"internal/cpu\","
+            - "\t\t\"internal/goarch\","
+            - "\t\t\"internal/godebugs\","
+            - "\t\t\"internal/goexperiment\","
+            - "\t\t\"internal/goos\","
+            - "\t\t\"internal/msan\","
+            - "\t\t\"internal/profilerecord\","
+            - "\t\t\"internal/race\","
+            - "\t\t\"internal/runtime/atomic\","
+            - "\t\t\"internal/runtime/cgroup\","
+            - "\t\t\"internal/runtime/exithook\","
+            - "\t\t\"internal/runtime/gc\","
+            - "\t\t\"internal/runtime/gc/scan\","
+            - "\t\t\"internal/runtime/maps\","
+            - "\t\t\"internal/runtime/math\","
+            - "\t\t\"internal/runtime/pprof/label\","
+            - "\t\t\"internal/runtime/sys\","
+            - "\t\t\"internal/runtime/syscall/linux\","
+            - "\t\t\"internal/strconv\","
+            - "\t\t\"internal/stringslite\","
+            - "\t\t\"internal/trace/tracev2\","
+            - "\t\t\"math/bits\","
+            - "\t\t\"runtime\","
+            - "\t\t\"unsafe\""
+            - "\t],"
+            - "\t\"TestGoFiles\": ["
+            - "\t\t\"main_test.go\""
+            - "\t],"
+            - "\t\"TestImports\": ["
+            - "\t\t\"testing\""
+            - "\t]"
+            - '}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/go/go-compact/filter.lf --sub=list --args='list -json ./...' --exit=0 --level=ultra < plugins/go/go-compact/samples/go-list-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 61
+            - bytes 1603
+        - name: exitcode
+          data:
+            - "0"

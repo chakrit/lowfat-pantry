@@ -1,0 +1,12 @@
+{"Time":"2026-06-18T16:27:27.070424912Z","Action":"start","Package":"demo"}
+{"Time":"2026-06-18T16:27:27.071916877Z","Action":"run","Package":"demo","Test":"TestAdd"}
+{"Time":"2026-06-18T16:27:27.071944585Z","Action":"output","Package":"demo","Test":"TestAdd","Output":"=== RUN   TestAdd\n"}
+{"Time":"2026-06-18T16:27:27.07195046Z","Action":"output","Package":"demo","Test":"TestAdd","Output":"--- PASS: TestAdd (0.00s)\n"}
+{"Time":"2026-06-18T16:27:27.071952627Z","Action":"pass","Package":"demo","Test":"TestAdd","Elapsed":0}
+{"Time":"2026-06-18T16:27:27.071956377Z","Action":"run","Package":"demo","Test":"TestAddZero"}
+{"Time":"2026-06-18T16:27:27.071957419Z","Action":"output","Package":"demo","Test":"TestAddZero","Output":"=== RUN   TestAddZero\n"}
+{"Time":"2026-06-18T16:27:27.071959085Z","Action":"output","Package":"demo","Test":"TestAddZero","Output":"--- PASS: TestAddZero (0.00s)\n"}
+{"Time":"2026-06-18T16:27:27.071960294Z","Action":"pass","Package":"demo","Test":"TestAddZero","Elapsed":0}
+{"Time":"2026-06-18T16:27:27.071961419Z","Action":"output","Package":"demo","Output":"PASS\n"}
+{"Time":"2026-06-18T16:27:27.072027169Z","Action":"output","Package":"demo","Output":"ok  \tdemo\t0.001s\n"}
+{"Time":"2026-06-18T16:27:27.072556255Z","Action":"pass","Package":"demo","Elapsed":0.002}

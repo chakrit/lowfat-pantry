@@ -1,9 +1,17 @@
 #!/usr/bin/env lowfat-filter
 # go-compact - keep Go diagnostics and test failures while dropping routine test noise.
 # env: $sub $level $exit $args
+#
+# `-json` is machine output — `go test -json` (ndjson), `go list -json`,
+# `go mod … -json`, `go vet -json`, `go build -json` (1.24+) — pass byte-exact
+# (invariant 1). Without the guard `go test -json` on a passing run collapses to
+# "go test: ok"; list/mod/* truncate the JSON. The guard repeats per compacting
+# rule because `.lf` has no top-level pre-filter.
 
 build:
     if exit failed:
+        raw
+    elif -json:
         raw
     else:
         match level:
@@ -12,7 +20,9 @@ build:
             lite:  head 80
 
 test:
-    if exit failed:
+    if -json:
+        raw
+    elif exit failed:
         match level:
             ultra:
                 keep /^(--- FAIL|FAIL|panic:|[[:space:]]+panic|[[:space:]]+.+\.go:[0-9]+:|[[:space:]]+Error Trace:|[[:space:]]+Error:|ok[[:space:]]|[?][[:space:]]|# )/
@@ -44,6 +54,8 @@ test:
 vet:
     if exit failed:
         raw
+    elif -json:
+        raw
     else:
         keep /^(.+\.go:[0-9]+:[0-9]+:|# )/
         head auto
@@ -51,6 +63,8 @@ vet:
 
 mod:
     if exit failed:
+        raw
+    elif -json:
         raw
     else:
         match level:
@@ -60,6 +74,8 @@ mod:
 
 *:
     if exit failed:
+        raw
+    elif -json:
         raw
     else:
         head auto

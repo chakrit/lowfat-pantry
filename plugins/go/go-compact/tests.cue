@@ -14,6 +14,9 @@ _cases: [
 	{sample: "samples/go-build-error.txt", sub: "build", args: "./cmd/api", exit: 1, levels: ["lite", "full", "ultra"]},
 	{sample: "samples/go-mod-download.txt", sub: "mod", args: "download", exit: 0, levels: ["lite", "full", "ultra"]},
 	{sample: "samples/go-test-pass.txt", sub: "test", args: "test -v ./...", exit: 0, levels: ["lite", "full", "ultra"]},
+	// invariant 1: -json is byte-exact machine output; the guard must pass it raw.
+	{sample: "samples/go-test-json.txt", sub: "test", args: "test -json ./...", exit: 0, levels: ["lite", "full", "ultra"]},
+	{sample: "samples/go-list-json.txt", sub: "list", args: "list -json ./...", exit: 0, levels: ["lite", "full", "ultra"]},
 ]
 
 config: {
