@@ -1,6 +1,10 @@
 #!/usr/bin/env lowfat-filter
 # pnpm-compact - keep pnpm summaries and diagnostics, trim progress.
 # env: $sub $level $exit $args
+#
+# `--json` (`pnpm ls`/`audit`/`outdated`/`licenses --json`) is machine output —
+# pass byte-exact (invariant 1). Without the guard `head auto` truncates it
+# (a 24-line `ls --json` lost 9 lines at ultra).
 
 define compact-pnpm-install(limit):
     drop /^Progress: /
@@ -11,6 +15,8 @@ define compact-pnpm-install(limit):
 
 install|i:
     if exit failed:
+        raw
+    elif --json:
         raw
     else:
         match level:
@@ -29,6 +35,8 @@ run|test:
 
 *:
     if exit failed:
+        raw
+    elif --json:
         raw
     else:
         head auto

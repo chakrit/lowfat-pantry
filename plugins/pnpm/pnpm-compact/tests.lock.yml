@@ -253,3 +253,129 @@
         - name: exitcode
           data:
             - "0"
+- name: plugins/pnpm/pnpm-compact/tests.cue \ pnpm-compact \ samples/pnpm-ls-json.txt lite
+  commands:
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=ls --args='ls --json --depth=Infinity' --exit=0 --level=lite < plugins/pnpm/pnpm-compact/samples/pnpm-ls-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '['
+            - '  {'
+            - '    "name": "demo",'
+            - '    "version": "1.0.0",'
+            - '    "path": "/work",'
+            - '    "private": false,'
+            - '    "dependencies": {'
+            - '      "is-odd": {'
+            - '        "from": "is-odd",'
+            - '        "version": "3.0.1",'
+            - '        "resolved": "https://registry.npmjs.org/is-odd/-/is-odd-3.0.1.tgz",'
+            - '        "path": "/work/node_modules/.pnpm/is-odd@3.0.1/node_modules/is-odd",'
+            - '        "dependencies": {'
+            - '          "is-number": {'
+            - '            "from": "is-number",'
+            - '            "version": "6.0.0",'
+            - '            "resolved": "https://registry.npmjs.org/is-number/-/is-number-6.0.0.tgz",'
+            - '            "path": "/work/node_modules/.pnpm/is-number@6.0.0/node_modules/is-number"'
+            - '          }'
+            - '        }'
+            - '      }'
+            - '    }'
+            - '  }'
+            - ']'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=ls --args='ls --json --depth=Infinity' --exit=0 --level=lite < plugins/pnpm/pnpm-compact/samples/pnpm-ls-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 24
+            - bytes 670
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/pnpm/pnpm-compact/tests.cue \ pnpm-compact \ samples/pnpm-ls-json.txt full
+  commands:
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=ls --args='ls --json --depth=Infinity' --exit=0 --level=full < plugins/pnpm/pnpm-compact/samples/pnpm-ls-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '['
+            - '  {'
+            - '    "name": "demo",'
+            - '    "version": "1.0.0",'
+            - '    "path": "/work",'
+            - '    "private": false,'
+            - '    "dependencies": {'
+            - '      "is-odd": {'
+            - '        "from": "is-odd",'
+            - '        "version": "3.0.1",'
+            - '        "resolved": "https://registry.npmjs.org/is-odd/-/is-odd-3.0.1.tgz",'
+            - '        "path": "/work/node_modules/.pnpm/is-odd@3.0.1/node_modules/is-odd",'
+            - '        "dependencies": {'
+            - '          "is-number": {'
+            - '            "from": "is-number",'
+            - '            "version": "6.0.0",'
+            - '            "resolved": "https://registry.npmjs.org/is-number/-/is-number-6.0.0.tgz",'
+            - '            "path": "/work/node_modules/.pnpm/is-number@6.0.0/node_modules/is-number"'
+            - '          }'
+            - '        }'
+            - '      }'
+            - '    }'
+            - '  }'
+            - ']'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=ls --args='ls --json --depth=Infinity' --exit=0 --level=full < plugins/pnpm/pnpm-compact/samples/pnpm-ls-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 24
+            - bytes 670
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/pnpm/pnpm-compact/tests.cue \ pnpm-compact \ samples/pnpm-ls-json.txt ultra
+  commands:
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=ls --args='ls --json --depth=Infinity' --exit=0 --level=ultra < plugins/pnpm/pnpm-compact/samples/pnpm-ls-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '['
+            - '  {'
+            - '    "name": "demo",'
+            - '    "version": "1.0.0",'
+            - '    "path": "/work",'
+            - '    "private": false,'
+            - '    "dependencies": {'
+            - '      "is-odd": {'
+            - '        "from": "is-odd",'
+            - '        "version": "3.0.1",'
+            - '        "resolved": "https://registry.npmjs.org/is-odd/-/is-odd-3.0.1.tgz",'
+            - '        "path": "/work/node_modules/.pnpm/is-odd@3.0.1/node_modules/is-odd",'
+            - '        "dependencies": {'
+            - '          "is-number": {'
+            - '            "from": "is-number",'
+            - '            "version": "6.0.0",'
+            - '            "resolved": "https://registry.npmjs.org/is-number/-/is-number-6.0.0.tgz",'
+            - '            "path": "/work/node_modules/.pnpm/is-number@6.0.0/node_modules/is-number"'
+            - '          }'
+            - '        }'
+            - '      }'
+            - '    }'
+            - '  }'
+            - ']'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=ls --args='ls --json --depth=Infinity' --exit=0 --level=ultra < plugins/pnpm/pnpm-compact/samples/pnpm-ls-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 24
+            - bytes 670
+        - name: exitcode
+          data:
+            - "0"
