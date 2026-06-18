@@ -32,7 +32,9 @@ tests: [{
 	tests: [
 		for c in _cases for l in c.levels {
 			let base = "lowfat filter \(_dir)/filter.lf --sub=\(c.sub) --args='\(c.args)' --exit=\(c.exit) --level=\(l) < \(_dir)/\(c.sample)"
-			name: "\(c.sample) \(l)"
+			// include sub+args: two cases reuse redis-cli-info.txt (info vs INFO),
+			// so sample+level alone collides — a duplicate test name (smoke exit 65).
+			name: "\(c.sample) \(c.sub) \(c.args) \(l)"
 			commands: [base, "\(base) | scripts/measure.py"]
 		},
 	]
