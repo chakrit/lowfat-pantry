@@ -19,6 +19,9 @@ _cases: [
 	{sample: "samples/pulumi-stack.txt", sub: "stack", args: "stack", exit: 0, levels: ["full", "ultra"]},
 	{sample: "samples/pulumi-stack-ls.txt", sub: "stack", args: "stack ls", exit: 0, levels: ["full"]},
 	{sample: "samples/pulumi-stack-output.txt", sub: "stack", args: "stack output", exit: 0, levels: ["full", "ultra"]},
+	// invariant 1: --json is byte-exact multi-line JSON; the guard must pass it raw.
+	{sample: "samples/pulumi-preview-json.txt", sub: "preview", args: "preview --json", exit: 0, levels: ["lite", "full", "ultra"]},
+	{sample: "samples/pulumi-stack-output-json.txt", sub: "stack", args: "stack output --json", exit: 0, levels: ["lite", "full", "ultra"]},
 ]
 
 config: {

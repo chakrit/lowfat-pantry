@@ -696,3 +696,315 @@
         - name: exitcode
           data:
             - "0"
+- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-preview-json.txt lite
+  commands:
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=preview --args='preview --json' --exit=0 --level=lite < plugins/pulumi/pulumi-compact/samples/pulumi-preview-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{'
+            - '    "steps": ['
+            - '        {'
+            - '            "op": "create",'
+            - '            "urn": "urn:pulumi:dev::demo::pulumi:pulumi:Stack::demo-dev",'
+            - '            "newState": {'
+            - '                "urn": "urn:pulumi:dev::demo::pulumi:pulumi:Stack::demo-dev",'
+            - '                "custom": false,'
+            - '                "type": "pulumi:pulumi:Stack",'
+            - '                "sourcePosition": "project:///../../home/runner/work/pulumi-yaml/pulumi-yaml/pkg/server/server.go#306",'
+            - '                "stackTrace": ['
+            - '                    {'
+            - '                        "sourcePosition": "project:///../../home/runner/work/pulumi-yaml/pulumi-yaml/pkg/server/server.go#306"'
+            - '                    },'
+            - '                    {'
+            - '                        "sourcePosition": "project:///../../home/runner/go/pkg/mod/github.com/pulumi/pulumi/sdk/v3@v3.245.0/proto/go/language_grpc.pb.go#588"'
+            - '                    },'
+            - '                    {'
+            - '                        "sourcePosition": "project:///../../home/runner/go/pkg/mod/github.com/pulumi/pulumi/sdk/v3@v3.245.0/go/common/util/rpcutil/interceptor.go#301"'
+            - '                    },'
+            - '                    {'
+            - '                        "sourcePosition": "project:///../../home/runner/go/pkg/mod/google.golang.org/grpc@v1.81.1/server.go#1243"'
+            - '                    },'
+            - '                    {'
+            - '                        "sourcePosition": "project:///../../home/runner/go/pkg/mod/github.com/grpc-ecosystem/grpc-opentracing@v0.0.0-20180507213350-8e809c8a8645/go/otgrpc/server.go#57"'
+            - '                    },'
+            - '                    {'
+            - '                        "sourcePosition": "project:///../../home/runner/go/pkg/mod/google.golang.org/grpc@v1.81.1/server.go#1243"'
+            - '                    },'
+            - '                    {'
+            - '                        "sourcePosition": "project:///../../home/runner/go/pkg/mod/github.com/pulumi/pulumi/sdk/v3@v3.245.0/go/common/util/rpcutil/interceptor.go#228"'
+            - '                    },'
+            - '                    {'
+            - '                        "sourcePosition": "project:///../../home/runner/go/pkg/mod/google.golang.org/grpc@v1.81.1/server.go#1234"'
+            - '                    },'
+            - '                    {'
+            - '                        "sourcePosition": "project:///../../home/runner/go/pkg/mod/github.com/pulumi/pulumi/sdk/v3@v3.245.0/proto/go/language_grpc.pb.go#590"'
+            - '                    },'
+            - '                    {'
+            - '                        "sourcePosition": "project:///../../home/runner/go/pkg/mod/google.golang.org/grpc@v1.81.1/server.go#1430"'
+            - '                    },'
+            - '                    {'
+            - '                        "sourcePosition": "project:///../../home/runner/go/pkg/mod/google.golang.org/grpc@v1.81.1/server.go#1856"'
+            - '                    },'
+            - '                    {'
+            - '                        "sourcePosition": "project:///../../home/runner/go/pkg/mod/google.golang.org/grpc@v1.81.1/server.go#1065"'
+            - '                    },'
+            - '                    {'
+            - '                        "sourcePosition": "project:///../../opt/hostedtoolcache/go/1.25.9/x64/src/runtime/asm_arm64.s#1268"'
+            - '                    }'
+            - '                ]'
+            - '            },'
+            - '            "detailedDiff": null'
+            - '        }'
+            - '    ],'
+            - '    "duration": 5689413,'
+            - '    "changeSummary": {'
+            - '        "create": 1'
+            - '    }'
+            - '}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=preview --args='preview --json' --exit=0 --level=lite < plugins/pulumi/pulumi-compact/samples/pulumi-preview-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 60
+            - bytes 3074
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-preview-json.txt full
+  commands:
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=preview --args='preview --json' --exit=0 --level=full < plugins/pulumi/pulumi-compact/samples/pulumi-preview-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{'
+            - '    "steps": ['
+            - '        {'
+            - '            "op": "create",'
+            - '            "urn": "urn:pulumi:dev::demo::pulumi:pulumi:Stack::demo-dev",'
+            - '            "newState": {'
+            - '                "urn": "urn:pulumi:dev::demo::pulumi:pulumi:Stack::demo-dev",'
+            - '                "custom": false,'
+            - '                "type": "pulumi:pulumi:Stack",'
+            - '                "sourcePosition": "project:///../../home/runner/work/pulumi-yaml/pulumi-yaml/pkg/server/server.go#306",'
+            - '                "stackTrace": ['
+            - '                    {'
+            - '                        "sourcePosition": "project:///../../home/runner/work/pulumi-yaml/pulumi-yaml/pkg/server/server.go#306"'
+            - '                    },'
+            - '                    {'
+            - '                        "sourcePosition": "project:///../../home/runner/go/pkg/mod/github.com/pulumi/pulumi/sdk/v3@v3.245.0/proto/go/language_grpc.pb.go#588"'
+            - '                    },'
+            - '                    {'
+            - '                        "sourcePosition": "project:///../../home/runner/go/pkg/mod/github.com/pulumi/pulumi/sdk/v3@v3.245.0/go/common/util/rpcutil/interceptor.go#301"'
+            - '                    },'
+            - '                    {'
+            - '                        "sourcePosition": "project:///../../home/runner/go/pkg/mod/google.golang.org/grpc@v1.81.1/server.go#1243"'
+            - '                    },'
+            - '                    {'
+            - '                        "sourcePosition": "project:///../../home/runner/go/pkg/mod/github.com/grpc-ecosystem/grpc-opentracing@v0.0.0-20180507213350-8e809c8a8645/go/otgrpc/server.go#57"'
+            - '                    },'
+            - '                    {'
+            - '                        "sourcePosition": "project:///../../home/runner/go/pkg/mod/google.golang.org/grpc@v1.81.1/server.go#1243"'
+            - '                    },'
+            - '                    {'
+            - '                        "sourcePosition": "project:///../../home/runner/go/pkg/mod/github.com/pulumi/pulumi/sdk/v3@v3.245.0/go/common/util/rpcutil/interceptor.go#228"'
+            - '                    },'
+            - '                    {'
+            - '                        "sourcePosition": "project:///../../home/runner/go/pkg/mod/google.golang.org/grpc@v1.81.1/server.go#1234"'
+            - '                    },'
+            - '                    {'
+            - '                        "sourcePosition": "project:///../../home/runner/go/pkg/mod/github.com/pulumi/pulumi/sdk/v3@v3.245.0/proto/go/language_grpc.pb.go#590"'
+            - '                    },'
+            - '                    {'
+            - '                        "sourcePosition": "project:///../../home/runner/go/pkg/mod/google.golang.org/grpc@v1.81.1/server.go#1430"'
+            - '                    },'
+            - '                    {'
+            - '                        "sourcePosition": "project:///../../home/runner/go/pkg/mod/google.golang.org/grpc@v1.81.1/server.go#1856"'
+            - '                    },'
+            - '                    {'
+            - '                        "sourcePosition": "project:///../../home/runner/go/pkg/mod/google.golang.org/grpc@v1.81.1/server.go#1065"'
+            - '                    },'
+            - '                    {'
+            - '                        "sourcePosition": "project:///../../opt/hostedtoolcache/go/1.25.9/x64/src/runtime/asm_arm64.s#1268"'
+            - '                    }'
+            - '                ]'
+            - '            },'
+            - '            "detailedDiff": null'
+            - '        }'
+            - '    ],'
+            - '    "duration": 5689413,'
+            - '    "changeSummary": {'
+            - '        "create": 1'
+            - '    }'
+            - '}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=preview --args='preview --json' --exit=0 --level=full < plugins/pulumi/pulumi-compact/samples/pulumi-preview-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 60
+            - bytes 3074
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-preview-json.txt ultra
+  commands:
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=preview --args='preview --json' --exit=0 --level=ultra < plugins/pulumi/pulumi-compact/samples/pulumi-preview-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{'
+            - '    "steps": ['
+            - '        {'
+            - '            "op": "create",'
+            - '            "urn": "urn:pulumi:dev::demo::pulumi:pulumi:Stack::demo-dev",'
+            - '            "newState": {'
+            - '                "urn": "urn:pulumi:dev::demo::pulumi:pulumi:Stack::demo-dev",'
+            - '                "custom": false,'
+            - '                "type": "pulumi:pulumi:Stack",'
+            - '                "sourcePosition": "project:///../../home/runner/work/pulumi-yaml/pulumi-yaml/pkg/server/server.go#306",'
+            - '                "stackTrace": ['
+            - '                    {'
+            - '                        "sourcePosition": "project:///../../home/runner/work/pulumi-yaml/pulumi-yaml/pkg/server/server.go#306"'
+            - '                    },'
+            - '                    {'
+            - '                        "sourcePosition": "project:///../../home/runner/go/pkg/mod/github.com/pulumi/pulumi/sdk/v3@v3.245.0/proto/go/language_grpc.pb.go#588"'
+            - '                    },'
+            - '                    {'
+            - '                        "sourcePosition": "project:///../../home/runner/go/pkg/mod/github.com/pulumi/pulumi/sdk/v3@v3.245.0/go/common/util/rpcutil/interceptor.go#301"'
+            - '                    },'
+            - '                    {'
+            - '                        "sourcePosition": "project:///../../home/runner/go/pkg/mod/google.golang.org/grpc@v1.81.1/server.go#1243"'
+            - '                    },'
+            - '                    {'
+            - '                        "sourcePosition": "project:///../../home/runner/go/pkg/mod/github.com/grpc-ecosystem/grpc-opentracing@v0.0.0-20180507213350-8e809c8a8645/go/otgrpc/server.go#57"'
+            - '                    },'
+            - '                    {'
+            - '                        "sourcePosition": "project:///../../home/runner/go/pkg/mod/google.golang.org/grpc@v1.81.1/server.go#1243"'
+            - '                    },'
+            - '                    {'
+            - '                        "sourcePosition": "project:///../../home/runner/go/pkg/mod/github.com/pulumi/pulumi/sdk/v3@v3.245.0/go/common/util/rpcutil/interceptor.go#228"'
+            - '                    },'
+            - '                    {'
+            - '                        "sourcePosition": "project:///../../home/runner/go/pkg/mod/google.golang.org/grpc@v1.81.1/server.go#1234"'
+            - '                    },'
+            - '                    {'
+            - '                        "sourcePosition": "project:///../../home/runner/go/pkg/mod/github.com/pulumi/pulumi/sdk/v3@v3.245.0/proto/go/language_grpc.pb.go#590"'
+            - '                    },'
+            - '                    {'
+            - '                        "sourcePosition": "project:///../../home/runner/go/pkg/mod/google.golang.org/grpc@v1.81.1/server.go#1430"'
+            - '                    },'
+            - '                    {'
+            - '                        "sourcePosition": "project:///../../home/runner/go/pkg/mod/google.golang.org/grpc@v1.81.1/server.go#1856"'
+            - '                    },'
+            - '                    {'
+            - '                        "sourcePosition": "project:///../../home/runner/go/pkg/mod/google.golang.org/grpc@v1.81.1/server.go#1065"'
+            - '                    },'
+            - '                    {'
+            - '                        "sourcePosition": "project:///../../opt/hostedtoolcache/go/1.25.9/x64/src/runtime/asm_arm64.s#1268"'
+            - '                    }'
+            - '                ]'
+            - '            },'
+            - '            "detailedDiff": null'
+            - '        }'
+            - '    ],'
+            - '    "duration": 5689413,'
+            - '    "changeSummary": {'
+            - '        "create": 1'
+            - '    }'
+            - '}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=preview --args='preview --json' --exit=0 --level=ultra < plugins/pulumi/pulumi-compact/samples/pulumi-preview-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 60
+            - bytes 3074
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-stack-output-json.txt lite
+  commands:
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=stack --args='stack output --json' --exit=0 --level=lite < plugins/pulumi/pulumi-compact/samples/pulumi-stack-output-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{'
+            - '  "endpoints": ['
+            - '    "api.example.com",'
+            - '    "web.example.com"'
+            - '  ],'
+            - '  "greeting": "hello from pulumi",'
+            - '  "replicas": 3'
+            - '}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=stack --args='stack output --json' --exit=0 --level=lite < plugins/pulumi/pulumi-compact/samples/pulumi-stack-output-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 8
+            - bytes 122
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-stack-output-json.txt full
+  commands:
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=stack --args='stack output --json' --exit=0 --level=full < plugins/pulumi/pulumi-compact/samples/pulumi-stack-output-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{'
+            - '  "endpoints": ['
+            - '    "api.example.com",'
+            - '    "web.example.com"'
+            - '  ],'
+            - '  "greeting": "hello from pulumi",'
+            - '  "replicas": 3'
+            - '}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=stack --args='stack output --json' --exit=0 --level=full < plugins/pulumi/pulumi-compact/samples/pulumi-stack-output-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 8
+            - bytes 122
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-stack-output-json.txt ultra
+  commands:
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=stack --args='stack output --json' --exit=0 --level=ultra < plugins/pulumi/pulumi-compact/samples/pulumi-stack-output-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{'
+            - '  "endpoints": ['
+            - '    "api.example.com",'
+            - '    "web.example.com"'
+            - '  ],'
+            - '  "greeting": "hello from pulumi",'
+            - '  "replicas": 3'
+            - '}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=stack --args='stack output --json' --exit=0 --level=ultra < plugins/pulumi/pulumi-compact/samples/pulumi-stack-output-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 8
+            - bytes 122
+        - name: exitcode
+          data:
+            - "0"

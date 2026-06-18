@@ -4,29 +4,41 @@
 # of the stream — and `up` emits two Resources: sections (preview phase, then
 # update phase) — so compaction is tail-anchored, never head-anchored. Errors
 # surface in Diagnostics even on exit 1, so no raw-on-failure branch is needed.
+#
+# `--json` is machine output (multi-line JSON) — pass byte-exact (invariant 1).
+# Without the guard the tail-cap truncates it into corrupt JSON. The guard
+# repeats per compacting rule because `.lf` has no top-level pre-filter.
 
 define drop-spinner-noise:
     drop /^@ /
     drop /^(Downloading|Installing) plugin /
 
 up|preview|destroy|refresh, ultra:
-    drop-spinner-noise
-    # all per-resource lines (plan + progress + completed): " +  ", " -- ", " ~  "...
-    drop /^ [-+~]{1,2} /
-    drop /^$/
-    tail 15
-    or-shell: tail -15
+    if --json:
+        raw
+    else:
+        drop-spinner-noise
+        # all per-resource lines (plan + progress + completed): " +  ", " -- ", " ~  "...
+        drop /^ [-+~]{1,2} /
+        drop /^$/
+        tail 15
+        or-shell: tail -15
 
 up|preview|destroy|refresh:
-    drop-spinner-noise
-    # in-progress lines duplicate their completed counterparts; "running" lines
-    # duplicate the Diagnostics block
-    drop / (creating|deleting|updating|replacing|refreshing|reading) /
-    drop / running /
-    tail auto
+    if --json:
+        raw
+    else:
+        drop-spinner-noise
+        # in-progress lines duplicate their completed counterparts; "running" lines
+        # duplicate the Diagnostics block
+        drop / (creating|deleting|updating|replacing|refreshing|reading) /
+        drop / running /
+        tail auto
 
 *:
     if exit failed:
+        raw
+    elif --json:
         raw
     else:
         head auto

@@ -1,0 +1,8 @@
+{
+  "endpoints": [
+    "api.example.com",
+    "web.example.com"
+  ],
+  "greeting": "hello from pulumi",
+  "replicas": 3
+}
