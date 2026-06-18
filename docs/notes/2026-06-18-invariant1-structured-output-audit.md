@@ -33,11 +33,11 @@ the noted level. "Effect" is what the agent receives instead of the bytes.
 | kubectl        | `-o json` / `-o yaml` | `get`/`describe` awk shreds to ~3 lines         | **FIXED** (this session) |
 | pip            | `--format json` @ultra | `keep`+`or` → replaced with `pip: ok`         | **FIXED** (this session, real golden) |
 | npm            | `--json`            | small survives via `or-shell: tail`; large truncates | **FIXED** (this session, real golden) |
-| terraform      | `-json`             | `compact-plan` matches nothing → **empty output** | open          |
-| helm           | `-o json` / `-o yaml` | `helm-table` awk collapses whitespace (byte-mangle) | open          |
-| golangci-lint  | `--out-format json` | `head 3` (clean) / `head N` truncates the JSON   | open          |
-| pulumi         | `--json`            | `*`→`head auto` / up-rules tail-cap → truncates large | open          |
-| dotnet         | `list ... --format json` | `*`→`head auto` truncates large list JSON     | open (pre-existing) |
+| terraform      | `-json`             | `compact-plan` matches nothing → **empty output** | **FIXED** (real golden) |
+| helm           | `-o json` / `-o yaml` | `helm-table` awk collapses whitespace (byte-mangle) | **FIXED** (real golden) |
+| golangci-lint  | `--output.json.path` (v2) | latent: routed through keep/head, survives by or-shell fallback (see below) | **FIXED** (real golden) |
+| pulumi         | `--json`            | `*`→`head auto` / up-rules tail-cap → truncates large | **FIXED** (real golden) |
+| dotnet         | `list ... --format json` | `*`→`head auto` truncates large list JSON     | **FIXED** (real golden) |
 
 mvn/gradlew have no common JSON stdout mode (build logs only) — not affected.
 
@@ -80,12 +80,30 @@ so all locks stay UNCHANGED — and verified):
   the already-present `python:3.12-slim` / `node:22` images (no new pulls), so
   the raw path is locked and a future narrowing of the guard surfaces as drift.
 
-Left open (need live infra to capture a golden, so deferred rather than shipping
-guard-without-test): **terraform** (tf project + provider), **helm** (cluster),
-**pulumi** (cloud creds), **golangci-lint** (go image + a project with lint
-issues — capturable but not with a present image), **dotnet** `list --format
-json` (SDK image; pre-existing catch-all).
+**The five open plugins were all fixed attended (2026-06-18, AFK), each with a
+real golden** — no guard shipped without a test:
 
-**Recommended next (attended):** apply the fix pattern to the five open plugins,
-capturing a real structured sample per plugin to lock the raw-path golden. The
-guard itself is mechanical (copy aws/az); the cost is the sample capture.
+- **terraform** `-json` — `hashicorp/terraform`, provider-free outputs config:
+  `plan -json` (ndjson) + `output -json`. Guarded plan/apply/init/*.
+- **helm** `-o json`/`-o yaml` (+ `--output` long form) — `alpine/helm` via
+  `install --dry-run=client` (no cluster), minimal chart. Guarded
+  install|upgrade|status, list, *. The list rule's guard is mechanical (its
+  `-o json` needs a live cluster) — zero-drift, same posture as kubectl.
+- **dotnet** `list --format json` — `mcr.microsoft.com/dotnet/sdk:8.0`, console
+  project + NuGet packages. Guarded the `*` arm.
+- **golangci-lint** — the original premise (line-based JSON truncation) was a v1
+  mental model. v2.12 emits **single-line** compact JSON via
+  `--output.json.path`; line caps never truncate it and at ultra the or-shell
+  fallback restores it, so there's no *active* corruption. But the filter still
+  routed structured output *through* keep/head — surviving only by that
+  accidental fallback, which invariant 1 forbids ("must pass raw, never
+  keep/head"). Guarded `--output.json.path` (v2) + legacy `--out-format` (v1) to
+  the raw path **by design**. Real golden from `golangci-lint:latest` (v2.12.2).
+  Residual machine formats (`--output.{sarif,checkstyle,code-climate,junit-xml,
+  html,teamcity}.path`) noted in the filter header — raw too, when demanded.
+- **pulumi** `--json` — `pulumi/pulumi-base`, local backend + yaml-runtime
+  program (no cloud creds): `preview --json` (60-line step stream) +
+  `stack output --json`. Guarded both up|preview|destroy|refresh rules and *.
+
+All 57 plugins' smoke goldens stay UNCHANGED (`scripts/test.sh` green); every new
+case locks the raw path, so a future narrowing of any guard surfaces as drift.
