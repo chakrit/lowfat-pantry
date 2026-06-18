@@ -4,11 +4,13 @@
 # progress dots and timing chatter.
 # env: $sub $level $exit $args
 
-# --format json / -f json is machine output — pass byte-exact (invariant 1).
+# Any explicit --format/-f (json, html, junit, a custom formatter class) is
+# caller-chosen machine output — pass byte-exact (invariant 1). The default
+# progress format (no flag) is the common case and still compacts below.
 *:
-    if --format json:
+    if --format:
         raw
-    elif -f json:
+    elif -f:
         raw
     elif exit ok:
         keep /examples?, \d+ failures?/

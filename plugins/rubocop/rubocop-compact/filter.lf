@@ -28,11 +28,13 @@ define compact-rubocop(limit):
           }
         '
 
-# --format json / -f json is machine output — pass byte-exact (invariant 1).
+# Any explicit --format/-f (json, junit, sarif, …) is caller-chosen machine
+# output — pass byte-exact (invariant 1). The awk extraction only ever fit the
+# default offense format; the default (no flag) is the common case below.
 *:
-    if --format json:
+    if --format:
         raw
-    elif -f json:
+    elif -f:
         raw
     else:
         match level:

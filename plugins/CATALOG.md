@@ -83,12 +83,14 @@ plugins (git, docker, grep, find, ls, tree) are not listed here.
   on failure keeps the `Failures:` section, the rerun list and the summary, dropping the
   progress dots and `Finished in` timing. Ultra trims to failure titles + `Failure/Error`
   lines + tally + rerun. Load errors (no `Failures:` header) are kept via their
-  `LoadError`/`An error occurred` markers.
+  `LoadError`/`An error occurred` markers. Any explicit `--format`/`-f` (json, html, a
+  custom formatter) passes byte-exact — only the default progress format is compacted.
 - **rubocop** — keeps offense lines (`path:line:col: S: Cop: msg`) and the inspected/
   offenses tally; drops the source-frame + caret pair under each offense and the
   `SuggestExtensions` "Tip:" block. Clean run → `rubocop: clean`. Gotcha: exit 2 with no
   offense lines (bad path) falls back to raw so the diagnostic survives — exit code alone
-  isn't trusted.
+  isn't trusted. Any explicit `--format`/`-f` (json, junit, sarif) passes byte-exact — the
+  extraction only fits the default offense format.
 - **bundle** (also `bundler`) — `install`/`update` collapse Fetching/Resolving chatter to
   the `Bundle complete!` verdict (ultra) or the `Installing` state lines (full); a failed
   resolve drops the giant `* gem-x.y.z` "matching gems" version dump but keeps the
