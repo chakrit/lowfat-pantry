@@ -13,6 +13,8 @@ _cases: [
 	{sample: "samples/golangci-issues.txt", sub: "run", args: "run ./...", exit: 1, levels: ["lite", "full", "ultra"]},
 	{sample: "samples/golangci-clean.txt", sub: "run", args: "run ./...", exit: 0, levels: ["lite", "full", "ultra"]},
 	{sample: "samples/golangci-configerr.txt", sub: "run", args: "run ./...", exit: 3, levels: ["lite", "full", "ultra"]},
+	// invariant 1: v2 --output.json.path is machine output; the guard must pass it raw.
+	{sample: "samples/golangci-json.txt", sub: "run", args: "run --output.json.path stdout ./...", exit: 1, levels: ["lite", "full", "ultra"]},
 ]
 
 config: {

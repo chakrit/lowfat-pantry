@@ -8,9 +8,20 @@
 # exit: 0 = clean, 1 = issues found, other = config/run error.
 # On a config error the keep-filter would empty the stream, so `or-shell: head`
 # falls back to the raw head — the error is never hidden.
+#
+# `--output.json.path` (v2) / `--out-format` (v1) select machine output — pass
+# byte-exact (invariant 1). v2 JSON is single-line, so the line-based caps don't
+# truncate it today, but routing structured output through keep/head survives
+# only by the or-shell fallback; the guard takes the raw path by design instead.
+# Residual (raw too, when demanded): v2 --output.{sarif,checkstyle,code-climate,
+# junit-xml,html,teamcity}.path.
 
 *:
-    if exit ok:
+    if --output.json.path:
+        raw
+    elif --out-format:
+        raw
+    elif exit ok:
         head 3
         or "golangci-lint: clean"
     else:
