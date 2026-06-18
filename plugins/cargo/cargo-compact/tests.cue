@@ -13,6 +13,9 @@ _cases: [
 	{sample: "samples/cargo-build-full.txt", sub: "build", args: "", exit: 0, levels: ["lite", "full", "ultra"]},
 	{sample: "samples/cargo-build-error.txt", sub: "build", args: "", exit: 101, levels: ["lite", "full", "ultra"]},
 	{sample: "samples/cargo-test-error.txt", sub: "test", args: "", exit: 101, levels: ["lite", "full", "ultra"]},
+	// invariant 1: --message-format json (ndjson) and metadata (JSON) pass raw.
+	{sample: "samples/cargo-build-json.txt", sub: "build", args: "build --message-format json", exit: 0, levels: ["lite", "full", "ultra"]},
+	{sample: "samples/cargo-metadata-json.txt", sub: "metadata", args: "metadata --format-version 1", exit: 0, levels: ["lite", "full", "ultra"]},
 ]
 
 config: {

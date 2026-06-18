@@ -1,0 +1,2 @@
+{"reason":"compiler-artifact","package_id":"path+file:///work#demo@0.1.0","manifest_path":"/work/Cargo.toml","target":{"kind":["bin"],"crate_types":["bin"],"name":"demo","src_path":"/work/src/main.rs","edition":"2021","doc":true,"doctest":false,"test":true},"profile":{"opt_level":"0","debuginfo":2,"debug_assertions":true,"overflow_checks":true,"test":false},"features":[],"filenames":["/work/target/debug/demo"],"executable":"/work/target/debug/demo","fresh":true}
+{"reason":"build-finished","success":true}

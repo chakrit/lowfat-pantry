@@ -273,3 +273,120 @@
         - name: exitcode
           data:
             - "0"
+- name: plugins/cargo/cargo-compact/tests.cue \ cargo-compact \ samples/cargo-build-json.txt lite
+  commands:
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=build --args='build --message-format json' --exit=0 --level=lite < plugins/cargo/cargo-compact/samples/cargo-build-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{"reason":"compiler-artifact","package_id":"path+file:///work#demo@0.1.0","manifest_path":"/work/Cargo.toml","target":{"kind":["bin"],"crate_types":["bin"],"name":"demo","src_path":"/work/src/main.rs","edition":"2021","doc":true,"doctest":false,"test":true},"profile":{"opt_level":"0","debuginfo":2,"debug_assertions":true,"overflow_checks":true,"test":false},"features":[],"filenames":["/work/target/debug/demo"],"executable":"/work/target/debug/demo","fresh":true}'
+            - '{"reason":"build-finished","success":true}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=build --args='build --message-format json' --exit=0 --level=lite < plugins/cargo/cargo-compact/samples/cargo-build-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 2
+            - bytes 510
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/cargo/cargo-compact/tests.cue \ cargo-compact \ samples/cargo-build-json.txt full
+  commands:
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=build --args='build --message-format json' --exit=0 --level=full < plugins/cargo/cargo-compact/samples/cargo-build-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{"reason":"compiler-artifact","package_id":"path+file:///work#demo@0.1.0","manifest_path":"/work/Cargo.toml","target":{"kind":["bin"],"crate_types":["bin"],"name":"demo","src_path":"/work/src/main.rs","edition":"2021","doc":true,"doctest":false,"test":true},"profile":{"opt_level":"0","debuginfo":2,"debug_assertions":true,"overflow_checks":true,"test":false},"features":[],"filenames":["/work/target/debug/demo"],"executable":"/work/target/debug/demo","fresh":true}'
+            - '{"reason":"build-finished","success":true}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=build --args='build --message-format json' --exit=0 --level=full < plugins/cargo/cargo-compact/samples/cargo-build-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 2
+            - bytes 510
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/cargo/cargo-compact/tests.cue \ cargo-compact \ samples/cargo-build-json.txt ultra
+  commands:
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=build --args='build --message-format json' --exit=0 --level=ultra < plugins/cargo/cargo-compact/samples/cargo-build-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{"reason":"compiler-artifact","package_id":"path+file:///work#demo@0.1.0","manifest_path":"/work/Cargo.toml","target":{"kind":["bin"],"crate_types":["bin"],"name":"demo","src_path":"/work/src/main.rs","edition":"2021","doc":true,"doctest":false,"test":true},"profile":{"opt_level":"0","debuginfo":2,"debug_assertions":true,"overflow_checks":true,"test":false},"features":[],"filenames":["/work/target/debug/demo"],"executable":"/work/target/debug/demo","fresh":true}'
+            - '{"reason":"build-finished","success":true}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=build --args='build --message-format json' --exit=0 --level=ultra < plugins/cargo/cargo-compact/samples/cargo-build-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 2
+            - bytes 510
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/cargo/cargo-compact/tests.cue \ cargo-compact \ samples/cargo-metadata-json.txt lite
+  commands:
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=metadata --args='metadata --format-version 1' --exit=0 --level=lite < plugins/cargo/cargo-compact/samples/cargo-metadata-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{"packages":[{"name":"demo","version":"0.1.0","id":"path+file:///work#demo@0.1.0","license":null,"license_file":null,"description":null,"source":null,"dependencies":[],"targets":[{"kind":["bin"],"crate_types":["bin"],"name":"demo","src_path":"/work/src/main.rs","edition":"2021","doc":true,"doctest":false,"test":true}],"features":{},"manifest_path":"/work/Cargo.toml","metadata":null,"publish":null,"authors":[],"categories":[],"keywords":[],"readme":null,"repository":null,"homepage":null,"documentation":null,"edition":"2021","links":null,"default_run":null,"rust_version":null}],"workspace_members":["path+file:///work#demo@0.1.0"],"workspace_default_members":["path+file:///work#demo@0.1.0"],"resolve":null,"target_directory":"/work/target","build_directory":"/work/target","version":1,"workspace_root":"/work","metadata":null}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=metadata --args='metadata --format-version 1' --exit=0 --level=lite < plugins/cargo/cargo-compact/samples/cargo-metadata-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 833
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/cargo/cargo-compact/tests.cue \ cargo-compact \ samples/cargo-metadata-json.txt full
+  commands:
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=metadata --args='metadata --format-version 1' --exit=0 --level=full < plugins/cargo/cargo-compact/samples/cargo-metadata-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{"packages":[{"name":"demo","version":"0.1.0","id":"path+file:///work#demo@0.1.0","license":null,"license_file":null,"description":null,"source":null,"dependencies":[],"targets":[{"kind":["bin"],"crate_types":["bin"],"name":"demo","src_path":"/work/src/main.rs","edition":"2021","doc":true,"doctest":false,"test":true}],"features":{},"manifest_path":"/work/Cargo.toml","metadata":null,"publish":null,"authors":[],"categories":[],"keywords":[],"readme":null,"repository":null,"homepage":null,"documentation":null,"edition":"2021","links":null,"default_run":null,"rust_version":null}],"workspace_members":["path+file:///work#demo@0.1.0"],"workspace_default_members":["path+file:///work#demo@0.1.0"],"resolve":null,"target_directory":"/work/target","build_directory":"/work/target","version":1,"workspace_root":"/work","metadata":null}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=metadata --args='metadata --format-version 1' --exit=0 --level=full < plugins/cargo/cargo-compact/samples/cargo-metadata-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 833
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/cargo/cargo-compact/tests.cue \ cargo-compact \ samples/cargo-metadata-json.txt ultra
+  commands:
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=metadata --args='metadata --format-version 1' --exit=0 --level=ultra < plugins/cargo/cargo-compact/samples/cargo-metadata-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{"packages":[{"name":"demo","version":"0.1.0","id":"path+file:///work#demo@0.1.0","license":null,"license_file":null,"description":null,"source":null,"dependencies":[],"targets":[{"kind":["bin"],"crate_types":["bin"],"name":"demo","src_path":"/work/src/main.rs","edition":"2021","doc":true,"doctest":false,"test":true}],"features":{},"manifest_path":"/work/Cargo.toml","metadata":null,"publish":null,"authors":[],"categories":[],"keywords":[],"readme":null,"repository":null,"homepage":null,"documentation":null,"edition":"2021","links":null,"default_run":null,"rust_version":null}],"workspace_members":["path+file:///work#demo@0.1.0"],"workspace_default_members":["path+file:///work#demo@0.1.0"],"resolve":null,"target_directory":"/work/target","build_directory":"/work/target","version":1,"workspace_root":"/work","metadata":null}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=metadata --args='metadata --format-version 1' --exit=0 --level=ultra < plugins/cargo/cargo-compact/samples/cargo-metadata-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 833
+        - name: exitcode
+          data:
+            - "0"

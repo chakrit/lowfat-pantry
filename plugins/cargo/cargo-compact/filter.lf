@@ -12,38 +12,50 @@
 # NOTE: a rule body is either a flat pipeline OR a cascade — you can't run a
 # flat op and then a `match`. So the shared `drop-progress` macro is invoked
 # inside each arm, not once before the match.
+#
+# `--message-format json` is machine output (ndjson) — pass byte-exact
+# (invariant 1). Without the guard a `cargo build --message-format json` run
+# collapses to "cargo: ok". Guard the json value (so `--message-format short`
+# /`human` still compact); the `json-diagnostic-*` variants are residual. The
+# `metadata` subcommand always emits JSON, so it raws unconditionally.
 
 define drop-progress:
     drop /^[[:space:]]*(Compiling|Checking|Downloading|Downloaded|Updating|Adding|Locking|Blocking|Waiting|Installing|Removing|Fresh|Ignored|Packaging|Verifying|Uploading) /
 
 # ── build / check / clippy — keep diagnostics, drop crate progress ────────
 build|check|clippy:
-    match level:
-        ultra:
-            drop-progress
-            keep /^(error|warning|[[:space:]]*-->|[[:space:]]*Finished|[[:space:]]*help:|[[:space:]]*note:|[[:space:]]*=|Some errors|For more information|[0-9]+ (error|warning))/
-            head 25
-            or "cargo: ok"
-        lite:
-            drop-progress
-            head 200
-        else:
-            drop-progress
-            head 60
+    if --message-format json:
+        raw
+    else:
+        match level:
+            ultra:
+                drop-progress
+                keep /^(error|warning|[[:space:]]*-->|[[:space:]]*Finished|[[:space:]]*help:|[[:space:]]*note:|[[:space:]]*=|Some errors|For more information|[0-9]+ (error|warning))/
+                head 25
+                or "cargo: ok"
+            lite:
+                drop-progress
+                head 200
+            else:
+                drop-progress
+                head 60
 
 # ── test / bench — keep failures + result, drop passing noise ─────────────
 test|bench:
-    match level:
-        ultra:
-            keep /(FAILED|panicked|^test result:|^---- |^failures:|^error|left:|right:|assertion)/
-            head 30
-            or "cargo test: ok"
-        lite:
-            drop /\.\.\. ok$/
-            head 200
-        else:
-            drop /\.\.\. ok$/
-            head 60
+    if --message-format json:
+        raw
+    else:
+        match level:
+            ultra:
+                keep /(FAILED|panicked|^test result:|^---- |^failures:|^error|left:|right:|assertion)/
+                head 30
+                or "cargo test: ok"
+            lite:
+                drop /\.\.\. ok$/
+                head 200
+            else:
+                drop /\.\.\. ok$/
+                head 60
 
 # ── run — strip the compile preamble only; never filter program output ────
 run:
@@ -58,7 +70,14 @@ run:
             drop-progress
             head 60
 
+# ── metadata — always emits a single JSON object; raw (invariant 1) ───────
+metadata:
+    raw
+
 # ── everything else (add, update, fmt, tree, …) — light cap ───────────────
 *:
-    drop-progress
-    head 40
+    if --message-format json:
+        raw
+    else:
+        drop-progress
+        head 40
