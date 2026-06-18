@@ -1,9 +1,19 @@
 #!/usr/bin/env lowfat-filter
 # playwright-compact - keep failing specs, diagnostics, and summary.
 # env: $sub $level $exit $args
+#
+# `--reporter=json`/`junit` is machine output — pass byte-exact (invariant 1).
+# Without the guard the tail-cap truncates the JSON report (a 177-line report
+# fell to 100 at ultra). Guarded value-specifically so the human reporters
+# (list/line/dot) still compact. Residual: a reporter set in playwright.config
+# isn't visible here, and `blob`/`github` formats aren't guarded.
 
 test:
-    if exit failed:
+    if --reporter json:
+        raw
+    elif --reporter junit:
+        raw
+    elif exit failed:
         match level:
             ultra:
                 drop /^[[:space:]]*[✓·.][[:space:]]/
