@@ -1,6 +1,12 @@
 #!/usr/bin/env lowfat-filter
 # kubectl-compact — preserve cluster signal while capping table/log verbosity.
 # env: $sub $level $exit $args
+#
+# `-o json` / `-o yaml` is machine output — pass byte-exact (invariant 1).
+# Without the guard, compact-get/describe shred JSON/YAML to a few lines. The
+# guard repeats per compacting rule because `.lf` has no top-level pre-filter
+# and macros can't wrap a cascade. (`-o jsonpath`/`go-template`/`custom-columns`
+# emit caller-formatted text — residual risk, not yet guarded.)
 
 define compact-get(limit):
     shell: |
@@ -29,6 +35,10 @@ define compact-describe(limit):
 get:
     if exit failed:
         raw
+    elif -o json:
+        raw
+    elif -o yaml:
+        raw
     else:
         match level:
             ultra: compact-get 12
@@ -37,6 +47,10 @@ get:
 
 describe:
     if exit failed:
+        raw
+    elif -o json:
+        raw
+    elif -o yaml:
         raw
     else:
         match level:
@@ -65,6 +79,10 @@ logs:
 apply|rollout:
     if exit failed:
         raw
+    elif -o json:
+        raw
+    elif -o yaml:
+        raw
     else:
         keep /^([[:alnum:]._\/-]+ (created|configured|unchanged|deleted)|deployment ".+" successfully|Waiting for|rollout status|error:)/
         head auto
@@ -72,6 +90,10 @@ apply|rollout:
 
 *:
     if exit failed:
+        raw
+    elif -o json:
+        raw
+    elif -o yaml:
         raw
     else:
         head auto

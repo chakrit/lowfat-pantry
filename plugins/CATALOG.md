@@ -122,9 +122,14 @@ plugins (git, docker, grep, find, ls, tree) are not listed here.
 
 ## Infra / ops
 
-- **kubectl** — compacts get/describe/logs/apply/rollout per subcommand shape.
-- **helm** — preserves release metadata; caps bulky NOTES/tables.
-- **terraform** — keeps plan/apply signal, drops repetitive diff/progress lines.
+- **kubectl** — compacts get/describe/logs/apply/rollout per subcommand shape. `-o json`/
+  `-o yaml` pass byte-exact (invariant 1; without the guard the get/describe awk shredded
+  structured output). `-o jsonpath`/`go-template` are residual, not yet guarded.
+- **helm** — preserves release metadata; caps bulky NOTES/tables. Gotcha: `-o json`/`-o
+  yaml` are currently byte-mangled — see `docs/notes/2026-06-18-invariant1-structured-
+  output-audit.md`.
+- **terraform** — keeps plan/apply signal, drops repetitive diff/progress lines. Gotcha:
+  `-json` is currently dropped to empty — see the invariant-1 audit note.
 - **ansible-playbook** — drops per-host `ok:`/`skipping:` chatter and `TASK [...]`
   banners; keeps `changed:`/`fatal:` and the `PLAY RECAP` tallies. Gotcha: failed runs
   tail to the recap — the recap block is the anchor, not the head of the stream.
