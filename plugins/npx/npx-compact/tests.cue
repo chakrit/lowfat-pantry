@@ -15,6 +15,8 @@ _cases: [
 	{sample: "samples/npx-prettier-check.txt", sub: "prettier", args: "prettier --check src", exit: 1, levels: ["lite", "full", "ultra"]},
 	{sample: "samples/npx-create.txt", sub: "create-vite", args: "create-vite demo", exit: 0, levels: ["lite", "full", "ultra"]},
 	{sample: "samples/npx-error.txt", sub: "tsc", args: "tsc --noEmit", exit: 2, levels: ["lite", "full", "ultra"]},
+	// recovery hint: a capped generic `npx <tool>` body announces "... (N lines total)".
+	{sample: "samples/npx-generic-capped.txt", sub: "mytool", args: "mytool --build", exit: 0, levels: ["lite", "full", "ultra"]},
 ]
 
 config: {
@@ -27,7 +29,9 @@ tests: [{
 	tests: [
 		for c in _cases for l in c.levels {
 			let base = "lowfat filter \(_dir)/filter.lf --sub=\(c.sub) --args='\(c.args)' --exit=\(c.exit) --level=\(l) < \(_dir)/\(c.sample)"
-			name: "\(c.sample) \(l)"
+			// include args: two cases reuse npx-eslint.txt (eslint vs -y), so
+			// sample+level alone collides — a duplicate test name (smoke exit 65).
+			name: "\(c.sample) \(c.args) \(l)"
 			commands: [base, "\(base) | scripts/measure.py"]
 		},
 	]

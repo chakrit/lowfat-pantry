@@ -1,4 +1,4 @@
-- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-eslint.txt lite
+- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-eslint.txt eslint src lite
   commands:
     - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=eslint --args='eslint src' --exit=0 --level=lite < plugins/npx/npx-compact/samples/npx-eslint.txt
       checks:
@@ -22,7 +22,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-eslint.txt full
+- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-eslint.txt eslint src full
   commands:
     - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=eslint --args='eslint src' --exit=0 --level=full < plugins/npx/npx-compact/samples/npx-eslint.txt
       checks:
@@ -46,7 +46,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-eslint.txt ultra
+- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-eslint.txt eslint src ultra
   commands:
     - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=eslint --args='eslint src' --exit=0 --level=ultra < plugins/npx/npx-compact/samples/npx-eslint.txt
       checks:
@@ -70,7 +70,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-eslint.txt lite
+- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-eslint.txt -y eslint src lite
   commands:
     - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=-y --args='-y eslint src' --exit=0 --level=lite < plugins/npx/npx-compact/samples/npx-eslint.txt
       checks:
@@ -94,7 +94,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-eslint.txt full
+- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-eslint.txt -y eslint src full
   commands:
     - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=-y --args='-y eslint src' --exit=0 --level=full < plugins/npx/npx-compact/samples/npx-eslint.txt
       checks:
@@ -118,7 +118,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-eslint.txt ultra
+- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-eslint.txt -y eslint src ultra
   commands:
     - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=-y --args='-y eslint src' --exit=0 --level=ultra < plugins/npx/npx-compact/samples/npx-eslint.txt
       checks:
@@ -142,7 +142,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-prettier-check.txt lite
+- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-prettier-check.txt prettier --check src lite
   commands:
     - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=prettier --args='prettier --check src' --exit=1 --level=lite < plugins/npx/npx-compact/samples/npx-prettier-check.txt
       checks:
@@ -165,7 +165,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-prettier-check.txt full
+- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-prettier-check.txt prettier --check src full
   commands:
     - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=prettier --args='prettier --check src' --exit=1 --level=full < plugins/npx/npx-compact/samples/npx-prettier-check.txt
       checks:
@@ -188,7 +188,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-prettier-check.txt ultra
+- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-prettier-check.txt prettier --check src ultra
   commands:
     - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=prettier --args='prettier --check src' --exit=1 --level=ultra < plugins/npx/npx-compact/samples/npx-prettier-check.txt
       checks:
@@ -211,7 +211,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-create.txt lite
+- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-create.txt create-vite demo lite
   commands:
     - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=create-vite --args='create-vite demo' --exit=0 --level=lite < plugins/npx/npx-compact/samples/npx-create.txt
       checks:
@@ -236,7 +236,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-create.txt full
+- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-create.txt create-vite demo full
   commands:
     - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=create-vite --args='create-vite demo' --exit=0 --level=full < plugins/npx/npx-compact/samples/npx-create.txt
       checks:
@@ -261,7 +261,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-create.txt ultra
+- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-create.txt create-vite demo ultra
   commands:
     - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=create-vite --args='create-vite demo' --exit=0 --level=ultra < plugins/npx/npx-compact/samples/npx-create.txt
       checks:
@@ -286,7 +286,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-error.txt lite
+- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-error.txt tsc --noEmit lite
   commands:
     - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=tsc --args='tsc --noEmit' --exit=2 --level=lite < plugins/npx/npx-compact/samples/npx-error.txt
       checks:
@@ -315,7 +315,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-error.txt full
+- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-error.txt tsc --noEmit full
   commands:
     - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=tsc --args='tsc --noEmit' --exit=2 --level=full < plugins/npx/npx-compact/samples/npx-error.txt
       checks:
@@ -344,7 +344,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-error.txt ultra
+- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-error.txt tsc --noEmit ultra
   commands:
     - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=tsc --args='tsc --noEmit' --exit=2 --level=ultra < plugins/npx/npx-compact/samples/npx-error.txt
       checks:
@@ -364,6 +364,221 @@
           data:
             - lines 5
             - bytes 340
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-generic-capped.txt mytool --build lite
+  commands:
+    - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=mytool --args='mytool --build' --exit=0 --level=lite < plugins/npx/npx-compact/samples/npx-generic-capped.txt
+      checks:
+        - name: stdout
+          data:
+            - generator output line 1
+            - generator output line 2
+            - generator output line 3
+            - generator output line 4
+            - generator output line 5
+            - generator output line 6
+            - generator output line 7
+            - generator output line 8
+            - generator output line 9
+            - generator output line 10
+            - generator output line 11
+            - generator output line 12
+            - generator output line 13
+            - generator output line 14
+            - generator output line 15
+            - generator output line 16
+            - generator output line 17
+            - generator output line 18
+            - generator output line 19
+            - generator output line 20
+            - generator output line 21
+            - generator output line 22
+            - generator output line 23
+            - generator output line 24
+            - generator output line 25
+            - generator output line 26
+            - generator output line 27
+            - generator output line 28
+            - generator output line 29
+            - generator output line 30
+            - generator output line 31
+            - generator output line 32
+            - generator output line 33
+            - generator output line 34
+            - generator output line 35
+            - generator output line 36
+            - generator output line 37
+            - generator output line 38
+            - generator output line 39
+            - generator output line 40
+            - generator output line 41
+            - generator output line 42
+            - generator output line 43
+            - generator output line 44
+            - generator output line 45
+            - generator output line 46
+            - generator output line 47
+            - generator output line 48
+            - generator output line 49
+            - generator output line 50
+            - generator output line 51
+            - generator output line 52
+            - generator output line 53
+            - generator output line 54
+            - generator output line 55
+            - generator output line 56
+            - generator output line 57
+            - generator output line 58
+            - generator output line 59
+            - generator output line 60
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=mytool --args='mytool --build' --exit=0 --level=lite < plugins/npx/npx-compact/samples/npx-generic-capped.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 60
+            - bytes 1491
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-generic-capped.txt mytool --build full
+  commands:
+    - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=mytool --args='mytool --build' --exit=0 --level=full < plugins/npx/npx-compact/samples/npx-generic-capped.txt
+      checks:
+        - name: stdout
+          data:
+            - generator output line 1
+            - generator output line 2
+            - generator output line 3
+            - generator output line 4
+            - generator output line 5
+            - generator output line 6
+            - generator output line 7
+            - generator output line 8
+            - generator output line 9
+            - generator output line 10
+            - generator output line 11
+            - generator output line 12
+            - generator output line 13
+            - generator output line 14
+            - generator output line 15
+            - generator output line 16
+            - generator output line 17
+            - generator output line 18
+            - generator output line 19
+            - generator output line 20
+            - generator output line 21
+            - generator output line 22
+            - generator output line 23
+            - generator output line 24
+            - generator output line 25
+            - generator output line 26
+            - generator output line 27
+            - generator output line 28
+            - generator output line 29
+            - generator output line 30
+            - generator output line 31
+            - generator output line 32
+            - generator output line 33
+            - generator output line 34
+            - generator output line 35
+            - generator output line 36
+            - generator output line 37
+            - generator output line 38
+            - generator output line 39
+            - generator output line 40
+            - generator output line 41
+            - generator output line 42
+            - generator output line 43
+            - generator output line 44
+            - generator output line 45
+            - generator output line 46
+            - generator output line 47
+            - generator output line 48
+            - generator output line 49
+            - generator output line 50
+            - generator output line 51
+            - generator output line 52
+            - generator output line 53
+            - generator output line 54
+            - generator output line 55
+            - generator output line 56
+            - generator output line 57
+            - generator output line 58
+            - generator output line 59
+            - generator output line 60
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=mytool --args='mytool --build' --exit=0 --level=full < plugins/npx/npx-compact/samples/npx-generic-capped.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 60
+            - bytes 1491
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-generic-capped.txt mytool --build ultra
+  commands:
+    - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=mytool --args='mytool --build' --exit=0 --level=ultra < plugins/npx/npx-compact/samples/npx-generic-capped.txt
+      checks:
+        - name: stdout
+          data:
+            - generator output line 1
+            - generator output line 2
+            - generator output line 3
+            - generator output line 4
+            - generator output line 5
+            - generator output line 6
+            - generator output line 7
+            - generator output line 8
+            - generator output line 9
+            - generator output line 10
+            - generator output line 11
+            - generator output line 12
+            - generator output line 13
+            - generator output line 14
+            - generator output line 15
+            - generator output line 16
+            - generator output line 17
+            - generator output line 18
+            - generator output line 19
+            - generator output line 20
+            - generator output line 21
+            - generator output line 22
+            - generator output line 23
+            - generator output line 24
+            - generator output line 25
+            - generator output line 26
+            - generator output line 27
+            - generator output line 28
+            - generator output line 29
+            - generator output line 30
+            - generator output line 31
+            - generator output line 32
+            - generator output line 33
+            - generator output line 34
+            - generator output line 35
+            - generator output line 36
+            - generator output line 37
+            - generator output line 38
+            - generator output line 39
+            - generator output line 40
+            - '... (60 lines total)'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=mytool --args='mytool --build' --exit=0 --level=ultra < plugins/npx/npx-compact/samples/npx-generic-capped.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 41
+            - bytes 1012
         - name: exitcode
           data:
             - "0"

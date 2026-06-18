@@ -63,8 +63,12 @@ define npx-dispatch:
             for line in out:
                 print(line)
 
+        # a silently head-capped body looks complete; announce the cap so the
+        # agent knows output was truncated (the curl/gem/rake convention).
         def capped(n):
             emit(lines[:n])
+            if len(lines) > n:
+                print("... (%d lines total)" % len(lines))
 
         def tailed(n):
             emit(lines[-n:] if n < len(lines) else lines)
