@@ -118,6 +118,7 @@
             - '< cache-control: no-store'
             - '< x-request-id: req_8b74a0'
             - '{'
+            - '... (30 lines total)'
         - name: exitcode
           data:
             - "0"
@@ -125,8 +126,8 @@
       checks:
         - name: stdout
           data:
-            - lines 18
-            - bytes 564
+            - lines 19
+            - bytes 585
         - name: exitcode
           data:
             - "0"
@@ -236,6 +237,7 @@
             - <p>Line 2 of a verbose diagnostic body.</p>
             - <p>Line 3 of a verbose diagnostic body.</p>
             - <p>Line 4 of a verbose diagnostic body.</p>
+            - '... (23 lines total)'
         - name: exitcode
           data:
             - "0"
@@ -243,8 +245,8 @@
       checks:
         - name: stdout
           data:
-            - lines 18
-            - bytes 590
+            - lines 19
+            - bytes 611
         - name: exitcode
           data:
             - "0"

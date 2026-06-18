@@ -1,6 +1,13 @@
 #!/usr/bin/env lowfat-filter
 # curl-compact — remove progress meters, keep HTTP exchange and capped body.
 # env: $sub $level $exit $args
+#
+# The body cap is the one risk: a JSON/structured response over the cap is
+# truncated. There's no flag to key on (the body is whatever the server sent),
+# so instead of corrupting silently the cap announces itself with the house
+# `... (N lines total)` hint — the agent sees it was capped and re-runs with
+# `-o FILE` or a `| jq` pipe (a pipe gets the full body; lowfat only caps the
+# final stdout) to recover the complete response.
 
 define compact-curl(limit):
     shell: |
@@ -11,12 +18,15 @@ define compact-curl(limit):
           /^[[:space:]]*%[[:space:]]*Total/ { next }
           /^[[:space:]]*[0-9]+[[:space:]]+[0-9]+[[:space:]]+[0-9]+[[:space:]]+[0-9]+[[:space:]]+[0-9]+/ { next }
           /^(\*|>|<|HTTP\/|[[:alnum:]-]+:)/ {
+            total++
             if (n < lim) { print; n++ }
             next
           }
           NF {
+            total++
             if (n < lim) { print; n++ }
           }
+          END { if (total > lim) printf "... (%d lines total)\n", total }
         '
 
 *:
