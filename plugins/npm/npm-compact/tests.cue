@@ -13,6 +13,7 @@ _cases: [
 	{sample: "samples/npm-install.txt", sub: "install", args: "", exit: 0, levels: ["lite", "full", "ultra"]},
 	{sample: "samples/npm-test.txt", sub: "test", args: "", exit: 0, levels: ["lite", "full", "ultra"]},
 	{sample: "samples/npm-error.txt", sub: "install", args: "", exit: 1, levels: ["lite", "full", "ultra"]},
+	{sample: "samples/npm-install-json.txt", sub: "install", args: "install --json", exit: 0, levels: ["lite", "full", "ultra"]},
 ]
 
 config: {

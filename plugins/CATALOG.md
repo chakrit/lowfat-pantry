@@ -36,6 +36,7 @@ plugins (git, docker, grep, find, ls, tree) are not listed here.
   (capping would corrupt code).
 - **npm** — drops install progress (`npm http`/`notice`/`timing`); keeps
   added/removed/audited counts, funding/vulnerability totals, and all warn/error lines.
+  `--json` passes byte-exact on any subcommand (invariant 1).
 - **pnpm** / **yarn** — same shape as npm for their own progress formats. Gotcha (yarn):
   `run`/`test` bodies are your script's output — only the `$ <cmd>` echo is dropped,
   failures tail (errors land at the end).
@@ -67,7 +68,8 @@ plugins (git, docker, grep, find, ls, tree) are not listed here.
   hidden by the keep-list.
 - **pip** — drops resolver chatter (`Collecting`, `Downloading`, `Requirement already
   satisfied`); keeps `Successfully installed`/`Installing collected` and errors.
-  Gotcha: a fully-cached install can compact to just `pip: ok`.
+  Gotcha: a fully-cached install can compact to just `pip: ok`. `--format json` (e.g.
+  `pip list --format json`) passes byte-exact (invariant 1).
 - **uv** (also `uvx`) — wrapper-aware: parses the arg string to find the wrapped tool
   (`uv run pytest`, `uvx ruff`, `uv tool run`, `python -m`, skipping value-flags like
   `--with X`) and applies that tool's compaction — pytest/ruff logic is **copied** from

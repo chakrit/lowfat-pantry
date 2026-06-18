@@ -14,8 +14,11 @@ define compact-npm-install(limit):
     shell: head -$1
     or-shell: awk 'NF' | tail -$1
 
+# --json is machine output on any subcommand — pass byte-exact (invariant 1).
 install|i|ci:
-    if exit failed:
+    if --json:
+        raw
+    elif exit failed:
         raw
     else:
         match level:
@@ -24,7 +27,9 @@ install|i|ci:
             lite:  compact-npm-install 60
 
 run|test:
-    if exit failed:
+    if --json:
+        raw
+    elif exit failed:
         raw
     else:
         match level:
@@ -33,7 +38,9 @@ run|test:
             lite:  head 160
 
 *:
-    if exit failed:
+    if --json:
+        raw
+    elif exit failed:
         raw
     else:
         head auto

@@ -13,6 +13,7 @@ _cases: [
 	{sample: "samples/pip-install.txt", sub: "install", args: "install requests", exit: 0, levels: ["lite", "full", "ultra"]},
 	{sample: "samples/pip-install-error.txt", sub: "install", args: "install nonexistent-package-xyz", exit: 1, levels: ["lite", "full", "ultra"]},
 	{sample: "samples/pip-list.txt", sub: "list", args: "list", exit: 0, levels: ["lite", "full", "ultra"]},
+	{sample: "samples/pip-list-json.txt", sub: "list", args: "list --format json", exit: 0, levels: ["lite", "full", "ultra"]},
 ]
 
 config: {

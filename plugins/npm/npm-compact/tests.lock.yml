@@ -271,3 +271,132 @@
         - name: exitcode
           data:
             - "0"
+- name: plugins/npm/npm-compact/tests.cue \ npm-compact \ samples/npm-install-json.txt lite
+  commands:
+    - command: lowfat filter plugins/npm/npm-compact/filter.lf --sub=install --args='install --json' --exit=0 --level=lite < plugins/npm/npm-compact/samples/npm-install-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{'
+            - '  "added": 0,'
+            - '  "removed": 0,'
+            - '  "changed": 0,'
+            - '  "audited": 1,'
+            - '  "funding": 0,'
+            - '  "audit": {'
+            - '    "vulnerabilities": {'
+            - '      "info": 0,'
+            - '      "low": 0,'
+            - '      "moderate": 0,'
+            - '      "high": 0,'
+            - '      "critical": 0,'
+            - '      "total": 0'
+            - '    },'
+            - '    "dependencies": {'
+            - '      "prod": 1,'
+            - '      "dev": 0,'
+            - '      "optional": 0,'
+            - '      "peer": 0,'
+            - '      "peerOptional": 0,'
+            - '      "total": 0'
+            - '    }'
+            - '  }'
+            - '}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/npm/npm-compact/filter.lf --sub=install --args='install --json' --exit=0 --level=lite < plugins/npm/npm-compact/samples/npm-install-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 25
+            - bytes 381
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/npm/npm-compact/tests.cue \ npm-compact \ samples/npm-install-json.txt full
+  commands:
+    - command: lowfat filter plugins/npm/npm-compact/filter.lf --sub=install --args='install --json' --exit=0 --level=full < plugins/npm/npm-compact/samples/npm-install-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{'
+            - '  "added": 0,'
+            - '  "removed": 0,'
+            - '  "changed": 0,'
+            - '  "audited": 1,'
+            - '  "funding": 0,'
+            - '  "audit": {'
+            - '    "vulnerabilities": {'
+            - '      "info": 0,'
+            - '      "low": 0,'
+            - '      "moderate": 0,'
+            - '      "high": 0,'
+            - '      "critical": 0,'
+            - '      "total": 0'
+            - '    },'
+            - '    "dependencies": {'
+            - '      "prod": 1,'
+            - '      "dev": 0,'
+            - '      "optional": 0,'
+            - '      "peer": 0,'
+            - '      "peerOptional": 0,'
+            - '      "total": 0'
+            - '    }'
+            - '  }'
+            - '}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/npm/npm-compact/filter.lf --sub=install --args='install --json' --exit=0 --level=full < plugins/npm/npm-compact/samples/npm-install-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 25
+            - bytes 381
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/npm/npm-compact/tests.cue \ npm-compact \ samples/npm-install-json.txt ultra
+  commands:
+    - command: lowfat filter plugins/npm/npm-compact/filter.lf --sub=install --args='install --json' --exit=0 --level=ultra < plugins/npm/npm-compact/samples/npm-install-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{'
+            - '  "added": 0,'
+            - '  "removed": 0,'
+            - '  "changed": 0,'
+            - '  "audited": 1,'
+            - '  "funding": 0,'
+            - '  "audit": {'
+            - '    "vulnerabilities": {'
+            - '      "info": 0,'
+            - '      "low": 0,'
+            - '      "moderate": 0,'
+            - '      "high": 0,'
+            - '      "critical": 0,'
+            - '      "total": 0'
+            - '    },'
+            - '    "dependencies": {'
+            - '      "prod": 1,'
+            - '      "dev": 0,'
+            - '      "optional": 0,'
+            - '      "peer": 0,'
+            - '      "peerOptional": 0,'
+            - '      "total": 0'
+            - '    }'
+            - '  }'
+            - '}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/npm/npm-compact/filter.lf --sub=install --args='install --json' --exit=0 --level=ultra < plugins/npm/npm-compact/samples/npm-install-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 25
+            - bytes 381
+        - name: exitcode
+          data:
+            - "0"

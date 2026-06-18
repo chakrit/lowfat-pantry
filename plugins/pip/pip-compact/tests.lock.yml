@@ -194,3 +194,60 @@
         - name: exitcode
           data:
             - "0"
+- name: plugins/pip/pip-compact/tests.cue \ pip-compact \ samples/pip-list-json.txt lite
+  commands:
+    - command: lowfat filter plugins/pip/pip-compact/filter.lf --sub=list --args='list --format json' --exit=0 --level=lite < plugins/pip/pip-compact/samples/pip-list-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '[{"name": "certifi", "version": "2026.6.17"}, {"name": "charset-normalizer", "version": "3.4.7"}, {"name": "idna", "version": "3.18"}, {"name": "markdown-it-py", "version": "4.2.0"}, {"name": "mdurl", "version": "0.1.2"}, {"name": "pip", "version": "25.0.1"}, {"name": "Pygments", "version": "2.20.0"}, {"name": "requests", "version": "2.34.2"}, {"name": "rich", "version": "15.0.0"}, {"name": "urllib3", "version": "2.7.0"}]'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pip/pip-compact/filter.lf --sub=list --args='list --format json' --exit=0 --level=lite < plugins/pip/pip-compact/samples/pip-list-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 426
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/pip/pip-compact/tests.cue \ pip-compact \ samples/pip-list-json.txt full
+  commands:
+    - command: lowfat filter plugins/pip/pip-compact/filter.lf --sub=list --args='list --format json' --exit=0 --level=full < plugins/pip/pip-compact/samples/pip-list-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '[{"name": "certifi", "version": "2026.6.17"}, {"name": "charset-normalizer", "version": "3.4.7"}, {"name": "idna", "version": "3.18"}, {"name": "markdown-it-py", "version": "4.2.0"}, {"name": "mdurl", "version": "0.1.2"}, {"name": "pip", "version": "25.0.1"}, {"name": "Pygments", "version": "2.20.0"}, {"name": "requests", "version": "2.34.2"}, {"name": "rich", "version": "15.0.0"}, {"name": "urllib3", "version": "2.7.0"}]'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pip/pip-compact/filter.lf --sub=list --args='list --format json' --exit=0 --level=full < plugins/pip/pip-compact/samples/pip-list-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 426
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/pip/pip-compact/tests.cue \ pip-compact \ samples/pip-list-json.txt ultra
+  commands:
+    - command: lowfat filter plugins/pip/pip-compact/filter.lf --sub=list --args='list --format json' --exit=0 --level=ultra < plugins/pip/pip-compact/samples/pip-list-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '[{"name": "certifi", "version": "2026.6.17"}, {"name": "charset-normalizer", "version": "3.4.7"}, {"name": "idna", "version": "3.18"}, {"name": "markdown-it-py", "version": "4.2.0"}, {"name": "mdurl", "version": "0.1.2"}, {"name": "pip", "version": "25.0.1"}, {"name": "Pygments", "version": "2.20.0"}, {"name": "requests", "version": "2.34.2"}, {"name": "rich", "version": "15.0.0"}, {"name": "urllib3", "version": "2.7.0"}]'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/pip/pip-compact/filter.lf --sub=list --args='list --format json' --exit=0 --level=ultra < plugins/pip/pip-compact/samples/pip-list-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 426
+        - name: exitcode
+          data:
+            - "0"

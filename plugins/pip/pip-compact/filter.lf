@@ -12,7 +12,9 @@ define drop-progress:
     drop /^(Collecting |[[:space:]]+Downloading |[[:space:]]+Using cached |Requirement already satisfied|[[:space:]]+Preparing |[[:space:]]+Getting |[[:space:]]+Building wheel|[[:space:]]+Created wheel|[[:space:]]+Stored in directory|[[:space:]]+Attempting uninstall)/
 
 *:
-    if exit failed:
+    if --format json:
+        raw
+    elif exit failed:
         match level:
             ultra:
                 keep /(ERROR|error:|Could not|No matching distribution|Successfully|Installing collected)/

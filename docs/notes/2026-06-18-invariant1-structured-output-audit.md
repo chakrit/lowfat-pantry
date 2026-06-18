@@ -31,11 +31,11 @@ the noted level. "Effect" is what the agent receives instead of the bytes.
 | plugin         | flag                | effect                                          | status        |
 | -------------- | ------------------- | ----------------------------------------------- | ------------- |
 | kubectl        | `-o json` / `-o yaml` | `get`/`describe` awk shreds to ~3 lines         | **FIXED** (this session) |
+| pip            | `--format json` @ultra | `keep`+`or` → replaced with `pip: ok`         | **FIXED** (this session, real golden) |
+| npm            | `--json`            | small survives via `or-shell: tail`; large truncates | **FIXED** (this session, real golden) |
 | terraform      | `-json`             | `compact-plan` matches nothing → **empty output** | open          |
-| pip            | `--format json` @ultra | `keep`+`or` → replaced with `pip: ok`         | open          |
 | helm           | `-o json` / `-o yaml` | `helm-table` awk collapses whitespace (byte-mangle) | open          |
 | golangci-lint  | `--out-format json` | `head 3` (clean) / `head N` truncates the JSON   | open          |
-| npm            | `--json`            | small survives via `or-shell: tail`; large truncates | open          |
 | pulumi         | `--json`            | `*`→`head auto` / up-rules tail-cap → truncates large | open          |
 | dotnet         | `list ... --format json` | `*`→`head auto` truncates large list JSON     | open (pre-existing) |
 
@@ -69,18 +69,23 @@ emits the compactable shape on the *default* (no-format) path, the cleaner form 
 Residual not covered by value guards: kubectl `-o jsonpath=`/`go-template=`/
 `custom-columns=` (caller-formatted text — arbitrary, arguably should `raw` too).
 
-## Why only kubectl was fixed unattended
+## What was fixed unattended, and what wasn't
 
-kubectl is the most severe (shred) and most-used, the guard is trivial and
-**zero-drift** (no existing sample uses `-o json`, so all locks stay UNCHANGED),
-and it's verified by synthetic repro. The other six are each a *bespoke* guard in
-a differently-shaped filter — too much unreviewed cross-cutting change to land
-overnight — and none can be properly **goldened** without a real structured
-sample, which needs live infra (a cluster for kubectl/helm, a tf project for
-terraform, cloud creds for pulumi) or a toolchain capture (npm/pip/golangci-lint
-via node/python/go images). The kubectl fix itself still wants a real
-`kubectl get -o json|yaml` golden captured against a cluster.
+Fixed this session (each zero-drift — no existing sample uses the guarded flag,
+so all locks stay UNCHANGED — and verified):
+- **kubectl** `-o json`/`-o yaml` (most severe + most-used; guard verified by
+  synthetic repro). Still wants a real `kubectl get -o json|yaml` golden captured
+  against a cluster — the fix shipped without one.
+- **pip** `--format json` and **npm** `--json` — captured **real goldens** using
+  the already-present `python:3.12-slim` / `node:22` images (no new pulls), so
+  the raw path is locked and a future narrowing of the guard surfaces as drift.
 
-**Recommended next (attended):** apply the fix pattern to the six open plugins as
-one reviewed batch, capturing a real structured sample per plugin to lock the
-raw-path golden (so a future edit narrowing the guard is caught as drift).
+Left open (need live infra to capture a golden, so deferred rather than shipping
+guard-without-test): **terraform** (tf project + provider), **helm** (cluster),
+**pulumi** (cloud creds), **golangci-lint** (go image + a project with lint
+issues — capturable but not with a present image), **dotnet** `list --format
+json` (SDK image; pre-existing catch-all).
+
+**Recommended next (attended):** apply the fix pattern to the five open plugins,
+capturing a real structured sample per plugin to lock the raw-path golden. The
+guard itself is mechanical (copy aws/az); the cost is the sample capture.
