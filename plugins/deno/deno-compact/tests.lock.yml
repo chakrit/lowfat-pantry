@@ -624,3 +624,165 @@
         - name: exitcode
           data:
             - "0"
+- name: plugins/deno/deno-compact/tests.cue \ deno-compact \ samples/deno-run-capped.txt lite
+  commands:
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=run --args='run server.ts' --exit=0 --level=lite < plugins/deno/deno-compact/samples/deno-run-capped.txt
+      checks:
+        - name: stdout
+          data:
+            - Starting server...
+            - request 1 handled
+            - request 2 handled
+            - request 3 handled
+            - request 4 handled
+            - request 5 handled
+            - request 6 handled
+            - request 7 handled
+            - request 8 handled
+            - request 9 handled
+            - request 10 handled
+            - request 11 handled
+            - request 12 handled
+            - request 13 handled
+            - request 14 handled
+            - request 15 handled
+            - request 16 handled
+            - request 17 handled
+            - request 18 handled
+            - request 19 handled
+            - request 20 handled
+            - request 21 handled
+            - request 22 handled
+            - request 23 handled
+            - request 24 handled
+            - request 25 handled
+            - request 26 handled
+            - request 27 handled
+            - request 28 handled
+            - request 29 handled
+            - request 30 handled
+            - request 31 handled
+            - request 32 handled
+            - request 33 handled
+            - request 34 handled
+            - request 35 handled
+            - request 36 handled
+            - request 37 handled
+            - request 38 handled
+            - request 39 handled
+            - request 40 handled
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=run --args='run server.ts' --exit=0 --level=lite < plugins/deno/deno-compact/samples/deno-run-capped.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 41
+            - bytes 770
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/deno/deno-compact/tests.cue \ deno-compact \ samples/deno-run-capped.txt full
+  commands:
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=run --args='run server.ts' --exit=0 --level=full < plugins/deno/deno-compact/samples/deno-run-capped.txt
+      checks:
+        - name: stdout
+          data:
+            - Starting server...
+            - request 1 handled
+            - request 2 handled
+            - request 3 handled
+            - request 4 handled
+            - request 5 handled
+            - request 6 handled
+            - request 7 handled
+            - request 8 handled
+            - request 9 handled
+            - request 10 handled
+            - request 11 handled
+            - request 12 handled
+            - request 13 handled
+            - request 14 handled
+            - request 15 handled
+            - request 16 handled
+            - request 17 handled
+            - request 18 handled
+            - request 19 handled
+            - request 20 handled
+            - request 21 handled
+            - request 22 handled
+            - request 23 handled
+            - request 24 handled
+            - request 25 handled
+            - request 26 handled
+            - request 27 handled
+            - request 28 handled
+            - request 29 handled
+            - request 30 handled
+            - request 31 handled
+            - request 32 handled
+            - request 33 handled
+            - request 34 handled
+            - request 35 handled
+            - request 36 handled
+            - request 37 handled
+            - request 38 handled
+            - request 39 handled
+            - request 40 handled
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=run --args='run server.ts' --exit=0 --level=full < plugins/deno/deno-compact/samples/deno-run-capped.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 41
+            - bytes 770
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/deno/deno-compact/tests.cue \ deno-compact \ samples/deno-run-capped.txt ultra
+  commands:
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=run --args='run server.ts' --exit=0 --level=ultra < plugins/deno/deno-compact/samples/deno-run-capped.txt
+      checks:
+        - name: stdout
+          data:
+            - Starting server...
+            - request 1 handled
+            - request 2 handled
+            - request 3 handled
+            - request 4 handled
+            - request 5 handled
+            - request 6 handled
+            - request 7 handled
+            - request 8 handled
+            - request 9 handled
+            - request 10 handled
+            - request 11 handled
+            - request 12 handled
+            - request 13 handled
+            - request 14 handled
+            - request 15 handled
+            - request 16 handled
+            - request 17 handled
+            - request 18 handled
+            - request 19 handled
+            - request 20 handled
+            - request 21 handled
+            - request 22 handled
+            - request 23 handled
+            - request 24 handled
+            - '... (41 lines total)'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=run --args='run server.ts' --exit=0 --level=ultra < plugins/deno/deno-compact/samples/deno-run-capped.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 26
+            - bytes 487
+        - name: exitcode
+          data:
+            - "0"

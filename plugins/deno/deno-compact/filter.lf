@@ -11,6 +11,11 @@
 # byte-exact (invariant 1). Without the guard `head` truncates it (a 99-line
 # `lint --json` fell to 40 at ultra). Guarded in check|lint and `*`.
 
+# cap that announces itself — a silently head-capped program body looks
+# complete; the hint tells the agent output was truncated.
+define cap(limit):
+    shell: awk -v lim=$1 'NR<=lim; END { if (NR>lim) printf "... (%d lines total)\n", NR }'
+
 # ── test / bench — keep failures + result, drop passing noise ─────────────
 test|bench:
     match level:
@@ -51,9 +56,9 @@ run|task|eval|repl|serve:
             else:  tail 80
     else:
         match level:
-            ultra: head 25
-            lite:  head 200
-            else:  head 60
+            ultra: cap 25
+            lite:  cap 200
+            else:  cap 60
 
 *:
     if exit failed:
