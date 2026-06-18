@@ -1,0 +1,29 @@
+#!/usr/bin/env lowfat-filter
+# rake-compact — a task's output is the task's own (passthrough) body, so on
+# success only cap it. On failure keep "rake aborted!", the error message and
+# the "Tasks:" trailer, dropping the Ruby backtrace frames.
+# env: $sub $level $exit $args
+
+define cap(limit):
+    shell: |
+        awk -v lim=$1 'NR<=lim; END { if (NR>lim) printf "... (%d lines total)\n", NR }'
+
+*:
+    if exit failed:
+        match level:
+            ultra:
+                drop /:[0-9]+:in /
+                head 6
+                or-shell: tail -20
+            lite:
+                drop /:[0-9]+:in /
+                head 60
+            full:
+                drop /:[0-9]+:in /
+                head 30
+                or-shell: tail -20
+    else:
+        match level:
+            ultra: cap 30
+            lite:  cap 300
+            else:  cap 100

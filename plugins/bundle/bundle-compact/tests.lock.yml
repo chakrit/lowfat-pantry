@@ -1,0 +1,295 @@
+- name: plugins/bundle/bundle-compact/tests.cue \ bundle-compact \ samples/bundle-install.txt lite
+  commands:
+    - command: lowfat filter plugins/bundle/bundle-compact/filter.lf --sub=install --args='install' --exit=0 --level=lite < plugins/bundle/bundle-compact/samples/bundle-install.txt
+      checks:
+        - name: stdout
+          data:
+            - Installing rake 13.4.2
+            - Installing ast 2.4.3
+            - Installing diff-lcs 1.6.2
+            - Installing json 2.19.9 with native extensions
+            - Installing language_server-protocol 3.17.0.5
+            - Installing lint_roller 1.1.0
+            - Installing parallel 2.1.0
+            - Installing racc 1.8.1 with native extensions
+            - Installing rainbow 3.1.1
+            - Installing regexp_parser 2.12.0
+            - Installing rspec-support 3.13.7
+            - Installing prism 1.9.0 with native extensions
+            - Installing ruby-progressbar 1.13.0
+            - Installing unicode-emoji 4.2.0
+            - Installing rspec-core 3.13.6
+            - Installing rspec-expectations 3.13.5
+            - Installing rspec-mocks 3.13.8
+            - Installing unicode-display_width 3.2.0
+            - Installing parser 3.3.11.1
+            - Installing rspec 3.13.2
+            - Installing rubocop-ast 1.49.1
+            - Installing rubocop 1.88.0
+            - Bundle complete! 5 Gemfile dependencies, 23 gems now installed.
+            - Use `bundle info [gemname]` to see where a bundled gem is installed.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/bundle/bundle-compact/filter.lf --sub=install --args='install' --exit=0 --level=lite < plugins/bundle/bundle-compact/samples/bundle-install.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 24
+            - bytes 837
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/bundle/bundle-compact/tests.cue \ bundle-compact \ samples/bundle-install.txt full
+  commands:
+    - command: lowfat filter plugins/bundle/bundle-compact/filter.lf --sub=install --args='install' --exit=0 --level=full < plugins/bundle/bundle-compact/samples/bundle-install.txt
+      checks:
+        - name: stdout
+          data:
+            - Installing rake 13.4.2
+            - Installing ast 2.4.3
+            - Installing diff-lcs 1.6.2
+            - Installing json 2.19.9 with native extensions
+            - Installing language_server-protocol 3.17.0.5
+            - Installing lint_roller 1.1.0
+            - Installing parallel 2.1.0
+            - Installing racc 1.8.1 with native extensions
+            - Installing rainbow 3.1.1
+            - Installing regexp_parser 2.12.0
+            - Installing rspec-support 3.13.7
+            - Installing prism 1.9.0 with native extensions
+            - Installing ruby-progressbar 1.13.0
+            - Installing unicode-emoji 4.2.0
+            - Installing rspec-core 3.13.6
+            - Installing rspec-expectations 3.13.5
+            - Installing rspec-mocks 3.13.8
+            - Installing unicode-display_width 3.2.0
+            - Installing parser 3.3.11.1
+            - Installing rspec 3.13.2
+            - Installing rubocop-ast 1.49.1
+            - Installing rubocop 1.88.0
+            - Bundle complete! 5 Gemfile dependencies, 23 gems now installed.
+            - Use `bundle info [gemname]` to see where a bundled gem is installed.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/bundle/bundle-compact/filter.lf --sub=install --args='install' --exit=0 --level=full < plugins/bundle/bundle-compact/samples/bundle-install.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 24
+            - bytes 837
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/bundle/bundle-compact/tests.cue \ bundle-compact \ samples/bundle-install.txt ultra
+  commands:
+    - command: lowfat filter plugins/bundle/bundle-compact/filter.lf --sub=install --args='install' --exit=0 --level=ultra < plugins/bundle/bundle-compact/samples/bundle-install.txt
+      checks:
+        - name: stdout
+          data:
+            - Bundle complete! 5 Gemfile dependencies, 23 gems now installed.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/bundle/bundle-compact/filter.lf --sub=install --args='install' --exit=0 --level=ultra < plugins/bundle/bundle-compact/samples/bundle-install.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 64
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/bundle/bundle-compact/tests.cue \ bundle-compact \ samples/bundle-error.txt lite
+  commands:
+    - command: lowfat filter plugins/bundle/bundle-compact/filter.lf --sub=install --args='install' --exit=7 --level=lite < plugins/bundle/bundle-compact/samples/bundle-error.txt
+      checks:
+        - name: stdout
+          data:
+            - Fetching gem metadata from https://rubygems.org/...........
+            - Could not find gem 'rubocop (= 99.0.0)' in rubygems repository
+            - https://rubygems.org/ or installed locally.
+            - ""
+            - 'The source contains the following gems matching ''rubocop'':'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/bundle/bundle-compact/filter.lf --sub=install --args='install' --exit=7 --level=lite < plugins/bundle/bundle-compact/samples/bundle-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 5
+            - bytes 227
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/bundle/bundle-compact/tests.cue \ bundle-compact \ samples/bundle-error.txt full
+  commands:
+    - command: lowfat filter plugins/bundle/bundle-compact/filter.lf --sub=install --args='install' --exit=7 --level=full < plugins/bundle/bundle-compact/samples/bundle-error.txt
+      checks:
+        - name: stdout
+          data:
+            - Fetching gem metadata from https://rubygems.org/...........
+            - Could not find gem 'rubocop (= 99.0.0)' in rubygems repository
+            - https://rubygems.org/ or installed locally.
+            - ""
+            - 'The source contains the following gems matching ''rubocop'':'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/bundle/bundle-compact/filter.lf --sub=install --args='install' --exit=7 --level=full < plugins/bundle/bundle-compact/samples/bundle-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 5
+            - bytes 227
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/bundle/bundle-compact/tests.cue \ bundle-compact \ samples/bundle-error.txt ultra
+  commands:
+    - command: lowfat filter plugins/bundle/bundle-compact/filter.lf --sub=install --args='install' --exit=7 --level=ultra < plugins/bundle/bundle-compact/samples/bundle-error.txt
+      checks:
+        - name: stdout
+          data:
+            - Fetching gem metadata from https://rubygems.org/...........
+            - Could not find gem 'rubocop (= 99.0.0)' in rubygems repository
+            - https://rubygems.org/ or installed locally.
+            - ""
+            - 'The source contains the following gems matching ''rubocop'':'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/bundle/bundle-compact/filter.lf --sub=install --args='install' --exit=7 --level=ultra < plugins/bundle/bundle-compact/samples/bundle-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 5
+            - bytes 227
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/bundle/bundle-compact/tests.cue \ bundle-compact \ samples/bundle-list.txt lite
+  commands:
+    - command: lowfat filter plugins/bundle/bundle-compact/filter.lf --sub=list --args='list' --exit=0 --level=lite < plugins/bundle/bundle-compact/samples/bundle-list.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Gems included by the bundle:'
+            - '  * ast (2.4.3)'
+            - '  * diff-lcs (1.6.2)'
+            - '  * json (2.19.9)'
+            - '  * language_server-protocol (3.17.0.5)'
+            - '  * lint_roller (1.1.0)'
+            - '  * parallel (2.1.0)'
+            - '  * parser (3.3.11.1)'
+            - '  * prism (1.9.0)'
+            - '  * racc (1.8.1)'
+            - '  * rainbow (3.1.1)'
+            - '  * rake (13.4.2)'
+            - '  * regexp_parser (2.12.0)'
+            - '  * rspec (3.13.2)'
+            - '  * rspec-core (3.13.6)'
+            - '  * rspec-expectations (3.13.5)'
+            - '  * rspec-mocks (3.13.8)'
+            - '  * rspec-support (3.13.7)'
+            - '  * rubocop (1.88.0)'
+            - '  * rubocop-ast (1.49.1)'
+            - '  * ruby-progressbar (1.13.0)'
+            - '  * unicode-display_width (3.2.0)'
+            - '  * unicode-emoji (4.2.0)'
+            - Use `bundle info` to print more detailed information about a gem
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/bundle/bundle-compact/filter.lf --sub=list --args='list' --exit=0 --level=lite < plugins/bundle/bundle-compact/samples/bundle-list.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 24
+            - bytes 619
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/bundle/bundle-compact/tests.cue \ bundle-compact \ samples/bundle-list.txt full
+  commands:
+    - command: lowfat filter plugins/bundle/bundle-compact/filter.lf --sub=list --args='list' --exit=0 --level=full < plugins/bundle/bundle-compact/samples/bundle-list.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Gems included by the bundle:'
+            - '  * ast (2.4.3)'
+            - '  * diff-lcs (1.6.2)'
+            - '  * json (2.19.9)'
+            - '  * language_server-protocol (3.17.0.5)'
+            - '  * lint_roller (1.1.0)'
+            - '  * parallel (2.1.0)'
+            - '  * parser (3.3.11.1)'
+            - '  * prism (1.9.0)'
+            - '  * racc (1.8.1)'
+            - '  * rainbow (3.1.1)'
+            - '  * rake (13.4.2)'
+            - '  * regexp_parser (2.12.0)'
+            - '  * rspec (3.13.2)'
+            - '  * rspec-core (3.13.6)'
+            - '  * rspec-expectations (3.13.5)'
+            - '  * rspec-mocks (3.13.8)'
+            - '  * rspec-support (3.13.7)'
+            - '  * rubocop (1.88.0)'
+            - '  * rubocop-ast (1.49.1)'
+            - '  * ruby-progressbar (1.13.0)'
+            - '  * unicode-display_width (3.2.0)'
+            - '  * unicode-emoji (4.2.0)'
+            - Use `bundle info` to print more detailed information about a gem
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/bundle/bundle-compact/filter.lf --sub=list --args='list' --exit=0 --level=full < plugins/bundle/bundle-compact/samples/bundle-list.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 24
+            - bytes 619
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/bundle/bundle-compact/tests.cue \ bundle-compact \ samples/bundle-list.txt ultra
+  commands:
+    - command: lowfat filter plugins/bundle/bundle-compact/filter.lf --sub=list --args='list' --exit=0 --level=ultra < plugins/bundle/bundle-compact/samples/bundle-list.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Gems included by the bundle:'
+            - '  * ast (2.4.3)'
+            - '  * diff-lcs (1.6.2)'
+            - '  * json (2.19.9)'
+            - '  * language_server-protocol (3.17.0.5)'
+            - '  * lint_roller (1.1.0)'
+            - '  * parallel (2.1.0)'
+            - '  * parser (3.3.11.1)'
+            - '  * prism (1.9.0)'
+            - '  * racc (1.8.1)'
+            - '  * rainbow (3.1.1)'
+            - '  * rake (13.4.2)'
+            - '  * regexp_parser (2.12.0)'
+            - '  * rspec (3.13.2)'
+            - '  * rspec-core (3.13.6)'
+            - '  * rspec-expectations (3.13.5)'
+            - '  * rspec-mocks (3.13.8)'
+            - '  * rspec-support (3.13.7)'
+            - '  * rubocop (1.88.0)'
+            - '  * rubocop-ast (1.49.1)'
+            - '... (24 lines total)'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/bundle/bundle-compact/filter.lf --sub=list --args='list' --exit=0 --level=ultra < plugins/bundle/bundle-compact/samples/bundle-list.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 21
+            - bytes 485
+        - name: exitcode
+          data:
+            - "0"

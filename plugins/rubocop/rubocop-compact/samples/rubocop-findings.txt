@@ -1,0 +1,42 @@
+Inspecting 1 file
+W
+
+Offenses:
+
+lib/calc.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.
+# A tiny calculator with an intentional bug + style offenses.
+^
+lib/calc.rb:3:11: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+  def add(a, b)
+          ^
+lib/calc.rb:3:14: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.
+  def add(a, b)
+             ^
+lib/calc.rb:7:13: C: [Correctable] Layout/SpaceInsideParens: Space inside parentheses detected.
+  def total( items )
+            ^
+lib/calc.rb:7:19: C: [Correctable] Layout/SpaceInsideParens: Space inside parentheses detected.
+  def total( items )
+                  ^
+lib/calc.rb:8:8: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator =.
+    sum=0
+       ^
+lib/calc.rb:9:5: C: [Correctable] Style/For: Prefer each over for.
+    for i in items do ...
+    ^^^^^^^^^^^^^^^^^
+lib/calc.rb:10:7: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand +=.
+      sum = sum + i
+      ^^^^^^^^^^^^^
+lib/calc.rb:16:5: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - x.
+    x = 42
+    ^
+
+1 file inspected, 9 offenses detected, 7 offenses autocorrectable
+
+Tip: Based on detected gems, the following RuboCop extension libraries might be helpful:
+  * rubocop-rake (https://rubygems.org/gems/rubocop-rake)
+  * rubocop-rspec (https://rubygems.org/gems/rubocop-rspec)
+
+You can opt out of this message by adding the following to your config (see https://docs.rubocop.org/rubocop/plugins.html#plugin-suggestions for more options):
+  AllCops:
+    SuggestExtensions: false

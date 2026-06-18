@@ -1,0 +1,32 @@
+#!/usr/bin/env lowfat-filter
+# gem-compact — install/update: keep the "Successfully installed" / "N gems
+# installed" state lines and any error, drop documentation/fetch chatter; on
+# failure keep the ERROR block. list/which/env: cap rows with a recovery hint.
+# env: $sub $level $exit $args
+
+define cap(limit):
+    shell: |
+        awk -v lim=$1 'NR<=lim; END { if (NR>lim) printf "... (%d lines total)\n", NR }'
+
+install|update:
+    match exit:
+        failed:
+            keep /(ERROR|error:|Could not|Unable|conflict|Failed|alternatives)/
+            head 30
+            or-shell: tail -30
+        else:
+            keep /(Successfully installed|gems? installed|gems? updated|ERROR|error|warning|Building native)/
+            head 20
+            or "gem: ok"
+
+list|which|env|sources|contents:
+    match level:
+        ultra: cap 20
+        lite:  cap 300
+        else:  cap 80
+
+*:
+    match level:
+        ultra: cap 20
+        lite:  cap 200
+        else:  cap 60

@@ -1,0 +1,4 @@
+rake boom   # Boom
+rake build  # Build the widget
+rake clean  # Clean artifacts
+rake spec   # Run RSpec code examples

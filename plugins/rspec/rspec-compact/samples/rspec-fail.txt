@@ -1,0 +1,30 @@
+..FF
+
+Failures:
+
+  1) Calc totals a list
+     Failure/Error: expect(calc.total([1, 2, 3])).to eq(6)
+
+       expected: 6
+            got: 7
+
+       (compared using ==)
+     # ./spec/calc_spec.rb:15:in `block (2 levels) in <top (required)>'
+
+  2) Calc totals an empty list
+     Failure/Error: expect(calc.total([])).to eq(0)
+
+       expected: 0
+            got: 1
+
+       (compared using ==)
+     # ./spec/calc_spec.rb:19:in `block (2 levels) in <top (required)>'
+
+Finished in 0.0047 seconds (files took 0.0389 seconds to load)
+4 examples, 2 failures
+
+Failed examples:
+
+rspec ./spec/calc_spec.rb:14 # Calc totals a list
+rspec ./spec/calc_spec.rb:18 # Calc totals an empty list
+

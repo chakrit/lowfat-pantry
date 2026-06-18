@@ -1,4 +1,4 @@
-# Pantry catalog — all 52 plugins
+# Pantry catalog — all 57 plugins
 
 What each plugin actually does beyond a dumb head-cap, and the gotchas to know before
 trusting it. Grouped by area; every plugin scales across `ultra`/`full`/`lite` and ships
@@ -76,6 +76,31 @@ plugins (git, docker, grep, find, ls, tree) are not listed here.
   `Installed`/`Audited`); arbitrary `uv run <prog>` is head-capped, never keyword-filtered.
   Gotcha: the copied bodies drift if pytest/ruff change — the real fix is wrapper-unwrap in
   lowfat-core (see backlog "Wrapper commands"). `npx` chose generic-cap instead of dispatch.
+
+## Ruby
+
+- **rspec** — passing runs collapse to the real tally line (`N examples, 0 failures`);
+  on failure keeps the `Failures:` section, the rerun list and the summary, dropping the
+  progress dots and `Finished in` timing. Ultra trims to failure titles + `Failure/Error`
+  lines + tally + rerun. Load errors (no `Failures:` header) are kept via their
+  `LoadError`/`An error occurred` markers.
+- **rubocop** — keeps offense lines (`path:line:col: S: Cop: msg`) and the inspected/
+  offenses tally; drops the source-frame + caret pair under each offense and the
+  `SuggestExtensions` "Tip:" block. Clean run → `rubocop: clean`. Gotcha: exit 2 with no
+  offense lines (bad path) falls back to raw so the diagnostic survives — exit code alone
+  isn't trusted.
+- **bundle** (also `bundler`) — `install`/`update` collapse Fetching/Resolving chatter to
+  the `Bundle complete!` verdict (ultra) or the `Installing` state lines (full); a failed
+  resolve drops the giant `* gem-x.y.z` "matching gems" version dump but keeps the
+  `Could not find`/conflict error. `exec` is another tool's output — capped only, never
+  keyword-filtered.
+- **gem** — `install`/`update` keep `Successfully installed`/`N gems installed` and any
+  `ERROR`, drop fetch/doc chatter; `list`/`env`/`which` cap rows with a `... (N lines
+  total)` recovery hint.
+- **rake** — a task's stdout is a passthrough body, so success only caps it; failure keeps
+  `rake aborted!`, the error message and the `Tasks:` trailer while dropping the Ruby
+  backtrace frames (`:NN:in …`). Gotcha: no fixed subcommands — the task name is `$sub`,
+  so branching is on exit + level, not subcommand.
 
 ## Go / JVM / .NET
 

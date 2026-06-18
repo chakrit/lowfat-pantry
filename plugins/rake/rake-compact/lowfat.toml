@@ -1,0 +1,6 @@
+[plugin]
+name = "rake-compact"
+version = "0.1.0"
+description = "Compact rake task output and trim aborted-task backtraces"
+category = "rake"
+commands = ["rake"]

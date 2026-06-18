@@ -1,0 +1,47 @@
+Fetching gem metadata from https://rubygems.org/...........
+Fetching rake 13.4.2
+Installing rake 13.4.2
+Fetching ast 2.4.3
+Fetching diff-lcs 1.6.2
+Fetching json 2.19.9
+Fetching language_server-protocol 3.17.0.5
+Fetching lint_roller 1.1.0
+Fetching parallel 2.1.0
+Installing ast 2.4.3
+Fetching racc 1.8.1
+Installing diff-lcs 1.6.2
+Installing json 2.19.9 with native extensions
+Installing language_server-protocol 3.17.0.5
+Installing lint_roller 1.1.0
+Installing parallel 2.1.0
+Fetching prism 1.9.0
+Installing racc 1.8.1 with native extensions
+Fetching rainbow 3.1.1
+Fetching regexp_parser 2.12.0
+Installing rainbow 3.1.1
+Fetching rspec-support 3.13.7
+Installing regexp_parser 2.12.0
+Installing rspec-support 3.13.7
+Installing prism 1.9.0 with native extensions
+Fetching ruby-progressbar 1.13.0
+Fetching unicode-emoji 4.2.0
+Fetching rspec-core 3.13.6
+Installing ruby-progressbar 1.13.0
+Fetching rspec-expectations 3.13.5
+Installing unicode-emoji 4.2.0
+Fetching rspec-mocks 3.13.8
+Installing rspec-core 3.13.6
+Fetching unicode-display_width 3.2.0
+Fetching parser 3.3.11.1
+Installing rspec-expectations 3.13.5
+Installing rspec-mocks 3.13.8
+Fetching rspec 3.13.2
+Installing unicode-display_width 3.2.0
+Installing parser 3.3.11.1
+Installing rspec 3.13.2
+Fetching rubocop-ast 1.49.1
+Installing rubocop-ast 1.49.1
+Fetching rubocop 1.88.0
+Installing rubocop 1.88.0
+Bundle complete! 5 Gemfile dependencies, 23 gems now installed.
+Use `bundle info [gemname]` to see where a bundled gem is installed.

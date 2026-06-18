@@ -1,0 +1,57 @@
+#!/usr/bin/env lowfat-filter
+# bundle-compact — install/update: collapse Fetching/Resolving chatter to the
+# "Bundle complete!" verdict; on failure drop the giant "matching gems" version
+# dump but keep the error. list/show: cap rows with a recovery hint. exec: the
+# body is another tool's output — cap only, never keyword-filter.
+# env: $sub $level $exit $args
+
+define cap(limit):
+    shell: |
+        awk -v lim=$1 'NR<=lim; END { if (NR>lim) printf "... (%d lines total)\n", NR }'
+
+install|update|add:
+    match exit:
+        failed:
+            match level:
+                ultra:
+                    drop /^  \* [a-z0-9._-]+-[0-9]/
+                    head 20
+                    or-shell: tail -20
+                lite:
+                    drop /^  \* [a-z0-9._-]+-[0-9]/
+                    head 200
+                full:
+                    drop /^  \* [a-z0-9._-]+-[0-9]/
+                    head 50
+                    or-shell: tail -40
+        else:
+            match level:
+                ultra:
+                    keep /(Bundle (complete|updated)|error|ERROR|Could not|Gem::|conflict|warning)/
+                    head 15
+                    or "bundle: ok"
+                lite:
+                    drop /^Fetching /
+                    head 200
+                full:
+                    drop /^(Fetching |Resolving dep|Using )/
+                    head 50
+                    or-shell: tail -40
+
+exec:
+    match level:
+        ultra: cap 30
+        lite:  cap 300
+        else:  cap 100
+
+list|show|outdated:
+    match level:
+        ultra: cap 20
+        lite:  cap 300
+        else:  cap 80
+
+*:
+    match level:
+        ultra: cap 20
+        lite:  cap 200
+        else:  cap 60

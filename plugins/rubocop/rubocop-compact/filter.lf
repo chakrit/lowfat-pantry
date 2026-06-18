@@ -1,0 +1,41 @@
+#!/usr/bin/env lowfat-filter
+# rubocop-compact — keep offense lines + the inspected/offenses tally, cap long
+# lists with a recovery hint, drop the source-frame/caret pairs and the
+# SuggestExtensions "Tip:" block. Clean run -> verdict; error (no offenses,
+# nonzero exit) -> raw so the diagnostic survives.
+# env: $sub $level $exit $args
+
+define compact-rubocop(limit):
+    shell: |
+        awk -v lim=$1 -v ex=$exit '
+          { raw[NR]=$0 }
+          /^[^:]+:[0-9]+:[0-9]+: [A-Z]: / {
+            findings++
+            if (shown < lim) { out[++outn]=$0; shown++ }
+            next
+          }
+          /^[0-9]+ files? inspected/ { summary=$0; next }
+          END {
+            if (findings) {
+              for (i=1; i<=outn; i++) print out[i]
+              if (summary) print summary
+              if (findings > shown) printf "... (%d offenses total)\n", findings
+            } else if (ex == "0") {
+              print "rubocop: clean"
+            } else {
+              for (i=1; i<=NR; i++) print raw[i]
+            }
+          }
+        '
+
+# --format json / -f json is machine output — pass byte-exact (invariant 1).
+*:
+    if --format json:
+        raw
+    elif -f json:
+        raw
+    else:
+        match level:
+            ultra: compact-rubocop 15
+            full:  compact-rubocop 35
+            lite:  compact-rubocop 70

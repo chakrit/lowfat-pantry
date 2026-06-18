@@ -1,0 +1,16 @@
+
+An error occurred while loading ./spec/broken_spec.rb. - Did you mean?
+                    rspec ./spec/calc_spec.rb
+
+Failure/Error: require_relative "../lib/nonexistent"
+
+LoadError:
+  cannot load such file -- /proj/lib/nonexistent
+# ./spec/broken_spec.rb:1:in `require_relative'
+# ./spec/broken_spec.rb:1:in `<top (required)>'
+No examples found.
+
+
+Finished in 0.00002 seconds (files took 0.03218 seconds to load)
+0 examples, 0 failures, 1 error occurred outside of examples
+

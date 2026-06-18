@@ -1,0 +1,8 @@
+rake aborted!
+kaboom: the build exploded
+/proj/rakefile:19:in `block in <top (required)>'
+/usr/local/bundle/gems/rake-13.4.2/exe/rake:27:in `<top (required)>'
+/usr/local/bin/bundle:25:in `load'
+/usr/local/bin/bundle:25:in `<main>'
+Tasks: TOP => boom
+(See full trace by running task with --trace)

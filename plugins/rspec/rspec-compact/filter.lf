@@ -1,0 +1,32 @@
+#!/usr/bin/env lowfat-filter
+# rspec-compact — collapse passing runs to the tally; on failure keep the
+# Failures section, the error block, the summary and the rerun list, drop the
+# progress dots and timing chatter.
+# env: $sub $level $exit $args
+
+# --format json / -f json is machine output — pass byte-exact (invariant 1).
+*:
+    if --format json:
+        raw
+    elif -f json:
+        raw
+    elif exit ok:
+        keep /examples?, \d+ failures?/
+        head 1
+        or "rspec: passed"
+    else:
+        match level:
+            ultra:
+                keep /(^\s+\d+\) |Failure\/Error|^rspec .*#|examples?, .*(failure|error)|LoadError|cannot load|An error occurred)/
+                head 30
+                or-shell: tail -20
+            lite:
+                drop /^Finished in /
+                drop /^[.FE*]+$/
+                head 200
+            full:
+                drop /^Finished in /
+                drop /^[.FE*]+$/
+                drop /^\s*$/
+                head 60
+                or-shell: tail -40

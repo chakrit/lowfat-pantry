@@ -1,0 +1,5 @@
+Error: No such file or directory: /proj/lib/nonexistent_file.rb
+Inspecting 1 file
+
+
+0 files inspected, no offenses detected

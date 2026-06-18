@@ -1,0 +1,299 @@
+- name: plugins/rspec/rspec-compact/tests.cue \ rspec-compact \ samples/rspec-pass.txt lite
+  commands:
+    - command: lowfat filter plugins/rspec/rspec-compact/filter.lf --sub= --args='spec/' --exit=0 --level=lite < plugins/rspec/rspec-compact/samples/rspec-pass.txt
+      checks:
+        - name: stdout
+          data:
+            - 3 examples, 0 failures
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/rspec/rspec-compact/filter.lf --sub= --args='spec/' --exit=0 --level=lite < plugins/rspec/rspec-compact/samples/rspec-pass.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 23
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/rspec/rspec-compact/tests.cue \ rspec-compact \ samples/rspec-pass.txt full
+  commands:
+    - command: lowfat filter plugins/rspec/rspec-compact/filter.lf --sub= --args='spec/' --exit=0 --level=full < plugins/rspec/rspec-compact/samples/rspec-pass.txt
+      checks:
+        - name: stdout
+          data:
+            - 3 examples, 0 failures
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/rspec/rspec-compact/filter.lf --sub= --args='spec/' --exit=0 --level=full < plugins/rspec/rspec-compact/samples/rspec-pass.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 23
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/rspec/rspec-compact/tests.cue \ rspec-compact \ samples/rspec-pass.txt ultra
+  commands:
+    - command: lowfat filter plugins/rspec/rspec-compact/filter.lf --sub= --args='spec/' --exit=0 --level=ultra < plugins/rspec/rspec-compact/samples/rspec-pass.txt
+      checks:
+        - name: stdout
+          data:
+            - 3 examples, 0 failures
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/rspec/rspec-compact/filter.lf --sub= --args='spec/' --exit=0 --level=ultra < plugins/rspec/rspec-compact/samples/rspec-pass.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 23
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/rspec/rspec-compact/tests.cue \ rspec-compact \ samples/rspec-fail.txt lite
+  commands:
+    - command: lowfat filter plugins/rspec/rspec-compact/filter.lf --sub= --args='spec/' --exit=1 --level=lite < plugins/rspec/rspec-compact/samples/rspec-fail.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Failures:'
+            - ""
+            - '  1) Calc totals a list'
+            - '     Failure/Error: expect(calc.total([1, 2, 3])).to eq(6)'
+            - ""
+            - '       expected: 6'
+            - '            got: 7'
+            - ""
+            - '       (compared using ==)'
+            - '     # ./spec/calc_spec.rb:15:in `block (2 levels) in <top (required)>'''
+            - ""
+            - '  2) Calc totals an empty list'
+            - '     Failure/Error: expect(calc.total([])).to eq(0)'
+            - ""
+            - '       expected: 0'
+            - '            got: 1'
+            - ""
+            - '       (compared using ==)'
+            - '     # ./spec/calc_spec.rb:19:in `block (2 levels) in <top (required)>'''
+            - ""
+            - 4 examples, 2 failures
+            - ""
+            - 'Failed examples:'
+            - ""
+            - 'rspec ./spec/calc_spec.rb:14 # Calc totals a list'
+            - 'rspec ./spec/calc_spec.rb:18 # Calc totals an empty list'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/rspec/rspec-compact/filter.lf --sub= --args='spec/' --exit=1 --level=lite < plugins/rspec/rspec-compact/samples/rspec-fail.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 27
+            - bytes 607
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/rspec/rspec-compact/tests.cue \ rspec-compact \ samples/rspec-fail.txt full
+  commands:
+    - command: lowfat filter plugins/rspec/rspec-compact/filter.lf --sub= --args='spec/' --exit=1 --level=full < plugins/rspec/rspec-compact/samples/rspec-fail.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Failures:'
+            - '  1) Calc totals a list'
+            - '     Failure/Error: expect(calc.total([1, 2, 3])).to eq(6)'
+            - '       expected: 6'
+            - '            got: 7'
+            - '       (compared using ==)'
+            - '     # ./spec/calc_spec.rb:15:in `block (2 levels) in <top (required)>'''
+            - '  2) Calc totals an empty list'
+            - '     Failure/Error: expect(calc.total([])).to eq(0)'
+            - '       expected: 0'
+            - '            got: 1'
+            - '       (compared using ==)'
+            - '     # ./spec/calc_spec.rb:19:in `block (2 levels) in <top (required)>'''
+            - 4 examples, 2 failures
+            - 'Failed examples:'
+            - 'rspec ./spec/calc_spec.rb:14 # Calc totals a list'
+            - 'rspec ./spec/calc_spec.rb:18 # Calc totals an empty list'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/rspec/rspec-compact/filter.lf --sub= --args='spec/' --exit=1 --level=full < plugins/rspec/rspec-compact/samples/rspec-fail.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 17
+            - bytes 597
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/rspec/rspec-compact/tests.cue \ rspec-compact \ samples/rspec-fail.txt ultra
+  commands:
+    - command: lowfat filter plugins/rspec/rspec-compact/filter.lf --sub= --args='spec/' --exit=1 --level=ultra < plugins/rspec/rspec-compact/samples/rspec-fail.txt
+      checks:
+        - name: stdout
+          data:
+            - '  1) Calc totals a list'
+            - '     Failure/Error: expect(calc.total([1, 2, 3])).to eq(6)'
+            - '  2) Calc totals an empty list'
+            - '     Failure/Error: expect(calc.total([])).to eq(0)'
+            - 4 examples, 2 failures
+            - 'rspec ./spec/calc_spec.rb:14 # Calc totals a list'
+            - 'rspec ./spec/calc_spec.rb:18 # Calc totals an empty list'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/rspec/rspec-compact/filter.lf --sub= --args='spec/' --exit=1 --level=ultra < plugins/rspec/rspec-compact/samples/rspec-fail.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 7
+            - bytes 296
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/rspec/rspec-compact/tests.cue \ rspec-compact \ samples/rspec-error.txt lite
+  commands:
+    - command: lowfat filter plugins/rspec/rspec-compact/filter.lf --sub= --args='spec/broken_spec.rb' --exit=1 --level=lite < plugins/rspec/rspec-compact/samples/rspec-error.txt
+      checks:
+        - name: stdout
+          data:
+            - An error occurred while loading ./spec/broken_spec.rb. - Did you mean?
+            - '                    rspec ./spec/calc_spec.rb'
+            - ""
+            - 'Failure/Error: require_relative "../lib/nonexistent"'
+            - ""
+            - 'LoadError:'
+            - '  cannot load such file -- /proj/lib/nonexistent'
+            - '# ./spec/broken_spec.rb:1:in `require_relative'''
+            - '# ./spec/broken_spec.rb:1:in `<top (required)>'''
+            - No examples found.
+            - ""
+            - ""
+            - 0 examples, 0 failures, 1 error occurred outside of examples
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/rspec/rspec-compact/filter.lf --sub= --args='spec/broken_spec.rb' --exit=1 --level=lite < plugins/rspec/rspec-compact/samples/rspec-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 14
+            - bytes 411
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/rspec/rspec-compact/tests.cue \ rspec-compact \ samples/rspec-error.txt full
+  commands:
+    - command: lowfat filter plugins/rspec/rspec-compact/filter.lf --sub= --args='spec/broken_spec.rb' --exit=1 --level=full < plugins/rspec/rspec-compact/samples/rspec-error.txt
+      checks:
+        - name: stdout
+          data:
+            - An error occurred while loading ./spec/broken_spec.rb. - Did you mean?
+            - '                    rspec ./spec/calc_spec.rb'
+            - 'Failure/Error: require_relative "../lib/nonexistent"'
+            - 'LoadError:'
+            - '  cannot load such file -- /proj/lib/nonexistent'
+            - '# ./spec/broken_spec.rb:1:in `require_relative'''
+            - '# ./spec/broken_spec.rb:1:in `<top (required)>'''
+            - No examples found.
+            - 0 examples, 0 failures, 1 error occurred outside of examples
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/rspec/rspec-compact/filter.lf --sub= --args='spec/broken_spec.rb' --exit=1 --level=full < plugins/rspec/rspec-compact/samples/rspec-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 9
+            - bytes 406
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/rspec/rspec-compact/tests.cue \ rspec-compact \ samples/rspec-error.txt ultra
+  commands:
+    - command: lowfat filter plugins/rspec/rspec-compact/filter.lf --sub= --args='spec/broken_spec.rb' --exit=1 --level=ultra < plugins/rspec/rspec-compact/samples/rspec-error.txt
+      checks:
+        - name: stdout
+          data:
+            - An error occurred while loading ./spec/broken_spec.rb. - Did you mean?
+            - 'Failure/Error: require_relative "../lib/nonexistent"'
+            - 'LoadError:'
+            - '  cannot load such file -- /proj/lib/nonexistent'
+            - 0 examples, 0 failures, 1 error occurred outside of examples
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/rspec/rspec-compact/filter.lf --sub= --args='spec/broken_spec.rb' --exit=1 --level=ultra < plugins/rspec/rspec-compact/samples/rspec-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 5
+            - bytes 245
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/rspec/rspec-compact/tests.cue \ rspec-compact \ samples/rspec-json.txt lite
+  commands:
+    - command: lowfat filter plugins/rspec/rspec-compact/filter.lf --sub= --args='--format json' --exit=0 --level=lite < plugins/rspec/rspec-compact/samples/rspec-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{"version":"3.13.6","examples":[{"id":"./spec/pass_spec.rb[1:1]","description":"adds","full_description":"Calc addition adds","status":"passed","file_path":"./spec/pass_spec.rb","line_number":4,"run_time":0.000430656,"pending_message":null},{"id":"./spec/pass_spec.rb[1:2]","description":"zeros","full_description":"Calc addition zeros","status":"passed","file_path":"./spec/pass_spec.rb","line_number":5,"run_time":3.4624e-05,"pending_message":null}],"summary":{"duration":0.000967101,"example_count":2,"failure_count":0,"pending_count":0,"errors_outside_of_examples_count":0},"summary_line":"2 examples, 0 failures"}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/rspec/rspec-compact/filter.lf --sub= --args='--format json' --exit=0 --level=lite < plugins/rspec/rspec-compact/samples/rspec-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 619
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/rspec/rspec-compact/tests.cue \ rspec-compact \ samples/rspec-json.txt full
+  commands:
+    - command: lowfat filter plugins/rspec/rspec-compact/filter.lf --sub= --args='--format json' --exit=0 --level=full < plugins/rspec/rspec-compact/samples/rspec-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{"version":"3.13.6","examples":[{"id":"./spec/pass_spec.rb[1:1]","description":"adds","full_description":"Calc addition adds","status":"passed","file_path":"./spec/pass_spec.rb","line_number":4,"run_time":0.000430656,"pending_message":null},{"id":"./spec/pass_spec.rb[1:2]","description":"zeros","full_description":"Calc addition zeros","status":"passed","file_path":"./spec/pass_spec.rb","line_number":5,"run_time":3.4624e-05,"pending_message":null}],"summary":{"duration":0.000967101,"example_count":2,"failure_count":0,"pending_count":0,"errors_outside_of_examples_count":0},"summary_line":"2 examples, 0 failures"}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/rspec/rspec-compact/filter.lf --sub= --args='--format json' --exit=0 --level=full < plugins/rspec/rspec-compact/samples/rspec-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 619
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/rspec/rspec-compact/tests.cue \ rspec-compact \ samples/rspec-json.txt ultra
+  commands:
+    - command: lowfat filter plugins/rspec/rspec-compact/filter.lf --sub= --args='--format json' --exit=0 --level=ultra < plugins/rspec/rspec-compact/samples/rspec-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{"version":"3.13.6","examples":[{"id":"./spec/pass_spec.rb[1:1]","description":"adds","full_description":"Calc addition adds","status":"passed","file_path":"./spec/pass_spec.rb","line_number":4,"run_time":0.000430656,"pending_message":null},{"id":"./spec/pass_spec.rb[1:2]","description":"zeros","full_description":"Calc addition zeros","status":"passed","file_path":"./spec/pass_spec.rb","line_number":5,"run_time":3.4624e-05,"pending_message":null}],"summary":{"duration":0.000967101,"example_count":2,"failure_count":0,"pending_count":0,"errors_outside_of_examples_count":0},"summary_line":"2 examples, 0 failures"}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/rspec/rspec-compact/filter.lf --sub= --args='--format json' --exit=0 --level=ultra < plugins/rspec/rspec-compact/samples/rspec-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 619
+        - name: exitcode
+          data:
+            - "0"

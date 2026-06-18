@@ -1,0 +1,6 @@
+[plugin]
+name = "rspec-compact"
+version = "0.1.0"
+description = "Compact rspec output to failures/errors and the final summary"
+category = "rspec"
+commands = ["rspec"]

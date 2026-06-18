@@ -1,0 +1,6 @@
+[plugin]
+name = "rubocop-compact"
+version = "0.1.0"
+description = "Compact rubocop output to offense lines and the inspected/offenses tally"
+category = "rubocop"
+commands = ["rubocop"]

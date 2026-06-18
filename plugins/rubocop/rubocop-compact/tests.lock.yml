@@ -1,0 +1,267 @@
+- name: plugins/rubocop/rubocop-compact/tests.cue \ rubocop-compact \ samples/rubocop-clean.txt lite
+  commands:
+    - command: lowfat filter plugins/rubocop/rubocop-compact/filter.lf --sub= --args='lib/' --exit=0 --level=lite < plugins/rubocop/rubocop-compact/samples/rubocop-clean.txt
+      checks:
+        - name: stdout
+          data:
+            - 'rubocop: clean'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/rubocop/rubocop-compact/filter.lf --sub= --args='lib/' --exit=0 --level=lite < plugins/rubocop/rubocop-compact/samples/rubocop-clean.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 15
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/rubocop/rubocop-compact/tests.cue \ rubocop-compact \ samples/rubocop-clean.txt full
+  commands:
+    - command: lowfat filter plugins/rubocop/rubocop-compact/filter.lf --sub= --args='lib/' --exit=0 --level=full < plugins/rubocop/rubocop-compact/samples/rubocop-clean.txt
+      checks:
+        - name: stdout
+          data:
+            - 'rubocop: clean'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/rubocop/rubocop-compact/filter.lf --sub= --args='lib/' --exit=0 --level=full < plugins/rubocop/rubocop-compact/samples/rubocop-clean.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 15
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/rubocop/rubocop-compact/tests.cue \ rubocop-compact \ samples/rubocop-clean.txt ultra
+  commands:
+    - command: lowfat filter plugins/rubocop/rubocop-compact/filter.lf --sub= --args='lib/' --exit=0 --level=ultra < plugins/rubocop/rubocop-compact/samples/rubocop-clean.txt
+      checks:
+        - name: stdout
+          data:
+            - 'rubocop: clean'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/rubocop/rubocop-compact/filter.lf --sub= --args='lib/' --exit=0 --level=ultra < plugins/rubocop/rubocop-compact/samples/rubocop-clean.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 15
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/rubocop/rubocop-compact/tests.cue \ rubocop-compact \ samples/rubocop-findings.txt lite
+  commands:
+    - command: lowfat filter plugins/rubocop/rubocop-compact/filter.lf --sub= --args='lib/' --exit=1 --level=lite < plugins/rubocop/rubocop-compact/samples/rubocop-findings.txt
+      checks:
+        - name: stdout
+          data:
+            - 'lib/calc.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.'
+            - 'lib/calc.rb:3:11: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.'
+            - 'lib/calc.rb:3:14: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.'
+            - 'lib/calc.rb:7:13: C: [Correctable] Layout/SpaceInsideParens: Space inside parentheses detected.'
+            - 'lib/calc.rb:7:19: C: [Correctable] Layout/SpaceInsideParens: Space inside parentheses detected.'
+            - 'lib/calc.rb:8:8: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator =.'
+            - 'lib/calc.rb:9:5: C: [Correctable] Style/For: Prefer each over for.'
+            - 'lib/calc.rb:10:7: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand +=.'
+            - 'lib/calc.rb:16:5: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - x.'
+            - 1 file inspected, 9 offenses detected, 7 offenses autocorrectable
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/rubocop/rubocop-compact/filter.lf --sub= --args='lib/' --exit=1 --level=lite < plugins/rubocop/rubocop-compact/samples/rubocop-findings.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 10
+            - bytes 927
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/rubocop/rubocop-compact/tests.cue \ rubocop-compact \ samples/rubocop-findings.txt full
+  commands:
+    - command: lowfat filter plugins/rubocop/rubocop-compact/filter.lf --sub= --args='lib/' --exit=1 --level=full < plugins/rubocop/rubocop-compact/samples/rubocop-findings.txt
+      checks:
+        - name: stdout
+          data:
+            - 'lib/calc.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.'
+            - 'lib/calc.rb:3:11: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.'
+            - 'lib/calc.rb:3:14: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.'
+            - 'lib/calc.rb:7:13: C: [Correctable] Layout/SpaceInsideParens: Space inside parentheses detected.'
+            - 'lib/calc.rb:7:19: C: [Correctable] Layout/SpaceInsideParens: Space inside parentheses detected.'
+            - 'lib/calc.rb:8:8: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator =.'
+            - 'lib/calc.rb:9:5: C: [Correctable] Style/For: Prefer each over for.'
+            - 'lib/calc.rb:10:7: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand +=.'
+            - 'lib/calc.rb:16:5: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - x.'
+            - 1 file inspected, 9 offenses detected, 7 offenses autocorrectable
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/rubocop/rubocop-compact/filter.lf --sub= --args='lib/' --exit=1 --level=full < plugins/rubocop/rubocop-compact/samples/rubocop-findings.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 10
+            - bytes 927
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/rubocop/rubocop-compact/tests.cue \ rubocop-compact \ samples/rubocop-findings.txt ultra
+  commands:
+    - command: lowfat filter plugins/rubocop/rubocop-compact/filter.lf --sub= --args='lib/' --exit=1 --level=ultra < plugins/rubocop/rubocop-compact/samples/rubocop-findings.txt
+      checks:
+        - name: stdout
+          data:
+            - 'lib/calc.rb:1:1: C: [Correctable] Style/FrozenStringLiteralComment: Missing frozen string literal comment.'
+            - 'lib/calc.rb:3:11: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.'
+            - 'lib/calc.rb:3:14: C: Naming/MethodParameterName: Method parameter must be at least 3 characters long.'
+            - 'lib/calc.rb:7:13: C: [Correctable] Layout/SpaceInsideParens: Space inside parentheses detected.'
+            - 'lib/calc.rb:7:19: C: [Correctable] Layout/SpaceInsideParens: Space inside parentheses detected.'
+            - 'lib/calc.rb:8:8: C: [Correctable] Layout/SpaceAroundOperators: Surrounding space missing for operator =.'
+            - 'lib/calc.rb:9:5: C: [Correctable] Style/For: Prefer each over for.'
+            - 'lib/calc.rb:10:7: C: [Correctable] Style/SelfAssignment: Use self-assignment shorthand +=.'
+            - 'lib/calc.rb:16:5: W: [Correctable] Lint/UselessAssignment: Useless assignment to variable - x.'
+            - 1 file inspected, 9 offenses detected, 7 offenses autocorrectable
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/rubocop/rubocop-compact/filter.lf --sub= --args='lib/' --exit=1 --level=ultra < plugins/rubocop/rubocop-compact/samples/rubocop-findings.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 10
+            - bytes 927
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/rubocop/rubocop-compact/tests.cue \ rubocop-compact \ samples/rubocop-error.txt lite
+  commands:
+    - command: lowfat filter plugins/rubocop/rubocop-compact/filter.lf --sub= --args='lib/nonexistent_file.rb' --exit=2 --level=lite < plugins/rubocop/rubocop-compact/samples/rubocop-error.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Error: No such file or directory: /proj/lib/nonexistent_file.rb'
+            - Inspecting 1 file
+            - ""
+            - ""
+            - 0 files inspected, no offenses detected
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/rubocop/rubocop-compact/filter.lf --sub= --args='lib/nonexistent_file.rb' --exit=2 --level=lite < plugins/rubocop/rubocop-compact/samples/rubocop-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 5
+            - bytes 124
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/rubocop/rubocop-compact/tests.cue \ rubocop-compact \ samples/rubocop-error.txt full
+  commands:
+    - command: lowfat filter plugins/rubocop/rubocop-compact/filter.lf --sub= --args='lib/nonexistent_file.rb' --exit=2 --level=full < plugins/rubocop/rubocop-compact/samples/rubocop-error.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Error: No such file or directory: /proj/lib/nonexistent_file.rb'
+            - Inspecting 1 file
+            - ""
+            - ""
+            - 0 files inspected, no offenses detected
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/rubocop/rubocop-compact/filter.lf --sub= --args='lib/nonexistent_file.rb' --exit=2 --level=full < plugins/rubocop/rubocop-compact/samples/rubocop-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 5
+            - bytes 124
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/rubocop/rubocop-compact/tests.cue \ rubocop-compact \ samples/rubocop-error.txt ultra
+  commands:
+    - command: lowfat filter plugins/rubocop/rubocop-compact/filter.lf --sub= --args='lib/nonexistent_file.rb' --exit=2 --level=ultra < plugins/rubocop/rubocop-compact/samples/rubocop-error.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Error: No such file or directory: /proj/lib/nonexistent_file.rb'
+            - Inspecting 1 file
+            - ""
+            - ""
+            - 0 files inspected, no offenses detected
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/rubocop/rubocop-compact/filter.lf --sub= --args='lib/nonexistent_file.rb' --exit=2 --level=ultra < plugins/rubocop/rubocop-compact/samples/rubocop-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 5
+            - bytes 124
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/rubocop/rubocop-compact/tests.cue \ rubocop-compact \ samples/rubocop-json.txt lite
+  commands:
+    - command: lowfat filter plugins/rubocop/rubocop-compact/filter.lf --sub= --args='--format json' --exit=1 --level=lite < plugins/rubocop/rubocop-compact/samples/rubocop-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{"metadata":{"rubocop_version":"1.88.0","ruby_engine":"ruby","ruby_version":"3.3.11","ruby_patchlevel":"205","ruby_platform":"aarch64-linux"},"files":[{"path":"lib/calc.rb","offenses":[{"severity":"convention","message":"Missing frozen string literal comment.","cop_name":"Style/FrozenStringLiteralComment","corrected":false,"correctable":true,"location":{"start_line":1,"start_column":1,"last_line":1,"last_column":1,"length":1,"line":1,"column":1}},{"severity":"convention","message":"Method parameter must be at least 3 characters long.","cop_name":"Naming/MethodParameterName","corrected":false,"correctable":false,"location":{"start_line":3,"start_column":11,"last_line":3,"last_column":11,"length":1,"line":3,"column":11}},{"severity":"convention","message":"Method parameter must be at least 3 characters long.","cop_name":"Naming/MethodParameterName","corrected":false,"correctable":false,"location":{"start_line":3,"start_column":14,"last_line":3,"last_column":14,"length":1,"line":3,"column":14}},{"severity":"convention","message":"Space inside parentheses detected.","cop_name":"Layout/SpaceInsideParens","corrected":false,"correctable":true,"location":{"start_line":7,"start_column":13,"last_line":7,"last_column":13,"length":1,"line":7,"column":13}},{"severity":"convention","message":"Space inside parentheses detected.","cop_name":"Layout/SpaceInsideParens","corrected":false,"correctable":true,"location":{"start_line":7,"start_column":19,"last_line":7,"last_column":19,"length":1,"line":7,"column":19}},{"severity":"convention","message":"Surrounding space missing for operator `=`.","cop_name":"Layout/SpaceAroundOperators","corrected":false,"correctable":true,"location":{"start_line":8,"start_column":8,"last_line":8,"last_column":8,"length":1,"line":8,"column":8}},{"severity":"convention","message":"Prefer `each` over `for`.","cop_name":"Style/For","corrected":false,"correctable":true,"location":{"start_line":9,"start_column":5,"last_line":11,"last_column":7,"length":45,"line":9,"column":5}},{"severity":"convention","message":"Use self-assignment shorthand `+=`.","cop_name":"Style/SelfAssignment","corrected":false,"correctable":true,"location":{"start_line":10,"start_column":7,"last_line":10,"last_column":19,"length":13,"line":10,"column":7}}]}],"summary":{"offense_count":8,"target_file_count":1,"inspected_file_count":1}}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/rubocop/rubocop-compact/filter.lf --sub= --args='--format json' --exit=1 --level=lite < plugins/rubocop/rubocop-compact/samples/rubocop-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 2356
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/rubocop/rubocop-compact/tests.cue \ rubocop-compact \ samples/rubocop-json.txt full
+  commands:
+    - command: lowfat filter plugins/rubocop/rubocop-compact/filter.lf --sub= --args='--format json' --exit=1 --level=full < plugins/rubocop/rubocop-compact/samples/rubocop-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{"metadata":{"rubocop_version":"1.88.0","ruby_engine":"ruby","ruby_version":"3.3.11","ruby_patchlevel":"205","ruby_platform":"aarch64-linux"},"files":[{"path":"lib/calc.rb","offenses":[{"severity":"convention","message":"Missing frozen string literal comment.","cop_name":"Style/FrozenStringLiteralComment","corrected":false,"correctable":true,"location":{"start_line":1,"start_column":1,"last_line":1,"last_column":1,"length":1,"line":1,"column":1}},{"severity":"convention","message":"Method parameter must be at least 3 characters long.","cop_name":"Naming/MethodParameterName","corrected":false,"correctable":false,"location":{"start_line":3,"start_column":11,"last_line":3,"last_column":11,"length":1,"line":3,"column":11}},{"severity":"convention","message":"Method parameter must be at least 3 characters long.","cop_name":"Naming/MethodParameterName","corrected":false,"correctable":false,"location":{"start_line":3,"start_column":14,"last_line":3,"last_column":14,"length":1,"line":3,"column":14}},{"severity":"convention","message":"Space inside parentheses detected.","cop_name":"Layout/SpaceInsideParens","corrected":false,"correctable":true,"location":{"start_line":7,"start_column":13,"last_line":7,"last_column":13,"length":1,"line":7,"column":13}},{"severity":"convention","message":"Space inside parentheses detected.","cop_name":"Layout/SpaceInsideParens","corrected":false,"correctable":true,"location":{"start_line":7,"start_column":19,"last_line":7,"last_column":19,"length":1,"line":7,"column":19}},{"severity":"convention","message":"Surrounding space missing for operator `=`.","cop_name":"Layout/SpaceAroundOperators","corrected":false,"correctable":true,"location":{"start_line":8,"start_column":8,"last_line":8,"last_column":8,"length":1,"line":8,"column":8}},{"severity":"convention","message":"Prefer `each` over `for`.","cop_name":"Style/For","corrected":false,"correctable":true,"location":{"start_line":9,"start_column":5,"last_line":11,"last_column":7,"length":45,"line":9,"column":5}},{"severity":"convention","message":"Use self-assignment shorthand `+=`.","cop_name":"Style/SelfAssignment","corrected":false,"correctable":true,"location":{"start_line":10,"start_column":7,"last_line":10,"last_column":19,"length":13,"line":10,"column":7}}]}],"summary":{"offense_count":8,"target_file_count":1,"inspected_file_count":1}}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/rubocop/rubocop-compact/filter.lf --sub= --args='--format json' --exit=1 --level=full < plugins/rubocop/rubocop-compact/samples/rubocop-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 2356
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/rubocop/rubocop-compact/tests.cue \ rubocop-compact \ samples/rubocop-json.txt ultra
+  commands:
+    - command: lowfat filter plugins/rubocop/rubocop-compact/filter.lf --sub= --args='--format json' --exit=1 --level=ultra < plugins/rubocop/rubocop-compact/samples/rubocop-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{"metadata":{"rubocop_version":"1.88.0","ruby_engine":"ruby","ruby_version":"3.3.11","ruby_patchlevel":"205","ruby_platform":"aarch64-linux"},"files":[{"path":"lib/calc.rb","offenses":[{"severity":"convention","message":"Missing frozen string literal comment.","cop_name":"Style/FrozenStringLiteralComment","corrected":false,"correctable":true,"location":{"start_line":1,"start_column":1,"last_line":1,"last_column":1,"length":1,"line":1,"column":1}},{"severity":"convention","message":"Method parameter must be at least 3 characters long.","cop_name":"Naming/MethodParameterName","corrected":false,"correctable":false,"location":{"start_line":3,"start_column":11,"last_line":3,"last_column":11,"length":1,"line":3,"column":11}},{"severity":"convention","message":"Method parameter must be at least 3 characters long.","cop_name":"Naming/MethodParameterName","corrected":false,"correctable":false,"location":{"start_line":3,"start_column":14,"last_line":3,"last_column":14,"length":1,"line":3,"column":14}},{"severity":"convention","message":"Space inside parentheses detected.","cop_name":"Layout/SpaceInsideParens","corrected":false,"correctable":true,"location":{"start_line":7,"start_column":13,"last_line":7,"last_column":13,"length":1,"line":7,"column":13}},{"severity":"convention","message":"Space inside parentheses detected.","cop_name":"Layout/SpaceInsideParens","corrected":false,"correctable":true,"location":{"start_line":7,"start_column":19,"last_line":7,"last_column":19,"length":1,"line":7,"column":19}},{"severity":"convention","message":"Surrounding space missing for operator `=`.","cop_name":"Layout/SpaceAroundOperators","corrected":false,"correctable":true,"location":{"start_line":8,"start_column":8,"last_line":8,"last_column":8,"length":1,"line":8,"column":8}},{"severity":"convention","message":"Prefer `each` over `for`.","cop_name":"Style/For","corrected":false,"correctable":true,"location":{"start_line":9,"start_column":5,"last_line":11,"last_column":7,"length":45,"line":9,"column":5}},{"severity":"convention","message":"Use self-assignment shorthand `+=`.","cop_name":"Style/SelfAssignment","corrected":false,"correctable":true,"location":{"start_line":10,"start_column":7,"last_line":10,"last_column":19,"length":13,"line":10,"column":7}}]}],"summary":{"offense_count":8,"target_file_count":1,"inspected_file_count":1}}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/rubocop/rubocop-compact/filter.lf --sub= --args='--format json' --exit=1 --level=ultra < plugins/rubocop/rubocop-compact/samples/rubocop-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 2356
+        - name: exitcode
+          data:
+            - "0"

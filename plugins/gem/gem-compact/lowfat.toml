@@ -1,0 +1,6 @@
+[plugin]
+name = "gem-compact"
+version = "0.1.0"
+description = "Compact gem install/update chatter and list output"
+category = "gem"
+commands = ["gem"]

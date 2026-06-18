@@ -1,0 +1,3 @@
+Successfully installed tty-cursor-0.7.1
+Successfully installed tty-spinner-0.9.3
+2 gems installed

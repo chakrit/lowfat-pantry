@@ -1,0 +1,6 @@
+[plugin]
+name = "bundle-compact"
+version = "0.1.0"
+description = "Compact bundler install/update chatter, list rows, and resolver errors"
+category = "bundle"
+commands = ["bundle", "bundler"]

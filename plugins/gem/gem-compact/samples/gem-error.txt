@@ -1,0 +1,2 @@
+ERROR:  Could not find a valid gem 'this-gem-does-not-exist-xyz123' (>= 0) in any repository
+ERROR:  Possible alternatives: this-gem-does-not-exist, this_person_does_not_exist
