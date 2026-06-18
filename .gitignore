@@ -28,3 +28,6 @@ ace.local.toml
 
 # ace-connect control-mode inbox
 .inbox.log
+
+# ace-afk unattended handoff report
+.afk.log
