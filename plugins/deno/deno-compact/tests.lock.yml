@@ -168,3 +168,459 @@
         - name: exitcode
           data:
             - "0"
+- name: plugins/deno/deno-compact/tests.cue \ deno-compact \ samples/deno-lint-json.txt lite
+  commands:
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=lint --args='lint --json mod.ts' --exit=1 --level=lite < plugins/deno/deno-compact/samples/deno-lint-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{'
+            - '  "version": 1,'
+            - '  "diagnostics": ['
+            - '    {'
+            - '      "filename": "file:///work/mod.ts",'
+            - '      "range": {'
+            - '        "start": {'
+            - '          "line": 1,'
+            - '          "col": 6,'
+            - '          "bytePos": 6'
+            - '        },'
+            - '        "end": {'
+            - '          "line": 1,'
+            - '          "col": 7,'
+            - '          "bytePos": 7'
+            - '        }'
+            - '      },'
+            - '      "message": "`a` is never used",'
+            - '      "code": "no-unused-vars",'
+            - '      "hint": "If this is intentional, prefix it with an underscore like `_a`"'
+            - '    },'
+            - '    {'
+            - '      "filename": "file:///work/mod.ts",'
+            - '      "range": {'
+            - '        "start": {'
+            - '          "line": 2,'
+            - '          "col": 6,'
+            - '          "bytePos": 19'
+            - '        },'
+            - '        "end": {'
+            - '          "line": 2,'
+            - '          "col": 7,'
+            - '          "bytePos": 20'
+            - '        }'
+            - '      },'
+            - '      "message": "`b` is never used",'
+            - '      "code": "no-unused-vars",'
+            - '      "hint": "If this is intentional, prefix it with an underscore like `_b`"'
+            - '    },'
+            - '    {'
+            - '      "filename": "file:///work/mod.ts",'
+            - '      "range": {'
+            - '        "start": {'
+            - '          "line": 3,'
+            - '          "col": 6,'
+            - '          "bytePos": 32'
+            - '        },'
+            - '        "end": {'
+            - '          "line": 3,'
+            - '          "col": 7,'
+            - '          "bytePos": 33'
+            - '        }'
+            - '      },'
+            - '      "message": "`c` is never used",'
+            - '      "code": "no-unused-vars",'
+            - '      "hint": "If this is intentional, prefix it with an underscore like `_c`"'
+            - '    },'
+            - '    {'
+            - '      "filename": "file:///work/mod.ts",'
+            - '      "range": {'
+            - '        "start": {'
+            - '          "line": 4,'
+            - '          "col": 4,'
+            - '          "bytePos": 43'
+            - '        },'
+            - '        "end": {'
+            - '          "line": 4,'
+            - '          "col": 5,'
+            - '          "bytePos": 44'
+            - '        }'
+            - '      },'
+            - '      "message": "`d` is never used",'
+            - '      "code": "no-unused-vars",'
+            - '      "hint": "If this is intentional, prefix it with an underscore like `_d`"'
+            - '    },'
+            - '    {'
+            - '      "filename": "file:///work/mod.ts",'
+            - '      "range": {'
+            - '        "start": {'
+            - '          "line": 4,'
+            - '          "col": 4,'
+            - '          "bytePos": 43'
+            - '        },'
+            - '        "end": {'
+            - '          "line": 4,'
+            - '          "col": 5,'
+            - '          "bytePos": 44'
+            - '        }'
+            - '      },'
+            - '      "message": "`d` is never reassigned",'
+            - '      "code": "prefer-const",'
+            - '      "hint": "Use `const` instead"'
+            - '    }'
+            - '  ],'
+            - '  "errors": [],'
+            - '  "checked_files": ['
+            - '    "/work/mod.ts"'
+            - '  ]'
+            - '}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=lint --args='lint --json mod.ts' --exit=1 --level=lite < plugins/deno/deno-compact/samples/deno-lint-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 99
+            - bytes 2142
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/deno/deno-compact/tests.cue \ deno-compact \ samples/deno-lint-json.txt full
+  commands:
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=lint --args='lint --json mod.ts' --exit=1 --level=full < plugins/deno/deno-compact/samples/deno-lint-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{'
+            - '  "version": 1,'
+            - '  "diagnostics": ['
+            - '    {'
+            - '      "filename": "file:///work/mod.ts",'
+            - '      "range": {'
+            - '        "start": {'
+            - '          "line": 1,'
+            - '          "col": 6,'
+            - '          "bytePos": 6'
+            - '        },'
+            - '        "end": {'
+            - '          "line": 1,'
+            - '          "col": 7,'
+            - '          "bytePos": 7'
+            - '        }'
+            - '      },'
+            - '      "message": "`a` is never used",'
+            - '      "code": "no-unused-vars",'
+            - '      "hint": "If this is intentional, prefix it with an underscore like `_a`"'
+            - '    },'
+            - '    {'
+            - '      "filename": "file:///work/mod.ts",'
+            - '      "range": {'
+            - '        "start": {'
+            - '          "line": 2,'
+            - '          "col": 6,'
+            - '          "bytePos": 19'
+            - '        },'
+            - '        "end": {'
+            - '          "line": 2,'
+            - '          "col": 7,'
+            - '          "bytePos": 20'
+            - '        }'
+            - '      },'
+            - '      "message": "`b` is never used",'
+            - '      "code": "no-unused-vars",'
+            - '      "hint": "If this is intentional, prefix it with an underscore like `_b`"'
+            - '    },'
+            - '    {'
+            - '      "filename": "file:///work/mod.ts",'
+            - '      "range": {'
+            - '        "start": {'
+            - '          "line": 3,'
+            - '          "col": 6,'
+            - '          "bytePos": 32'
+            - '        },'
+            - '        "end": {'
+            - '          "line": 3,'
+            - '          "col": 7,'
+            - '          "bytePos": 33'
+            - '        }'
+            - '      },'
+            - '      "message": "`c` is never used",'
+            - '      "code": "no-unused-vars",'
+            - '      "hint": "If this is intentional, prefix it with an underscore like `_c`"'
+            - '    },'
+            - '    {'
+            - '      "filename": "file:///work/mod.ts",'
+            - '      "range": {'
+            - '        "start": {'
+            - '          "line": 4,'
+            - '          "col": 4,'
+            - '          "bytePos": 43'
+            - '        },'
+            - '        "end": {'
+            - '          "line": 4,'
+            - '          "col": 5,'
+            - '          "bytePos": 44'
+            - '        }'
+            - '      },'
+            - '      "message": "`d` is never used",'
+            - '      "code": "no-unused-vars",'
+            - '      "hint": "If this is intentional, prefix it with an underscore like `_d`"'
+            - '    },'
+            - '    {'
+            - '      "filename": "file:///work/mod.ts",'
+            - '      "range": {'
+            - '        "start": {'
+            - '          "line": 4,'
+            - '          "col": 4,'
+            - '          "bytePos": 43'
+            - '        },'
+            - '        "end": {'
+            - '          "line": 4,'
+            - '          "col": 5,'
+            - '          "bytePos": 44'
+            - '        }'
+            - '      },'
+            - '      "message": "`d` is never reassigned",'
+            - '      "code": "prefer-const",'
+            - '      "hint": "Use `const` instead"'
+            - '    }'
+            - '  ],'
+            - '  "errors": [],'
+            - '  "checked_files": ['
+            - '    "/work/mod.ts"'
+            - '  ]'
+            - '}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=lint --args='lint --json mod.ts' --exit=1 --level=full < plugins/deno/deno-compact/samples/deno-lint-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 99
+            - bytes 2142
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/deno/deno-compact/tests.cue \ deno-compact \ samples/deno-lint-json.txt ultra
+  commands:
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=lint --args='lint --json mod.ts' --exit=1 --level=ultra < plugins/deno/deno-compact/samples/deno-lint-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{'
+            - '  "version": 1,'
+            - '  "diagnostics": ['
+            - '    {'
+            - '      "filename": "file:///work/mod.ts",'
+            - '      "range": {'
+            - '        "start": {'
+            - '          "line": 1,'
+            - '          "col": 6,'
+            - '          "bytePos": 6'
+            - '        },'
+            - '        "end": {'
+            - '          "line": 1,'
+            - '          "col": 7,'
+            - '          "bytePos": 7'
+            - '        }'
+            - '      },'
+            - '      "message": "`a` is never used",'
+            - '      "code": "no-unused-vars",'
+            - '      "hint": "If this is intentional, prefix it with an underscore like `_a`"'
+            - '    },'
+            - '    {'
+            - '      "filename": "file:///work/mod.ts",'
+            - '      "range": {'
+            - '        "start": {'
+            - '          "line": 2,'
+            - '          "col": 6,'
+            - '          "bytePos": 19'
+            - '        },'
+            - '        "end": {'
+            - '          "line": 2,'
+            - '          "col": 7,'
+            - '          "bytePos": 20'
+            - '        }'
+            - '      },'
+            - '      "message": "`b` is never used",'
+            - '      "code": "no-unused-vars",'
+            - '      "hint": "If this is intentional, prefix it with an underscore like `_b`"'
+            - '    },'
+            - '    {'
+            - '      "filename": "file:///work/mod.ts",'
+            - '      "range": {'
+            - '        "start": {'
+            - '          "line": 3,'
+            - '          "col": 6,'
+            - '          "bytePos": 32'
+            - '        },'
+            - '        "end": {'
+            - '          "line": 3,'
+            - '          "col": 7,'
+            - '          "bytePos": 33'
+            - '        }'
+            - '      },'
+            - '      "message": "`c` is never used",'
+            - '      "code": "no-unused-vars",'
+            - '      "hint": "If this is intentional, prefix it with an underscore like `_c`"'
+            - '    },'
+            - '    {'
+            - '      "filename": "file:///work/mod.ts",'
+            - '      "range": {'
+            - '        "start": {'
+            - '          "line": 4,'
+            - '          "col": 4,'
+            - '          "bytePos": 43'
+            - '        },'
+            - '        "end": {'
+            - '          "line": 4,'
+            - '          "col": 5,'
+            - '          "bytePos": 44'
+            - '        }'
+            - '      },'
+            - '      "message": "`d` is never used",'
+            - '      "code": "no-unused-vars",'
+            - '      "hint": "If this is intentional, prefix it with an underscore like `_d`"'
+            - '    },'
+            - '    {'
+            - '      "filename": "file:///work/mod.ts",'
+            - '      "range": {'
+            - '        "start": {'
+            - '          "line": 4,'
+            - '          "col": 4,'
+            - '          "bytePos": 43'
+            - '        },'
+            - '        "end": {'
+            - '          "line": 4,'
+            - '          "col": 5,'
+            - '          "bytePos": 44'
+            - '        }'
+            - '      },'
+            - '      "message": "`d` is never reassigned",'
+            - '      "code": "prefer-const",'
+            - '      "hint": "Use `const` instead"'
+            - '    }'
+            - '  ],'
+            - '  "errors": [],'
+            - '  "checked_files": ['
+            - '    "/work/mod.ts"'
+            - '  ]'
+            - '}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=lint --args='lint --json mod.ts' --exit=1 --level=ultra < plugins/deno/deno-compact/samples/deno-lint-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 99
+            - bytes 2142
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/deno/deno-compact/tests.cue \ deno-compact \ samples/deno-info-json.txt lite
+  commands:
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=info --args='info --json mod.ts' --exit=0 --level=lite < plugins/deno/deno-compact/samples/deno-info-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{'
+            - '  "version": 1,'
+            - '  "roots": ['
+            - '    "file:///work/mod.ts"'
+            - '  ],'
+            - '  "modules": ['
+            - '    {'
+            - '      "kind": "esm",'
+            - '      "local": "/work/mod.ts",'
+            - '      "size": 112,'
+            - '      "mediaType": "TypeScript",'
+            - '      "specifier": "file:///work/mod.ts"'
+            - '    }'
+            - '  ],'
+            - '  "redirects": {},'
+            - '  "npmPackages": {}'
+            - '}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=info --args='info --json mod.ts' --exit=0 --level=lite < plugins/deno/deno-compact/samples/deno-info-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 17
+            - bytes 280
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/deno/deno-compact/tests.cue \ deno-compact \ samples/deno-info-json.txt full
+  commands:
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=info --args='info --json mod.ts' --exit=0 --level=full < plugins/deno/deno-compact/samples/deno-info-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{'
+            - '  "version": 1,'
+            - '  "roots": ['
+            - '    "file:///work/mod.ts"'
+            - '  ],'
+            - '  "modules": ['
+            - '    {'
+            - '      "kind": "esm",'
+            - '      "local": "/work/mod.ts",'
+            - '      "size": 112,'
+            - '      "mediaType": "TypeScript",'
+            - '      "specifier": "file:///work/mod.ts"'
+            - '    }'
+            - '  ],'
+            - '  "redirects": {},'
+            - '  "npmPackages": {}'
+            - '}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=info --args='info --json mod.ts' --exit=0 --level=full < plugins/deno/deno-compact/samples/deno-info-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 17
+            - bytes 280
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/deno/deno-compact/tests.cue \ deno-compact \ samples/deno-info-json.txt ultra
+  commands:
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=info --args='info --json mod.ts' --exit=0 --level=ultra < plugins/deno/deno-compact/samples/deno-info-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{'
+            - '  "version": 1,'
+            - '  "roots": ['
+            - '    "file:///work/mod.ts"'
+            - '  ],'
+            - '  "modules": ['
+            - '    {'
+            - '      "kind": "esm",'
+            - '      "local": "/work/mod.ts",'
+            - '      "size": 112,'
+            - '      "mediaType": "TypeScript",'
+            - '      "specifier": "file:///work/mod.ts"'
+            - '    }'
+            - '  ],'
+            - '  "redirects": {},'
+            - '  "npmPackages": {}'
+            - '}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=info --args='info --json mod.ts' --exit=0 --level=ultra < plugins/deno/deno-compact/samples/deno-info-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 17
+            - bytes 280
+        - name: exitcode
+          data:
+            - "0"

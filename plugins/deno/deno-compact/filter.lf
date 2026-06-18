@@ -6,6 +6,10 @@
 # assertion/error lines; drop the per-test `... ok` passing noise. check/lint:
 # keep the diagnostics (errors with file:line). run/task: the body is the
 # program's own output — never keyword-filter; cap, tail on failure.
+#
+# `--json` (`deno lint --json`, `deno info --json`) is machine output — pass
+# byte-exact (invariant 1). Without the guard `head` truncates it (a 99-line
+# `lint --json` fell to 40 at ultra). Guarded in check|lint and `*`.
 
 # ── test / bench — keep failures + result, drop passing noise ─────────────
 test|bench:
@@ -23,7 +27,9 @@ test|bench:
 
 # ── check / lint — diagnostics; cap, raw-tail fallback ────────────────────
 check|lint:
-    if exit failed:
+    if --json:
+        raw
+    elif exit failed:
         match level:
             ultra:
                 head 40
@@ -51,6 +57,8 @@ run|task|eval|repl|serve:
 
 *:
     if exit failed:
+        raw
+    elif --json:
         raw
     else:
         head 40

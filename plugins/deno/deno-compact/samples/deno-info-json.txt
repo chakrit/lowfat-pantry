@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "roots": [
+    "file:///work/mod.ts"
+  ],
+  "modules": [
+    {
+      "kind": "esm",
+      "local": "/work/mod.ts",
+      "size": 112,
+      "mediaType": "TypeScript",
+      "specifier": "file:///work/mod.ts"
+    }
+  ],
+  "redirects": {},
+  "npmPackages": {}
+}

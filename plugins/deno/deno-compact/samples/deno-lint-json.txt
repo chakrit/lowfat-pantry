@@ -1,0 +1,99 @@
+{
+  "version": 1,
+  "diagnostics": [
+    {
+      "filename": "file:///work/mod.ts",
+      "range": {
+        "start": {
+          "line": 1,
+          "col": 6,
+          "bytePos": 6
+        },
+        "end": {
+          "line": 1,
+          "col": 7,
+          "bytePos": 7
+        }
+      },
+      "message": "`a` is never used",
+      "code": "no-unused-vars",
+      "hint": "If this is intentional, prefix it with an underscore like `_a`"
+    },
+    {
+      "filename": "file:///work/mod.ts",
+      "range": {
+        "start": {
+          "line": 2,
+          "col": 6,
+          "bytePos": 19
+        },
+        "end": {
+          "line": 2,
+          "col": 7,
+          "bytePos": 20
+        }
+      },
+      "message": "`b` is never used",
+      "code": "no-unused-vars",
+      "hint": "If this is intentional, prefix it with an underscore like `_b`"
+    },
+    {
+      "filename": "file:///work/mod.ts",
+      "range": {
+        "start": {
+          "line": 3,
+          "col": 6,
+          "bytePos": 32
+        },
+        "end": {
+          "line": 3,
+          "col": 7,
+          "bytePos": 33
+        }
+      },
+      "message": "`c` is never used",
+      "code": "no-unused-vars",
+      "hint": "If this is intentional, prefix it with an underscore like `_c`"
+    },
+    {
+      "filename": "file:///work/mod.ts",
+      "range": {
+        "start": {
+          "line": 4,
+          "col": 4,
+          "bytePos": 43
+        },
+        "end": {
+          "line": 4,
+          "col": 5,
+          "bytePos": 44
+        }
+      },
+      "message": "`d` is never used",
+      "code": "no-unused-vars",
+      "hint": "If this is intentional, prefix it with an underscore like `_d`"
+    },
+    {
+      "filename": "file:///work/mod.ts",
+      "range": {
+        "start": {
+          "line": 4,
+          "col": 4,
+          "bytePos": 43
+        },
+        "end": {
+          "line": 4,
+          "col": 5,
+          "bytePos": 44
+        }
+      },
+      "message": "`d` is never reassigned",
+      "code": "prefer-const",
+      "hint": "Use `const` instead"
+    }
+  ],
+  "errors": [],
+  "checked_files": [
+    "/work/mod.ts"
+  ]
+}

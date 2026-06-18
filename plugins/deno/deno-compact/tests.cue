@@ -12,6 +12,9 @@ _dir: "plugins/deno/deno-compact"
 _cases: [
 	{sample: "samples/deno-test-fail.txt", sub: "test", args: "test", exit: 1, levels: ["lite", "full", "ultra"]},
 	{sample: "samples/deno-check-clean.txt", sub: "check", args: "check main.ts", exit: 0, levels: ["lite", "full", "ultra"]},
+	// invariant 1: --json is byte-exact machine output; the guard must pass it raw.
+	{sample: "samples/deno-lint-json.txt", sub: "lint", args: "lint --json mod.ts", exit: 1, levels: ["lite", "full", "ultra"]},
+	{sample: "samples/deno-info-json.txt", sub: "info", args: "info --json mod.ts", exit: 0, levels: ["lite", "full", "ultra"]},
 ]
 
 config: {
