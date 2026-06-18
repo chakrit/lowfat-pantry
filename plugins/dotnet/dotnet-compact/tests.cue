@@ -15,6 +15,8 @@ _cases: [
 	{sample: "samples/dotnet-build-error.txt", sub: "build", args: "", exit: 1, levels: ["lite", "full", "ultra"]},
 	{sample: "samples/dotnet-publish.txt", sub: "publish", args: "-c Release", exit: 0, levels: ["lite", "full", "ultra"]},
 	{sample: "samples/dotnet-pack.txt", sub: "pack", args: "-c Release", exit: 0, levels: ["lite", "full", "ultra"]},
+	// invariant 1: `list --format json` is byte-exact; the guard must pass it raw.
+	{sample: "samples/dotnet-list-json.txt", sub: "list", args: "list package --format json", exit: 0, levels: ["lite", "full", "ultra"]},
 ]
 
 config: {

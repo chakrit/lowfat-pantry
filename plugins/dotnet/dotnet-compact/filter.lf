@@ -20,6 +20,10 @@ define compact-dotnet(limit):
 # output shape (restore chatter + diagnostics); pack's "Successfully created
 # package" verdict is in the keep-list, publish's terse path lines fall to the
 # or-shell fallback.
+#
+# `dotnet list ... --format json` is machine output — pass byte-exact
+# (invariant 1). It hits the `*` arm, where `head auto` would truncate a large
+# list; the guard passes it raw.
 build|test|publish|pack:
     match level:
         ultra: compact-dotnet 18
@@ -28,6 +32,8 @@ build|test|publish|pack:
 
 *:
     if exit failed:
+        raw
+    elif --format json:
         raw
     else:
         head auto

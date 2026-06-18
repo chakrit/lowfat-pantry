@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "parameters": "",
+  "projects": [
+    {
+      "path": "/work/app/app.csproj",
+      "frameworks": [
+        {
+          "framework": "net8.0",
+          "topLevelPackages": [
+            {
+              "id": "Newtonsoft.Json",
+              "requestedVersion": "13.0.3",
+              "resolvedVersion": "13.0.3"
+            },
+            {
+              "id": "Serilog",
+              "requestedVersion": "3.1.1",
+              "resolvedVersion": "3.1.1"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
