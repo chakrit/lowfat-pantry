@@ -12,9 +12,16 @@
 # Piped under lowfat (non-TTY), ripgrep defaults to --no-heading, emitting one
 # `path:line:text` match per line. Recursive match lists are the bloat we cap;
 # tighter than grep since rg searches whole trees by default.
+#
+# `--json` emits an ndjson event stream (begin/match/end/summary) — pass
+# byte-exact (invariant 1). Without the guard `head N` truncates it mid-stream
+# (dropping the summary record) into corrupt ndjson. --json is checked first so
+# it raws on any exit (a no-match run still emits a valid summary record).
 
 *:
-    if exit failed:
+    if --json:
+        raw
+    elif exit failed:
         raw
         or "rg: no matches"
     else:

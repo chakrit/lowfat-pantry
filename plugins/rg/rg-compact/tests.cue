@@ -14,6 +14,8 @@ _cases: [
 	{sample: "samples/rg-numbered-full.txt", sub: "", args: "-n", exit: 0, levels: ["lite", "full", "ultra"]},
 	{sample: "samples/rg-count-full.txt", sub: "", args: "--count", exit: 0, levels: ["lite", "full", "ultra"]},
 	{sample: "samples/rg-files-full.txt", sub: "", args: "-l", exit: 0, levels: ["lite", "full", "ultra"]},
+	// invariant 1: --json is a byte-exact ndjson stream; the guard must pass it raw.
+	{sample: "samples/rg-json.txt", sub: "", args: "--json raw", exit: 0, levels: ["lite", "full", "ultra"]},
 ]
 
 config: {
