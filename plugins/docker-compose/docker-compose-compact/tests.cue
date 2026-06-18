@@ -14,6 +14,8 @@ _cases: [
 	{sample: "samples/docker-compose-logs.txt", sub: "logs", args: "logs api", exit: 0, levels: ["lite", "full", "ultra"]},
 	{sample: "samples/docker-compose-ps.txt", sub: "ps", args: "ps", exit: 0, levels: ["lite", "full", "ultra"]},
 	{sample: "samples/docker-compose-build-error.txt", sub: "build", args: "build api", exit: 1, levels: ["lite", "full", "ultra"]},
+	// invariant 1: --format json is byte-exact machine output; the guard must pass it raw.
+	{sample: "samples/compose-config-json.txt", sub: "config", args: "config --format json", exit: 0, levels: ["lite", "full", "ultra"]},
 ]
 
 config: {

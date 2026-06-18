@@ -1,6 +1,12 @@
 #!/usr/bin/env lowfat-filter
 # docker-compose-compact - compact legacy docker-compose output.
 # env: $sub $level $exit $args
+#
+# `--format json` (`ps`/`config`/`images --format json`) is machine output —
+# pass byte-exact (invariant 1). Without the guard compact-ps reshapes it and
+# the `*` drop-blank+head-auto truncates it (a 53-line `config --format json`
+# fell to 15 at ultra). Guard the json value so default `--format table` /
+# yaml still compacts.
 
 define drop-compose-spam:
     drop /^$/
@@ -57,6 +63,8 @@ logs:
 ps:
     if exit failed:
         raw
+    elif --format json:
+        raw
     else:
         match level:
             ultra: compact-ps 12
@@ -65,6 +73,8 @@ ps:
 
 *:
     if exit failed:
+        raw
+    elif --format json:
         raw
     else:
         drop-compose-spam

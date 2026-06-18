@@ -441,3 +441,219 @@
         - name: exitcode
           data:
             - "0"
+- name: plugins/docker-compose/docker-compose-compact/tests.cue \ docker-compose-compact \ samples/compose-config-json.txt lite
+  commands:
+    - command: lowfat filter plugins/docker-compose/docker-compose-compact/filter.lf --sub=config --args='config --format json' --exit=0 --level=lite < plugins/docker-compose/docker-compose-compact/samples/compose-config-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{'
+            - '  "name": "lf-composerfcq6k",'
+            - '  "networks": {'
+            - '    "default": {'
+            - '      "name": "lf-composerfcq6k_default",'
+            - '      "ipam": {}'
+            - '    }'
+            - '  },'
+            - '  "services": {'
+            - '    "db": {'
+            - '      "command": null,'
+            - '      "entrypoint": null,'
+            - '      "environment": {'
+            - '        "POSTGRES_PASSWORD": "secret"'
+            - '      },'
+            - '      "image": "postgres:16",'
+            - '      "networks": {'
+            - '        "default": null'
+            - '      },'
+            - '      "volumes": ['
+            - '        {'
+            - '          "type": "volume",'
+            - '          "source": "dbdata",'
+            - '          "target": "/var/lib/postgresql/data",'
+            - '          "volume": {}'
+            - '        }'
+            - '      ]'
+            - '    },'
+            - '    "web": {'
+            - '      "command": null,'
+            - '      "entrypoint": null,'
+            - '      "environment": {'
+            - '        "APP_ENV": "production"'
+            - '      },'
+            - '      "image": "nginx:1.27",'
+            - '      "networks": {'
+            - '        "default": null'
+            - '      },'
+            - '      "ports": ['
+            - '        {'
+            - '          "mode": "ingress",'
+            - '          "target": 80,'
+            - '          "published": "8080",'
+            - '          "protocol": "tcp"'
+            - '        }'
+            - '      ]'
+            - '    }'
+            - '  },'
+            - '  "volumes": {'
+            - '    "dbdata": {'
+            - '      "name": "lf-composerfcq6k_dbdata"'
+            - '    }'
+            - '  }'
+            - '}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/docker-compose/docker-compose-compact/filter.lf --sub=config --args='config --format json' --exit=0 --level=lite < plugins/docker-compose/docker-compose-compact/samples/compose-config-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 54
+            - bytes 1007
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/docker-compose/docker-compose-compact/tests.cue \ docker-compose-compact \ samples/compose-config-json.txt full
+  commands:
+    - command: lowfat filter plugins/docker-compose/docker-compose-compact/filter.lf --sub=config --args='config --format json' --exit=0 --level=full < plugins/docker-compose/docker-compose-compact/samples/compose-config-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{'
+            - '  "name": "lf-composerfcq6k",'
+            - '  "networks": {'
+            - '    "default": {'
+            - '      "name": "lf-composerfcq6k_default",'
+            - '      "ipam": {}'
+            - '    }'
+            - '  },'
+            - '  "services": {'
+            - '    "db": {'
+            - '      "command": null,'
+            - '      "entrypoint": null,'
+            - '      "environment": {'
+            - '        "POSTGRES_PASSWORD": "secret"'
+            - '      },'
+            - '      "image": "postgres:16",'
+            - '      "networks": {'
+            - '        "default": null'
+            - '      },'
+            - '      "volumes": ['
+            - '        {'
+            - '          "type": "volume",'
+            - '          "source": "dbdata",'
+            - '          "target": "/var/lib/postgresql/data",'
+            - '          "volume": {}'
+            - '        }'
+            - '      ]'
+            - '    },'
+            - '    "web": {'
+            - '      "command": null,'
+            - '      "entrypoint": null,'
+            - '      "environment": {'
+            - '        "APP_ENV": "production"'
+            - '      },'
+            - '      "image": "nginx:1.27",'
+            - '      "networks": {'
+            - '        "default": null'
+            - '      },'
+            - '      "ports": ['
+            - '        {'
+            - '          "mode": "ingress",'
+            - '          "target": 80,'
+            - '          "published": "8080",'
+            - '          "protocol": "tcp"'
+            - '        }'
+            - '      ]'
+            - '    }'
+            - '  },'
+            - '  "volumes": {'
+            - '    "dbdata": {'
+            - '      "name": "lf-composerfcq6k_dbdata"'
+            - '    }'
+            - '  }'
+            - '}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/docker-compose/docker-compose-compact/filter.lf --sub=config --args='config --format json' --exit=0 --level=full < plugins/docker-compose/docker-compose-compact/samples/compose-config-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 54
+            - bytes 1007
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/docker-compose/docker-compose-compact/tests.cue \ docker-compose-compact \ samples/compose-config-json.txt ultra
+  commands:
+    - command: lowfat filter plugins/docker-compose/docker-compose-compact/filter.lf --sub=config --args='config --format json' --exit=0 --level=ultra < plugins/docker-compose/docker-compose-compact/samples/compose-config-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{'
+            - '  "name": "lf-composerfcq6k",'
+            - '  "networks": {'
+            - '    "default": {'
+            - '      "name": "lf-composerfcq6k_default",'
+            - '      "ipam": {}'
+            - '    }'
+            - '  },'
+            - '  "services": {'
+            - '    "db": {'
+            - '      "command": null,'
+            - '      "entrypoint": null,'
+            - '      "environment": {'
+            - '        "POSTGRES_PASSWORD": "secret"'
+            - '      },'
+            - '      "image": "postgres:16",'
+            - '      "networks": {'
+            - '        "default": null'
+            - '      },'
+            - '      "volumes": ['
+            - '        {'
+            - '          "type": "volume",'
+            - '          "source": "dbdata",'
+            - '          "target": "/var/lib/postgresql/data",'
+            - '          "volume": {}'
+            - '        }'
+            - '      ]'
+            - '    },'
+            - '    "web": {'
+            - '      "command": null,'
+            - '      "entrypoint": null,'
+            - '      "environment": {'
+            - '        "APP_ENV": "production"'
+            - '      },'
+            - '      "image": "nginx:1.27",'
+            - '      "networks": {'
+            - '        "default": null'
+            - '      },'
+            - '      "ports": ['
+            - '        {'
+            - '          "mode": "ingress",'
+            - '          "target": 80,'
+            - '          "published": "8080",'
+            - '          "protocol": "tcp"'
+            - '        }'
+            - '      ]'
+            - '    }'
+            - '  },'
+            - '  "volumes": {'
+            - '    "dbdata": {'
+            - '      "name": "lf-composerfcq6k_dbdata"'
+            - '    }'
+            - '  }'
+            - '}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/docker-compose/docker-compose-compact/filter.lf --sub=config --args='config --format json' --exit=0 --level=ultra < plugins/docker-compose/docker-compose-compact/samples/compose-config-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 54
+            - bytes 1007
+        - name: exitcode
+          data:
+            - "0"
