@@ -358,3 +358,117 @@
         - name: exitcode
           data:
             - "0"
+- name: plugins/uv/uv-compact/tests.cue \ uv-compact \ samples/uv-pip-list-json.txt lite
+  commands:
+    - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=pip --args='pip list --format json' --exit=0 --level=lite < plugins/uv/uv-compact/samples/uv-pip-list-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '[{"name":"certifi","version":"2026.6.17"},{"name":"idna","version":"3.18"}]'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=pip --args='pip list --format json' --exit=0 --level=lite < plugins/uv/uv-compact/samples/uv-pip-list-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 76
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/uv/uv-compact/tests.cue \ uv-compact \ samples/uv-pip-list-json.txt full
+  commands:
+    - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=pip --args='pip list --format json' --exit=0 --level=full < plugins/uv/uv-compact/samples/uv-pip-list-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '[{"name":"certifi","version":"2026.6.17"},{"name":"idna","version":"3.18"}]'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=pip --args='pip list --format json' --exit=0 --level=full < plugins/uv/uv-compact/samples/uv-pip-list-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 76
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/uv/uv-compact/tests.cue \ uv-compact \ samples/uv-pip-list-json.txt ultra
+  commands:
+    - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=pip --args='pip list --format json' --exit=0 --level=ultra < plugins/uv/uv-compact/samples/uv-pip-list-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '[{"name":"certifi","version":"2026.6.17"},{"name":"idna","version":"3.18"}]'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=pip --args='pip list --format json' --exit=0 --level=ultra < plugins/uv/uv-compact/samples/uv-pip-list-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 76
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/uv/uv-compact/tests.cue \ uv-compact \ samples/uv-ruff-json-clean.txt lite
+  commands:
+    - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=ruff --args='ruff check --output-format json .' --exit=0 --level=lite < plugins/uv/uv-compact/samples/uv-ruff-json-clean.txt
+      checks:
+        - name: stdout
+          data:
+            - '[]'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=ruff --args='ruff check --output-format json .' --exit=0 --level=lite < plugins/uv/uv-compact/samples/uv-ruff-json-clean.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 3
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/uv/uv-compact/tests.cue \ uv-compact \ samples/uv-ruff-json-clean.txt full
+  commands:
+    - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=ruff --args='ruff check --output-format json .' --exit=0 --level=full < plugins/uv/uv-compact/samples/uv-ruff-json-clean.txt
+      checks:
+        - name: stdout
+          data:
+            - '[]'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=ruff --args='ruff check --output-format json .' --exit=0 --level=full < plugins/uv/uv-compact/samples/uv-ruff-json-clean.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 3
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/uv/uv-compact/tests.cue \ uv-compact \ samples/uv-ruff-json-clean.txt ultra
+  commands:
+    - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=ruff --args='ruff check --output-format json .' --exit=0 --level=ultra < plugins/uv/uv-compact/samples/uv-ruff-json-clean.txt
+      checks:
+        - name: stdout
+          data:
+            - '[]'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=ruff --args='ruff check --output-format json .' --exit=0 --level=ultra < plugins/uv/uv-compact/samples/uv-ruff-json-clean.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 3
+        - name: exitcode
+          data:
+            - "0"

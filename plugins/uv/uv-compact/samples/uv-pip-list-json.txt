@@ -1,0 +1,1 @@
+[{"name":"certifi","version":"2026.6.17"},{"name":"idna","version":"3.18"}]

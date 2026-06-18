@@ -76,6 +76,19 @@ define uv-dispatch:
             for line in out:
                 print(line)
 
+        # invariant 1: structured output (json) must pass byte-exact, never
+        # through the keyword-filter that would collapse it to an "ok" verdict.
+        def has_flag(flag):
+            return any(a == flag or a.startswith(flag + "=") for a in args)
+
+        def has_flag_value(flag, value):
+            for i, a in enumerate(args):
+                if a == flag and i + 1 < len(args) and args[i + 1] == value:
+                    return True
+                if a == flag + "=" + value:
+                    return True
+            return False
+
         # --- pytest: copied from plugins/pytest/pytest-compact/filter.lf ---
         def do_pytest():
             limit = {"ultra": 18, "full": 45, "lite": 90}.get(level, 45)
@@ -114,6 +127,11 @@ define uv-dispatch:
 
         # --- ruff: copied from plugins/ruff/ruff-compact/filter.lf ---
         def do_ruff():
+            # invariant 1: any explicit --output-format/--format -> raw (mirrors
+            # the guard in ruff-compact; this branch is a drift-copy of it).
+            if has_flag("--output-format") or has_flag("--format"):
+                emit(lines)
+                return
             limit = {"ultra": 15, "full": 35, "lite": 70}.get(level, 35)
             findings = []
             summary = None
@@ -134,6 +152,10 @@ define uv-dispatch:
 
         # --- uv's own resolver/install output ---
         def do_uv_native():
+            # invariant 1: `uv pip list --format json` is machine output -> raw.
+            if has_flag_value("--format", "json"):
+                emit(lines)
+                return
             limit = {"ultra": 15, "full": 30, "lite": 60}.get(level, 30)
             keep = []
             for line in lines:
