@@ -1,6 +1,11 @@
 #!/usr/bin/env lowfat-filter
 # terraform-compact - preserve plan/apply signal, drop repetitive diffs/progress.
 # env: $sub $level $exit $args
+#
+# `-json` is machine output (ndjson stream) — pass byte-exact (invariant 1).
+# Without the guard, compact-plan matches none of it (empty output) and the
+# apply/init tails truncate the stream. The guard repeats per compacting rule
+# because `.lf` has no top-level pre-filter and macros can't wrap a cascade.
 
 define compact-plan(limit):
     shell: |
@@ -19,6 +24,8 @@ define compact-plan(limit):
 plan:
     if exit failed:
         raw
+    elif -json:
+        raw
     else:
         match level:
             ultra: compact-plan 40
@@ -27,6 +34,8 @@ plan:
 
 apply:
     if exit failed:
+        raw
+    elif -json:
         raw
     else:
         match level:
@@ -44,6 +53,8 @@ apply:
 init:
     if exit failed:
         raw
+    elif -json:
+        raw
     else:
         match level:
             ultra: tail 20
@@ -52,6 +63,8 @@ init:
 
 *:
     if exit failed:
+        raw
+    elif -json:
         raw
     else:
         head auto

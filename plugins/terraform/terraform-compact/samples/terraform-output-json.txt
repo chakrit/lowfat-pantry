@@ -1,0 +1,48 @@
+{
+  "config": {
+    "sensitive": false,
+    "type": [
+      "object",
+      {
+        "region": "string",
+        "replicas": "number",
+        "tags": [
+          "tuple",
+          [
+            "string",
+            "string"
+          ]
+        ]
+      }
+    ],
+    "value": {
+      "region": "us-east-1",
+      "replicas": 3,
+      "tags": [
+        "prod",
+        "web"
+      ]
+    }
+  },
+  "greeting": {
+    "sensitive": false,
+    "type": "string",
+    "value": "hello from terraform"
+  },
+  "servers": {
+    "sensitive": false,
+    "type": [
+      "tuple",
+      [
+        "string",
+        "string",
+        "string"
+      ]
+    ],
+    "value": [
+      "web-0",
+      "web-1",
+      "web-2"
+    ]
+  }
+}

@@ -1,0 +1,3 @@
+{"@level":"info","@message":"Terraform 1.15.6","@module":"terraform.ui","@timestamp":"2026-06-18T16:02:51.786199Z","terraform":"1.15.6","type":"version","ui":"1.3"}
+{"@level":"info","@message":"Plan: 0 to add, 0 to change, 0 to destroy.","@module":"terraform.ui","@timestamp":"2026-06-18T16:02:51.813605Z","changes":{"add":0,"change":0,"import":0,"remove":0,"action_invocation":0,"operation":"plan"},"type":"change_summary"}
+{"@level":"info","@message":"Outputs: 3","@module":"terraform.ui","@timestamp":"2026-06-18T16:02:51.813700Z","outputs":{"config":{"sensitive":false,"action":"noop"},"greeting":{"sensitive":false,"action":"noop"},"servers":{"sensitive":false,"action":"noop"}},"type":"outputs"}
