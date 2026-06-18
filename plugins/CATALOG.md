@@ -115,7 +115,8 @@ plugins (git, docker, grep, find, ls, tree) are not listed here.
   extracts the `FAILURE:`/`What went wrong:` block, with a capped tail fallback.
 - **dotnet** — strips restore/project chatter; keeps compiler `error CS…` diagnostics,
   build verdicts, and vstest failure blocks (test name + Error Message/Stack Trace).
-  Extraction runs on failure too.
+  Extraction runs on failure too. `publish`/`pack` share the build output shape and route
+  through the same extraction (`pack`'s `Successfully created package` verdict is kept).
 
 ## Infra / ops
 

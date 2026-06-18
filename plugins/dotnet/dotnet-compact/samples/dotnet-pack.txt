@@ -1,0 +1,5 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  Demo -> /tmp/demo/bin/Release/net8.0/Demo.dll
+  The package Demo.1.0.0 is missing a readme. Go to https://aka.ms/nuget/authoring-best-practices/readme to learn why package readmes are important.
+  Successfully created package '/tmp/demo/bin/Release/Demo.1.0.0.nupkg'.

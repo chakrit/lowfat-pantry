@@ -208,3 +208,126 @@
         - name: exitcode
           data:
             - "0"
+- name: plugins/dotnet/dotnet-compact/tests.cue \ dotnet-compact \ samples/dotnet-publish.txt lite
+  commands:
+    - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=publish --args='-c Release' --exit=0 --level=lite < plugins/dotnet/dotnet-compact/samples/dotnet-publish.txt
+      checks:
+        - name: stdout
+          data:
+            - '  Determining projects to restore...'
+            - '  All projects are up-to-date for restore.'
+            - '  Demo -> /tmp/demo/bin/Release/net8.0/Demo.dll'
+            - '  Demo -> /tmp/demo/bin/Release/net8.0/publish/'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=publish --args='-c Release' --exit=0 --level=lite < plugins/dotnet/dotnet-compact/samples/dotnet-publish.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 4
+            - bytes 176
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/dotnet/dotnet-compact/tests.cue \ dotnet-compact \ samples/dotnet-publish.txt full
+  commands:
+    - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=publish --args='-c Release' --exit=0 --level=full < plugins/dotnet/dotnet-compact/samples/dotnet-publish.txt
+      checks:
+        - name: stdout
+          data:
+            - '  Determining projects to restore...'
+            - '  All projects are up-to-date for restore.'
+            - '  Demo -> /tmp/demo/bin/Release/net8.0/Demo.dll'
+            - '  Demo -> /tmp/demo/bin/Release/net8.0/publish/'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=publish --args='-c Release' --exit=0 --level=full < plugins/dotnet/dotnet-compact/samples/dotnet-publish.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 4
+            - bytes 176
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/dotnet/dotnet-compact/tests.cue \ dotnet-compact \ samples/dotnet-publish.txt ultra
+  commands:
+    - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=publish --args='-c Release' --exit=0 --level=ultra < plugins/dotnet/dotnet-compact/samples/dotnet-publish.txt
+      checks:
+        - name: stdout
+          data:
+            - '  Determining projects to restore...'
+            - '  All projects are up-to-date for restore.'
+            - '  Demo -> /tmp/demo/bin/Release/net8.0/Demo.dll'
+            - '  Demo -> /tmp/demo/bin/Release/net8.0/publish/'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=publish --args='-c Release' --exit=0 --level=ultra < plugins/dotnet/dotnet-compact/samples/dotnet-publish.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 4
+            - bytes 176
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/dotnet/dotnet-compact/tests.cue \ dotnet-compact \ samples/dotnet-pack.txt lite
+  commands:
+    - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=pack --args='-c Release' --exit=0 --level=lite < plugins/dotnet/dotnet-compact/samples/dotnet-pack.txt
+      checks:
+        - name: stdout
+          data:
+            - '  Successfully created package ''/tmp/demo/bin/Release/Demo.1.0.0.nupkg''.'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=pack --args='-c Release' --exit=0 --level=lite < plugins/dotnet/dotnet-compact/samples/dotnet-pack.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 73
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/dotnet/dotnet-compact/tests.cue \ dotnet-compact \ samples/dotnet-pack.txt full
+  commands:
+    - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=pack --args='-c Release' --exit=0 --level=full < plugins/dotnet/dotnet-compact/samples/dotnet-pack.txt
+      checks:
+        - name: stdout
+          data:
+            - '  Successfully created package ''/tmp/demo/bin/Release/Demo.1.0.0.nupkg''.'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=pack --args='-c Release' --exit=0 --level=full < plugins/dotnet/dotnet-compact/samples/dotnet-pack.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 73
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/dotnet/dotnet-compact/tests.cue \ dotnet-compact \ samples/dotnet-pack.txt ultra
+  commands:
+    - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=pack --args='-c Release' --exit=0 --level=ultra < plugins/dotnet/dotnet-compact/samples/dotnet-pack.txt
+      checks:
+        - name: stdout
+          data:
+            - '  Successfully created package ''/tmp/demo/bin/Release/Demo.1.0.0.nupkg''.'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=pack --args='-c Release' --exit=0 --level=ultra < plugins/dotnet/dotnet-compact/samples/dotnet-pack.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 73
+        - name: exitcode
+          data:
+            - "0"

@@ -1,0 +1,4 @@
+  Determining projects to restore...
+  All projects are up-to-date for restore.
+  Demo -> /tmp/demo/bin/Release/net8.0/Demo.dll
+  Demo -> /tmp/demo/bin/Release/net8.0/publish/

@@ -13,6 +13,8 @@ _cases: [
 	{sample: "samples/dotnet-build-warning.txt", sub: "build", args: "", exit: 0, levels: ["lite", "full", "ultra"]},
 	{sample: "samples/dotnet-test-fail.txt", sub: "test", args: "", exit: 1, levels: ["lite", "full", "ultra"]},
 	{sample: "samples/dotnet-build-error.txt", sub: "build", args: "", exit: 1, levels: ["lite", "full", "ultra"]},
+	{sample: "samples/dotnet-publish.txt", sub: "publish", args: "-c Release", exit: 0, levels: ["lite", "full", "ultra"]},
+	{sample: "samples/dotnet-pack.txt", sub: "pack", args: "-c Release", exit: 0, levels: ["lite", "full", "ultra"]},
 ]
 
 config: {

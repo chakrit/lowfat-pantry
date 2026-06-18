@@ -10,14 +10,17 @@ define compact-dotnet(limit):
     # keep: compiler diagnostics, build verdicts, vstest failure details (test
     # name + Error Message:/Stack Trace: blocks, incl. their 3+-space-indented
     # bodies), and run summaries (one-line "Failed!  -" and multi-line formats)
-    keep /(error CS[0-9]+|warning CS[0-9]+|Build succeeded\.|Build FAILED\.|Passed!|Failed!|Total tests:|(Passed|Failed|Skipped):[[:space:]]+[0-9]+|Test Run (Failed|Successful)|^[[:space:]]+(Failed [A-Za-z_]|Error Message:|Stack Trace:|at )|^[[:space:]]{3}[^[:space:]])/
+    keep /(error CS[0-9]+|warning CS[0-9]+|Build succeeded\.|Build FAILED\.|Successfully created package|Passed!|Failed!|Total tests:|(Passed|Failed|Skipped):[[:space:]]+[0-9]+|Test Run (Failed|Successful)|^[[:space:]]+(Failed [A-Za-z_]|Error Message:|Stack Trace:|at )|^[[:space:]]{3}[^[:space:]])/
     shell: head -$1
     or-shell: awk 'NF' | head -$1
 
 # Extraction runs on failure too — a failed build is restore chatter + error
 # CS lines, exactly what the keep-list pulls out; the macro's or-shell guards
-# a crash with none of the expected markers.
-build|test:
+# a crash with none of the expected markers. publish/pack share the build
+# output shape (restore chatter + diagnostics); pack's "Successfully created
+# package" verdict is in the keep-list, publish's terse path lines fall to the
+# or-shell fallback.
+build|test|publish|pack:
     match level:
         ultra: compact-dotnet 18
         full:  compact-dotnet 35
