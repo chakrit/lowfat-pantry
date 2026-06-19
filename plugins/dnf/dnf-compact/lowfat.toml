@@ -1,0 +1,7 @@
+[plugin]
+name = "dnf-compact"
+version = "0.1.0"
+description = "Compact dnf/yum install/upgrade output: keep the transaction summary table and Complete!, drop repo-loading meters and per-package [N/M] download/install progress rows; on failure keep the error"
+category = "dnf"
+commands = ["dnf", "yum"]
+subcommands = ["install", "upgrade", "remove", "update", "reinstall", "downgrade"]

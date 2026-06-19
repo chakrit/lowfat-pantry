@@ -1,0 +1,34 @@
+#!/usr/bin/env lowfat-filter
+# apt-compact — compact apt/apt-get install/upgrade output. Registers both
+# `apt` and `apt-get`; capture from apt-get (clean line output).
+# env: $sub $level $exit $args
+#
+# Bloat is the per-file/per-archive chatter: `Get:N http...`, `Selecting
+# previously unselected`, `Preparing to unpack`, `Unpacking ...`, the
+# `(Reading database ...` progress line, debconf frontend fallbacks. Signal is
+# the decision/summary: `The following NEW packages will be installed`,
+# `N upgraded, M newly installed, K to remove`, `Setting up`, `Processing
+# triggers`, and any error/warning. On failure keep the `E:` block (apt prints
+# it at the tail). No JSON output path → no byte-exact guard needed.
+
+define drop-chatter:
+    drop /^(Get:[0-9]|Selecting previously unselected|Preparing to unpack|Unpacking |\(Reading database |Reading package lists|Reading state information|Building dependency tree|Fetched |debconf:|Need to get |After this operation)/
+
+*:
+    if exit failed:
+        keep /(^E:|^W:|Unable to locate|Unable to correct|broken packages|not found|Err:|Failed to fetch|held broken)/
+        head 40
+        or-shell: tail -40
+    else:
+        match level:
+            ultra:
+                drop-chatter
+                keep /(NEW packages|to remove|newly installed|upgraded,|Setting up |Processing triggers|^E:|^W:|warning)/
+                head 25
+                or "apt: ok"
+            lite:
+                drop-chatter
+                head 200
+            else:
+                drop-chatter
+                head 60

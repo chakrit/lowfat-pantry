@@ -1,0 +1,7 @@
+[plugin]
+name = "apt-compact"
+version = "0.1.0"
+description = "Compact apt/apt-get install/upgrade output: keep the NEW-packages decision and N-upgraded/installed summary, drop Get:/Unpacking/Setting-up per-file chatter; on failure keep the E: error"
+category = "apt"
+commands = ["apt", "apt-get"]
+subcommands = ["install", "upgrade", "remove", "update", "full-upgrade", "dist-upgrade"]

@@ -1,0 +1,3 @@
+ERROR: unable to select packages:
+  nosuchpkg123 (no such package):
+    required by: world[nosuchpkg123]

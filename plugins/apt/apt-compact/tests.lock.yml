@@ -1,0 +1,135 @@
+- name: plugins/apt/apt-compact/tests.cue \ apt-compact \ samples/apt-install.txt lite
+  commands:
+    - command: lowfat filter plugins/apt/apt-compact/filter.lf --sub=install --args='install -y --no-install-recommends jq' --exit=0 --level=lite < plugins/apt/apt-compact/samples/apt-install.txt
+      checks:
+        - name: stdout
+          data:
+            - 'The following additional packages will be installed:'
+            - '  libjq1 libonig5'
+            - 'The following NEW packages will be installed:'
+            - '  jq libjq1 libonig5'
+            - 0 upgraded, 3 newly installed, 0 to remove and 0 not upgraded.
+            - Setting up libonig5:arm64 (6.9.9-1+b1) ...
+            - Setting up libjq1:arm64 (1.7.1-6+deb13u2) ...
+            - Setting up jq (1.7.1-6+deb13u2) ...
+            - Processing triggers for libc-bin (2.41-12+deb13u3) ...
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/apt/apt-compact/filter.lf --sub=install --args='install -y --no-install-recommends jq' --exit=0 --level=lite < plugins/apt/apt-compact/samples/apt-install.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 9
+            - bytes 381
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/apt/apt-compact/tests.cue \ apt-compact \ samples/apt-install.txt full
+  commands:
+    - command: lowfat filter plugins/apt/apt-compact/filter.lf --sub=install --args='install -y --no-install-recommends jq' --exit=0 --level=full < plugins/apt/apt-compact/samples/apt-install.txt
+      checks:
+        - name: stdout
+          data:
+            - 'The following additional packages will be installed:'
+            - '  libjq1 libonig5'
+            - 'The following NEW packages will be installed:'
+            - '  jq libjq1 libonig5'
+            - 0 upgraded, 3 newly installed, 0 to remove and 0 not upgraded.
+            - Setting up libonig5:arm64 (6.9.9-1+b1) ...
+            - Setting up libjq1:arm64 (1.7.1-6+deb13u2) ...
+            - Setting up jq (1.7.1-6+deb13u2) ...
+            - Processing triggers for libc-bin (2.41-12+deb13u3) ...
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/apt/apt-compact/filter.lf --sub=install --args='install -y --no-install-recommends jq' --exit=0 --level=full < plugins/apt/apt-compact/samples/apt-install.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 9
+            - bytes 381
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/apt/apt-compact/tests.cue \ apt-compact \ samples/apt-install.txt ultra
+  commands:
+    - command: lowfat filter plugins/apt/apt-compact/filter.lf --sub=install --args='install -y --no-install-recommends jq' --exit=0 --level=ultra < plugins/apt/apt-compact/samples/apt-install.txt
+      checks:
+        - name: stdout
+          data:
+            - 'The following NEW packages will be installed:'
+            - 0 upgraded, 3 newly installed, 0 to remove and 0 not upgraded.
+            - Setting up libonig5:arm64 (6.9.9-1+b1) ...
+            - Setting up libjq1:arm64 (1.7.1-6+deb13u2) ...
+            - Setting up jq (1.7.1-6+deb13u2) ...
+            - Processing triggers for libc-bin (2.41-12+deb13u3) ...
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/apt/apt-compact/filter.lf --sub=install --args='install -y --no-install-recommends jq' --exit=0 --level=ultra < plugins/apt/apt-compact/samples/apt-install.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 6
+            - bytes 289
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/apt/apt-compact/tests.cue \ apt-compact \ samples/apt-install-error.txt lite
+  commands:
+    - command: lowfat filter plugins/apt/apt-compact/filter.lf --sub=install --args='install -y nosuchpkg123' --exit=100 --level=lite < plugins/apt/apt-compact/samples/apt-install-error.txt
+      checks:
+        - name: stdout
+          data:
+            - 'E: Unable to locate package nosuchpkg123'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/apt/apt-compact/filter.lf --sub=install --args='install -y nosuchpkg123' --exit=100 --level=lite < plugins/apt/apt-compact/samples/apt-install-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 41
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/apt/apt-compact/tests.cue \ apt-compact \ samples/apt-install-error.txt full
+  commands:
+    - command: lowfat filter plugins/apt/apt-compact/filter.lf --sub=install --args='install -y nosuchpkg123' --exit=100 --level=full < plugins/apt/apt-compact/samples/apt-install-error.txt
+      checks:
+        - name: stdout
+          data:
+            - 'E: Unable to locate package nosuchpkg123'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/apt/apt-compact/filter.lf --sub=install --args='install -y nosuchpkg123' --exit=100 --level=full < plugins/apt/apt-compact/samples/apt-install-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 41
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/apt/apt-compact/tests.cue \ apt-compact \ samples/apt-install-error.txt ultra
+  commands:
+    - command: lowfat filter plugins/apt/apt-compact/filter.lf --sub=install --args='install -y nosuchpkg123' --exit=100 --level=ultra < plugins/apt/apt-compact/samples/apt-install-error.txt
+      checks:
+        - name: stdout
+          data:
+            - 'E: Unable to locate package nosuchpkg123'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/apt/apt-compact/filter.lf --sub=install --args='install -y nosuchpkg123' --exit=100 --level=ultra < plugins/apt/apt-compact/samples/apt-install-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 41
+        - name: exitcode
+          data:
+            - "0"

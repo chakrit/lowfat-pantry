@@ -1,0 +1,30 @@
+#!/usr/bin/env lowfat-filter
+# apk-compact — compact Alpine apk add/del/upgrade output.
+# env: $sub $level $exit $args
+#
+# Bloat is the per-package `(N/M) Installing <pkg>` lines and `Executing
+# <trigger>` rows. Signal is the trailing `OK: N MiB in N packages` summary and
+# any WARNING/ERROR. On failure apk prints an `ERROR: unable to select packages`
+# block — keep it. No JSON output path → no byte-exact guard needed.
+
+define drop-chatter:
+    drop /^(\([0-9]+\/[0-9]+\) (Installing|Purging|Upgrading) |Executing )/
+
+*:
+    if exit failed:
+        keep /(ERROR|WARNING|error:|warning:|no such package|unsatisfiable|conflict|required by)/
+        head 40
+        or-shell: tail -40
+    else:
+        match level:
+            ultra:
+                drop-chatter
+                keep /(^OK:|ERROR|WARNING|error:|warning:)/
+                head 20
+                or "apk: ok"
+            lite:
+                drop-chatter
+                head 200
+            else:
+                drop-chatter
+                head 60

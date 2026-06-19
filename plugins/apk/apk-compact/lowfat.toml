@@ -1,0 +1,7 @@
+[plugin]
+name = "apk-compact"
+version = "0.1.0"
+description = "Compact apk add/del output: keep the `OK: N MiB in N packages` summary and any error, drop per-package Installing/Executing chatter; on failure keep the ERROR block"
+category = "apk"
+commands = ["apk"]
+subcommands = ["add", "del", "upgrade", "update", "fix"]

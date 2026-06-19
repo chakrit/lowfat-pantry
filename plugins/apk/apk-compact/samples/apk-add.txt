@@ -1,0 +1,4 @@
+(1/2) Installing oniguruma (6.9.10-r0)
+(2/2) Installing jq (1.8.1-r0)
+Executing busybox-1.37.0-r31.trigger
+OK: 9424 KiB in 18 packages
