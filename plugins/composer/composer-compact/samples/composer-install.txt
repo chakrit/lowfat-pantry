@@ -1,0 +1,18 @@
+No composer.lock file present. Updating dependencies to latest instead of installing from lock file. See https://getcomposer.org/install for more information.
+Loading composer repositories with package information
+Updating dependencies
+Lock file operations: 2 installs, 0 updates, 0 removals
+  - Locking psr/container (2.0.2)
+  - Locking psr/log (3.0.2)
+Writing lock file
+Installing dependencies from lock file (including require-dev)
+Package operations: 2 installs, 0 updates, 0 removals
+  - Downloading psr/container (2.0.2)
+  - Downloading psr/log (3.0.2)
+ 0/2 [>---------------------------]   0%
+ 2/2 [============================] 100%
+  - Installing psr/container (2.0.2): Extracting archive
+  - Installing psr/log (3.0.2): Extracting archive
+ 0/2 [>---------------------------]   0%
+ 2/2 [============================] 100%
+Generating autoload files

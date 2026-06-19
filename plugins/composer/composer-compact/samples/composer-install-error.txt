@@ -1,0 +1,8 @@
+No composer.lock file present. Updating dependencies to latest instead of installing from lock file. See https://getcomposer.org/install for more information.
+Loading composer repositories with package information
+Updating dependencies
+Your requirements could not be resolved to an installable set of packages.
+
+  Problem 1
+    - Root composer.json requires psr/container ^999.0, found psr/container[dev-master, dev-add-funding, 1.0.0, ..., 1.x-dev, 2.0.0, 2.0.1, 2.0.2, 2.0.x-dev (alias of dev-master)] but it does not match the constraint.
+

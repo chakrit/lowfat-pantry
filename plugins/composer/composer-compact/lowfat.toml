@@ -1,0 +1,6 @@
+[plugin]
+name = "composer-compact"
+version = "0.1.0"
+description = "Compact composer install/update output for LLM contexts (passes --format json raw)"
+category = "composer"
+commands = ["composer"]
