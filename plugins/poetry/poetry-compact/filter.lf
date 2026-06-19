@@ -1,0 +1,43 @@
+#!/usr/bin/env lowfat-filter
+# poetry-compact — compact poetry lock/install output for LLM contexts.
+# env: $sub $level $exit $args
+#
+# The bloat is per-package install chatter: `  - Installing x (1.2.3)`,
+# `  - Updating`, `  - Removing`, `Pending...`. The signal is the
+# `Package operations: N installs, …` tally, `Writing lock file`,
+# `No dependencies to install`, and any warning. On failure keep the solver
+# error block (`SolverProblemError`, `Because`, `version solving failed`,
+# `Cannot`). `poetry show -f json` must pass through byte-exact (INVARIANT 1).
+
+define drop-progress:
+    drop /^[[:space:]]*[-•][[:space:]]+(Installing|Updating|Removing|Downgrading) /
+    drop /^[[:space:]]*Pending\.\.\./
+
+*:
+    if --format json:
+        raw
+    elif -f json:
+        raw
+    elif exit failed:
+        match level:
+            ultra:
+                keep /(SolverProblemError|^Because|version solving failed|Cannot|conflict|[Ee]rror|incompatible|not (found|allowed))/
+                head 30
+                or-shell: tail -30
+            lite:
+                head 200
+            else:
+                head 80
+    else:
+        match level:
+            ultra:
+                drop-progress
+                keep /(Package operations|Writing lock file|No dependencies to install|[Ww]arning|[Ee]rror)/
+                head 20
+                or "poetry: ok"
+            lite:
+                drop-progress
+                head 200
+            else:
+                drop-progress
+                head 60

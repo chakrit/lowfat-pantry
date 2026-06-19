@@ -1,0 +1,6 @@
+[plugin]
+name = "poetry-compact"
+version = "0.1.0"
+description = "Compact poetry lock/install output to the operations tally and any solver error"
+category = "poetry"
+commands = ["poetry"]
