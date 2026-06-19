@@ -1,4 +1,4 @@
-# Pantry catalog — all 57 plugins
+# Pantry catalog — all 64 plugins
 
 What each plugin actually does beyond a dumb head-cap, and the gotchas to know before
 trusting it. Grouped by area; every plugin scales across `ultra`/`full`/`lite` and ships
@@ -62,6 +62,13 @@ plugins (git, docker, grep, find, ls, tree) are not listed here.
 - **deno** — test keeps `FAILED`/`failures:`/`test result:` and assertion lines, drops
   per-test `... ok`; `run`/`task` bodies only capped, tail on failure. `--json`
   (`lint --json`, `info --json`) passes byte-exact (invariant 1).
+- **jest** / **vitest** — test-runner shape (like pytest): passing runs collapse to a
+  one-line tally (`jest: N passed, N total`), failures keep the failing-test block + final
+  summary, drop per-suite `PASS ` noise; ultra trims to `FAIL` headers + assertion lines.
+  jest `--json`/`--outputFile` and vitest `--reporter=json|junit`/`--outputFile` pass
+  byte-exact (invariant 1). Gotcha: ultra matchers are ASCII-only — a non-ASCII literal in
+  a `.lf` macro body is mangled by lowfat 0.6.8's `$N` arg-expansion (`docs/spec/lf-wishlist.md`);
+  full/lite keep the block wholesale so glyph lines survive via passthrough.
 
 ## Python
 
@@ -89,6 +96,18 @@ plugins (git, docker, grep, find, ls, tree) are not listed here.
   (invariant 1; the ruff guard is mirrored into the drift-copy per the contract).
   Gotcha: the copied bodies drift if pytest/ruff change — the real fix is wrapper-unwrap in
   lowfat-core (see backlog "Wrapper commands"). `npx` chose generic-cap instead of dispatch.
+- **poetry** — installer shape (like pip): drops per-package `- Installing/Updating/Removing`
+  chatter, keeps the `Package operations:` tally + `Writing lock file` + warnings; failed
+  resolve keeps the solver/`Because` block, tail recovery. `poetry show -f json`/`--format json`
+  passes byte-exact (invariant 1).
+
+## PHP
+
+- **composer** — installer shape: drops per-package `Locking`/`Downloading`/`Installing`
+  chatter + `N/M [====]` progress bars, keeps `Lock file operations:`/`Package operations:`
+  tally + autoload + warnings; failed resolve keeps the conflict block, tail recovery.
+  `--format json`/`--format=json` passes byte-exact (invariant 1). Gotcha: a failed resolve
+  exits 2 (not 1) and composer emits progress bars to the pipe even without a TTY.
 
 ## Ruby
 
@@ -137,6 +156,20 @@ plugins (git, docker, grep, find, ls, tree) are not listed here.
   Extraction runs on failure too. `publish`/`pack` share the build output shape and route
   through the same extraction (`pack`'s `Successfully created package` verdict is kept).
   `dotnet list … --format json` passes byte-exact in the `*` arm (invariant 1).
+
+## OS packages
+
+- **apt** (also `apt-get`) — installer shape: drops `Get:`/`Selecting`/`Unpacking`/`(Reading
+  database`/`debconf:` chatter, keeps the `NEW packages will be installed` decision, the
+  `N upgraded, M newly installed` summary, `Setting up`/`Processing triggers`, errors;
+  failure keeps the `E:` block, tail recovery. Capture from `apt-get` (clean line output);
+  no JSON path → no invariant-1 guard. Gotcha: not-found exits 100.
+- **apk** — drops `(N/M) Installing`/`Executing` rows, keeps the `OK: N MiB in N packages`
+  summary + warnings; failure keeps the `ERROR: unable to select packages` block. No JSON path.
+- **dnf** (also `yum`) — drops repo-loading meters, `[N/M] … 100% |` progress rows, the
+  `---` rule; keeps the `Installing:`/dependencies plan, the `Transaction Summary:` block,
+  `Total size`, `Complete!`; failure keeps `No match for argument`/`Failed to resolve`. dnf5
+  output shape; no JSON path.
 
 ## Infra / ops
 

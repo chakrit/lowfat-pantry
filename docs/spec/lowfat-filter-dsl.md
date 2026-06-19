@@ -184,6 +184,12 @@ define compact(limit):                 # one param
 - A macro's ops run as a sub-chain over the current stream
   (`lf.rs:1416-1428`). Macros may call other macros and appear inside
   `split` branches.
+- 🚨 **No non-ASCII literals in a macro body.** `expand_args` rewrites the body
+  byte-wise, which mangles multibyte glyphs (`●`, `❯`, `×`, `→`, `⎯`) — a
+  `keep`/`drop`/`python:` match on such a glyph silently never fires (no crash).
+  Bare `*:` rules are unaffected. Key matches on ASCII text instead; if you must
+  match a glyph, do it in a top-level rule, not a `define`. (lowfat 0.6.8;
+  `docs/spec/lf-wishlist.md` #5.)
 
 ## `match <dim>:` — single-dimension cascade sugar
 

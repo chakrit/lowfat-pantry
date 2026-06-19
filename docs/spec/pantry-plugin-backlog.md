@@ -8,24 +8,26 @@ merges nothing) and needs trust.
 
 ## Testing posture
 
-All 57 plugins have a smoke golden-file spec (`tests.cue` + committed `tests.lock.yml`);
+All 64 plugins have a smoke golden-file spec (`tests.cue` + committed `tests.lock.yml`);
 `scripts/test.sh` runs the suite. smoke is the sole judge; `scripts/measure.py` emits size
 metrics it locks. Harness detail: `smoke-golden-tests.md`.
 
 The legacy test path was retired (2026-06-17): the 52 `tests.yml` and `scripts/validate.py`
 are gone, replaced by the smoke golden suite.
 
-## Built (57 community plugins)
+## Built (64 community plugins)
 
 VCS/CI: `rg` `gh` `glab` · Rust: `cargo` · TS/JS: `tsc` `eslint` `prettier` `npm` `pnpm`
-`yarn` `bun` · Python: `pytest` `ruff` `mypy` `black` `pip` · Ruby: `rspec` `rubocop`
-`bundle` `gem` `rake` · Go: `go` `golangci-lint` · .NET: `dotnet` · JVM: `mvn` `gradlew` ·
+`yarn` `bun` `jest` `vitest` · Python: `pytest` `ruff` `mypy` `black` `pip` `poetry` · PHP:
+`composer` · Ruby: `rspec` `rubocop` `bundle` `gem` `rake` · Go: `go` `golangci-lint` ·
+.NET: `dotnet` · JVM: `mvn` `gradlew` · OS packages: `apt`(+`apt-get`) `apk` `dnf`(+`yum`) ·
 Infra/ops: `kubectl` `helm` `terraform` `ansible-playbook` `systemctl` `journalctl`
 `docker-compose` `ssh` `rsync` · Cloud/data: `aws` `gcloud` `psql` `sqlite3` `env` ·
 Runtimes/build: `make` `npx` `deno` `uv` · Net/data: `curl` `wget` `jq` `json` `tar` ·
 Toolchain: `diff` `prisma` `next` `playwright` · Deploy/data (docker-captured real samples,
 2026-06-10): `redis-cli` `pulumi` `wrangler` `az`. Ruby set: docker-captured real samples,
-2026-06-18.
+2026-06-18. JS test runners + PHP + Python(poetry) + OS package managers: docker-captured
+real samples, 2026-06-19.
 
 lowfat has **no command router** — it intercepts real binaries by name. So
 `eslint`/`prettier`/`pytest`/`vitest` are their own plugins, never folded into abstract

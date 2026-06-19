@@ -82,3 +82,24 @@ forwarded. Gives wrappers a stable delegation target without path-hardcoding —
 weight alternative to #1/#2 if those are too invasive.
 
 **Upstream issue.** _none filed yet_
+
+## 5. Non-ASCII literals corrupted inside `define` macro bodies (`$N` arg-expansion bug)
+
+**Problem.** A literal multibyte glyph (`●`, `❯`, `×`, `→`, `⎯`) inside a `define` macro
+body — e.g. a `keep`/`drop` regex or a `python:` body — is mangled by lowfat 0.6.8's `$N`
+arg-expansion pass, so a match on that glyph silently never fires (no crash). Confirmed
+2026-06-19: identical bytes match fine in a bare `*:` rule but not when the same pattern
+lives in a `define`d macro; stdin decoding itself is unaffected. Class: the macro
+arg-substitution rewrites the body byte-wise and corrupts multibyte sequences.
+
+**Workaround in pantry.** `jest`/`vitest` matchers are ASCII-only — the `ultra` keep-list is
+bounded by ASCII text (`FAIL`, `Expected/Received`, `AssertionError`) instead of the runners'
+glyph lines. `full`/`lite` keep the failure block wholesale, so glyph lines survive via
+passthrough; no signal loss, but glyph-keyed *matching* is off-limits in macros.
+
+**Proposed shape.** Make `$N` arg-expansion operate on a decoded string (or only on
+`$`-prefixed tokens), not raw bytes, so multibyte literals in macro bodies round-trip
+unchanged. Until then, the DSL spec should warn: don't key matches on non-ASCII glyphs
+inside a `define`.
+
+**Upstream issue.** _none filed yet_
