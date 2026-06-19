@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="vitest tests" tests="4" failures="1" errors="0" time="0.356">
+    <testsuite name="sum.fail.test.js" timestamp="2026-06-19T11:00:54.711Z" hostname="48432354a559" tests="2" failures="1" errors="0" skipped="0" time="0.006287051">
+        <testcase classname="sum.fail.test.js" name="adds 1 + 2 to equal 3 (pass)" time="0.000818954">
+        </testcase>
+        <testcase classname="sum.fail.test.js" name="broken: adds 1 + 1 to equal 3" time="0.00488135">
+            <failure message="expected 2 to be 3 // Object.is equality" type="AssertionError">
+AssertionError: expected 2 to be 3 // Object.is equality
+
+- Expected
++ Received
+
+- 3
++ 2
+
+ ❯ sum.fail.test.js:4:65
+            </failure>
+        </testcase>
+    </testsuite>
+    <testsuite name="sum.test.js" timestamp="2026-06-19T11:00:54.716Z" hostname="48432354a559" tests="2" failures="0" errors="0" skipped="0" time="0.001533868">
+        <testcase classname="sum.test.js" name="adds 1 + 2 to equal 3" time="0.000824413">
+        </testcase>
+        <testcase classname="sum.test.js" name="adds 2 + 2 to equal 4" time="0.000166416">
+        </testcase>
+    </testsuite>
+</testsuites>

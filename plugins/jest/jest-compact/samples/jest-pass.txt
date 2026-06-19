@@ -1,0 +1,9 @@
+PASS __tests__/sum.test.js
+  ✓ adds 1 + 2 to equal 3 (2 ms)
+  ✓ adds 2 + 2 to equal 4
+
+Test Suites: 1 passed, 1 total
+Tests:       2 passed, 2 total
+Snapshots:   0 total
+Time:        0.333 s
+Ran all test suites matching /__tests__\/sum.test.js/i.

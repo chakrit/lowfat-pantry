@@ -1,0 +1,6 @@
+[plugin]
+name = "jest-compact"
+version = "0.1.0"
+description = "Compact jest output to failing tests and the final summary tally"
+category = "jest"
+commands = ["jest"]

@@ -1,0 +1,70 @@
+#!/usr/bin/env lowfat-filter
+# jest-compact — pass: collapse to a one-line tally; fail: keep the failing-test
+# blocks (● / FAIL) plus the final summary, drop per-suite PASS noise, scale body
+# by level. Structured output (--json / --outputFile) passes through byte-exact.
+# env: $sub $level $exit $args
+
+define compact-jest(limit):
+    python: |
+        import os
+        import re
+        import sys
+
+        limit = $1
+        level = os.environ.get("level", "full")
+        exit_code = os.environ.get("exit", "0")
+        lines = sys.stdin.buffer.read().decode("utf-8", "replace").splitlines()
+
+        if exit_code == "0":
+            for line in lines:
+                m = re.search(r"Tests:\s+(.*)", line)
+                if m:
+                    print(f"jest: {m.group(1).strip()}")
+                    break
+            else:
+                print("jest: passed")
+            raise SystemExit(0)
+
+        out = []
+        in_summary = False
+        for line in lines:
+            # final summary block: Test Suites: / Tests: / Snapshots: / Time:
+            if re.match(r"(Test Suites|Tests|Snapshots|Time|Ran all):", line):
+                in_summary = True
+                out.append(line)
+                continue
+            if in_summary:
+                # blank/continuation after the summary started — keep collapsing
+                continue
+            # failing-test header and failure block body
+            if line.startswith("FAIL "):
+                out.append(line)
+                continue
+            if level == "ultra":
+                # ultra: FAIL headers (above) + the assertion verdict lines. The
+                # per-test bullet line is matched structurally (a short indented
+                # line right after FAIL, before the blank gap) rather than by its
+                # non-ASCII glyph: a literal multibyte char in a macro body is
+                # corrupted by lowfat's $N arg-expansion, so we avoid it.
+                stripped = line.lstrip()
+                if re.match(r"(Expected|Received|expect\()", stripped):
+                    out.append(line)
+            else:
+                # full/lite: the whole failure block (code frame, location, etc.),
+                # minus the per-suite PASS noise which never reaches here
+                if not line.startswith("PASS "):
+                    out.append(line)
+
+        for line in out[:limit + 8]:
+            print(line)
+
+*:
+    if --json:
+        raw
+    elif --outputFile:
+        raw
+    else:
+        match level:
+            ultra: compact-jest 18
+            full:  compact-jest 45
+            lite:  compact-jest 90

@@ -1,0 +1,6 @@
+[plugin]
+name = "vitest-compact"
+version = "0.1.0"
+description = "Compact vitest output to failing tests and the final summary tally"
+category = "vitest"
+commands = ["vitest"]

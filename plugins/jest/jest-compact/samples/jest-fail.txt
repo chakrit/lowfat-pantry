@@ -1,0 +1,22 @@
+PASS __tests__/sum.test.js
+FAIL __tests__/sum.fail.test.js
+  ● broken: adds 1 + 1 to equal 3
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 3
+    Received: 2
+
+      1 | const sum = require('../sum');
+      2 | test('adds 1 + 2 to equal 3 (pass)', () => { expect(sum(1, 2)).toBe(3); });
+    > 3 | test('broken: adds 1 + 1 to equal 3', () => { expect(sum(1, 1)).toBe(3); });
+        |                                                                 ^
+      4 |
+
+      at Object.toBe (__tests__/sum.fail.test.js:3:65)
+
+Test Suites: 1 failed, 1 passed, 2 total
+Tests:       1 failed, 3 passed, 4 total
+Snapshots:   0 total
+Time:        0.558 s
+Ran all test suites.

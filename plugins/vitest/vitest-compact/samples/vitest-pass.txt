@@ -1,0 +1,10 @@
+
+ RUN  v2.1.9 /app
+
+ ✓ sum.test.js (2 tests) 2ms
+
+ Test Files  1 passed (1)
+      Tests  2 passed (2)
+   Start at  11:00:50
+   Duration  412ms (transform 34ms, setup 0ms, collect 32ms, tests 2ms, environment 0ms, prepare 90ms)
+

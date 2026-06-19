@@ -1,0 +1,355 @@
+- name: plugins/vitest/vitest-compact/tests.cue \ vitest-compact \ samples/vitest-fail.txt lite
+  commands:
+    - command: lowfat filter plugins/vitest/vitest-compact/filter.lf --sub= --args='run' --exit=1 --level=lite < plugins/vitest/vitest-compact/samples/vitest-fail.txt
+      checks:
+        - name: stdout
+          data:
+            - ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+            - ""
+            - ' FAIL  sum.fail.test.js > broken: adds 1 + 1 to equal 3'
+            - 'AssertionError: expected 2 to be 3 // Object.is equality'
+            - ""
+            - '- Expected'
+            - + Received
+            - ""
+            - '- 3'
+            - + 2
+            - ""
+            - ' ❯ sum.fail.test.js:4:65'
+            - '      2| import { sum } from ''./sum.js'';'
+            - '      3| test(''adds 1 + 2 to equal 3 (pass)'', () => { expect(sum(1, 2)).toBe(3)…'
+            - '      4| test(''broken: adds 1 + 1 to equal 3'', () => { expect(sum(1, 1)).toBe(3…'
+            - '       |                                                                 ^'
+            - '      5| '
+            - ""
+            - ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+            - ""
+            - ' Test Files  1 failed | 1 passed (2)'
+            - '      Tests  1 failed | 3 passed (4)'
+            - '   Start at  11:00:51'
+            - '   Duration  294ms (transform 31ms, setup 0ms, collect 38ms, tests 10ms, environment 0ms, prepare 134ms)'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/vitest/vitest-compact/filter.lf --sub= --args='run' --exit=1 --level=lite < plugins/vitest/vitest-compact/samples/vitest-fail.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 24
+            - bytes 809
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/vitest/vitest-compact/tests.cue \ vitest-compact \ samples/vitest-fail.txt full
+  commands:
+    - command: lowfat filter plugins/vitest/vitest-compact/filter.lf --sub= --args='run' --exit=1 --level=full < plugins/vitest/vitest-compact/samples/vitest-fail.txt
+      checks:
+        - name: stdout
+          data:
+            - ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+            - ""
+            - ' FAIL  sum.fail.test.js > broken: adds 1 + 1 to equal 3'
+            - 'AssertionError: expected 2 to be 3 // Object.is equality'
+            - ""
+            - '- Expected'
+            - + Received
+            - ""
+            - '- 3'
+            - + 2
+            - ""
+            - ' ❯ sum.fail.test.js:4:65'
+            - '      2| import { sum } from ''./sum.js'';'
+            - '      3| test(''adds 1 + 2 to equal 3 (pass)'', () => { expect(sum(1, 2)).toBe(3)…'
+            - '      4| test(''broken: adds 1 + 1 to equal 3'', () => { expect(sum(1, 1)).toBe(3…'
+            - '       |                                                                 ^'
+            - '      5| '
+            - ""
+            - ⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯⎯[1/1]⎯
+            - ""
+            - ' Test Files  1 failed | 1 passed (2)'
+            - '      Tests  1 failed | 3 passed (4)'
+            - '   Start at  11:00:51'
+            - '   Duration  294ms (transform 31ms, setup 0ms, collect 38ms, tests 10ms, environment 0ms, prepare 134ms)'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/vitest/vitest-compact/filter.lf --sub= --args='run' --exit=1 --level=full < plugins/vitest/vitest-compact/samples/vitest-fail.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 24
+            - bytes 809
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/vitest/vitest-compact/tests.cue \ vitest-compact \ samples/vitest-fail.txt ultra
+  commands:
+    - command: lowfat filter plugins/vitest/vitest-compact/filter.lf --sub= --args='run' --exit=1 --level=ultra < plugins/vitest/vitest-compact/samples/vitest-fail.txt
+      checks:
+        - name: stdout
+          data:
+            - ⎯⎯⎯⎯⎯⎯⎯ Failed Tests 1 ⎯⎯⎯⎯⎯⎯⎯
+            - ' FAIL  sum.fail.test.js > broken: adds 1 + 1 to equal 3'
+            - 'AssertionError: expected 2 to be 3 // Object.is equality'
+            - ' Test Files  1 failed | 1 passed (2)'
+            - '      Tests  1 failed | 3 passed (4)'
+            - '   Start at  11:00:51'
+            - '   Duration  294ms (transform 31ms, setup 0ms, collect 38ms, tests 10ms, environment 0ms, prepare 134ms)'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/vitest/vitest-compact/filter.lf --sub= --args='run' --exit=1 --level=ultra < plugins/vitest/vitest-compact/samples/vitest-fail.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 7
+            - bytes 373
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/vitest/vitest-compact/tests.cue \ vitest-compact \ samples/vitest-pass.txt lite
+  commands:
+    - command: lowfat filter plugins/vitest/vitest-compact/filter.lf --sub= --args='run' --exit=0 --level=lite < plugins/vitest/vitest-compact/samples/vitest-pass.txt
+      checks:
+        - name: stdout
+          data:
+            - 'vitest: 2 passed (2)'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/vitest/vitest-compact/filter.lf --sub= --args='run' --exit=0 --level=lite < plugins/vitest/vitest-compact/samples/vitest-pass.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 21
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/vitest/vitest-compact/tests.cue \ vitest-compact \ samples/vitest-pass.txt full
+  commands:
+    - command: lowfat filter plugins/vitest/vitest-compact/filter.lf --sub= --args='run' --exit=0 --level=full < plugins/vitest/vitest-compact/samples/vitest-pass.txt
+      checks:
+        - name: stdout
+          data:
+            - 'vitest: 2 passed (2)'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/vitest/vitest-compact/filter.lf --sub= --args='run' --exit=0 --level=full < plugins/vitest/vitest-compact/samples/vitest-pass.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 21
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/vitest/vitest-compact/tests.cue \ vitest-compact \ samples/vitest-pass.txt ultra
+  commands:
+    - command: lowfat filter plugins/vitest/vitest-compact/filter.lf --sub= --args='run' --exit=0 --level=ultra < plugins/vitest/vitest-compact/samples/vitest-pass.txt
+      checks:
+        - name: stdout
+          data:
+            - 'vitest: 2 passed (2)'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/vitest/vitest-compact/filter.lf --sub= --args='run' --exit=0 --level=ultra < plugins/vitest/vitest-compact/samples/vitest-pass.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 21
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/vitest/vitest-compact/tests.cue \ vitest-compact \ samples/vitest-json.txt lite
+  commands:
+    - command: lowfat filter plugins/vitest/vitest-compact/filter.lf --sub= --args='run --reporter=json' --exit=1 --level=lite < plugins/vitest/vitest-compact/samples/vitest-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{"numTotalTestSuites":2,"numPassedTestSuites":1,"numFailedTestSuites":1,"numPendingTestSuites":0,"numTotalTests":4,"numPassedTests":3,"numFailedTests":1,"numPendingTests":0,"numTodoTests":0,"snapshot":{"added":0,"failure":false,"filesAdded":0,"filesRemoved":0,"filesRemovedList":[],"filesUnmatched":0,"filesUpdated":0,"matched":0,"total":0,"unchecked":0,"uncheckedKeysByFile":[],"unmatched":0,"updated":0,"didUpdate":false},"startTime":1781866852772,"success":false,"testResults":[{"assertionResults":[{"ancestorTitles":[],"fullName":"adds 1 + 2 to equal 3 (pass)","status":"passed","title":"adds 1 + 2 to equal 3 (pass)","duration":0.7478720000000294,"failureMessages":[],"meta":{}},{"ancestorTitles":[],"fullName":"broken: adds 1 + 1 to equal 3","status":"failed","title":"broken: adds 1 + 1 to equal 3","duration":11.183067999999992,"failureMessages":["AssertionError: expected 2 to be 3 // Object.is equality\n    at /app/sum.fail.test.js:4:65\n    at file:///app/node_modules/@vitest/runner/dist/index.js:146:14\n    at file:///app/node_modules/@vitest/runner/dist/index.js:533:11\n    at runWithTimeout (file:///app/node_modules/@vitest/runner/dist/index.js:39:7)\n    at runTest (file:///app/node_modules/@vitest/runner/dist/index.js:1056:17)\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at runSuite (file:///app/node_modules/@vitest/runner/dist/index.js:1205:15)\n    at runFiles (file:///app/node_modules/@vitest/runner/dist/index.js:1262:5)\n    at startTests (file:///app/node_modules/@vitest/runner/dist/index.js:1271:3)\n    at file:///app/node_modules/vitest/dist/chunks/runBaseTests.3qpJUEJM.js:126:11"],"meta":{}}],"startTime":1781866853090,"endTime":1781866853102.183,"status":"failed","message":"","name":"/app/sum.fail.test.js"},{"assertionResults":[{"ancestorTitles":[],"fullName":"adds 1 + 2 to equal 3","status":"passed","title":"adds 1 + 2 to equal 3","duration":0.8274540000000457,"failureMessages":[],"meta":{}},{"ancestorTitles":[],"fullName":"adds 2 + 2 to equal 4","status":"passed","title":"adds 2 + 2 to equal 4","duration":0.16495800000001282,"failureMessages":[],"meta":{}}],"startTime":1781866853098,"endTime":1781866853099.165,"status":"passed","message":"","name":"/app/sum.test.js"}]}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/vitest/vitest-compact/filter.lf --sub= --args='run --reporter=json' --exit=1 --level=lite < plugins/vitest/vitest-compact/samples/vitest-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 2257
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/vitest/vitest-compact/tests.cue \ vitest-compact \ samples/vitest-json.txt full
+  commands:
+    - command: lowfat filter plugins/vitest/vitest-compact/filter.lf --sub= --args='run --reporter=json' --exit=1 --level=full < plugins/vitest/vitest-compact/samples/vitest-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{"numTotalTestSuites":2,"numPassedTestSuites":1,"numFailedTestSuites":1,"numPendingTestSuites":0,"numTotalTests":4,"numPassedTests":3,"numFailedTests":1,"numPendingTests":0,"numTodoTests":0,"snapshot":{"added":0,"failure":false,"filesAdded":0,"filesRemoved":0,"filesRemovedList":[],"filesUnmatched":0,"filesUpdated":0,"matched":0,"total":0,"unchecked":0,"uncheckedKeysByFile":[],"unmatched":0,"updated":0,"didUpdate":false},"startTime":1781866852772,"success":false,"testResults":[{"assertionResults":[{"ancestorTitles":[],"fullName":"adds 1 + 2 to equal 3 (pass)","status":"passed","title":"adds 1 + 2 to equal 3 (pass)","duration":0.7478720000000294,"failureMessages":[],"meta":{}},{"ancestorTitles":[],"fullName":"broken: adds 1 + 1 to equal 3","status":"failed","title":"broken: adds 1 + 1 to equal 3","duration":11.183067999999992,"failureMessages":["AssertionError: expected 2 to be 3 // Object.is equality\n    at /app/sum.fail.test.js:4:65\n    at file:///app/node_modules/@vitest/runner/dist/index.js:146:14\n    at file:///app/node_modules/@vitest/runner/dist/index.js:533:11\n    at runWithTimeout (file:///app/node_modules/@vitest/runner/dist/index.js:39:7)\n    at runTest (file:///app/node_modules/@vitest/runner/dist/index.js:1056:17)\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at runSuite (file:///app/node_modules/@vitest/runner/dist/index.js:1205:15)\n    at runFiles (file:///app/node_modules/@vitest/runner/dist/index.js:1262:5)\n    at startTests (file:///app/node_modules/@vitest/runner/dist/index.js:1271:3)\n    at file:///app/node_modules/vitest/dist/chunks/runBaseTests.3qpJUEJM.js:126:11"],"meta":{}}],"startTime":1781866853090,"endTime":1781866853102.183,"status":"failed","message":"","name":"/app/sum.fail.test.js"},{"assertionResults":[{"ancestorTitles":[],"fullName":"adds 1 + 2 to equal 3","status":"passed","title":"adds 1 + 2 to equal 3","duration":0.8274540000000457,"failureMessages":[],"meta":{}},{"ancestorTitles":[],"fullName":"adds 2 + 2 to equal 4","status":"passed","title":"adds 2 + 2 to equal 4","duration":0.16495800000001282,"failureMessages":[],"meta":{}}],"startTime":1781866853098,"endTime":1781866853099.165,"status":"passed","message":"","name":"/app/sum.test.js"}]}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/vitest/vitest-compact/filter.lf --sub= --args='run --reporter=json' --exit=1 --level=full < plugins/vitest/vitest-compact/samples/vitest-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 2257
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/vitest/vitest-compact/tests.cue \ vitest-compact \ samples/vitest-json.txt ultra
+  commands:
+    - command: lowfat filter plugins/vitest/vitest-compact/filter.lf --sub= --args='run --reporter=json' --exit=1 --level=ultra < plugins/vitest/vitest-compact/samples/vitest-json.txt
+      checks:
+        - name: stdout
+          data:
+            - '{"numTotalTestSuites":2,"numPassedTestSuites":1,"numFailedTestSuites":1,"numPendingTestSuites":0,"numTotalTests":4,"numPassedTests":3,"numFailedTests":1,"numPendingTests":0,"numTodoTests":0,"snapshot":{"added":0,"failure":false,"filesAdded":0,"filesRemoved":0,"filesRemovedList":[],"filesUnmatched":0,"filesUpdated":0,"matched":0,"total":0,"unchecked":0,"uncheckedKeysByFile":[],"unmatched":0,"updated":0,"didUpdate":false},"startTime":1781866852772,"success":false,"testResults":[{"assertionResults":[{"ancestorTitles":[],"fullName":"adds 1 + 2 to equal 3 (pass)","status":"passed","title":"adds 1 + 2 to equal 3 (pass)","duration":0.7478720000000294,"failureMessages":[],"meta":{}},{"ancestorTitles":[],"fullName":"broken: adds 1 + 1 to equal 3","status":"failed","title":"broken: adds 1 + 1 to equal 3","duration":11.183067999999992,"failureMessages":["AssertionError: expected 2 to be 3 // Object.is equality\n    at /app/sum.fail.test.js:4:65\n    at file:///app/node_modules/@vitest/runner/dist/index.js:146:14\n    at file:///app/node_modules/@vitest/runner/dist/index.js:533:11\n    at runWithTimeout (file:///app/node_modules/@vitest/runner/dist/index.js:39:7)\n    at runTest (file:///app/node_modules/@vitest/runner/dist/index.js:1056:17)\n    at processTicksAndRejections (node:internal/process/task_queues:103:5)\n    at runSuite (file:///app/node_modules/@vitest/runner/dist/index.js:1205:15)\n    at runFiles (file:///app/node_modules/@vitest/runner/dist/index.js:1262:5)\n    at startTests (file:///app/node_modules/@vitest/runner/dist/index.js:1271:3)\n    at file:///app/node_modules/vitest/dist/chunks/runBaseTests.3qpJUEJM.js:126:11"],"meta":{}}],"startTime":1781866853090,"endTime":1781866853102.183,"status":"failed","message":"","name":"/app/sum.fail.test.js"},{"assertionResults":[{"ancestorTitles":[],"fullName":"adds 1 + 2 to equal 3","status":"passed","title":"adds 1 + 2 to equal 3","duration":0.8274540000000457,"failureMessages":[],"meta":{}},{"ancestorTitles":[],"fullName":"adds 2 + 2 to equal 4","status":"passed","title":"adds 2 + 2 to equal 4","duration":0.16495800000001282,"failureMessages":[],"meta":{}}],"startTime":1781866853098,"endTime":1781866853099.165,"status":"passed","message":"","name":"/app/sum.test.js"}]}'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/vitest/vitest-compact/filter.lf --sub= --args='run --reporter=json' --exit=1 --level=ultra < plugins/vitest/vitest-compact/samples/vitest-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 1
+            - bytes 2257
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/vitest/vitest-compact/tests.cue \ vitest-compact \ samples/vitest-junit.txt lite
+  commands:
+    - command: lowfat filter plugins/vitest/vitest-compact/filter.lf --sub= --args='run --reporter=junit' --exit=1 --level=lite < plugins/vitest/vitest-compact/samples/vitest-junit.txt
+      checks:
+        - name: stdout
+          data:
+            - <?xml version="1.0" encoding="UTF-8" ?>
+            - <testsuites name="vitest tests" tests="4" failures="1" errors="0" time="0.356">
+            - '    <testsuite name="sum.fail.test.js" timestamp="2026-06-19T11:00:54.711Z" hostname="48432354a559" tests="2" failures="1" errors="0" skipped="0" time="0.006287051">'
+            - '        <testcase classname="sum.fail.test.js" name="adds 1 + 2 to equal 3 (pass)" time="0.000818954">'
+            - '        </testcase>'
+            - '        <testcase classname="sum.fail.test.js" name="broken: adds 1 + 1 to equal 3" time="0.00488135">'
+            - '            <failure message="expected 2 to be 3 // Object.is equality" type="AssertionError">'
+            - 'AssertionError: expected 2 to be 3 // Object.is equality'
+            - ""
+            - '- Expected'
+            - + Received
+            - ""
+            - '- 3'
+            - + 2
+            - ""
+            - ' ❯ sum.fail.test.js:4:65'
+            - '            </failure>'
+            - '        </testcase>'
+            - '    </testsuite>'
+            - '    <testsuite name="sum.test.js" timestamp="2026-06-19T11:00:54.716Z" hostname="48432354a559" tests="2" failures="0" errors="0" skipped="0" time="0.001533868">'
+            - '        <testcase classname="sum.test.js" name="adds 1 + 2 to equal 3" time="0.000824413">'
+            - '        </testcase>'
+            - '        <testcase classname="sum.test.js" name="adds 2 + 2 to equal 4" time="0.000166416">'
+            - '        </testcase>'
+            - '    </testsuite>'
+            - </testsuites>
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/vitest/vitest-compact/filter.lf --sub= --args='run --reporter=junit' --exit=1 --level=lite < plugins/vitest/vitest-compact/samples/vitest-junit.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 26
+            - bytes 1198
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/vitest/vitest-compact/tests.cue \ vitest-compact \ samples/vitest-junit.txt full
+  commands:
+    - command: lowfat filter plugins/vitest/vitest-compact/filter.lf --sub= --args='run --reporter=junit' --exit=1 --level=full < plugins/vitest/vitest-compact/samples/vitest-junit.txt
+      checks:
+        - name: stdout
+          data:
+            - <?xml version="1.0" encoding="UTF-8" ?>
+            - <testsuites name="vitest tests" tests="4" failures="1" errors="0" time="0.356">
+            - '    <testsuite name="sum.fail.test.js" timestamp="2026-06-19T11:00:54.711Z" hostname="48432354a559" tests="2" failures="1" errors="0" skipped="0" time="0.006287051">'
+            - '        <testcase classname="sum.fail.test.js" name="adds 1 + 2 to equal 3 (pass)" time="0.000818954">'
+            - '        </testcase>'
+            - '        <testcase classname="sum.fail.test.js" name="broken: adds 1 + 1 to equal 3" time="0.00488135">'
+            - '            <failure message="expected 2 to be 3 // Object.is equality" type="AssertionError">'
+            - 'AssertionError: expected 2 to be 3 // Object.is equality'
+            - ""
+            - '- Expected'
+            - + Received
+            - ""
+            - '- 3'
+            - + 2
+            - ""
+            - ' ❯ sum.fail.test.js:4:65'
+            - '            </failure>'
+            - '        </testcase>'
+            - '    </testsuite>'
+            - '    <testsuite name="sum.test.js" timestamp="2026-06-19T11:00:54.716Z" hostname="48432354a559" tests="2" failures="0" errors="0" skipped="0" time="0.001533868">'
+            - '        <testcase classname="sum.test.js" name="adds 1 + 2 to equal 3" time="0.000824413">'
+            - '        </testcase>'
+            - '        <testcase classname="sum.test.js" name="adds 2 + 2 to equal 4" time="0.000166416">'
+            - '        </testcase>'
+            - '    </testsuite>'
+            - </testsuites>
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/vitest/vitest-compact/filter.lf --sub= --args='run --reporter=junit' --exit=1 --level=full < plugins/vitest/vitest-compact/samples/vitest-junit.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 26
+            - bytes 1198
+        - name: exitcode
+          data:
+            - "0"
+- name: plugins/vitest/vitest-compact/tests.cue \ vitest-compact \ samples/vitest-junit.txt ultra
+  commands:
+    - command: lowfat filter plugins/vitest/vitest-compact/filter.lf --sub= --args='run --reporter=junit' --exit=1 --level=ultra < plugins/vitest/vitest-compact/samples/vitest-junit.txt
+      checks:
+        - name: stdout
+          data:
+            - <?xml version="1.0" encoding="UTF-8" ?>
+            - <testsuites name="vitest tests" tests="4" failures="1" errors="0" time="0.356">
+            - '    <testsuite name="sum.fail.test.js" timestamp="2026-06-19T11:00:54.711Z" hostname="48432354a559" tests="2" failures="1" errors="0" skipped="0" time="0.006287051">'
+            - '        <testcase classname="sum.fail.test.js" name="adds 1 + 2 to equal 3 (pass)" time="0.000818954">'
+            - '        </testcase>'
+            - '        <testcase classname="sum.fail.test.js" name="broken: adds 1 + 1 to equal 3" time="0.00488135">'
+            - '            <failure message="expected 2 to be 3 // Object.is equality" type="AssertionError">'
+            - 'AssertionError: expected 2 to be 3 // Object.is equality'
+            - ""
+            - '- Expected'
+            - + Received
+            - ""
+            - '- 3'
+            - + 2
+            - ""
+            - ' ❯ sum.fail.test.js:4:65'
+            - '            </failure>'
+            - '        </testcase>'
+            - '    </testsuite>'
+            - '    <testsuite name="sum.test.js" timestamp="2026-06-19T11:00:54.716Z" hostname="48432354a559" tests="2" failures="0" errors="0" skipped="0" time="0.001533868">'
+            - '        <testcase classname="sum.test.js" name="adds 1 + 2 to equal 3" time="0.000824413">'
+            - '        </testcase>'
+            - '        <testcase classname="sum.test.js" name="adds 2 + 2 to equal 4" time="0.000166416">'
+            - '        </testcase>'
+            - '    </testsuite>'
+            - </testsuites>
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/vitest/vitest-compact/filter.lf --sub= --args='run --reporter=junit' --exit=1 --level=ultra < plugins/vitest/vitest-compact/samples/vitest-junit.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 26
+            - bytes 1198
+        - name: exitcode
+          data:
+            - "0"

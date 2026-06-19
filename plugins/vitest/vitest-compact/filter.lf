@@ -1,0 +1,71 @@
+#!/usr/bin/env lowfat-filter
+# vitest-compact — pass: collapse to a one-line tally; fail: keep the Failed Tests
+# section plus the final Test Files/Tests summary, drop the RUN banner and per-file
+# pass noise, scale body by level. Structured output (--reporter=json|junit and
+# --outputFile) passes through byte-exact.
+# Note: matchers are ASCII-only on purpose — a non-ASCII literal in a macro body
+# is corrupted by lowfat's $N arg-expansion, so the section is bounded by its
+# ASCII text ("Failed Tests", "Test Files", "AssertionError") not vitest's glyphs.
+# env: $sub $level $exit $args
+
+define compact-vitest(limit):
+    python: |
+        import os
+        import re
+        import sys
+
+        limit = $1
+        level = os.environ.get("level", "full")
+        exit_code = os.environ.get("exit", "0")
+        lines = sys.stdin.buffer.read().decode("utf-8", "replace").splitlines()
+
+        if exit_code == "0":
+            for line in lines:
+                m = re.match(r"\s*Tests\s+(.*)", line)
+                if m:
+                    print(f"vitest: {m.group(1).strip()}")
+                    break
+            else:
+                print("vitest: passed")
+            raise SystemExit(0)
+
+        out = []
+        in_section = False
+        in_summary = False
+        for line in lines:
+            # final summary block: Test Files / Tests / Start at / Duration
+            if re.match(r"\s*(Test Files|Tests|Start at|Duration)\b", line):
+                in_summary = True
+                in_section = False
+                out.append(line)
+                continue
+            if in_summary:
+                continue
+            # the failing section header opens the detailed block
+            if "Failed Tests" in line:
+                in_section = True
+                out.append(line)
+                continue
+            if in_section:
+                if level == "ultra":
+                    # ultra: FAIL headers + the assertion/error verdict only
+                    if line.startswith(" FAIL ") or "Error:" in line or "Error" in line.split(":")[0]:
+                        out.append(line)
+                else:
+                    out.append(line)
+
+        for line in out[:limit + 8]:
+            print(line)
+
+*:
+    if --reporter=json:
+        raw
+    elif --reporter=junit:
+        raw
+    elif --outputFile:
+        raw
+    else:
+        match level:
+            ultra: compact-vitest 18
+            full:  compact-vitest 45
+            lite:  compact-vitest 90
