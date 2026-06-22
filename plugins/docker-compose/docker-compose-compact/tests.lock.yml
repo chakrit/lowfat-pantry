@@ -1,4 +1,4 @@
-- name: plugins/docker-compose/docker-compose-compact/tests.cue \ docker-compose-compact \ samples/docker-compose-up.txt lite
+- name: tests.cue \ docker-compose-compact \ samples/docker-compose-up.txt lite
   commands:
     - command: lowfat filter plugins/docker-compose/docker-compose-compact/filter.lf --sub=up --args='up' --exit=0 --level=lite < plugins/docker-compose/docker-compose-compact/samples/docker-compose-up.txt
       checks:
@@ -23,7 +23,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/docker-compose/docker-compose-compact/tests.cue \ docker-compose-compact \ samples/docker-compose-up.txt full
+- name: tests.cue \ docker-compose-compact \ samples/docker-compose-up.txt full
   commands:
     - command: lowfat filter plugins/docker-compose/docker-compose-compact/filter.lf --sub=up --args='up' --exit=0 --level=full < plugins/docker-compose/docker-compose-compact/samples/docker-compose-up.txt
       checks:
@@ -48,7 +48,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/docker-compose/docker-compose-compact/tests.cue \ docker-compose-compact \ samples/docker-compose-up.txt ultra
+- name: tests.cue \ docker-compose-compact \ samples/docker-compose-up.txt ultra
   commands:
     - command: lowfat filter plugins/docker-compose/docker-compose-compact/filter.lf --sub=up --args='up' --exit=0 --level=ultra < plugins/docker-compose/docker-compose-compact/samples/docker-compose-up.txt
       checks:
@@ -67,7 +67,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/docker-compose/docker-compose-compact/tests.cue \ docker-compose-compact \ samples/docker-compose-logs.txt lite
+- name: tests.cue \ docker-compose-compact \ samples/docker-compose-logs.txt lite
   commands:
     - command: lowfat filter plugins/docker-compose/docker-compose-compact/filter.lf --sub=logs --args='logs api' --exit=0 --level=lite < plugins/docker-compose/docker-compose-compact/samples/docker-compose-logs.txt
       checks:
@@ -166,7 +166,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/docker-compose/docker-compose-compact/tests.cue \ docker-compose-compact \ samples/docker-compose-logs.txt full
+- name: tests.cue \ docker-compose-compact \ samples/docker-compose-logs.txt full
   commands:
     - command: lowfat filter plugins/docker-compose/docker-compose-compact/filter.lf --sub=logs --args='logs api' --exit=0 --level=full < plugins/docker-compose/docker-compose-compact/samples/docker-compose-logs.txt
       checks:
@@ -244,7 +244,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/docker-compose/docker-compose-compact/tests.cue \ docker-compose-compact \ samples/docker-compose-logs.txt ultra
+- name: tests.cue \ docker-compose-compact \ samples/docker-compose-logs.txt ultra
   commands:
     - command: lowfat filter plugins/docker-compose/docker-compose-compact/filter.lf --sub=logs --args='logs api' --exit=0 --level=ultra < plugins/docker-compose/docker-compose-compact/samples/docker-compose-logs.txt
       checks:
@@ -282,7 +282,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/docker-compose/docker-compose-compact/tests.cue \ docker-compose-compact \ samples/docker-compose-ps.txt lite
+- name: tests.cue \ docker-compose-compact \ samples/docker-compose-ps.txt lite
   commands:
     - command: lowfat filter plugins/docker-compose/docker-compose-compact/filter.lf --sub=ps --args='ps' --exit=0 --level=lite < plugins/docker-compose/docker-compose-compact/samples/docker-compose-ps.txt
       checks:
@@ -305,7 +305,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/docker-compose/docker-compose-compact/tests.cue \ docker-compose-compact \ samples/docker-compose-ps.txt full
+- name: tests.cue \ docker-compose-compact \ samples/docker-compose-ps.txt full
   commands:
     - command: lowfat filter plugins/docker-compose/docker-compose-compact/filter.lf --sub=ps --args='ps' --exit=0 --level=full < plugins/docker-compose/docker-compose-compact/samples/docker-compose-ps.txt
       checks:
@@ -328,7 +328,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/docker-compose/docker-compose-compact/tests.cue \ docker-compose-compact \ samples/docker-compose-ps.txt ultra
+- name: tests.cue \ docker-compose-compact \ samples/docker-compose-ps.txt ultra
   commands:
     - command: lowfat filter plugins/docker-compose/docker-compose-compact/filter.lf --sub=ps --args='ps' --exit=0 --level=ultra < plugins/docker-compose/docker-compose-compact/samples/docker-compose-ps.txt
       checks:
@@ -351,7 +351,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/docker-compose/docker-compose-compact/tests.cue \ docker-compose-compact \ samples/docker-compose-build-error.txt lite
+- name: tests.cue \ docker-compose-compact \ samples/docker-compose-build-error.txt lite
   commands:
     - command: lowfat filter plugins/docker-compose/docker-compose-compact/filter.lf --sub=build --args='build api' --exit=1 --level=lite < plugins/docker-compose/docker-compose-compact/samples/docker-compose-build-error.txt
       checks:
@@ -381,7 +381,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/docker-compose/docker-compose-compact/tests.cue \ docker-compose-compact \ samples/docker-compose-build-error.txt full
+- name: tests.cue \ docker-compose-compact \ samples/docker-compose-build-error.txt full
   commands:
     - command: lowfat filter plugins/docker-compose/docker-compose-compact/filter.lf --sub=build --args='build api' --exit=1 --level=full < plugins/docker-compose/docker-compose-compact/samples/docker-compose-build-error.txt
       checks:
@@ -411,7 +411,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/docker-compose/docker-compose-compact/tests.cue \ docker-compose-compact \ samples/docker-compose-build-error.txt ultra
+- name: tests.cue \ docker-compose-compact \ samples/docker-compose-build-error.txt ultra
   commands:
     - command: lowfat filter plugins/docker-compose/docker-compose-compact/filter.lf --sub=build --args='build api' --exit=1 --level=ultra < plugins/docker-compose/docker-compose-compact/samples/docker-compose-build-error.txt
       checks:
@@ -441,7 +441,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/docker-compose/docker-compose-compact/tests.cue \ docker-compose-compact \ samples/compose-config-json.txt lite
+- name: tests.cue \ docker-compose-compact \ samples/compose-config-json.txt lite
   commands:
     - command: lowfat filter plugins/docker-compose/docker-compose-compact/filter.lf --sub=config --args='config --format json' --exit=0 --level=lite < plugins/docker-compose/docker-compose-compact/samples/compose-config-json.txt
       checks:
@@ -513,7 +513,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/docker-compose/docker-compose-compact/tests.cue \ docker-compose-compact \ samples/compose-config-json.txt full
+- name: tests.cue \ docker-compose-compact \ samples/compose-config-json.txt full
   commands:
     - command: lowfat filter plugins/docker-compose/docker-compose-compact/filter.lf --sub=config --args='config --format json' --exit=0 --level=full < plugins/docker-compose/docker-compose-compact/samples/compose-config-json.txt
       checks:
@@ -585,7 +585,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/docker-compose/docker-compose-compact/tests.cue \ docker-compose-compact \ samples/compose-config-json.txt ultra
+- name: tests.cue \ docker-compose-compact \ samples/compose-config-json.txt ultra
   commands:
     - command: lowfat filter plugins/docker-compose/docker-compose-compact/filter.lf --sub=config --args='config --format json' --exit=0 --level=ultra < plugins/docker-compose/docker-compose-compact/samples/compose-config-json.txt
       checks:

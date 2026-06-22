@@ -1,7 +1,7 @@
 # Smoke golden-file tests
 
 How the pantry's filters are tested for output drift. The harness is
-[`chakrit/smoke`](https://github.com/chakrit/smoke) (>= v0.3.0) driving a
+[`chakrit/smoke`](https://github.com/chakrit/smoke) (>= v0.4.0) driving a
 committed golden per plugin. smoke is a **drift detector**, not an assertion
 engine: a clean run means the output still matches the locked golden, not that
 the output is "correct" — correctness is established once, by a human, when the
@@ -12,21 +12,23 @@ golden is first reviewed and committed.
 ```sh
 scripts/test.sh          # whole suite; exit 0 = no drift
 scripts/test.sh -c       # re-lock everything (review the diff, then commit)
-smoke plugins/go/go-compact/tests.cue        # one plugin
-smoke -c plugins/go/go-compact/tests.cue     # re-lock one plugin
+scripts/smoke.sh plugins/go/go-compact/tests.cue        # one plugin
+scripts/smoke.sh -c plugins/go/go-compact/tests.cue     # re-lock one plugin
 ```
 
-smoke runs each spec's commands in the **invocation cwd**, so always invoke from
-the repo root (`test.sh` enforces this). Exit codes: `0` UNCHANGED, `1` CHANGED
-(drift — investigate or re-lock), `3` NEW (no lock yet), `65` malformed spec.
+Both wrap `scripts/smoke.sh`, which provisions a pinned `chakrit/smoke` into a
+gitignored `.bin/` via `go install` (needs Go on PATH) — never a bare `smoke` off
+PATH, which may be an older version that mis-keys every lock (see Lock keys
+below). smoke runs each spec's commands in the **invocation cwd**, so always
+invoke from the repo root (the scripts enforce this). Exit codes: `0` UNCHANGED,
+`1` CHANGED (drift — investigate or re-lock), `3` NEW (no lock yet), `64` usage
+error, `65` malformed spec / duplicate test name.
 
-**One smoke invocation per spec — never `smoke <spec1> <spec2> …`.** In smoke's
-default compare mode `compareResults()` calls `os.Exit()` after the FIRST spec
-(zdk/smoke process.go:282), so a multi-spec compare silently skips specs 2..N —
-the suite reads green while only spec #1 was checked. `test.sh` loops per-spec
-for exactly this reason (it does NOT pass all specs in one call). `--commit`/`-c`
-is unaffected (it returns instead of exiting), but the loop is uniform. Upstream
-fix (process every spec + aggregate exit) is pending in zdk/smoke.
+**`test.sh` runs one spec per invocation.** Each plugin gets its own verdict line
+and the suite aggregates the worst exit. Earlier smoke exited after the first
+spec of a multi-spec compare, which *forced* this loop; v0.4 fixed it — a single
+multi-spec call now checks every spec and aggregates exit — but the loop stays
+for obvious per-plugin attribution and uniform behaviour under `-c`.
 
 ## What a spec looks like
 
@@ -40,14 +42,15 @@ annotated reference. The shape:
   exit 65). This is why specs are CUE, not YAML: the matrix templates cleanly
   while the validated surface stays closed.
 - A comprehension expands `_cases × levels` into one smoke test each.
+- **Lock keys use the spec BASENAME (smoke v0.4).** A test's full key is
+  `<basename> \ <name> \ …`, so every lock here roots at `tests.cue \ …`, not
+  the path. An older `smoke` keyed by the path as typed and mis-keys (re-NEWs)
+  these locks — always run via `scripts/smoke.sh`.
 - **Test names must be unique.** The default name is `"\(c.sample) \(l)"`. If two
   cases reuse the *same sample* (e.g. one filter invoked two ways over one
   fixture), that name collides → duplicate test → smoke **exit 65** standalone.
   When a sample is reused, include sub+args:
   `name: "\(c.sample) \(c.sub) \(c.args) \(l)"`. (npx, redis-cli hit this.)
-  Note: a dup used to read green via `test.sh` only because the old multi-spec
-  invocation skipped specs 2..N (see the per-spec note above) — now that the
-  suite loops, a dup in any spec is caught.
 - Each test locks **two commands**:
   1. the raw `lowfat filter … < sample` — the literal golden, catches any
      content drift;

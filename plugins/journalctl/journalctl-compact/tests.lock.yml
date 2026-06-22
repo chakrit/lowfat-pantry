@@ -1,4 +1,4 @@
-- name: plugins/journalctl/journalctl-compact/tests.cue \ journalctl-compact \ samples/journalctl-unit.txt lite
+- name: tests.cue \ journalctl-compact \ samples/journalctl-unit.txt lite
   commands:
     - command: lowfat filter plugins/journalctl/journalctl-compact/filter.lf --sub=-u --args='-u checkout-api' --exit=0 --level=lite < plugins/journalctl/journalctl-compact/samples/journalctl-unit.txt
       checks:
@@ -90,7 +90,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/journalctl/journalctl-compact/tests.cue \ journalctl-compact \ samples/journalctl-unit.txt full
+- name: tests.cue \ journalctl-compact \ samples/journalctl-unit.txt full
   commands:
     - command: lowfat filter plugins/journalctl/journalctl-compact/filter.lf --sub=-u --args='-u checkout-api' --exit=0 --level=full < plugins/journalctl/journalctl-compact/samples/journalctl-unit.txt
       checks:
@@ -168,7 +168,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/journalctl/journalctl-compact/tests.cue \ journalctl-compact \ samples/journalctl-unit.txt ultra
+- name: tests.cue \ journalctl-compact \ samples/journalctl-unit.txt ultra
   commands:
     - command: lowfat filter plugins/journalctl/journalctl-compact/filter.lf --sub=-u --args='-u checkout-api' --exit=0 --level=ultra < plugins/journalctl/journalctl-compact/samples/journalctl-unit.txt
       checks:
@@ -206,7 +206,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/journalctl/journalctl-compact/tests.cue \ journalctl-compact \ samples/journalctl-json.txt lite
+- name: tests.cue \ journalctl-compact \ samples/journalctl-json.txt lite
   commands:
     - command: lowfat filter plugins/journalctl/journalctl-compact/filter.lf --sub=-u --args='-u checkout-api -o json' --exit=0 --level=lite < plugins/journalctl/journalctl-compact/samples/journalctl-json.txt
       checks:
@@ -227,7 +227,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/journalctl/journalctl-compact/tests.cue \ journalctl-compact \ samples/journalctl-json.txt full
+- name: tests.cue \ journalctl-compact \ samples/journalctl-json.txt full
   commands:
     - command: lowfat filter plugins/journalctl/journalctl-compact/filter.lf --sub=-u --args='-u checkout-api -o json' --exit=0 --level=full < plugins/journalctl/journalctl-compact/samples/journalctl-json.txt
       checks:
@@ -248,7 +248,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/journalctl/journalctl-compact/tests.cue \ journalctl-compact \ samples/journalctl-json.txt ultra
+- name: tests.cue \ journalctl-compact \ samples/journalctl-json.txt ultra
   commands:
     - command: lowfat filter plugins/journalctl/journalctl-compact/filter.lf --sub=-u --args='-u checkout-api -o json' --exit=0 --level=ultra < plugins/journalctl/journalctl-compact/samples/journalctl-json.txt
       checks:
@@ -269,7 +269,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/journalctl/journalctl-compact/tests.cue \ journalctl-compact \ samples/journalctl-error.txt lite
+- name: tests.cue \ journalctl-compact \ samples/journalctl-error.txt lite
   commands:
     - command: lowfat filter plugins/journalctl/journalctl-compact/filter.lf --sub=-u --args='-u checkout-api' --exit=1 --level=lite < plugins/journalctl/journalctl-compact/samples/journalctl-error.txt
       checks:
@@ -290,7 +290,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/journalctl/journalctl-compact/tests.cue \ journalctl-compact \ samples/journalctl-error.txt full
+- name: tests.cue \ journalctl-compact \ samples/journalctl-error.txt full
   commands:
     - command: lowfat filter plugins/journalctl/journalctl-compact/filter.lf --sub=-u --args='-u checkout-api' --exit=1 --level=full < plugins/journalctl/journalctl-compact/samples/journalctl-error.txt
       checks:
@@ -311,7 +311,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/journalctl/journalctl-compact/tests.cue \ journalctl-compact \ samples/journalctl-error.txt ultra
+- name: tests.cue \ journalctl-compact \ samples/journalctl-error.txt ultra
   commands:
     - command: lowfat filter plugins/journalctl/journalctl-compact/filter.lf --sub=-u --args='-u checkout-api' --exit=1 --level=ultra < plugins/journalctl/journalctl-compact/samples/journalctl-error.txt
       checks:

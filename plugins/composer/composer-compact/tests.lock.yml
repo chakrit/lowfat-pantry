@@ -1,4 +1,4 @@
-- name: plugins/composer/composer-compact/tests.cue \ composer-compact \ install samples/composer-install.txt lite
+- name: tests.cue \ composer-compact \ install samples/composer-install.txt lite
   commands:
     - command: lowfat filter plugins/composer/composer-compact/filter.lf --sub=install --args='install' --exit=0 --level=lite < plugins/composer/composer-compact/samples/composer-install.txt
       checks:
@@ -20,7 +20,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/composer/composer-compact/tests.cue \ composer-compact \ install samples/composer-install.txt full
+- name: tests.cue \ composer-compact \ install samples/composer-install.txt full
   commands:
     - command: lowfat filter plugins/composer/composer-compact/filter.lf --sub=install --args='install' --exit=0 --level=full < plugins/composer/composer-compact/samples/composer-install.txt
       checks:
@@ -41,7 +41,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/composer/composer-compact/tests.cue \ composer-compact \ install samples/composer-install.txt ultra
+- name: tests.cue \ composer-compact \ install samples/composer-install.txt ultra
   commands:
     - command: lowfat filter plugins/composer/composer-compact/filter.lf --sub=install --args='install' --exit=0 --level=ultra < plugins/composer/composer-compact/samples/composer-install.txt
       checks:
@@ -62,7 +62,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/composer/composer-compact/tests.cue \ composer-compact \ install samples/composer-install-error.txt lite
+- name: tests.cue \ composer-compact \ install samples/composer-install-error.txt lite
   commands:
     - command: lowfat filter plugins/composer/composer-compact/filter.lf --sub=install --args='install' --exit=2 --level=lite < plugins/composer/composer-compact/samples/composer-install-error.txt
       checks:
@@ -87,7 +87,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/composer/composer-compact/tests.cue \ composer-compact \ install samples/composer-install-error.txt full
+- name: tests.cue \ composer-compact \ install samples/composer-install-error.txt full
   commands:
     - command: lowfat filter plugins/composer/composer-compact/filter.lf --sub=install --args='install' --exit=2 --level=full < plugins/composer/composer-compact/samples/composer-install-error.txt
       checks:
@@ -108,7 +108,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/composer/composer-compact/tests.cue \ composer-compact \ install samples/composer-install-error.txt ultra
+- name: tests.cue \ composer-compact \ install samples/composer-install-error.txt ultra
   commands:
     - command: lowfat filter plugins/composer/composer-compact/filter.lf --sub=install --args='install' --exit=2 --level=ultra < plugins/composer/composer-compact/samples/composer-install-error.txt
       checks:
@@ -129,7 +129,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/composer/composer-compact/tests.cue \ composer-compact \ show samples/composer-show-json.txt lite
+- name: tests.cue \ composer-compact \ show samples/composer-show-json.txt lite
   commands:
     - command: lowfat filter plugins/composer/composer-compact/filter.lf --sub=show --args='show --format=json' --exit=0 --level=lite < plugins/composer/composer-compact/samples/composer-show-json.txt
       checks:
@@ -169,7 +169,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/composer/composer-compact/tests.cue \ composer-compact \ show samples/composer-show-json.txt full
+- name: tests.cue \ composer-compact \ show samples/composer-show-json.txt full
   commands:
     - command: lowfat filter plugins/composer/composer-compact/filter.lf --sub=show --args='show --format=json' --exit=0 --level=full < plugins/composer/composer-compact/samples/composer-show-json.txt
       checks:
@@ -209,7 +209,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/composer/composer-compact/tests.cue \ composer-compact \ show samples/composer-show-json.txt ultra
+- name: tests.cue \ composer-compact \ show samples/composer-show-json.txt ultra
   commands:
     - command: lowfat filter plugins/composer/composer-compact/filter.lf --sub=show --args='show --format=json' --exit=0 --level=ultra < plugins/composer/composer-compact/samples/composer-show-json.txt
       checks:
@@ -249,7 +249,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/composer/composer-compact/tests.cue \ composer-compact \ outdated samples/composer-outdated-json.txt lite
+- name: tests.cue \ composer-compact \ outdated samples/composer-outdated-json.txt lite
   commands:
     - command: lowfat filter plugins/composer/composer-compact/filter.lf --sub=outdated --args='outdated --format=json' --exit=0 --level=lite < plugins/composer/composer-compact/samples/composer-outdated-json.txt
       checks:
@@ -270,7 +270,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/composer/composer-compact/tests.cue \ composer-compact \ outdated samples/composer-outdated-json.txt full
+- name: tests.cue \ composer-compact \ outdated samples/composer-outdated-json.txt full
   commands:
     - command: lowfat filter plugins/composer/composer-compact/filter.lf --sub=outdated --args='outdated --format=json' --exit=0 --level=full < plugins/composer/composer-compact/samples/composer-outdated-json.txt
       checks:
@@ -291,7 +291,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/composer/composer-compact/tests.cue \ composer-compact \ outdated samples/composer-outdated-json.txt ultra
+- name: tests.cue \ composer-compact \ outdated samples/composer-outdated-json.txt ultra
   commands:
     - command: lowfat filter plugins/composer/composer-compact/filter.lf --sub=outdated --args='outdated --format=json' --exit=0 --level=ultra < plugins/composer/composer-compact/samples/composer-outdated-json.txt
       checks:

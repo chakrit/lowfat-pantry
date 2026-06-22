@@ -1,4 +1,4 @@
-- name: plugins/jest/jest-compact/tests.cue \ jest-compact \ samples/jest-fail.txt lite
+- name: tests.cue \ jest-compact \ samples/jest-fail.txt lite
   commands:
     - command: lowfat filter plugins/jest/jest-compact/filter.lf --sub= --args='' --exit=1 --level=lite < plugins/jest/jest-compact/samples/jest-fail.txt
       checks:
@@ -36,7 +36,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/jest/jest-compact/tests.cue \ jest-compact \ samples/jest-fail.txt full
+- name: tests.cue \ jest-compact \ samples/jest-fail.txt full
   commands:
     - command: lowfat filter plugins/jest/jest-compact/filter.lf --sub= --args='' --exit=1 --level=full < plugins/jest/jest-compact/samples/jest-fail.txt
       checks:
@@ -74,7 +74,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/jest/jest-compact/tests.cue \ jest-compact \ samples/jest-fail.txt ultra
+- name: tests.cue \ jest-compact \ samples/jest-fail.txt ultra
   commands:
     - command: lowfat filter plugins/jest/jest-compact/filter.lf --sub= --args='' --exit=1 --level=ultra < plugins/jest/jest-compact/samples/jest-fail.txt
       checks:
@@ -100,7 +100,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/jest/jest-compact/tests.cue \ jest-compact \ samples/jest-pass.txt lite
+- name: tests.cue \ jest-compact \ samples/jest-pass.txt lite
   commands:
     - command: lowfat filter plugins/jest/jest-compact/filter.lf --sub= --args='' --exit=0 --level=lite < plugins/jest/jest-compact/samples/jest-pass.txt
       checks:
@@ -119,7 +119,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/jest/jest-compact/tests.cue \ jest-compact \ samples/jest-pass.txt full
+- name: tests.cue \ jest-compact \ samples/jest-pass.txt full
   commands:
     - command: lowfat filter plugins/jest/jest-compact/filter.lf --sub= --args='' --exit=0 --level=full < plugins/jest/jest-compact/samples/jest-pass.txt
       checks:
@@ -138,7 +138,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/jest/jest-compact/tests.cue \ jest-compact \ samples/jest-pass.txt ultra
+- name: tests.cue \ jest-compact \ samples/jest-pass.txt ultra
   commands:
     - command: lowfat filter plugins/jest/jest-compact/filter.lf --sub= --args='' --exit=0 --level=ultra < plugins/jest/jest-compact/samples/jest-pass.txt
       checks:
@@ -157,7 +157,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/jest/jest-compact/tests.cue \ jest-compact \ samples/jest-json.txt lite
+- name: tests.cue \ jest-compact \ samples/jest-json.txt lite
   commands:
     - command: lowfat filter plugins/jest/jest-compact/filter.lf --sub= --args='--json' --exit=1 --level=lite < plugins/jest/jest-compact/samples/jest-json.txt
       checks:
@@ -176,7 +176,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/jest/jest-compact/tests.cue \ jest-compact \ samples/jest-json.txt full
+- name: tests.cue \ jest-compact \ samples/jest-json.txt full
   commands:
     - command: lowfat filter plugins/jest/jest-compact/filter.lf --sub= --args='--json' --exit=1 --level=full < plugins/jest/jest-compact/samples/jest-json.txt
       checks:
@@ -195,7 +195,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/jest/jest-compact/tests.cue \ jest-compact \ samples/jest-json.txt ultra
+- name: tests.cue \ jest-compact \ samples/jest-json.txt ultra
   commands:
     - command: lowfat filter plugins/jest/jest-compact/filter.lf --sub= --args='--json' --exit=1 --level=ultra < plugins/jest/jest-compact/samples/jest-json.txt
       checks:

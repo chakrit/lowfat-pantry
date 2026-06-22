@@ -1,4 +1,4 @@
-- name: plugins/aws/aws-compact/tests.cue \ aws-compact \ samples/aws-json.txt lite
+- name: tests.cue \ aws-compact \ samples/aws-json.txt lite
   commands:
     - command: lowfat filter plugins/aws/aws-compact/filter.lf --sub=s3 --args='s3api list-buckets' --exit=0 --level=lite < plugins/aws/aws-compact/samples/aws-json.txt
       checks:
@@ -36,7 +36,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/aws/aws-compact/tests.cue \ aws-compact \ samples/aws-json.txt full
+- name: tests.cue \ aws-compact \ samples/aws-json.txt full
   commands:
     - command: lowfat filter plugins/aws/aws-compact/filter.lf --sub=s3 --args='s3api list-buckets' --exit=0 --level=full < plugins/aws/aws-compact/samples/aws-json.txt
       checks:
@@ -74,7 +74,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/aws/aws-compact/tests.cue \ aws-compact \ samples/aws-json.txt ultra
+- name: tests.cue \ aws-compact \ samples/aws-json.txt ultra
   commands:
     - command: lowfat filter plugins/aws/aws-compact/filter.lf --sub=s3 --args='s3api list-buckets' --exit=0 --level=ultra < plugins/aws/aws-compact/samples/aws-json.txt
       checks:
@@ -112,7 +112,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/aws/aws-compact/tests.cue \ aws-compact \ samples/aws-table.txt lite
+- name: tests.cue \ aws-compact \ samples/aws-table.txt lite
   commands:
     - command: lowfat filter plugins/aws/aws-compact/filter.lf --sub=s3 --args='s3api list-buckets --output table' --exit=0 --level=lite < plugins/aws/aws-compact/samples/aws-table.txt
       checks:
@@ -139,7 +139,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/aws/aws-compact/tests.cue \ aws-compact \ samples/aws-table.txt full
+- name: tests.cue \ aws-compact \ samples/aws-table.txt full
   commands:
     - command: lowfat filter plugins/aws/aws-compact/filter.lf --sub=s3 --args='s3api list-buckets --output table' --exit=0 --level=full < plugins/aws/aws-compact/samples/aws-table.txt
       checks:
@@ -166,7 +166,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/aws/aws-compact/tests.cue \ aws-compact \ samples/aws-table.txt ultra
+- name: tests.cue \ aws-compact \ samples/aws-table.txt ultra
   commands:
     - command: lowfat filter plugins/aws/aws-compact/filter.lf --sub=s3 --args='s3api list-buckets --output table' --exit=0 --level=ultra < plugins/aws/aws-compact/samples/aws-table.txt
       checks:
@@ -193,7 +193,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/aws/aws-compact/tests.cue \ aws-compact \ samples/aws-error.txt lite
+- name: tests.cue \ aws-compact \ samples/aws-error.txt lite
   commands:
     - command: lowfat filter plugins/aws/aws-compact/filter.lf --sub=s3 --args='s3api list-buckets' --exit=254 --level=lite < plugins/aws/aws-compact/samples/aws-error.txt
       checks:
@@ -212,7 +212,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/aws/aws-compact/tests.cue \ aws-compact \ samples/aws-error.txt full
+- name: tests.cue \ aws-compact \ samples/aws-error.txt full
   commands:
     - command: lowfat filter plugins/aws/aws-compact/filter.lf --sub=s3 --args='s3api list-buckets' --exit=254 --level=full < plugins/aws/aws-compact/samples/aws-error.txt
       checks:
@@ -231,7 +231,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/aws/aws-compact/tests.cue \ aws-compact \ samples/aws-error.txt ultra
+- name: tests.cue \ aws-compact \ samples/aws-error.txt ultra
   commands:
     - command: lowfat filter plugins/aws/aws-compact/filter.lf --sub=s3 --args='s3api list-buckets' --exit=254 --level=ultra < plugins/aws/aws-compact/samples/aws-error.txt
       checks:

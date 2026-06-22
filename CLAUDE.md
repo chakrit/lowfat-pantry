@@ -1,7 +1,7 @@
 # lowfat-pantry
 
 This repo is **`chakrit/lowfat-pantry`** — a standalone Claude Code `/lowfat-pantry` skill plus a
-pantry of lowfat plugins/filters, replacing RTK as the command-output token compactor.
+pantry of lowfat plugins/filters for compacting command-output tokens.
 `SKILL.md` (the `/lowfat-pantry` entrypoint) and **64 community plugins** under `plugins/` are
 built.
 
@@ -14,7 +14,7 @@ built.
 - `docs/decisions/` — rulings
 - `docs/spec/pantry-plugin-backlog.md` — what's built + what's left
 
-Test filters with `scripts/test.sh` (smoke golden suite) or `smoke -c
+Test filters with `scripts/test.sh` (smoke golden suite) or `scripts/smoke.sh -c
 plugins/<cmd>/<plugin>/tests.cue` for one plugin; see `docs/spec/smoke-golden-tests.md`.
 Session resume breadcrumb: `.tasks.md`.
 

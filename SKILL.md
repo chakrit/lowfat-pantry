@@ -154,7 +154,7 @@ A pantry plugin is a directory `plugins/<command>/<command>-compact/` holding:
     lowfat.toml    # [plugin] name=<command>-compact, version, description, category=<command>, commands=["<command>"]
     filter.lf      # the filter (below)
     tests.cue      # smoke golden spec: case matrix (source of truth)
-    tests.lock.yml # committed golden output (smoke -c writes it)
+    tests.lock.yml # committed golden output (scripts/smoke.sh -c writes it)
     samples/       # byte-faithful captured output, one file per case
 
 Mirror `plugins/rg/rg-compact/` (simplest) or `plugins/gh/` (flag guards). Copy its
@@ -209,10 +209,10 @@ Add a structured-output guard arm above it when step 1 applies; split into per-s
 rules (`status:`, `diff:`, …) when subcommands need different treatment.
 
 ### Test (always, before declaring done)
-Golden-file drift is the gate — `chakrit/smoke` (>= v0.3.0) over `tests.cue`:
+Golden-file drift is the gate — `chakrit/smoke` (>= v0.4.0) over `tests.cue`:
 
-    smoke -c plugins/<command>/<plugin>/tests.cue   # lock; REVIEW the diff
-    scripts/test.sh                                  # whole suite, exit 0 = no drift
+    scripts/smoke.sh -c plugins/<command>/<plugin>/tests.cue   # lock; REVIEW the diff
+    scripts/test.sh                                            # whole suite, exit 0 = no drift
 
 The lock diff is the correctness gate: a NEW/CHANGED golden is only trustworthy because a
 human read it. Each case locks the compacted output plus `measure.py` size metrics, so an
@@ -227,7 +227,7 @@ deterministic (smoke compares bytes).
 Hand it: this section + the target plugin dir + 2-3 real captured samples (`<command> … |
 tee samples/<case>.txt`). Tell it to (1) classify each subcommand via the decision tree
 above, (2) write `filter.lf` + `lowfat.toml` + `tests.cue` (cases), (3) lock with
-`smoke -c …`, review the golden diff, and iterate until green. The single highest-leverage instruction: **"structured and
+`scripts/smoke.sh -c …`, review the golden diff, and iterate until green. The single highest-leverage instruction: **"structured and
 passthrough output must survive byte-exact — branch and `raw` it, never filter it."** That
 one rule prevents the most damaging class of bug (silently corrupted JSON / hidden results).
 

@@ -1,4 +1,4 @@
-- name: plugins/bundle/bundle-compact/tests.cue \ bundle-compact \ samples/bundle-install.txt lite
+- name: tests.cue \ bundle-compact \ samples/bundle-install.txt lite
   commands:
     - command: lowfat filter plugins/bundle/bundle-compact/filter.lf --sub=install --args='install' --exit=0 --level=lite < plugins/bundle/bundle-compact/samples/bundle-install.txt
       checks:
@@ -40,7 +40,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/bundle/bundle-compact/tests.cue \ bundle-compact \ samples/bundle-install.txt full
+- name: tests.cue \ bundle-compact \ samples/bundle-install.txt full
   commands:
     - command: lowfat filter plugins/bundle/bundle-compact/filter.lf --sub=install --args='install' --exit=0 --level=full < plugins/bundle/bundle-compact/samples/bundle-install.txt
       checks:
@@ -82,7 +82,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/bundle/bundle-compact/tests.cue \ bundle-compact \ samples/bundle-install.txt ultra
+- name: tests.cue \ bundle-compact \ samples/bundle-install.txt ultra
   commands:
     - command: lowfat filter plugins/bundle/bundle-compact/filter.lf --sub=install --args='install' --exit=0 --level=ultra < plugins/bundle/bundle-compact/samples/bundle-install.txt
       checks:
@@ -101,7 +101,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/bundle/bundle-compact/tests.cue \ bundle-compact \ samples/bundle-error.txt lite
+- name: tests.cue \ bundle-compact \ samples/bundle-error.txt lite
   commands:
     - command: lowfat filter plugins/bundle/bundle-compact/filter.lf --sub=install --args='install' --exit=7 --level=lite < plugins/bundle/bundle-compact/samples/bundle-error.txt
       checks:
@@ -124,7 +124,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/bundle/bundle-compact/tests.cue \ bundle-compact \ samples/bundle-error.txt full
+- name: tests.cue \ bundle-compact \ samples/bundle-error.txt full
   commands:
     - command: lowfat filter plugins/bundle/bundle-compact/filter.lf --sub=install --args='install' --exit=7 --level=full < plugins/bundle/bundle-compact/samples/bundle-error.txt
       checks:
@@ -147,7 +147,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/bundle/bundle-compact/tests.cue \ bundle-compact \ samples/bundle-error.txt ultra
+- name: tests.cue \ bundle-compact \ samples/bundle-error.txt ultra
   commands:
     - command: lowfat filter plugins/bundle/bundle-compact/filter.lf --sub=install --args='install' --exit=7 --level=ultra < plugins/bundle/bundle-compact/samples/bundle-error.txt
       checks:
@@ -170,7 +170,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/bundle/bundle-compact/tests.cue \ bundle-compact \ samples/bundle-list.txt lite
+- name: tests.cue \ bundle-compact \ samples/bundle-list.txt lite
   commands:
     - command: lowfat filter plugins/bundle/bundle-compact/filter.lf --sub=list --args='list' --exit=0 --level=lite < plugins/bundle/bundle-compact/samples/bundle-list.txt
       checks:
@@ -212,7 +212,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/bundle/bundle-compact/tests.cue \ bundle-compact \ samples/bundle-list.txt full
+- name: tests.cue \ bundle-compact \ samples/bundle-list.txt full
   commands:
     - command: lowfat filter plugins/bundle/bundle-compact/filter.lf --sub=list --args='list' --exit=0 --level=full < plugins/bundle/bundle-compact/samples/bundle-list.txt
       checks:
@@ -254,7 +254,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/bundle/bundle-compact/tests.cue \ bundle-compact \ samples/bundle-list.txt ultra
+- name: tests.cue \ bundle-compact \ samples/bundle-list.txt ultra
   commands:
     - command: lowfat filter plugins/bundle/bundle-compact/filter.lf --sub=list --args='list' --exit=0 --level=ultra < plugins/bundle/bundle-compact/samples/bundle-list.txt
       checks:

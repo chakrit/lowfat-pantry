@@ -1,4 +1,4 @@
-- name: plugins/next/next-compact/tests.cue \ next-compact \ samples/next-build.txt lite
+- name: tests.cue \ next-compact \ samples/next-build.txt lite
   commands:
     - command: lowfat filter plugins/next/next-compact/filter.lf --sub=build --args='' --exit=0 --level=lite < plugins/next/next-compact/samples/next-build.txt
       checks:
@@ -39,7 +39,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/next/next-compact/tests.cue \ next-compact \ samples/next-build.txt full
+- name: tests.cue \ next-compact \ samples/next-build.txt full
   commands:
     - command: lowfat filter plugins/next/next-compact/filter.lf --sub=build --args='' --exit=0 --level=full < plugins/next/next-compact/samples/next-build.txt
       checks:
@@ -80,7 +80,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/next/next-compact/tests.cue \ next-compact \ samples/next-build.txt ultra
+- name: tests.cue \ next-compact \ samples/next-build.txt ultra
   commands:
     - command: lowfat filter plugins/next/next-compact/filter.lf --sub=build --args='' --exit=0 --level=ultra < plugins/next/next-compact/samples/next-build.txt
       checks:
@@ -99,7 +99,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/next/next-compact/tests.cue \ next-compact \ samples/next-build-warning.txt lite
+- name: tests.cue \ next-compact \ samples/next-build-warning.txt lite
   commands:
     - command: lowfat filter plugins/next/next-compact/filter.lf --sub=build --args='' --exit=0 --level=lite < plugins/next/next-compact/samples/next-build-warning.txt
       checks:
@@ -129,7 +129,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/next/next-compact/tests.cue \ next-compact \ samples/next-build-warning.txt full
+- name: tests.cue \ next-compact \ samples/next-build-warning.txt full
   commands:
     - command: lowfat filter plugins/next/next-compact/filter.lf --sub=build --args='' --exit=0 --level=full < plugins/next/next-compact/samples/next-build-warning.txt
       checks:
@@ -159,7 +159,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/next/next-compact/tests.cue \ next-compact \ samples/next-build-warning.txt ultra
+- name: tests.cue \ next-compact \ samples/next-build-warning.txt ultra
   commands:
     - command: lowfat filter plugins/next/next-compact/filter.lf --sub=build --args='' --exit=0 --level=ultra < plugins/next/next-compact/samples/next-build-warning.txt
       checks:
@@ -179,7 +179,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/next/next-compact/tests.cue \ next-compact \ samples/next-build-error.txt lite
+- name: tests.cue \ next-compact \ samples/next-build-error.txt lite
   commands:
     - command: lowfat filter plugins/next/next-compact/filter.lf --sub=build --args='' --exit=1 --level=lite < plugins/next/next-compact/samples/next-build-error.txt
       checks:
@@ -210,7 +210,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/next/next-compact/tests.cue \ next-compact \ samples/next-build-error.txt full
+- name: tests.cue \ next-compact \ samples/next-build-error.txt full
   commands:
     - command: lowfat filter plugins/next/next-compact/filter.lf --sub=build --args='' --exit=1 --level=full < plugins/next/next-compact/samples/next-build-error.txt
       checks:
@@ -241,7 +241,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/next/next-compact/tests.cue \ next-compact \ samples/next-build-error.txt ultra
+- name: tests.cue \ next-compact \ samples/next-build-error.txt ultra
   commands:
     - command: lowfat filter plugins/next/next-compact/filter.lf --sub=build --args='' --exit=1 --level=ultra < plugins/next/next-compact/samples/next-build-error.txt
       checks:

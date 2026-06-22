@@ -1,27 +1,20 @@
 #!/bin/sh
-# Run the full smoke golden-test suite over every plugin's tests.cue.
-#
-# smoke executes each spec's commands in the INVOCATION cwd, and the specs use
-# repo-root-relative paths — so this always cd's to the repo root first. Extra
-# args pass through to smoke:
+# Run the full smoke golden-test suite over every plugin's tests.cue, through the
+# repo's pinned smoke wrapper (scripts/smoke.sh — provisions chakrit/smoke v0.4
+# into .bin/). Args pass through to smoke:
 #   scripts/test.sh           # UNCHANGED/0 = no drift across all plugins
 #   scripts/test.sh -c        # re-lock everything (review the diff before commit)
 #   scripts/test.sh -v        # verbose
 #
-# Needs chakrit/smoke >= v0.3.0 on PATH (go install github.com/chakrit/smoke@latest).
-#
-# One smoke invocation PER spec, not `smoke <spec1> <spec2> ...`: in smoke's
-# default compare mode `compareResults()` calls os.Exit() after the FIRST spec
-# (zdk/smoke process.go:282), so a single multi-spec call silently skips specs
-# 2..N — the suite would read green while 56 of 57 specs went unchecked.
-# (--commit/-c is unaffected — it returns instead of exiting — but we loop
-# uniformly so verify and re-lock behave the same.) Aggregate the worst exit.
+# One invocation PER spec so each plugin gets its own verdict; the worst exit
+# across all specs is aggregated below. (v0.4 also aggregates a single multi-spec
+# call correctly, but per-spec keeps attribution obvious and re-lock uniform.)
 unset CDPATH
 cd "$(dirname "$0")/.." || exit 2
 
 rc=0
 for spec in $(find plugins -name tests.cue | sort); do
-    smoke "$@" "$spec"
+    scripts/smoke.sh "$@" "$spec"
     st=$?
     if [ "$st" -gt "$rc" ]; then
         rc=$st

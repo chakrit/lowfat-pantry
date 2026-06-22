@@ -1,4 +1,4 @@
-- name: plugins/pnpm/pnpm-compact/tests.cue \ pnpm-compact \ samples/pnpm-install.txt lite
+- name: tests.cue \ pnpm-compact \ samples/pnpm-install.txt lite
   commands:
     - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=install --args='' --exit=0 --level=lite < plugins/pnpm/pnpm-compact/samples/pnpm-install.txt
       checks:
@@ -27,7 +27,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pnpm/pnpm-compact/tests.cue \ pnpm-compact \ samples/pnpm-install.txt full
+- name: tests.cue \ pnpm-compact \ samples/pnpm-install.txt full
   commands:
     - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=install --args='' --exit=0 --level=full < plugins/pnpm/pnpm-compact/samples/pnpm-install.txt
       checks:
@@ -56,7 +56,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pnpm/pnpm-compact/tests.cue \ pnpm-compact \ samples/pnpm-install.txt ultra
+- name: tests.cue \ pnpm-compact \ samples/pnpm-install.txt ultra
   commands:
     - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=install --args='' --exit=0 --level=ultra < plugins/pnpm/pnpm-compact/samples/pnpm-install.txt
       checks:
@@ -85,7 +85,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pnpm/pnpm-compact/tests.cue \ pnpm-compact \ samples/pnpm-test.txt lite
+- name: tests.cue \ pnpm-compact \ samples/pnpm-test.txt lite
   commands:
     - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=test --args='' --exit=0 --level=lite < plugins/pnpm/pnpm-compact/samples/pnpm-test.txt
       checks:
@@ -115,7 +115,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pnpm/pnpm-compact/tests.cue \ pnpm-compact \ samples/pnpm-test.txt full
+- name: tests.cue \ pnpm-compact \ samples/pnpm-test.txt full
   commands:
     - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=test --args='' --exit=0 --level=full < plugins/pnpm/pnpm-compact/samples/pnpm-test.txt
       checks:
@@ -145,7 +145,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pnpm/pnpm-compact/tests.cue \ pnpm-compact \ samples/pnpm-test.txt ultra
+- name: tests.cue \ pnpm-compact \ samples/pnpm-test.txt ultra
   commands:
     - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=test --args='' --exit=0 --level=ultra < plugins/pnpm/pnpm-compact/samples/pnpm-test.txt
       checks:
@@ -175,7 +175,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pnpm/pnpm-compact/tests.cue \ pnpm-compact \ samples/pnpm-error.txt lite
+- name: tests.cue \ pnpm-compact \ samples/pnpm-error.txt lite
   commands:
     - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=install --args='' --exit=1 --level=lite < plugins/pnpm/pnpm-compact/samples/pnpm-error.txt
       checks:
@@ -201,7 +201,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pnpm/pnpm-compact/tests.cue \ pnpm-compact \ samples/pnpm-error.txt full
+- name: tests.cue \ pnpm-compact \ samples/pnpm-error.txt full
   commands:
     - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=install --args='' --exit=1 --level=full < plugins/pnpm/pnpm-compact/samples/pnpm-error.txt
       checks:
@@ -227,7 +227,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pnpm/pnpm-compact/tests.cue \ pnpm-compact \ samples/pnpm-error.txt ultra
+- name: tests.cue \ pnpm-compact \ samples/pnpm-error.txt ultra
   commands:
     - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=install --args='' --exit=1 --level=ultra < plugins/pnpm/pnpm-compact/samples/pnpm-error.txt
       checks:
@@ -253,7 +253,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pnpm/pnpm-compact/tests.cue \ pnpm-compact \ samples/pnpm-ls-json.txt lite
+- name: tests.cue \ pnpm-compact \ samples/pnpm-ls-json.txt lite
   commands:
     - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=ls --args='ls --json --depth=Infinity' --exit=0 --level=lite < plugins/pnpm/pnpm-compact/samples/pnpm-ls-json.txt
       checks:
@@ -295,7 +295,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pnpm/pnpm-compact/tests.cue \ pnpm-compact \ samples/pnpm-ls-json.txt full
+- name: tests.cue \ pnpm-compact \ samples/pnpm-ls-json.txt full
   commands:
     - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=ls --args='ls --json --depth=Infinity' --exit=0 --level=full < plugins/pnpm/pnpm-compact/samples/pnpm-ls-json.txt
       checks:
@@ -337,7 +337,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pnpm/pnpm-compact/tests.cue \ pnpm-compact \ samples/pnpm-ls-json.txt ultra
+- name: tests.cue \ pnpm-compact \ samples/pnpm-ls-json.txt ultra
   commands:
     - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=ls --args='ls --json --depth=Infinity' --exit=0 --level=ultra < plugins/pnpm/pnpm-compact/samples/pnpm-ls-json.txt
       checks:
@@ -379,7 +379,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pnpm/pnpm-compact/tests.cue \ pnpm-compact \ samples/pnpm-run-capped.txt lite
+- name: tests.cue \ pnpm-compact \ samples/pnpm-run-capped.txt lite
   commands:
     - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=run --args='run build' --exit=0 --level=lite < plugins/pnpm/pnpm-compact/samples/pnpm-run-capped.txt
       checks:
@@ -451,7 +451,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pnpm/pnpm-compact/tests.cue \ pnpm-compact \ samples/pnpm-run-capped.txt full
+- name: tests.cue \ pnpm-compact \ samples/pnpm-run-capped.txt full
   commands:
     - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=run --args='run build' --exit=0 --level=full < plugins/pnpm/pnpm-compact/samples/pnpm-run-capped.txt
       checks:
@@ -523,7 +523,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pnpm/pnpm-compact/tests.cue \ pnpm-compact \ samples/pnpm-run-capped.txt ultra
+- name: tests.cue \ pnpm-compact \ samples/pnpm-run-capped.txt ultra
   commands:
     - command: lowfat filter plugins/pnpm/pnpm-compact/filter.lf --sub=run --args='run build' --exit=0 --level=ultra < plugins/pnpm/pnpm-compact/samples/pnpm-run-capped.txt
       checks:

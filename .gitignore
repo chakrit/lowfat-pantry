@@ -6,6 +6,9 @@ Thumbs.db
 .vscode/
 .idea/
 
+# project-local pinned tool binaries (smoke, provisioned by scripts/test.sh)
+.bin/
+
 # ACE-managed — do not edit this block.
 # Managed by ACE. See https://github.com/ace-rs/ace
 .agents/agents

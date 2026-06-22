@@ -1,4 +1,4 @@
-- name: plugins/gem/gem-compact/tests.cue \ gem-compact \ samples/gem-install.txt lite
+- name: tests.cue \ gem-compact \ samples/gem-install.txt lite
   commands:
     - command: lowfat filter plugins/gem/gem-compact/filter.lf --sub=install --args='install tty-spinner' --exit=0 --level=lite < plugins/gem/gem-compact/samples/gem-install.txt
       checks:
@@ -19,7 +19,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/gem/gem-compact/tests.cue \ gem-compact \ samples/gem-install.txt full
+- name: tests.cue \ gem-compact \ samples/gem-install.txt full
   commands:
     - command: lowfat filter plugins/gem/gem-compact/filter.lf --sub=install --args='install tty-spinner' --exit=0 --level=full < plugins/gem/gem-compact/samples/gem-install.txt
       checks:
@@ -40,7 +40,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/gem/gem-compact/tests.cue \ gem-compact \ samples/gem-install.txt ultra
+- name: tests.cue \ gem-compact \ samples/gem-install.txt ultra
   commands:
     - command: lowfat filter plugins/gem/gem-compact/filter.lf --sub=install --args='install tty-spinner' --exit=0 --level=ultra < plugins/gem/gem-compact/samples/gem-install.txt
       checks:
@@ -61,7 +61,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/gem/gem-compact/tests.cue \ gem-compact \ samples/gem-error.txt lite
+- name: tests.cue \ gem-compact \ samples/gem-error.txt lite
   commands:
     - command: lowfat filter plugins/gem/gem-compact/filter.lf --sub=install --args='install this-gem-does-not-exist-xyz123' --exit=2 --level=lite < plugins/gem/gem-compact/samples/gem-error.txt
       checks:
@@ -81,7 +81,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/gem/gem-compact/tests.cue \ gem-compact \ samples/gem-error.txt full
+- name: tests.cue \ gem-compact \ samples/gem-error.txt full
   commands:
     - command: lowfat filter plugins/gem/gem-compact/filter.lf --sub=install --args='install this-gem-does-not-exist-xyz123' --exit=2 --level=full < plugins/gem/gem-compact/samples/gem-error.txt
       checks:
@@ -101,7 +101,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/gem/gem-compact/tests.cue \ gem-compact \ samples/gem-error.txt ultra
+- name: tests.cue \ gem-compact \ samples/gem-error.txt ultra
   commands:
     - command: lowfat filter plugins/gem/gem-compact/filter.lf --sub=install --args='install this-gem-does-not-exist-xyz123' --exit=2 --level=ultra < plugins/gem/gem-compact/samples/gem-error.txt
       checks:
@@ -121,7 +121,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/gem/gem-compact/tests.cue \ gem-compact \ samples/gem-list.txt lite
+- name: tests.cue \ gem-compact \ samples/gem-list.txt lite
   commands:
     - command: lowfat filter plugins/gem/gem-compact/filter.lf --sub=list --args='list' --exit=0 --level=lite < plugins/gem/gem-compact/samples/gem-list.txt
       checks:
@@ -246,7 +246,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/gem/gem-compact/tests.cue \ gem-compact \ samples/gem-list.txt full
+- name: tests.cue \ gem-compact \ samples/gem-list.txt full
   commands:
     - command: lowfat filter plugins/gem/gem-compact/filter.lf --sub=list --args='list' --exit=0 --level=full < plugins/gem/gem-compact/samples/gem-list.txt
       checks:
@@ -345,7 +345,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/gem/gem-compact/tests.cue \ gem-compact \ samples/gem-list.txt ultra
+- name: tests.cue \ gem-compact \ samples/gem-list.txt ultra
   commands:
     - command: lowfat filter plugins/gem/gem-compact/filter.lf --sub=list --args='list' --exit=0 --level=ultra < plugins/gem/gem-compact/samples/gem-list.txt
       checks:

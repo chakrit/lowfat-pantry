@@ -1,4 +1,4 @@
-- name: plugins/ruff/ruff-compact/tests.cue \ ruff-compact \ samples/ruff-findings.txt lite
+- name: tests.cue \ ruff-compact \ samples/ruff-findings.txt lite
   commands:
     - command: lowfat filter plugins/ruff/ruff-compact/filter.lf --sub=check --args='.' --exit=1 --level=lite < plugins/ruff/ruff-compact/samples/ruff-findings.txt
       checks:
@@ -62,7 +62,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/ruff/ruff-compact/tests.cue \ ruff-compact \ samples/ruff-findings.txt full
+- name: tests.cue \ ruff-compact \ samples/ruff-findings.txt full
   commands:
     - command: lowfat filter plugins/ruff/ruff-compact/filter.lf --sub=check --args='.' --exit=1 --level=full < plugins/ruff/ruff-compact/samples/ruff-findings.txt
       checks:
@@ -116,7 +116,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/ruff/ruff-compact/tests.cue \ ruff-compact \ samples/ruff-findings.txt ultra
+- name: tests.cue \ ruff-compact \ samples/ruff-findings.txt ultra
   commands:
     - command: lowfat filter plugins/ruff/ruff-compact/filter.lf --sub=check --args='.' --exit=1 --level=ultra < plugins/ruff/ruff-compact/samples/ruff-findings.txt
       checks:
@@ -150,7 +150,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/ruff/ruff-compact/tests.cue \ ruff-compact \ samples/ruff-clean.txt lite
+- name: tests.cue \ ruff-compact \ samples/ruff-clean.txt lite
   commands:
     - command: lowfat filter plugins/ruff/ruff-compact/filter.lf --sub=check --args='.' --exit=0 --level=lite < plugins/ruff/ruff-compact/samples/ruff-clean.txt
       checks:
@@ -169,7 +169,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/ruff/ruff-compact/tests.cue \ ruff-compact \ samples/ruff-clean.txt full
+- name: tests.cue \ ruff-compact \ samples/ruff-clean.txt full
   commands:
     - command: lowfat filter plugins/ruff/ruff-compact/filter.lf --sub=check --args='.' --exit=0 --level=full < plugins/ruff/ruff-compact/samples/ruff-clean.txt
       checks:
@@ -188,7 +188,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/ruff/ruff-compact/tests.cue \ ruff-compact \ samples/ruff-clean.txt ultra
+- name: tests.cue \ ruff-compact \ samples/ruff-clean.txt ultra
   commands:
     - command: lowfat filter plugins/ruff/ruff-compact/filter.lf --sub=check --args='.' --exit=0 --level=ultra < plugins/ruff/ruff-compact/samples/ruff-clean.txt
       checks:
@@ -207,7 +207,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/ruff/ruff-compact/tests.cue \ ruff-compact \ samples/ruff-error.txt lite
+- name: tests.cue \ ruff-compact \ samples/ruff-error.txt lite
   commands:
     - command: lowfat filter plugins/ruff/ruff-compact/filter.lf --sub=check --args='--config missing.toml .' --exit=2 --level=lite < plugins/ruff/ruff-compact/samples/ruff-error.txt
       checks:
@@ -228,7 +228,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/ruff/ruff-compact/tests.cue \ ruff-compact \ samples/ruff-error.txt full
+- name: tests.cue \ ruff-compact \ samples/ruff-error.txt full
   commands:
     - command: lowfat filter plugins/ruff/ruff-compact/filter.lf --sub=check --args='--config missing.toml .' --exit=2 --level=full < plugins/ruff/ruff-compact/samples/ruff-error.txt
       checks:
@@ -249,7 +249,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/ruff/ruff-compact/tests.cue \ ruff-compact \ samples/ruff-error.txt ultra
+- name: tests.cue \ ruff-compact \ samples/ruff-error.txt ultra
   commands:
     - command: lowfat filter plugins/ruff/ruff-compact/filter.lf --sub=check --args='--config missing.toml .' --exit=2 --level=ultra < plugins/ruff/ruff-compact/samples/ruff-error.txt
       checks:
@@ -270,7 +270,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/ruff/ruff-compact/tests.cue \ ruff-compact \ samples/ruff-json-clean.txt lite
+- name: tests.cue \ ruff-compact \ samples/ruff-json-clean.txt lite
   commands:
     - command: lowfat filter plugins/ruff/ruff-compact/filter.lf --sub=check --args='check --output-format json .' --exit=0 --level=lite < plugins/ruff/ruff-compact/samples/ruff-json-clean.txt
       checks:
@@ -289,7 +289,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/ruff/ruff-compact/tests.cue \ ruff-compact \ samples/ruff-json-clean.txt full
+- name: tests.cue \ ruff-compact \ samples/ruff-json-clean.txt full
   commands:
     - command: lowfat filter plugins/ruff/ruff-compact/filter.lf --sub=check --args='check --output-format json .' --exit=0 --level=full < plugins/ruff/ruff-compact/samples/ruff-json-clean.txt
       checks:
@@ -308,7 +308,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/ruff/ruff-compact/tests.cue \ ruff-compact \ samples/ruff-json-clean.txt ultra
+- name: tests.cue \ ruff-compact \ samples/ruff-json-clean.txt ultra
   commands:
     - command: lowfat filter plugins/ruff/ruff-compact/filter.lf --sub=check --args='check --output-format json .' --exit=0 --level=ultra < plugins/ruff/ruff-compact/samples/ruff-json-clean.txt
       checks:
@@ -327,7 +327,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/ruff/ruff-compact/tests.cue \ ruff-compact \ samples/ruff-json-issues.txt lite
+- name: tests.cue \ ruff-compact \ samples/ruff-json-issues.txt lite
   commands:
     - command: lowfat filter plugins/ruff/ruff-compact/filter.lf --sub=check --args='check --output-format json .' --exit=1 --level=lite < plugins/ruff/ruff-compact/samples/ruff-json-issues.txt
       checks:
@@ -446,7 +446,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/ruff/ruff-compact/tests.cue \ ruff-compact \ samples/ruff-json-issues.txt full
+- name: tests.cue \ ruff-compact \ samples/ruff-json-issues.txt full
   commands:
     - command: lowfat filter plugins/ruff/ruff-compact/filter.lf --sub=check --args='check --output-format json .' --exit=1 --level=full < plugins/ruff/ruff-compact/samples/ruff-json-issues.txt
       checks:
@@ -565,7 +565,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/ruff/ruff-compact/tests.cue \ ruff-compact \ samples/ruff-json-issues.txt ultra
+- name: tests.cue \ ruff-compact \ samples/ruff-json-issues.txt ultra
   commands:
     - command: lowfat filter plugins/ruff/ruff-compact/filter.lf --sub=check --args='check --output-format json .' --exit=1 --level=ultra < plugins/ruff/ruff-compact/samples/ruff-json-issues.txt
       checks:

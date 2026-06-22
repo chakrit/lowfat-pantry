@@ -1,4 +1,4 @@
-- name: plugins/diff/diff-compact/tests.cue \ diff-compact \ samples/diff-unified.txt lite
+- name: tests.cue \ diff-compact \ samples/diff-unified.txt lite
   commands:
     - command: lowfat filter plugins/diff/diff-compact/filter.lf --sub= --args='-u old.txt new.txt' --exit=1 --level=lite < plugins/diff/diff-compact/samples/diff-unified.txt
       checks:
@@ -36,7 +36,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/diff/diff-compact/tests.cue \ diff-compact \ samples/diff-unified.txt full
+- name: tests.cue \ diff-compact \ samples/diff-unified.txt full
   commands:
     - command: lowfat filter plugins/diff/diff-compact/filter.lf --sub= --args='-u old.txt new.txt' --exit=1 --level=full < plugins/diff/diff-compact/samples/diff-unified.txt
       checks:
@@ -74,7 +74,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/diff/diff-compact/tests.cue \ diff-compact \ samples/diff-unified.txt ultra
+- name: tests.cue \ diff-compact \ samples/diff-unified.txt ultra
   commands:
     - command: lowfat filter plugins/diff/diff-compact/filter.lf --sub= --args='-u old.txt new.txt' --exit=1 --level=ultra < plugins/diff/diff-compact/samples/diff-unified.txt
       checks:
@@ -106,7 +106,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/diff/diff-compact/tests.cue \ diff-compact \ samples/diff-context-heavy.txt lite
+- name: tests.cue \ diff-compact \ samples/diff-context-heavy.txt lite
   commands:
     - command: lowfat filter plugins/diff/diff-compact/filter.lf --sub= --args='-u before.py after.py' --exit=1 --level=lite < plugins/diff/diff-compact/samples/diff-context-heavy.txt
       checks:
@@ -141,7 +141,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/diff/diff-compact/tests.cue \ diff-compact \ samples/diff-context-heavy.txt full
+- name: tests.cue \ diff-compact \ samples/diff-context-heavy.txt full
   commands:
     - command: lowfat filter plugins/diff/diff-compact/filter.lf --sub= --args='-u before.py after.py' --exit=1 --level=full < plugins/diff/diff-compact/samples/diff-context-heavy.txt
       checks:
@@ -176,7 +176,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/diff/diff-compact/tests.cue \ diff-compact \ samples/diff-context-heavy.txt ultra
+- name: tests.cue \ diff-compact \ samples/diff-context-heavy.txt ultra
   commands:
     - command: lowfat filter plugins/diff/diff-compact/filter.lf --sub= --args='-u before.py after.py' --exit=1 --level=ultra < plugins/diff/diff-compact/samples/diff-context-heavy.txt
       checks:
@@ -205,7 +205,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/diff/diff-compact/tests.cue \ diff-compact \ samples/diff-error.txt lite
+- name: tests.cue \ diff-compact \ samples/diff-error.txt lite
   commands:
     - command: lowfat filter plugins/diff/diff-compact/filter.lf --sub= --args='-u missing.txt new.txt' --exit=2 --level=lite < plugins/diff/diff-compact/samples/diff-error.txt
       checks:
@@ -224,7 +224,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/diff/diff-compact/tests.cue \ diff-compact \ samples/diff-error.txt full
+- name: tests.cue \ diff-compact \ samples/diff-error.txt full
   commands:
     - command: lowfat filter plugins/diff/diff-compact/filter.lf --sub= --args='-u missing.txt new.txt' --exit=2 --level=full < plugins/diff/diff-compact/samples/diff-error.txt
       checks:
@@ -243,7 +243,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/diff/diff-compact/tests.cue \ diff-compact \ samples/diff-error.txt ultra
+- name: tests.cue \ diff-compact \ samples/diff-error.txt ultra
   commands:
     - command: lowfat filter plugins/diff/diff-compact/filter.lf --sub= --args='-u missing.txt new.txt' --exit=2 --level=ultra < plugins/diff/diff-compact/samples/diff-error.txt
       checks:

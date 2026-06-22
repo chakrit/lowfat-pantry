@@ -1,4 +1,4 @@
-- name: plugins/playwright/playwright-compact/tests.cue \ playwright-compact \ samples/playwright-pass.txt lite
+- name: tests.cue \ playwright-compact \ samples/playwright-pass.txt lite
   commands:
     - command: lowfat filter plugins/playwright/playwright-compact/filter.lf --sub=test --args='' --exit=0 --level=lite < plugins/playwright/playwright-compact/samples/playwright-pass.txt
       checks:
@@ -18,7 +18,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/playwright/playwright-compact/tests.cue \ playwright-compact \ samples/playwright-pass.txt full
+- name: tests.cue \ playwright-compact \ samples/playwright-pass.txt full
   commands:
     - command: lowfat filter plugins/playwright/playwright-compact/filter.lf --sub=test --args='' --exit=0 --level=full < plugins/playwright/playwright-compact/samples/playwright-pass.txt
       checks:
@@ -38,7 +38,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/playwright/playwright-compact/tests.cue \ playwright-compact \ samples/playwright-pass.txt ultra
+- name: tests.cue \ playwright-compact \ samples/playwright-pass.txt ultra
   commands:
     - command: lowfat filter plugins/playwright/playwright-compact/filter.lf --sub=test --args='' --exit=0 --level=ultra < plugins/playwright/playwright-compact/samples/playwright-pass.txt
       checks:
@@ -58,7 +58,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/playwright/playwright-compact/tests.cue \ playwright-compact \ samples/playwright-fail.txt lite
+- name: tests.cue \ playwright-compact \ samples/playwright-fail.txt lite
   commands:
     - command: lowfat filter plugins/playwright/playwright-compact/filter.lf --sub=test --args='--project=chromium' --exit=1 --level=lite < plugins/playwright/playwright-compact/samples/playwright-fail.txt
       checks:
@@ -112,7 +112,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/playwright/playwright-compact/tests.cue \ playwright-compact \ samples/playwright-fail.txt full
+- name: tests.cue \ playwright-compact \ samples/playwright-fail.txt full
   commands:
     - command: lowfat filter plugins/playwright/playwright-compact/filter.lf --sub=test --args='--project=chromium' --exit=1 --level=full < plugins/playwright/playwright-compact/samples/playwright-fail.txt
       checks:
@@ -166,7 +166,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/playwright/playwright-compact/tests.cue \ playwright-compact \ samples/playwright-fail.txt ultra
+- name: tests.cue \ playwright-compact \ samples/playwright-fail.txt ultra
   commands:
     - command: lowfat filter plugins/playwright/playwright-compact/filter.lf --sub=test --args='--project=chromium' --exit=1 --level=ultra < plugins/playwright/playwright-compact/samples/playwright-fail.txt
       checks:
@@ -219,7 +219,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/playwright/playwright-compact/tests.cue \ playwright-compact \ samples/playwright-json.txt lite
+- name: tests.cue \ playwright-compact \ samples/playwright-json.txt lite
   commands:
     - command: lowfat filter plugins/playwright/playwright-compact/filter.lf --sub=test --args='test --reporter=json' --exit=1 --level=lite < plugins/playwright/playwright-compact/samples/playwright-json.txt
       checks:
@@ -414,7 +414,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/playwright/playwright-compact/tests.cue \ playwright-compact \ samples/playwright-json.txt full
+- name: tests.cue \ playwright-compact \ samples/playwright-json.txt full
   commands:
     - command: lowfat filter plugins/playwright/playwright-compact/filter.lf --sub=test --args='test --reporter=json' --exit=1 --level=full < plugins/playwright/playwright-compact/samples/playwright-json.txt
       checks:
@@ -609,7 +609,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/playwright/playwright-compact/tests.cue \ playwright-compact \ samples/playwright-json.txt ultra
+- name: tests.cue \ playwright-compact \ samples/playwright-json.txt ultra
   commands:
     - command: lowfat filter plugins/playwright/playwright-compact/filter.lf --sub=test --args='test --reporter=json' --exit=1 --level=ultra < plugins/playwright/playwright-compact/samples/playwright-json.txt
       checks:

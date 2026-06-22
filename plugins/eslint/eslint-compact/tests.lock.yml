@@ -1,4 +1,4 @@
-- name: plugins/eslint/eslint-compact/tests.cue \ eslint-compact \ samples/eslint-problems.txt lite
+- name: tests.cue \ eslint-compact \ samples/eslint-problems.txt lite
   commands:
     - command: lowfat filter plugins/eslint/eslint-compact/filter.lf --sub= --args='.' --exit=1 --level=lite < plugins/eslint/eslint-compact/samples/eslint-problems.txt
       checks:
@@ -28,7 +28,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/eslint/eslint-compact/tests.cue \ eslint-compact \ samples/eslint-problems.txt full
+- name: tests.cue \ eslint-compact \ samples/eslint-problems.txt full
   commands:
     - command: lowfat filter plugins/eslint/eslint-compact/filter.lf --sub= --args='.' --exit=1 --level=full < plugins/eslint/eslint-compact/samples/eslint-problems.txt
       checks:
@@ -58,7 +58,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/eslint/eslint-compact/tests.cue \ eslint-compact \ samples/eslint-problems.txt ultra
+- name: tests.cue \ eslint-compact \ samples/eslint-problems.txt ultra
   commands:
     - command: lowfat filter plugins/eslint/eslint-compact/filter.lf --sub= --args='.' --exit=1 --level=ultra < plugins/eslint/eslint-compact/samples/eslint-problems.txt
       checks:
@@ -88,7 +88,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/eslint/eslint-compact/tests.cue \ eslint-compact \ samples/eslint-clean.txt lite
+- name: tests.cue \ eslint-compact \ samples/eslint-clean.txt lite
   commands:
     - command: lowfat filter plugins/eslint/eslint-compact/filter.lf --sub= --args='.' --exit=0 --level=lite < plugins/eslint/eslint-compact/samples/eslint-clean.txt
       checks:
@@ -107,7 +107,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/eslint/eslint-compact/tests.cue \ eslint-compact \ samples/eslint-clean.txt full
+- name: tests.cue \ eslint-compact \ samples/eslint-clean.txt full
   commands:
     - command: lowfat filter plugins/eslint/eslint-compact/filter.lf --sub= --args='.' --exit=0 --level=full < plugins/eslint/eslint-compact/samples/eslint-clean.txt
       checks:
@@ -126,7 +126,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/eslint/eslint-compact/tests.cue \ eslint-compact \ samples/eslint-clean.txt ultra
+- name: tests.cue \ eslint-compact \ samples/eslint-clean.txt ultra
   commands:
     - command: lowfat filter plugins/eslint/eslint-compact/filter.lf --sub= --args='.' --exit=0 --level=ultra < plugins/eslint/eslint-compact/samples/eslint-clean.txt
       checks:
@@ -145,7 +145,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/eslint/eslint-compact/tests.cue \ eslint-compact \ samples/eslint-many.txt lite
+- name: tests.cue \ eslint-compact \ samples/eslint-many.txt lite
   commands:
     - command: lowfat filter plugins/eslint/eslint-compact/filter.lf --sub= --args='src' --exit=1 --level=lite < plugins/eslint/eslint-compact/samples/eslint-many.txt
       checks:
@@ -195,7 +195,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/eslint/eslint-compact/tests.cue \ eslint-compact \ samples/eslint-many.txt full
+- name: tests.cue \ eslint-compact \ samples/eslint-many.txt full
   commands:
     - command: lowfat filter plugins/eslint/eslint-compact/filter.lf --sub= --args='src' --exit=1 --level=full < plugins/eslint/eslint-compact/samples/eslint-many.txt
       checks:
@@ -245,7 +245,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/eslint/eslint-compact/tests.cue \ eslint-compact \ samples/eslint-many.txt ultra
+- name: tests.cue \ eslint-compact \ samples/eslint-many.txt ultra
   commands:
     - command: lowfat filter plugins/eslint/eslint-compact/filter.lf --sub= --args='src' --exit=1 --level=ultra < plugins/eslint/eslint-compact/samples/eslint-many.txt
       checks:

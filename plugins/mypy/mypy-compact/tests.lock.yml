@@ -1,4 +1,4 @@
-- name: plugins/mypy/mypy-compact/tests.cue \ mypy-compact \ samples/mypy-errors.txt lite
+- name: tests.cue \ mypy-compact \ samples/mypy-errors.txt lite
   commands:
     - command: lowfat filter plugins/mypy/mypy-compact/filter.lf --sub= --args='src tests' --exit=1 --level=lite < plugins/mypy/mypy-compact/samples/mypy-errors.txt
       checks:
@@ -58,7 +58,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/mypy/mypy-compact/tests.cue \ mypy-compact \ samples/mypy-errors.txt full
+- name: tests.cue \ mypy-compact \ samples/mypy-errors.txt full
   commands:
     - command: lowfat filter plugins/mypy/mypy-compact/filter.lf --sub= --args='src tests' --exit=1 --level=full < plugins/mypy/mypy-compact/samples/mypy-errors.txt
       checks:
@@ -112,7 +112,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/mypy/mypy-compact/tests.cue \ mypy-compact \ samples/mypy-errors.txt ultra
+- name: tests.cue \ mypy-compact \ samples/mypy-errors.txt ultra
   commands:
     - command: lowfat filter plugins/mypy/mypy-compact/filter.lf --sub= --args='src tests' --exit=1 --level=ultra < plugins/mypy/mypy-compact/samples/mypy-errors.txt
       checks:
@@ -146,7 +146,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/mypy/mypy-compact/tests.cue \ mypy-compact \ samples/mypy-clean.txt lite
+- name: tests.cue \ mypy-compact \ samples/mypy-clean.txt lite
   commands:
     - command: lowfat filter plugins/mypy/mypy-compact/filter.lf --sub= --args='src' --exit=0 --level=lite < plugins/mypy/mypy-compact/samples/mypy-clean.txt
       checks:
@@ -165,7 +165,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/mypy/mypy-compact/tests.cue \ mypy-compact \ samples/mypy-clean.txt full
+- name: tests.cue \ mypy-compact \ samples/mypy-clean.txt full
   commands:
     - command: lowfat filter plugins/mypy/mypy-compact/filter.lf --sub= --args='src' --exit=0 --level=full < plugins/mypy/mypy-compact/samples/mypy-clean.txt
       checks:
@@ -184,7 +184,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/mypy/mypy-compact/tests.cue \ mypy-compact \ samples/mypy-clean.txt ultra
+- name: tests.cue \ mypy-compact \ samples/mypy-clean.txt ultra
   commands:
     - command: lowfat filter plugins/mypy/mypy-compact/filter.lf --sub= --args='src' --exit=0 --level=ultra < plugins/mypy/mypy-compact/samples/mypy-clean.txt
       checks:
@@ -203,7 +203,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/mypy/mypy-compact/tests.cue \ mypy-compact \ samples/mypy-error-exit.txt lite
+- name: tests.cue \ mypy-compact \ samples/mypy-error-exit.txt lite
   commands:
     - command: lowfat filter plugins/mypy/mypy-compact/filter.lf --sub= --args='--config-file missing.ini src' --exit=2 --level=lite < plugins/mypy/mypy-compact/samples/mypy-error-exit.txt
       checks:
@@ -222,7 +222,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/mypy/mypy-compact/tests.cue \ mypy-compact \ samples/mypy-error-exit.txt full
+- name: tests.cue \ mypy-compact \ samples/mypy-error-exit.txt full
   commands:
     - command: lowfat filter plugins/mypy/mypy-compact/filter.lf --sub= --args='--config-file missing.ini src' --exit=2 --level=full < plugins/mypy/mypy-compact/samples/mypy-error-exit.txt
       checks:
@@ -241,7 +241,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/mypy/mypy-compact/tests.cue \ mypy-compact \ samples/mypy-error-exit.txt ultra
+- name: tests.cue \ mypy-compact \ samples/mypy-error-exit.txt ultra
   commands:
     - command: lowfat filter plugins/mypy/mypy-compact/filter.lf --sub= --args='--config-file missing.ini src' --exit=2 --level=ultra < plugins/mypy/mypy-compact/samples/mypy-error-exit.txt
       checks:

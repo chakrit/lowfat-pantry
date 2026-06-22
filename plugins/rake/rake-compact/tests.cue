@@ -1,4 +1,4 @@
-// Golden-file drift tests for rake-compact, run by chakrit/smoke (>= v0.3.0).
+// Golden-file drift tests for rake-compact, run by chakrit/smoke (>= v0.4.0).
 // Invoke from the REPO ROOT:
 //   smoke plugins/rake/rake-compact/tests.cue        # UNCHANGED/0 = no drift
 //   smoke -c plugins/rake/rake-compact/tests.cue     # re-lock intentionally

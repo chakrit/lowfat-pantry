@@ -1,4 +1,4 @@
-- name: plugins/glab/glab-compact/tests.cue \ glab-compact \ samples/glab-mr-list.txt lite
+- name: tests.cue \ glab-compact \ samples/glab-mr-list.txt lite
   commands:
     - command: lowfat filter plugins/glab/glab-compact/filter.lf --sub=mr --args='list' --exit=0 --level=lite < plugins/glab/glab-compact/samples/glab-mr-list.txt
       checks:
@@ -23,7 +23,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/glab/glab-compact/tests.cue \ glab-compact \ samples/glab-mr-list.txt full
+- name: tests.cue \ glab-compact \ samples/glab-mr-list.txt full
   commands:
     - command: lowfat filter plugins/glab/glab-compact/filter.lf --sub=mr --args='list' --exit=0 --level=full < plugins/glab/glab-compact/samples/glab-mr-list.txt
       checks:
@@ -48,7 +48,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/glab/glab-compact/tests.cue \ glab-compact \ samples/glab-mr-list.txt ultra
+- name: tests.cue \ glab-compact \ samples/glab-mr-list.txt ultra
   commands:
     - command: lowfat filter plugins/glab/glab-compact/filter.lf --sub=mr --args='list' --exit=0 --level=ultra < plugins/glab/glab-compact/samples/glab-mr-list.txt
       checks:
@@ -73,7 +73,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/glab/glab-compact/tests.cue \ glab-compact \ samples/glab-ci-trace.txt lite
+- name: tests.cue \ glab-compact \ samples/glab-ci-trace.txt lite
   commands:
     - command: lowfat filter plugins/glab/glab-compact/filter.lf --sub=ci --args='trace --trace' --exit=0 --level=lite < plugins/glab/glab-compact/samples/glab-ci-trace.txt
       checks:
@@ -146,7 +146,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/glab/glab-compact/tests.cue \ glab-compact \ samples/glab-ci-trace.txt full
+- name: tests.cue \ glab-compact \ samples/glab-ci-trace.txt full
   commands:
     - command: lowfat filter plugins/glab/glab-compact/filter.lf --sub=ci --args='trace --trace' --exit=0 --level=full < plugins/glab/glab-compact/samples/glab-ci-trace.txt
       checks:
@@ -219,7 +219,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/glab/glab-compact/tests.cue \ glab-compact \ samples/glab-ci-trace.txt ultra
+- name: tests.cue \ glab-compact \ samples/glab-ci-trace.txt ultra
   commands:
     - command: lowfat filter plugins/glab/glab-compact/filter.lf --sub=ci --args='trace --trace' --exit=0 --level=ultra < plugins/glab/glab-compact/samples/glab-ci-trace.txt
       checks:
@@ -277,7 +277,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/glab/glab-compact/tests.cue \ glab-compact \ samples/glab-mr-json.txt lite
+- name: tests.cue \ glab-compact \ samples/glab-mr-json.txt lite
   commands:
     - command: lowfat filter plugins/glab/glab-compact/filter.lf --sub=mr --args='view 214 -F json' --exit=0 --level=lite < plugins/glab/glab-compact/samples/glab-mr-json.txt
       checks:
@@ -296,7 +296,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/glab/glab-compact/tests.cue \ glab-compact \ samples/glab-mr-json.txt full
+- name: tests.cue \ glab-compact \ samples/glab-mr-json.txt full
   commands:
     - command: lowfat filter plugins/glab/glab-compact/filter.lf --sub=mr --args='view 214 -F json' --exit=0 --level=full < plugins/glab/glab-compact/samples/glab-mr-json.txt
       checks:
@@ -315,7 +315,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/glab/glab-compact/tests.cue \ glab-compact \ samples/glab-mr-json.txt ultra
+- name: tests.cue \ glab-compact \ samples/glab-mr-json.txt ultra
   commands:
     - command: lowfat filter plugins/glab/glab-compact/filter.lf --sub=mr --args='view 214 -F json' --exit=0 --level=ultra < plugins/glab/glab-compact/samples/glab-mr-json.txt
       checks:

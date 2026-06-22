@@ -1,4 +1,4 @@
-- name: plugins/redis-cli/redis-cli-compact/tests.cue \ redis-cli-compact \ samples/redis-cli-info.txt info  lite
+- name: tests.cue \ redis-cli-compact \ samples/redis-cli-info.txt info  lite
   commands:
     - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=info --args='' --exit=0 --level=lite < plugins/redis-cli/redis-cli-compact/samples/redis-cli-info.txt
       checks:
@@ -52,7 +52,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/redis-cli/redis-cli-compact/tests.cue \ redis-cli-compact \ samples/redis-cli-info.txt info  full
+- name: tests.cue \ redis-cli-compact \ samples/redis-cli-info.txt info  full
   commands:
     - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=info --args='' --exit=0 --level=full < plugins/redis-cli/redis-cli-compact/samples/redis-cli-info.txt
       checks:
@@ -106,7 +106,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/redis-cli/redis-cli-compact/tests.cue \ redis-cli-compact \ samples/redis-cli-info.txt info  ultra
+- name: tests.cue \ redis-cli-compact \ samples/redis-cli-info.txt info  ultra
   commands:
     - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=info --args='' --exit=0 --level=ultra < plugins/redis-cli/redis-cli-compact/samples/redis-cli-info.txt
       checks:
@@ -137,7 +137,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/redis-cli/redis-cli-compact/tests.cue \ redis-cli-compact \ samples/redis-cli-info.txt INFO  full
+- name: tests.cue \ redis-cli-compact \ samples/redis-cli-info.txt INFO  full
   commands:
     - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=INFO --args='' --exit=0 --level=full < plugins/redis-cli/redis-cli-compact/samples/redis-cli-info.txt
       checks:
@@ -191,7 +191,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/redis-cli/redis-cli-compact/tests.cue \ redis-cli-compact \ samples/redis-cli-scan.txt --scan --scan lite
+- name: tests.cue \ redis-cli-compact \ samples/redis-cli-scan.txt --scan --scan lite
   commands:
     - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=--scan --args='--scan' --exit=0 --level=lite < plugins/redis-cli/redis-cli-compact/samples/redis-cli-scan.txt
       checks:
@@ -270,7 +270,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/redis-cli/redis-cli-compact/tests.cue \ redis-cli-compact \ samples/redis-cli-scan.txt --scan --scan full
+- name: tests.cue \ redis-cli-compact \ samples/redis-cli-scan.txt --scan --scan full
   commands:
     - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=--scan --args='--scan' --exit=0 --level=full < plugins/redis-cli/redis-cli-compact/samples/redis-cli-scan.txt
       checks:
@@ -319,7 +319,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/redis-cli/redis-cli-compact/tests.cue \ redis-cli-compact \ samples/redis-cli-scan.txt --scan --scan ultra
+- name: tests.cue \ redis-cli-compact \ samples/redis-cli-scan.txt --scan --scan ultra
   commands:
     - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=--scan --args='--scan' --exit=0 --level=ultra < plugins/redis-cli/redis-cli-compact/samples/redis-cli-scan.txt
       checks:
@@ -353,7 +353,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/redis-cli/redis-cli-compact/tests.cue \ redis-cli-compact \ samples/redis-cli-keys.txt keys keys user:* lite
+- name: tests.cue \ redis-cli-compact \ samples/redis-cli-keys.txt keys keys user:* lite
   commands:
     - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=keys --args='keys user:*' --exit=0 --level=lite < plugins/redis-cli/redis-cli-compact/samples/redis-cli-keys.txt
       checks:
@@ -432,7 +432,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/redis-cli/redis-cli-compact/tests.cue \ redis-cli-compact \ samples/redis-cli-keys.txt keys keys user:* full
+- name: tests.cue \ redis-cli-compact \ samples/redis-cli-keys.txt keys keys user:* full
   commands:
     - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=keys --args='keys user:*' --exit=0 --level=full < plugins/redis-cli/redis-cli-compact/samples/redis-cli-keys.txt
       checks:
@@ -481,7 +481,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/redis-cli/redis-cli-compact/tests.cue \ redis-cli-compact \ samples/redis-cli-keys.txt keys keys user:* ultra
+- name: tests.cue \ redis-cli-compact \ samples/redis-cli-keys.txt keys keys user:* ultra
   commands:
     - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=keys --args='keys user:*' --exit=0 --level=ultra < plugins/redis-cli/redis-cli-compact/samples/redis-cli-keys.txt
       checks:
@@ -515,7 +515,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/redis-cli/redis-cli-compact/tests.cue \ redis-cli-compact \ samples/redis-cli-slowlog.txt slowlog slowlog get 10 full
+- name: tests.cue \ redis-cli-compact \ samples/redis-cli-slowlog.txt slowlog slowlog get 10 full
   commands:
     - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=slowlog --args='slowlog get 10' --exit=0 --level=full < plugins/redis-cli/redis-cli-compact/samples/redis-cli-slowlog.txt
       checks:
@@ -564,7 +564,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/redis-cli/redis-cli-compact/tests.cue \ redis-cli-compact \ samples/redis-cli-slowlog.txt slowlog slowlog get 10 ultra
+- name: tests.cue \ redis-cli-compact \ samples/redis-cli-slowlog.txt slowlog slowlog get 10 ultra
   commands:
     - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=slowlog --args='slowlog get 10' --exit=0 --level=ultra < plugins/redis-cli/redis-cli-compact/samples/redis-cli-slowlog.txt
       checks:
@@ -598,7 +598,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/redis-cli/redis-cli-compact/tests.cue \ redis-cli-compact \ samples/redis-cli-memory-stats.txt memory memory stats full
+- name: tests.cue \ redis-cli-compact \ samples/redis-cli-memory-stats.txt memory memory stats full
   commands:
     - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=memory --args='memory stats' --exit=0 --level=full < plugins/redis-cli/redis-cli-compact/samples/redis-cli-memory-stats.txt
       checks:
@@ -647,7 +647,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/redis-cli/redis-cli-compact/tests.cue \ redis-cli-compact \ samples/redis-cli-memory-stats.txt memory memory stats ultra
+- name: tests.cue \ redis-cli-compact \ samples/redis-cli-memory-stats.txt memory memory stats ultra
   commands:
     - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=memory --args='memory stats' --exit=0 --level=ultra < plugins/redis-cli/redis-cli-compact/samples/redis-cli-memory-stats.txt
       checks:
@@ -681,7 +681,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/redis-cli/redis-cli-compact/tests.cue \ redis-cli-compact \ samples/redis-cli-client-list.txt client client list full
+- name: tests.cue \ redis-cli-compact \ samples/redis-cli-client-list.txt client client list full
   commands:
     - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=client --args='client list' --exit=0 --level=full < plugins/redis-cli/redis-cli-compact/samples/redis-cli-client-list.txt
       checks:
@@ -700,7 +700,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/redis-cli/redis-cli-compact/tests.cue \ redis-cli-compact \ samples/redis-cli-get.txt get get user:1:profile full
+- name: tests.cue \ redis-cli-compact \ samples/redis-cli-get.txt get get user:1:profile full
   commands:
     - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=get --args='get user:1:profile' --exit=0 --level=full < plugins/redis-cli/redis-cli-compact/samples/redis-cli-get.txt
       checks:
@@ -719,7 +719,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/redis-cli/redis-cli-compact/tests.cue \ redis-cli-compact \ samples/redis-cli-get.txt get get user:1:profile ultra
+- name: tests.cue \ redis-cli-compact \ samples/redis-cli-get.txt get get user:1:profile ultra
   commands:
     - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=get --args='get user:1:profile' --exit=0 --level=ultra < plugins/redis-cli/redis-cli-compact/samples/redis-cli-get.txt
       checks:
@@ -738,7 +738,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/redis-cli/redis-cli-compact/tests.cue \ redis-cli-compact \ samples/redis-cli-err-unknown.txt gett gett foo full
+- name: tests.cue \ redis-cli-compact \ samples/redis-cli-err-unknown.txt gett gett foo full
   commands:
     - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=gett --args='gett foo' --exit=0 --level=full < plugins/redis-cli/redis-cli-compact/samples/redis-cli-err-unknown.txt
       checks:
@@ -757,7 +757,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/redis-cli/redis-cli-compact/tests.cue \ redis-cli-compact \ samples/redis-cli-err-unknown.txt gett gett foo ultra
+- name: tests.cue \ redis-cli-compact \ samples/redis-cli-err-unknown.txt gett gett foo ultra
   commands:
     - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=gett --args='gett foo' --exit=0 --level=ultra < plugins/redis-cli/redis-cli-compact/samples/redis-cli-err-unknown.txt
       checks:
@@ -776,7 +776,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/redis-cli/redis-cli-compact/tests.cue \ redis-cli-compact \ samples/redis-cli-err-conn.txt -p -p 9999 ping full
+- name: tests.cue \ redis-cli-compact \ samples/redis-cli-err-conn.txt -p -p 9999 ping full
   commands:
     - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=-p --args='-p 9999 ping' --exit=1 --level=full < plugins/redis-cli/redis-cli-compact/samples/redis-cli-err-conn.txt
       checks:
@@ -795,7 +795,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/redis-cli/redis-cli-compact/tests.cue \ redis-cli-compact \ samples/redis-cli-err-conn.txt -p -p 9999 ping ultra
+- name: tests.cue \ redis-cli-compact \ samples/redis-cli-err-conn.txt -p -p 9999 ping ultra
   commands:
     - command: lowfat filter plugins/redis-cli/redis-cli-compact/filter.lf --sub=-p --args='-p 9999 ping' --exit=1 --level=ultra < plugins/redis-cli/redis-cli-compact/samples/redis-cli-err-conn.txt
       checks:

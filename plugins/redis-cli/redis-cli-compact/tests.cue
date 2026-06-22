@@ -1,4 +1,4 @@
-// Golden-file drift tests for redis-cli-compact, run by chakrit/smoke (>= v0.3.0).
+// Golden-file drift tests for redis-cli-compact, run by chakrit/smoke (>= v0.4.0).
 // Source of truth: the smoke golden spec for this plugin.
 // Invoke from the REPO ROOT (smoke runs commands in the invocation cwd):
 //   smoke plugins/redis-cli/redis-cli-compact/tests.cue        # UNCHANGED/0 = no drift

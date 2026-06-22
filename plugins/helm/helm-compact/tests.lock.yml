@@ -1,4 +1,4 @@
-- name: plugins/helm/helm-compact/tests.cue \ helm-compact \ samples/helm-install.txt lite
+- name: tests.cue \ helm-compact \ samples/helm-install.txt lite
   commands:
     - command: lowfat filter plugins/helm/helm-compact/filter.lf --sub=install --args='api ./chart -n production' --exit=0 --level=lite < plugins/helm/helm-compact/samples/helm-install.txt
       checks:
@@ -38,7 +38,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/helm/helm-compact/tests.cue \ helm-compact \ samples/helm-install.txt full
+- name: tests.cue \ helm-compact \ samples/helm-install.txt full
   commands:
     - command: lowfat filter plugins/helm/helm-compact/filter.lf --sub=install --args='api ./chart -n production' --exit=0 --level=full < plugins/helm/helm-compact/samples/helm-install.txt
       checks:
@@ -78,7 +78,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/helm/helm-compact/tests.cue \ helm-compact \ samples/helm-install.txt ultra
+- name: tests.cue \ helm-compact \ samples/helm-install.txt ultra
   commands:
     - command: lowfat filter plugins/helm/helm-compact/filter.lf --sub=install --args='api ./chart -n production' --exit=0 --level=ultra < plugins/helm/helm-compact/samples/helm-install.txt
       checks:
@@ -103,7 +103,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/helm/helm-compact/tests.cue \ helm-compact \ samples/helm-list.txt lite
+- name: tests.cue \ helm-compact \ samples/helm-list.txt lite
   commands:
     - command: lowfat filter plugins/helm/helm-compact/filter.lf --sub=list --args='-A' --exit=0 --level=lite < plugins/helm/helm-compact/samples/helm-list.txt
       checks:
@@ -130,7 +130,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/helm/helm-compact/tests.cue \ helm-compact \ samples/helm-list.txt full
+- name: tests.cue \ helm-compact \ samples/helm-list.txt full
   commands:
     - command: lowfat filter plugins/helm/helm-compact/filter.lf --sub=list --args='-A' --exit=0 --level=full < plugins/helm/helm-compact/samples/helm-list.txt
       checks:
@@ -157,7 +157,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/helm/helm-compact/tests.cue \ helm-compact \ samples/helm-list.txt ultra
+- name: tests.cue \ helm-compact \ samples/helm-list.txt ultra
   commands:
     - command: lowfat filter plugins/helm/helm-compact/filter.lf --sub=list --args='-A' --exit=0 --level=ultra < plugins/helm/helm-compact/samples/helm-list.txt
       checks:
@@ -184,7 +184,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/helm/helm-compact/tests.cue \ helm-compact \ samples/helm-upgrade-error.txt lite
+- name: tests.cue \ helm-compact \ samples/helm-upgrade-error.txt lite
   commands:
     - command: lowfat filter plugins/helm/helm-compact/filter.lf --sub=upgrade --args='api ./chart -n production --install' --exit=1 --level=lite < plugins/helm/helm-compact/samples/helm-upgrade-error.txt
       checks:
@@ -204,7 +204,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/helm/helm-compact/tests.cue \ helm-compact \ samples/helm-upgrade-error.txt full
+- name: tests.cue \ helm-compact \ samples/helm-upgrade-error.txt full
   commands:
     - command: lowfat filter plugins/helm/helm-compact/filter.lf --sub=upgrade --args='api ./chart -n production --install' --exit=1 --level=full < plugins/helm/helm-compact/samples/helm-upgrade-error.txt
       checks:
@@ -224,7 +224,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/helm/helm-compact/tests.cue \ helm-compact \ samples/helm-upgrade-error.txt ultra
+- name: tests.cue \ helm-compact \ samples/helm-upgrade-error.txt ultra
   commands:
     - command: lowfat filter plugins/helm/helm-compact/filter.lf --sub=upgrade --args='api ./chart -n production --install' --exit=1 --level=ultra < plugins/helm/helm-compact/samples/helm-upgrade-error.txt
       checks:
@@ -244,7 +244,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/helm/helm-compact/tests.cue \ helm-compact \ samples/helm-install-json.txt lite
+- name: tests.cue \ helm-compact \ samples/helm-install-json.txt lite
   commands:
     - command: lowfat filter plugins/helm/helm-compact/filter.lf --sub=install --args='api ./mychart -n production -o json' --exit=0 --level=lite < plugins/helm/helm-compact/samples/helm-install-json.txt
       checks:
@@ -263,7 +263,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/helm/helm-compact/tests.cue \ helm-compact \ samples/helm-install-json.txt full
+- name: tests.cue \ helm-compact \ samples/helm-install-json.txt full
   commands:
     - command: lowfat filter plugins/helm/helm-compact/filter.lf --sub=install --args='api ./mychart -n production -o json' --exit=0 --level=full < plugins/helm/helm-compact/samples/helm-install-json.txt
       checks:
@@ -282,7 +282,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/helm/helm-compact/tests.cue \ helm-compact \ samples/helm-install-json.txt ultra
+- name: tests.cue \ helm-compact \ samples/helm-install-json.txt ultra
   commands:
     - command: lowfat filter plugins/helm/helm-compact/filter.lf --sub=install --args='api ./mychart -n production -o json' --exit=0 --level=ultra < plugins/helm/helm-compact/samples/helm-install-json.txt
       checks:
@@ -301,7 +301,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/helm/helm-compact/tests.cue \ helm-compact \ samples/helm-install-yaml.txt lite
+- name: tests.cue \ helm-compact \ samples/helm-install-yaml.txt lite
   commands:
     - command: lowfat filter plugins/helm/helm-compact/filter.lf --sub=install --args='api ./mychart -n production -o yaml' --exit=0 --level=lite < plugins/helm/helm-compact/samples/helm-install-yaml.txt
       checks:
@@ -359,7 +359,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/helm/helm-compact/tests.cue \ helm-compact \ samples/helm-install-yaml.txt full
+- name: tests.cue \ helm-compact \ samples/helm-install-yaml.txt full
   commands:
     - command: lowfat filter plugins/helm/helm-compact/filter.lf --sub=install --args='api ./mychart -n production -o yaml' --exit=0 --level=full < plugins/helm/helm-compact/samples/helm-install-yaml.txt
       checks:
@@ -417,7 +417,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/helm/helm-compact/tests.cue \ helm-compact \ samples/helm-install-yaml.txt ultra
+- name: tests.cue \ helm-compact \ samples/helm-install-yaml.txt ultra
   commands:
     - command: lowfat filter plugins/helm/helm-compact/filter.lf --sub=install --args='api ./mychart -n production -o yaml' --exit=0 --level=ultra < plugins/helm/helm-compact/samples/helm-install-yaml.txt
       checks:

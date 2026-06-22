@@ -1,4 +1,4 @@
-- name: plugins/make/make-compact/tests.cue \ make-compact \ samples/make-success.txt lite
+- name: tests.cue \ make-compact \ samples/make-success.txt lite
   commands:
     - command: lowfat filter plugins/make/make-compact/filter.lf --sub= --args='release' --exit=0 --level=lite < plugins/make/make-compact/samples/make-success.txt
       checks:
@@ -36,7 +36,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/make/make-compact/tests.cue \ make-compact \ samples/make-success.txt full
+- name: tests.cue \ make-compact \ samples/make-success.txt full
   commands:
     - command: lowfat filter plugins/make/make-compact/filter.lf --sub= --args='release' --exit=0 --level=full < plugins/make/make-compact/samples/make-success.txt
       checks:
@@ -74,7 +74,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/make/make-compact/tests.cue \ make-compact \ samples/make-success.txt ultra
+- name: tests.cue \ make-compact \ samples/make-success.txt ultra
   commands:
     - command: lowfat filter plugins/make/make-compact/filter.lf --sub= --args='release' --exit=0 --level=ultra < plugins/make/make-compact/samples/make-success.txt
       checks:
@@ -112,7 +112,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/make/make-compact/tests.cue \ make-compact \ samples/make-failure.txt lite
+- name: tests.cue \ make-compact \ samples/make-failure.txt lite
   commands:
     - command: lowfat filter plugins/make/make-compact/filter.lf --sub= --args='release' --exit=2 --level=lite < plugins/make/make-compact/samples/make-failure.txt
       checks:
@@ -157,7 +157,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/make/make-compact/tests.cue \ make-compact \ samples/make-failure.txt full
+- name: tests.cue \ make-compact \ samples/make-failure.txt full
   commands:
     - command: lowfat filter plugins/make/make-compact/filter.lf --sub= --args='release' --exit=2 --level=full < plugins/make/make-compact/samples/make-failure.txt
       checks:
@@ -202,7 +202,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/make/make-compact/tests.cue \ make-compact \ samples/make-failure.txt ultra
+- name: tests.cue \ make-compact \ samples/make-failure.txt ultra
   commands:
     - command: lowfat filter plugins/make/make-compact/filter.lf --sub= --args='release' --exit=2 --level=ultra < plugins/make/make-compact/samples/make-failure.txt
       checks:

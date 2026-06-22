@@ -1,4 +1,4 @@
-- name: plugins/npm/npm-compact/tests.cue \ npm-compact \ samples/npm-install.txt lite
+- name: tests.cue \ npm-compact \ samples/npm-install.txt lite
   commands:
     - command: lowfat filter plugins/npm/npm-compact/filter.lf --sub=install --args='' --exit=0 --level=lite < plugins/npm/npm-compact/samples/npm-install.txt
       checks:
@@ -21,7 +21,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/npm/npm-compact/tests.cue \ npm-compact \ samples/npm-install.txt full
+- name: tests.cue \ npm-compact \ samples/npm-install.txt full
   commands:
     - command: lowfat filter plugins/npm/npm-compact/filter.lf --sub=install --args='' --exit=0 --level=full < plugins/npm/npm-compact/samples/npm-install.txt
       checks:
@@ -44,7 +44,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/npm/npm-compact/tests.cue \ npm-compact \ samples/npm-install.txt ultra
+- name: tests.cue \ npm-compact \ samples/npm-install.txt ultra
   commands:
     - command: lowfat filter plugins/npm/npm-compact/filter.lf --sub=install --args='' --exit=0 --level=ultra < plugins/npm/npm-compact/samples/npm-install.txt
       checks:
@@ -67,7 +67,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/npm/npm-compact/tests.cue \ npm-compact \ samples/npm-test.txt lite
+- name: tests.cue \ npm-compact \ samples/npm-test.txt lite
   commands:
     - command: lowfat filter plugins/npm/npm-compact/filter.lf --sub=test --args='' --exit=0 --level=lite < plugins/npm/npm-compact/samples/npm-test.txt
       checks:
@@ -99,7 +99,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/npm/npm-compact/tests.cue \ npm-compact \ samples/npm-test.txt full
+- name: tests.cue \ npm-compact \ samples/npm-test.txt full
   commands:
     - command: lowfat filter plugins/npm/npm-compact/filter.lf --sub=test --args='' --exit=0 --level=full < plugins/npm/npm-compact/samples/npm-test.txt
       checks:
@@ -131,7 +131,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/npm/npm-compact/tests.cue \ npm-compact \ samples/npm-test.txt ultra
+- name: tests.cue \ npm-compact \ samples/npm-test.txt ultra
   commands:
     - command: lowfat filter plugins/npm/npm-compact/filter.lf --sub=test --args='' --exit=0 --level=ultra < plugins/npm/npm-compact/samples/npm-test.txt
       checks:
@@ -163,7 +163,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/npm/npm-compact/tests.cue \ npm-compact \ samples/npm-error.txt lite
+- name: tests.cue \ npm-compact \ samples/npm-error.txt lite
   commands:
     - command: lowfat filter plugins/npm/npm-compact/filter.lf --sub=install --args='' --exit=1 --level=lite < plugins/npm/npm-compact/samples/npm-error.txt
       checks:
@@ -199,7 +199,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/npm/npm-compact/tests.cue \ npm-compact \ samples/npm-error.txt full
+- name: tests.cue \ npm-compact \ samples/npm-error.txt full
   commands:
     - command: lowfat filter plugins/npm/npm-compact/filter.lf --sub=install --args='' --exit=1 --level=full < plugins/npm/npm-compact/samples/npm-error.txt
       checks:
@@ -235,7 +235,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/npm/npm-compact/tests.cue \ npm-compact \ samples/npm-error.txt ultra
+- name: tests.cue \ npm-compact \ samples/npm-error.txt ultra
   commands:
     - command: lowfat filter plugins/npm/npm-compact/filter.lf --sub=install --args='' --exit=1 --level=ultra < plugins/npm/npm-compact/samples/npm-error.txt
       checks:
@@ -271,7 +271,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/npm/npm-compact/tests.cue \ npm-compact \ samples/npm-install-json.txt lite
+- name: tests.cue \ npm-compact \ samples/npm-install-json.txt lite
   commands:
     - command: lowfat filter plugins/npm/npm-compact/filter.lf --sub=install --args='install --json' --exit=0 --level=lite < plugins/npm/npm-compact/samples/npm-install-json.txt
       checks:
@@ -314,7 +314,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/npm/npm-compact/tests.cue \ npm-compact \ samples/npm-install-json.txt full
+- name: tests.cue \ npm-compact \ samples/npm-install-json.txt full
   commands:
     - command: lowfat filter plugins/npm/npm-compact/filter.lf --sub=install --args='install --json' --exit=0 --level=full < plugins/npm/npm-compact/samples/npm-install-json.txt
       checks:
@@ -357,7 +357,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/npm/npm-compact/tests.cue \ npm-compact \ samples/npm-install-json.txt ultra
+- name: tests.cue \ npm-compact \ samples/npm-install-json.txt ultra
   commands:
     - command: lowfat filter plugins/npm/npm-compact/filter.lf --sub=install --args='install --json' --exit=0 --level=ultra < plugins/npm/npm-compact/samples/npm-install-json.txt
       checks:

@@ -1,4 +1,4 @@
-- name: plugins/cargo/cargo-compact/tests.cue \ cargo-compact \ samples/cargo-build-full.txt lite
+- name: tests.cue \ cargo-compact \ samples/cargo-build-full.txt lite
   commands:
     - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=build --args='' --exit=0 --level=lite < plugins/cargo/cargo-compact/samples/cargo-build-full.txt
       checks:
@@ -26,7 +26,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/cargo/cargo-compact/tests.cue \ cargo-compact \ samples/cargo-build-full.txt full
+- name: tests.cue \ cargo-compact \ samples/cargo-build-full.txt full
   commands:
     - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=build --args='' --exit=0 --level=full < plugins/cargo/cargo-compact/samples/cargo-build-full.txt
       checks:
@@ -54,7 +54,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/cargo/cargo-compact/tests.cue \ cargo-compact \ samples/cargo-build-full.txt ultra
+- name: tests.cue \ cargo-compact \ samples/cargo-build-full.txt ultra
   commands:
     - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=build --args='' --exit=0 --level=ultra < plugins/cargo/cargo-compact/samples/cargo-build-full.txt
       checks:
@@ -77,7 +77,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/cargo/cargo-compact/tests.cue \ cargo-compact \ samples/cargo-build-error.txt lite
+- name: tests.cue \ cargo-compact \ samples/cargo-build-error.txt lite
   commands:
     - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=build --args='' --exit=101 --level=lite < plugins/cargo/cargo-compact/samples/cargo-build-error.txt
       checks:
@@ -111,7 +111,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/cargo/cargo-compact/tests.cue \ cargo-compact \ samples/cargo-build-error.txt full
+- name: tests.cue \ cargo-compact \ samples/cargo-build-error.txt full
   commands:
     - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=build --args='' --exit=101 --level=full < plugins/cargo/cargo-compact/samples/cargo-build-error.txt
       checks:
@@ -145,7 +145,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/cargo/cargo-compact/tests.cue \ cargo-compact \ samples/cargo-build-error.txt ultra
+- name: tests.cue \ cargo-compact \ samples/cargo-build-error.txt ultra
   commands:
     - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=build --args='' --exit=101 --level=ultra < plugins/cargo/cargo-compact/samples/cargo-build-error.txt
       checks:
@@ -170,7 +170,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/cargo/cargo-compact/tests.cue \ cargo-compact \ samples/cargo-test-error.txt lite
+- name: tests.cue \ cargo-compact \ samples/cargo-test-error.txt lite
   commands:
     - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=test --args='' --exit=101 --level=lite < plugins/cargo/cargo-compact/samples/cargo-test-error.txt
       checks:
@@ -208,7 +208,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/cargo/cargo-compact/tests.cue \ cargo-compact \ samples/cargo-test-error.txt full
+- name: tests.cue \ cargo-compact \ samples/cargo-test-error.txt full
   commands:
     - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=test --args='' --exit=101 --level=full < plugins/cargo/cargo-compact/samples/cargo-test-error.txt
       checks:
@@ -246,7 +246,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/cargo/cargo-compact/tests.cue \ cargo-compact \ samples/cargo-test-error.txt ultra
+- name: tests.cue \ cargo-compact \ samples/cargo-test-error.txt ultra
   commands:
     - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=test --args='' --exit=101 --level=ultra < plugins/cargo/cargo-compact/samples/cargo-test-error.txt
       checks:
@@ -273,7 +273,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/cargo/cargo-compact/tests.cue \ cargo-compact \ samples/cargo-build-json.txt lite
+- name: tests.cue \ cargo-compact \ samples/cargo-build-json.txt lite
   commands:
     - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=build --args='build --message-format json' --exit=0 --level=lite < plugins/cargo/cargo-compact/samples/cargo-build-json.txt
       checks:
@@ -293,7 +293,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/cargo/cargo-compact/tests.cue \ cargo-compact \ samples/cargo-build-json.txt full
+- name: tests.cue \ cargo-compact \ samples/cargo-build-json.txt full
   commands:
     - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=build --args='build --message-format json' --exit=0 --level=full < plugins/cargo/cargo-compact/samples/cargo-build-json.txt
       checks:
@@ -313,7 +313,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/cargo/cargo-compact/tests.cue \ cargo-compact \ samples/cargo-build-json.txt ultra
+- name: tests.cue \ cargo-compact \ samples/cargo-build-json.txt ultra
   commands:
     - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=build --args='build --message-format json' --exit=0 --level=ultra < plugins/cargo/cargo-compact/samples/cargo-build-json.txt
       checks:
@@ -333,7 +333,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/cargo/cargo-compact/tests.cue \ cargo-compact \ samples/cargo-metadata-json.txt lite
+- name: tests.cue \ cargo-compact \ samples/cargo-metadata-json.txt lite
   commands:
     - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=metadata --args='metadata --format-version 1' --exit=0 --level=lite < plugins/cargo/cargo-compact/samples/cargo-metadata-json.txt
       checks:
@@ -352,7 +352,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/cargo/cargo-compact/tests.cue \ cargo-compact \ samples/cargo-metadata-json.txt full
+- name: tests.cue \ cargo-compact \ samples/cargo-metadata-json.txt full
   commands:
     - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=metadata --args='metadata --format-version 1' --exit=0 --level=full < plugins/cargo/cargo-compact/samples/cargo-metadata-json.txt
       checks:
@@ -371,7 +371,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/cargo/cargo-compact/tests.cue \ cargo-compact \ samples/cargo-metadata-json.txt ultra
+- name: tests.cue \ cargo-compact \ samples/cargo-metadata-json.txt ultra
   commands:
     - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=metadata --args='metadata --format-version 1' --exit=0 --level=ultra < plugins/cargo/cargo-compact/samples/cargo-metadata-json.txt
       checks:
@@ -390,7 +390,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/cargo/cargo-compact/tests.cue \ cargo-compact \ samples/cargo-run.txt lite
+- name: tests.cue \ cargo-compact \ samples/cargo-run.txt lite
   commands:
     - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=run --args='run' --exit=0 --level=lite < plugins/cargo/cargo-compact/samples/cargo-run.txt
       checks:
@@ -461,7 +461,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/cargo/cargo-compact/tests.cue \ cargo-compact \ samples/cargo-run.txt full
+- name: tests.cue \ cargo-compact \ samples/cargo-run.txt full
   commands:
     - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=run --args='run' --exit=0 --level=full < plugins/cargo/cargo-compact/samples/cargo-run.txt
       checks:
@@ -532,7 +532,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/cargo/cargo-compact/tests.cue \ cargo-compact \ samples/cargo-run.txt ultra
+- name: tests.cue \ cargo-compact \ samples/cargo-run.txt ultra
   commands:
     - command: lowfat filter plugins/cargo/cargo-compact/filter.lf --sub=run --args='run' --exit=0 --level=ultra < plugins/cargo/cargo-compact/samples/cargo-run.txt
       checks:

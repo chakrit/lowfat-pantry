@@ -1,4 +1,4 @@
-- name: plugins/ansible-playbook/ansible-playbook-compact/tests.cue \ ansible-playbook-compact \ samples/ansible-failure.txt lite
+- name: tests.cue \ ansible-playbook-compact \ samples/ansible-failure.txt lite
   commands:
     - command: lowfat filter plugins/ansible-playbook/ansible-playbook-compact/filter.lf --sub= --args='-i prod site.yml' --exit=2 --level=lite < plugins/ansible-playbook/ansible-playbook-compact/samples/ansible-failure.txt
       checks:
@@ -34,7 +34,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/ansible-playbook/ansible-playbook-compact/tests.cue \ ansible-playbook-compact \ samples/ansible-failure.txt full
+- name: tests.cue \ ansible-playbook-compact \ samples/ansible-failure.txt full
   commands:
     - command: lowfat filter plugins/ansible-playbook/ansible-playbook-compact/filter.lf --sub= --args='-i prod site.yml' --exit=2 --level=full < plugins/ansible-playbook/ansible-playbook-compact/samples/ansible-failure.txt
       checks:
@@ -70,7 +70,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/ansible-playbook/ansible-playbook-compact/tests.cue \ ansible-playbook-compact \ samples/ansible-failure.txt ultra
+- name: tests.cue \ ansible-playbook-compact \ samples/ansible-failure.txt ultra
   commands:
     - command: lowfat filter plugins/ansible-playbook/ansible-playbook-compact/filter.lf --sub= --args='-i prod site.yml' --exit=2 --level=ultra < plugins/ansible-playbook/ansible-playbook-compact/samples/ansible-failure.txt
       checks:
@@ -93,7 +93,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/ansible-playbook/ansible-playbook-compact/tests.cue \ ansible-playbook-compact \ samples/ansible-success.txt lite
+- name: tests.cue \ ansible-playbook-compact \ samples/ansible-success.txt lite
   commands:
     - command: lowfat filter plugins/ansible-playbook/ansible-playbook-compact/filter.lf --sub= --args='-i prod site.yml' --exit=0 --level=lite < plugins/ansible-playbook/ansible-playbook-compact/samples/ansible-success.txt
       checks:
@@ -125,7 +125,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/ansible-playbook/ansible-playbook-compact/tests.cue \ ansible-playbook-compact \ samples/ansible-success.txt full
+- name: tests.cue \ ansible-playbook-compact \ samples/ansible-success.txt full
   commands:
     - command: lowfat filter plugins/ansible-playbook/ansible-playbook-compact/filter.lf --sub= --args='-i prod site.yml' --exit=0 --level=full < plugins/ansible-playbook/ansible-playbook-compact/samples/ansible-success.txt
       checks:
@@ -157,7 +157,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/ansible-playbook/ansible-playbook-compact/tests.cue \ ansible-playbook-compact \ samples/ansible-success.txt ultra
+- name: tests.cue \ ansible-playbook-compact \ samples/ansible-success.txt ultra
   commands:
     - command: lowfat filter plugins/ansible-playbook/ansible-playbook-compact/filter.lf --sub= --args='-i prod site.yml' --exit=0 --level=ultra < plugins/ansible-playbook/ansible-playbook-compact/samples/ansible-success.txt
       checks:

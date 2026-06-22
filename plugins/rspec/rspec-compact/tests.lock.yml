@@ -1,4 +1,4 @@
-- name: plugins/rspec/rspec-compact/tests.cue \ rspec-compact \ samples/rspec-pass.txt lite
+- name: tests.cue \ rspec-compact \ samples/rspec-pass.txt lite
   commands:
     - command: lowfat filter plugins/rspec/rspec-compact/filter.lf --sub= --args='spec/' --exit=0 --level=lite < plugins/rspec/rspec-compact/samples/rspec-pass.txt
       checks:
@@ -17,7 +17,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rspec/rspec-compact/tests.cue \ rspec-compact \ samples/rspec-pass.txt full
+- name: tests.cue \ rspec-compact \ samples/rspec-pass.txt full
   commands:
     - command: lowfat filter plugins/rspec/rspec-compact/filter.lf --sub= --args='spec/' --exit=0 --level=full < plugins/rspec/rspec-compact/samples/rspec-pass.txt
       checks:
@@ -36,7 +36,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rspec/rspec-compact/tests.cue \ rspec-compact \ samples/rspec-pass.txt ultra
+- name: tests.cue \ rspec-compact \ samples/rspec-pass.txt ultra
   commands:
     - command: lowfat filter plugins/rspec/rspec-compact/filter.lf --sub= --args='spec/' --exit=0 --level=ultra < plugins/rspec/rspec-compact/samples/rspec-pass.txt
       checks:
@@ -55,7 +55,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rspec/rspec-compact/tests.cue \ rspec-compact \ samples/rspec-fail.txt lite
+- name: tests.cue \ rspec-compact \ samples/rspec-fail.txt lite
   commands:
     - command: lowfat filter plugins/rspec/rspec-compact/filter.lf --sub= --args='spec/' --exit=1 --level=lite < plugins/rspec/rspec-compact/samples/rspec-fail.txt
       checks:
@@ -99,7 +99,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rspec/rspec-compact/tests.cue \ rspec-compact \ samples/rspec-fail.txt full
+- name: tests.cue \ rspec-compact \ samples/rspec-fail.txt full
   commands:
     - command: lowfat filter plugins/rspec/rspec-compact/filter.lf --sub= --args='spec/' --exit=1 --level=full < plugins/rspec/rspec-compact/samples/rspec-fail.txt
       checks:
@@ -134,7 +134,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rspec/rspec-compact/tests.cue \ rspec-compact \ samples/rspec-fail.txt ultra
+- name: tests.cue \ rspec-compact \ samples/rspec-fail.txt ultra
   commands:
     - command: lowfat filter plugins/rspec/rspec-compact/filter.lf --sub= --args='spec/' --exit=1 --level=ultra < plugins/rspec/rspec-compact/samples/rspec-fail.txt
       checks:
@@ -159,7 +159,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rspec/rspec-compact/tests.cue \ rspec-compact \ samples/rspec-error.txt lite
+- name: tests.cue \ rspec-compact \ samples/rspec-error.txt lite
   commands:
     - command: lowfat filter plugins/rspec/rspec-compact/filter.lf --sub= --args='spec/broken_spec.rb' --exit=1 --level=lite < plugins/rspec/rspec-compact/samples/rspec-error.txt
       checks:
@@ -190,7 +190,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rspec/rspec-compact/tests.cue \ rspec-compact \ samples/rspec-error.txt full
+- name: tests.cue \ rspec-compact \ samples/rspec-error.txt full
   commands:
     - command: lowfat filter plugins/rspec/rspec-compact/filter.lf --sub= --args='spec/broken_spec.rb' --exit=1 --level=full < plugins/rspec/rspec-compact/samples/rspec-error.txt
       checks:
@@ -217,7 +217,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rspec/rspec-compact/tests.cue \ rspec-compact \ samples/rspec-error.txt ultra
+- name: tests.cue \ rspec-compact \ samples/rspec-error.txt ultra
   commands:
     - command: lowfat filter plugins/rspec/rspec-compact/filter.lf --sub= --args='spec/broken_spec.rb' --exit=1 --level=ultra < plugins/rspec/rspec-compact/samples/rspec-error.txt
       checks:
@@ -240,7 +240,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rspec/rspec-compact/tests.cue \ rspec-compact \ samples/rspec-json.txt lite
+- name: tests.cue \ rspec-compact \ samples/rspec-json.txt lite
   commands:
     - command: lowfat filter plugins/rspec/rspec-compact/filter.lf --sub= --args='--format json' --exit=0 --level=lite < plugins/rspec/rspec-compact/samples/rspec-json.txt
       checks:
@@ -259,7 +259,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rspec/rspec-compact/tests.cue \ rspec-compact \ samples/rspec-json.txt full
+- name: tests.cue \ rspec-compact \ samples/rspec-json.txt full
   commands:
     - command: lowfat filter plugins/rspec/rspec-compact/filter.lf --sub= --args='--format json' --exit=0 --level=full < plugins/rspec/rspec-compact/samples/rspec-json.txt
       checks:
@@ -278,7 +278,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rspec/rspec-compact/tests.cue \ rspec-compact \ samples/rspec-json.txt ultra
+- name: tests.cue \ rspec-compact \ samples/rspec-json.txt ultra
   commands:
     - command: lowfat filter plugins/rspec/rspec-compact/filter.lf --sub= --args='--format json' --exit=0 --level=ultra < plugins/rspec/rspec-compact/samples/rspec-json.txt
       checks:

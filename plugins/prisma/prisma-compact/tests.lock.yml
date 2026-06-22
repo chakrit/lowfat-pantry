@@ -1,4 +1,4 @@
-- name: plugins/prisma/prisma-compact/tests.cue \ prisma-compact \ samples/prisma-generate.txt lite
+- name: tests.cue \ prisma-compact \ samples/prisma-generate.txt lite
   commands:
     - command: lowfat filter plugins/prisma/prisma-compact/filter.lf --sub=generate --args='' --exit=0 --level=lite < plugins/prisma/prisma-compact/samples/prisma-generate.txt
       checks:
@@ -19,7 +19,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/prisma/prisma-compact/tests.cue \ prisma-compact \ samples/prisma-generate.txt full
+- name: tests.cue \ prisma-compact \ samples/prisma-generate.txt full
   commands:
     - command: lowfat filter plugins/prisma/prisma-compact/filter.lf --sub=generate --args='' --exit=0 --level=full < plugins/prisma/prisma-compact/samples/prisma-generate.txt
       checks:
@@ -40,7 +40,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/prisma/prisma-compact/tests.cue \ prisma-compact \ samples/prisma-generate.txt ultra
+- name: tests.cue \ prisma-compact \ samples/prisma-generate.txt ultra
   commands:
     - command: lowfat filter plugins/prisma/prisma-compact/filter.lf --sub=generate --args='' --exit=0 --level=ultra < plugins/prisma/prisma-compact/samples/prisma-generate.txt
       checks:
@@ -59,7 +59,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/prisma/prisma-compact/tests.cue \ prisma-compact \ samples/prisma-migrate.txt lite
+- name: tests.cue \ prisma-compact \ samples/prisma-migrate.txt lite
   commands:
     - command: lowfat filter plugins/prisma/prisma-compact/filter.lf --sub=migrate --args='deploy' --exit=0 --level=lite < plugins/prisma/prisma-compact/samples/prisma-migrate.txt
       checks:
@@ -95,7 +95,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/prisma/prisma-compact/tests.cue \ prisma-compact \ samples/prisma-migrate.txt full
+- name: tests.cue \ prisma-compact \ samples/prisma-migrate.txt full
   commands:
     - command: lowfat filter plugins/prisma/prisma-compact/filter.lf --sub=migrate --args='deploy' --exit=0 --level=full < plugins/prisma/prisma-compact/samples/prisma-migrate.txt
       checks:
@@ -131,7 +131,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/prisma/prisma-compact/tests.cue \ prisma-compact \ samples/prisma-migrate.txt ultra
+- name: tests.cue \ prisma-compact \ samples/prisma-migrate.txt ultra
   commands:
     - command: lowfat filter plugins/prisma/prisma-compact/filter.lf --sub=migrate --args='deploy' --exit=0 --level=ultra < plugins/prisma/prisma-compact/samples/prisma-migrate.txt
       checks:
@@ -155,7 +155,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/prisma/prisma-compact/tests.cue \ prisma-compact \ samples/prisma-error.txt lite
+- name: tests.cue \ prisma-compact \ samples/prisma-error.txt lite
   commands:
     - command: lowfat filter plugins/prisma/prisma-compact/filter.lf --sub=migrate --args='dev' --exit=1 --level=lite < plugins/prisma/prisma-compact/samples/prisma-error.txt
       checks:
@@ -184,7 +184,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/prisma/prisma-compact/tests.cue \ prisma-compact \ samples/prisma-error.txt full
+- name: tests.cue \ prisma-compact \ samples/prisma-error.txt full
   commands:
     - command: lowfat filter plugins/prisma/prisma-compact/filter.lf --sub=migrate --args='dev' --exit=1 --level=full < plugins/prisma/prisma-compact/samples/prisma-error.txt
       checks:
@@ -213,7 +213,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/prisma/prisma-compact/tests.cue \ prisma-compact \ samples/prisma-error.txt ultra
+- name: tests.cue \ prisma-compact \ samples/prisma-error.txt ultra
   commands:
     - command: lowfat filter plugins/prisma/prisma-compact/filter.lf --sub=migrate --args='dev' --exit=1 --level=ultra < plugins/prisma/prisma-compact/samples/prisma-error.txt
       checks:

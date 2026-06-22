@@ -1,4 +1,4 @@
-- name: plugins/gh/gh-compact/tests.cue \ gh-compact \ samples/gh-pr-list.txt lite
+- name: tests.cue \ gh-compact \ samples/gh-pr-list.txt lite
   commands:
     - command: lowfat filter plugins/gh/gh-compact/filter.lf --sub=pr --args='list' --exit=0 --level=lite < plugins/gh/gh-compact/samples/gh-pr-list.txt
       checks:
@@ -23,7 +23,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/gh/gh-compact/tests.cue \ gh-compact \ samples/gh-pr-list.txt full
+- name: tests.cue \ gh-compact \ samples/gh-pr-list.txt full
   commands:
     - command: lowfat filter plugins/gh/gh-compact/filter.lf --sub=pr --args='list' --exit=0 --level=full < plugins/gh/gh-compact/samples/gh-pr-list.txt
       checks:
@@ -48,7 +48,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/gh/gh-compact/tests.cue \ gh-compact \ samples/gh-pr-list.txt ultra
+- name: tests.cue \ gh-compact \ samples/gh-pr-list.txt ultra
   commands:
     - command: lowfat filter plugins/gh/gh-compact/filter.lf --sub=pr --args='list' --exit=0 --level=ultra < plugins/gh/gh-compact/samples/gh-pr-list.txt
       checks:
@@ -73,7 +73,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/gh/gh-compact/tests.cue \ gh-compact \ samples/gh-run-view.txt lite
+- name: tests.cue \ gh-compact \ samples/gh-run-view.txt lite
   commands:
     - command: lowfat filter plugins/gh/gh-compact/filter.lf --sub=run --args='view 994203' --exit=0 --level=lite < plugins/gh/gh-compact/samples/gh-run-view.txt
       checks:
@@ -105,7 +105,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/gh/gh-compact/tests.cue \ gh-compact \ samples/gh-run-view.txt full
+- name: tests.cue \ gh-compact \ samples/gh-run-view.txt full
   commands:
     - command: lowfat filter plugins/gh/gh-compact/filter.lf --sub=run --args='view 994203' --exit=0 --level=full < plugins/gh/gh-compact/samples/gh-run-view.txt
       checks:
@@ -137,7 +137,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/gh/gh-compact/tests.cue \ gh-compact \ samples/gh-run-view.txt ultra
+- name: tests.cue \ gh-compact \ samples/gh-run-view.txt ultra
   commands:
     - command: lowfat filter plugins/gh/gh-compact/filter.lf --sub=run --args='view 994203' --exit=0 --level=ultra < plugins/gh/gh-compact/samples/gh-run-view.txt
       checks:
@@ -169,7 +169,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/gh/gh-compact/tests.cue \ gh-compact \ samples/gh-run-log.txt lite
+- name: tests.cue \ gh-compact \ samples/gh-run-log.txt lite
   commands:
     - command: lowfat filter plugins/gh/gh-compact/filter.lf --sub=run --args='view 994203 --log' --exit=0 --level=lite < plugins/gh/gh-compact/samples/gh-run-log.txt
       checks:
@@ -250,7 +250,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/gh/gh-compact/tests.cue \ gh-compact \ samples/gh-run-log.txt full
+- name: tests.cue \ gh-compact \ samples/gh-run-log.txt full
   commands:
     - command: lowfat filter plugins/gh/gh-compact/filter.lf --sub=run --args='view 994203 --log' --exit=0 --level=full < plugins/gh/gh-compact/samples/gh-run-log.txt
       checks:
@@ -331,7 +331,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/gh/gh-compact/tests.cue \ gh-compact \ samples/gh-run-log.txt ultra
+- name: tests.cue \ gh-compact \ samples/gh-run-log.txt ultra
   commands:
     - command: lowfat filter plugins/gh/gh-compact/filter.lf --sub=run --args='view 994203 --log' --exit=0 --level=ultra < plugins/gh/gh-compact/samples/gh-run-log.txt
       checks:
@@ -389,7 +389,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/gh/gh-compact/tests.cue \ gh-compact \ samples/gh-pr-json.txt lite
+- name: tests.cue \ gh-compact \ samples/gh-pr-json.txt lite
   commands:
     - command: lowfat filter plugins/gh/gh-compact/filter.lf --sub=pr --args='view 12 --json number,state,title' --exit=0 --level=lite < plugins/gh/gh-compact/samples/gh-pr-json.txt
       checks:
@@ -408,7 +408,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/gh/gh-compact/tests.cue \ gh-compact \ samples/gh-pr-json.txt full
+- name: tests.cue \ gh-compact \ samples/gh-pr-json.txt full
   commands:
     - command: lowfat filter plugins/gh/gh-compact/filter.lf --sub=pr --args='view 12 --json number,state,title' --exit=0 --level=full < plugins/gh/gh-compact/samples/gh-pr-json.txt
       checks:
@@ -427,7 +427,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/gh/gh-compact/tests.cue \ gh-compact \ samples/gh-pr-json.txt ultra
+- name: tests.cue \ gh-compact \ samples/gh-pr-json.txt ultra
   commands:
     - command: lowfat filter plugins/gh/gh-compact/filter.lf --sub=pr --args='view 12 --json number,state,title' --exit=0 --level=ultra < plugins/gh/gh-compact/samples/gh-pr-json.txt
       checks:

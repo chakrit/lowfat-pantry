@@ -1,4 +1,4 @@
-- name: plugins/jq/jq-compact/tests.cue \ jq-compact \ samples/jq-array.txt lite
+- name: tests.cue \ jq-compact \ samples/jq-array.txt lite
   commands:
     - command: lowfat filter plugins/jq/jq-compact/filter.lf --sub= --args='.' --exit=0 --level=lite < plugins/jq/jq-compact/samples/jq-array.txt
       checks:
@@ -93,7 +93,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/jq/jq-compact/tests.cue \ jq-compact \ samples/jq-array.txt full
+- name: tests.cue \ jq-compact \ samples/jq-array.txt full
   commands:
     - command: lowfat filter plugins/jq/jq-compact/filter.lf --sub= --args='.' --exit=0 --level=full < plugins/jq/jq-compact/samples/jq-array.txt
       checks:
@@ -188,7 +188,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/jq/jq-compact/tests.cue \ jq-compact \ samples/jq-array.txt ultra
+- name: tests.cue \ jq-compact \ samples/jq-array.txt ultra
   commands:
     - command: lowfat filter plugins/jq/jq-compact/filter.lf --sub= --args='.' --exit=0 --level=ultra < plugins/jq/jq-compact/samples/jq-array.txt
       checks:
@@ -271,7 +271,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/jq/jq-compact/tests.cue \ jq-compact \ samples/jq-raw.txt lite
+- name: tests.cue \ jq-compact \ samples/jq-raw.txt lite
   commands:
     - command: lowfat filter plugins/jq/jq-compact/filter.lf --sub= --args='-r .name' --exit=0 --level=lite < plugins/jq/jq-compact/samples/jq-raw.txt
       checks:
@@ -315,7 +315,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/jq/jq-compact/tests.cue \ jq-compact \ samples/jq-raw.txt full
+- name: tests.cue \ jq-compact \ samples/jq-raw.txt full
   commands:
     - command: lowfat filter plugins/jq/jq-compact/filter.lf --sub= --args='-r .name' --exit=0 --level=full < plugins/jq/jq-compact/samples/jq-raw.txt
       checks:
@@ -359,7 +359,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/jq/jq-compact/tests.cue \ jq-compact \ samples/jq-raw.txt ultra
+- name: tests.cue \ jq-compact \ samples/jq-raw.txt ultra
   commands:
     - command: lowfat filter plugins/jq/jq-compact/filter.lf --sub= --args='-r .name' --exit=0 --level=ultra < plugins/jq/jq-compact/samples/jq-raw.txt
       checks:
@@ -403,7 +403,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/jq/jq-compact/tests.cue \ jq-compact \ samples/jq-error.txt lite
+- name: tests.cue \ jq-compact \ samples/jq-error.txt lite
   commands:
     - command: lowfat filter plugins/jq/jq-compact/filter.lf --sub= --args='.' --exit=4 --level=lite < plugins/jq/jq-compact/samples/jq-error.txt
       checks:
@@ -422,7 +422,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/jq/jq-compact/tests.cue \ jq-compact \ samples/jq-error.txt full
+- name: tests.cue \ jq-compact \ samples/jq-error.txt full
   commands:
     - command: lowfat filter plugins/jq/jq-compact/filter.lf --sub= --args='.' --exit=4 --level=full < plugins/jq/jq-compact/samples/jq-error.txt
       checks:
@@ -441,7 +441,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/jq/jq-compact/tests.cue \ jq-compact \ samples/jq-error.txt ultra
+- name: tests.cue \ jq-compact \ samples/jq-error.txt ultra
   commands:
     - command: lowfat filter plugins/jq/jq-compact/filter.lf --sub= --args='.' --exit=4 --level=ultra < plugins/jq/jq-compact/samples/jq-error.txt
       checks:

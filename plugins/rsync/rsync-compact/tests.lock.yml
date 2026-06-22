@@ -1,4 +1,4 @@
-- name: plugins/rsync/rsync-compact/tests.cue \ rsync-compact \ samples/rsync-transfer.txt lite
+- name: tests.cue \ rsync-compact \ samples/rsync-transfer.txt lite
   commands:
     - command: lowfat filter plugins/rsync/rsync-compact/filter.lf --sub= --args='-av src/ host:/dst/' --exit=0 --level=lite < plugins/rsync/rsync-compact/samples/rsync-transfer.txt
       checks:
@@ -50,7 +50,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rsync/rsync-compact/tests.cue \ rsync-compact \ samples/rsync-transfer.txt full
+- name: tests.cue \ rsync-compact \ samples/rsync-transfer.txt full
   commands:
     - command: lowfat filter plugins/rsync/rsync-compact/filter.lf --sub= --args='-av src/ host:/dst/' --exit=0 --level=full < plugins/rsync/rsync-compact/samples/rsync-transfer.txt
       checks:
@@ -102,7 +102,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rsync/rsync-compact/tests.cue \ rsync-compact \ samples/rsync-transfer.txt ultra
+- name: tests.cue \ rsync-compact \ samples/rsync-transfer.txt ultra
   commands:
     - command: lowfat filter plugins/rsync/rsync-compact/filter.lf --sub= --args='-av src/ host:/dst/' --exit=0 --level=ultra < plugins/rsync/rsync-compact/samples/rsync-transfer.txt
       checks:
@@ -135,7 +135,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rsync/rsync-compact/tests.cue \ rsync-compact \ samples/rsync-error.txt lite
+- name: tests.cue \ rsync-compact \ samples/rsync-error.txt lite
   commands:
     - command: lowfat filter plugins/rsync/rsync-compact/filter.lf --sub= --args='-av /missing/ host:/dst/' --exit=23 --level=lite < plugins/rsync/rsync-compact/samples/rsync-error.txt
       checks:
@@ -155,7 +155,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rsync/rsync-compact/tests.cue \ rsync-compact \ samples/rsync-error.txt full
+- name: tests.cue \ rsync-compact \ samples/rsync-error.txt full
   commands:
     - command: lowfat filter plugins/rsync/rsync-compact/filter.lf --sub= --args='-av /missing/ host:/dst/' --exit=23 --level=full < plugins/rsync/rsync-compact/samples/rsync-error.txt
       checks:
@@ -175,7 +175,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rsync/rsync-compact/tests.cue \ rsync-compact \ samples/rsync-error.txt ultra
+- name: tests.cue \ rsync-compact \ samples/rsync-error.txt ultra
   commands:
     - command: lowfat filter plugins/rsync/rsync-compact/filter.lf --sub= --args='-av /missing/ host:/dst/' --exit=23 --level=ultra < plugins/rsync/rsync-compact/samples/rsync-error.txt
       checks:

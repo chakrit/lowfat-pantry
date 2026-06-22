@@ -1,4 +1,4 @@
-- name: plugins/wget/wget-compact/tests.cue \ wget-compact \ samples/wget-success.txt lite
+- name: tests.cue \ wget-compact \ samples/wget-success.txt lite
   commands:
     - command: lowfat filter plugins/wget/wget-compact/filter.lf --sub=download --args='https://example.com/releases/app-1.2.3.tar.gz' --exit=0 --level=lite < plugins/wget/wget-compact/samples/wget-success.txt
       checks:
@@ -36,7 +36,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/wget/wget-compact/tests.cue \ wget-compact \ samples/wget-success.txt full
+- name: tests.cue \ wget-compact \ samples/wget-success.txt full
   commands:
     - command: lowfat filter plugins/wget/wget-compact/filter.lf --sub=download --args='https://example.com/releases/app-1.2.3.tar.gz' --exit=0 --level=full < plugins/wget/wget-compact/samples/wget-success.txt
       checks:
@@ -74,7 +74,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/wget/wget-compact/tests.cue \ wget-compact \ samples/wget-success.txt ultra
+- name: tests.cue \ wget-compact \ samples/wget-success.txt ultra
   commands:
     - command: lowfat filter plugins/wget/wget-compact/filter.lf --sub=download --args='https://example.com/releases/app-1.2.3.tar.gz' --exit=0 --level=ultra < plugins/wget/wget-compact/samples/wget-success.txt
       checks:
@@ -99,7 +99,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/wget/wget-compact/tests.cue \ wget-compact \ samples/wget-spider.txt lite
+- name: tests.cue \ wget-compact \ samples/wget-spider.txt lite
   commands:
     - command: lowfat filter plugins/wget/wget-compact/filter.lf --sub=--spider --args='--spider https://example.com/health' --exit=0 --level=lite < plugins/wget/wget-compact/samples/wget-spider.txt
       checks:
@@ -125,7 +125,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/wget/wget-compact/tests.cue \ wget-compact \ samples/wget-spider.txt full
+- name: tests.cue \ wget-compact \ samples/wget-spider.txt full
   commands:
     - command: lowfat filter plugins/wget/wget-compact/filter.lf --sub=--spider --args='--spider https://example.com/health' --exit=0 --level=full < plugins/wget/wget-compact/samples/wget-spider.txt
       checks:
@@ -151,7 +151,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/wget/wget-compact/tests.cue \ wget-compact \ samples/wget-spider.txt ultra
+- name: tests.cue \ wget-compact \ samples/wget-spider.txt ultra
   commands:
     - command: lowfat filter plugins/wget/wget-compact/filter.lf --sub=--spider --args='--spider https://example.com/health' --exit=0 --level=ultra < plugins/wget/wget-compact/samples/wget-spider.txt
       checks:
@@ -174,7 +174,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/wget/wget-compact/tests.cue \ wget-compact \ samples/wget-error.txt lite
+- name: tests.cue \ wget-compact \ samples/wget-error.txt lite
   commands:
     - command: lowfat filter plugins/wget/wget-compact/filter.lf --sub=download --args='https://downloads.example.invalid/app.tar.gz' --exit=4 --level=lite < plugins/wget/wget-compact/samples/wget-error.txt
       checks:
@@ -195,7 +195,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/wget/wget-compact/tests.cue \ wget-compact \ samples/wget-error.txt full
+- name: tests.cue \ wget-compact \ samples/wget-error.txt full
   commands:
     - command: lowfat filter plugins/wget/wget-compact/filter.lf --sub=download --args='https://downloads.example.invalid/app.tar.gz' --exit=4 --level=full < plugins/wget/wget-compact/samples/wget-error.txt
       checks:
@@ -216,7 +216,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/wget/wget-compact/tests.cue \ wget-compact \ samples/wget-error.txt ultra
+- name: tests.cue \ wget-compact \ samples/wget-error.txt ultra
   commands:
     - command: lowfat filter plugins/wget/wget-compact/filter.lf --sub=download --args='https://downloads.example.invalid/app.tar.gz' --exit=4 --level=ultra < plugins/wget/wget-compact/samples/wget-error.txt
       checks:

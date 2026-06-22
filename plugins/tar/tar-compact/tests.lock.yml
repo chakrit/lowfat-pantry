@@ -1,4 +1,4 @@
-- name: plugins/tar/tar-compact/tests.cue \ tar-compact \ samples/tar-list.txt lite
+- name: tests.cue \ tar-compact \ samples/tar-list.txt lite
   commands:
     - command: lowfat filter plugins/tar/tar-compact/filter.lf --sub= --args='-tvf archive.tar' --exit=0 --level=lite < plugins/tar/tar-compact/samples/tar-list.txt
       checks:
@@ -46,7 +46,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/tar/tar-compact/tests.cue \ tar-compact \ samples/tar-list.txt full
+- name: tests.cue \ tar-compact \ samples/tar-list.txt full
   commands:
     - command: lowfat filter plugins/tar/tar-compact/filter.lf --sub= --args='-tvf archive.tar' --exit=0 --level=full < plugins/tar/tar-compact/samples/tar-list.txt
       checks:
@@ -94,7 +94,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/tar/tar-compact/tests.cue \ tar-compact \ samples/tar-list.txt ultra
+- name: tests.cue \ tar-compact \ samples/tar-list.txt ultra
   commands:
     - command: lowfat filter plugins/tar/tar-compact/filter.lf --sub= --args='-tvf archive.tar' --exit=0 --level=ultra < plugins/tar/tar-compact/samples/tar-list.txt
       checks:
@@ -125,7 +125,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/tar/tar-compact/tests.cue \ tar-compact \ samples/tar-error.txt lite
+- name: tests.cue \ tar-compact \ samples/tar-error.txt lite
   commands:
     - command: lowfat filter plugins/tar/tar-compact/filter.lf --sub= --args='-tvf missing.tar' --exit=2 --level=lite < plugins/tar/tar-compact/samples/tar-error.txt
       checks:
@@ -145,7 +145,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/tar/tar-compact/tests.cue \ tar-compact \ samples/tar-error.txt full
+- name: tests.cue \ tar-compact \ samples/tar-error.txt full
   commands:
     - command: lowfat filter plugins/tar/tar-compact/filter.lf --sub= --args='-tvf missing.tar' --exit=2 --level=full < plugins/tar/tar-compact/samples/tar-error.txt
       checks:
@@ -165,7 +165,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/tar/tar-compact/tests.cue \ tar-compact \ samples/tar-error.txt ultra
+- name: tests.cue \ tar-compact \ samples/tar-error.txt ultra
   commands:
     - command: lowfat filter plugins/tar/tar-compact/filter.lf --sub= --args='-tvf missing.tar' --exit=2 --level=ultra < plugins/tar/tar-compact/samples/tar-error.txt
       checks:

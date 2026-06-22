@@ -1,4 +1,4 @@
-- name: plugins/gcloud/gcloud-compact/tests.cue \ gcloud-compact \ samples/gcloud-list.txt lite
+- name: tests.cue \ gcloud-compact \ samples/gcloud-list.txt lite
   commands:
     - command: lowfat filter plugins/gcloud/gcloud-compact/filter.lf --sub=compute --args='compute instances list' --exit=0 --level=lite < plugins/gcloud/gcloud-compact/samples/gcloud-list.txt
       checks:
@@ -42,7 +42,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/gcloud/gcloud-compact/tests.cue \ gcloud-compact \ samples/gcloud-list.txt full
+- name: tests.cue \ gcloud-compact \ samples/gcloud-list.txt full
   commands:
     - command: lowfat filter plugins/gcloud/gcloud-compact/filter.lf --sub=compute --args='compute instances list' --exit=0 --level=full < plugins/gcloud/gcloud-compact/samples/gcloud-list.txt
       checks:
@@ -86,7 +86,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/gcloud/gcloud-compact/tests.cue \ gcloud-compact \ samples/gcloud-list.txt ultra
+- name: tests.cue \ gcloud-compact \ samples/gcloud-list.txt ultra
   commands:
     - command: lowfat filter plugins/gcloud/gcloud-compact/filter.lf --sub=compute --args='compute instances list' --exit=0 --level=ultra < plugins/gcloud/gcloud-compact/samples/gcloud-list.txt
       checks:
@@ -129,7 +129,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/gcloud/gcloud-compact/tests.cue \ gcloud-compact \ samples/gcloud-json.txt lite
+- name: tests.cue \ gcloud-compact \ samples/gcloud-json.txt lite
   commands:
     - command: lowfat filter plugins/gcloud/gcloud-compact/filter.lf --sub=compute --args='compute instances describe web-01 --format json' --exit=0 --level=lite < plugins/gcloud/gcloud-compact/samples/gcloud-json.txt
       checks:
@@ -152,7 +152,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/gcloud/gcloud-compact/tests.cue \ gcloud-compact \ samples/gcloud-json.txt full
+- name: tests.cue \ gcloud-compact \ samples/gcloud-json.txt full
   commands:
     - command: lowfat filter plugins/gcloud/gcloud-compact/filter.lf --sub=compute --args='compute instances describe web-01 --format json' --exit=0 --level=full < plugins/gcloud/gcloud-compact/samples/gcloud-json.txt
       checks:
@@ -175,7 +175,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/gcloud/gcloud-compact/tests.cue \ gcloud-compact \ samples/gcloud-json.txt ultra
+- name: tests.cue \ gcloud-compact \ samples/gcloud-json.txt ultra
   commands:
     - command: lowfat filter plugins/gcloud/gcloud-compact/filter.lf --sub=compute --args='compute instances describe web-01 --format json' --exit=0 --level=ultra < plugins/gcloud/gcloud-compact/samples/gcloud-json.txt
       checks:
@@ -198,7 +198,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/gcloud/gcloud-compact/tests.cue \ gcloud-compact \ samples/gcloud-error.txt lite
+- name: tests.cue \ gcloud-compact \ samples/gcloud-error.txt lite
   commands:
     - command: lowfat filter plugins/gcloud/gcloud-compact/filter.lf --sub=compute --args='compute instances describe nope' --exit=1 --level=lite < plugins/gcloud/gcloud-compact/samples/gcloud-error.txt
       checks:
@@ -218,7 +218,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/gcloud/gcloud-compact/tests.cue \ gcloud-compact \ samples/gcloud-error.txt full
+- name: tests.cue \ gcloud-compact \ samples/gcloud-error.txt full
   commands:
     - command: lowfat filter plugins/gcloud/gcloud-compact/filter.lf --sub=compute --args='compute instances describe nope' --exit=1 --level=full < plugins/gcloud/gcloud-compact/samples/gcloud-error.txt
       checks:
@@ -238,7 +238,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/gcloud/gcloud-compact/tests.cue \ gcloud-compact \ samples/gcloud-error.txt ultra
+- name: tests.cue \ gcloud-compact \ samples/gcloud-error.txt ultra
   commands:
     - command: lowfat filter plugins/gcloud/gcloud-compact/filter.lf --sub=compute --args='compute instances describe nope' --exit=1 --level=ultra < plugins/gcloud/gcloud-compact/samples/gcloud-error.txt
       checks:

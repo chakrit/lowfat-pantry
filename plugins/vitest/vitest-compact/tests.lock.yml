@@ -1,4 +1,4 @@
-- name: plugins/vitest/vitest-compact/tests.cue \ vitest-compact \ samples/vitest-fail.txt lite
+- name: tests.cue \ vitest-compact \ samples/vitest-fail.txt lite
   commands:
     - command: lowfat filter plugins/vitest/vitest-compact/filter.lf --sub= --args='run' --exit=1 --level=lite < plugins/vitest/vitest-compact/samples/vitest-fail.txt
       checks:
@@ -40,7 +40,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/vitest/vitest-compact/tests.cue \ vitest-compact \ samples/vitest-fail.txt full
+- name: tests.cue \ vitest-compact \ samples/vitest-fail.txt full
   commands:
     - command: lowfat filter plugins/vitest/vitest-compact/filter.lf --sub= --args='run' --exit=1 --level=full < plugins/vitest/vitest-compact/samples/vitest-fail.txt
       checks:
@@ -82,7 +82,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/vitest/vitest-compact/tests.cue \ vitest-compact \ samples/vitest-fail.txt ultra
+- name: tests.cue \ vitest-compact \ samples/vitest-fail.txt ultra
   commands:
     - command: lowfat filter plugins/vitest/vitest-compact/filter.lf --sub= --args='run' --exit=1 --level=ultra < plugins/vitest/vitest-compact/samples/vitest-fail.txt
       checks:
@@ -107,7 +107,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/vitest/vitest-compact/tests.cue \ vitest-compact \ samples/vitest-pass.txt lite
+- name: tests.cue \ vitest-compact \ samples/vitest-pass.txt lite
   commands:
     - command: lowfat filter plugins/vitest/vitest-compact/filter.lf --sub= --args='run' --exit=0 --level=lite < plugins/vitest/vitest-compact/samples/vitest-pass.txt
       checks:
@@ -126,7 +126,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/vitest/vitest-compact/tests.cue \ vitest-compact \ samples/vitest-pass.txt full
+- name: tests.cue \ vitest-compact \ samples/vitest-pass.txt full
   commands:
     - command: lowfat filter plugins/vitest/vitest-compact/filter.lf --sub= --args='run' --exit=0 --level=full < plugins/vitest/vitest-compact/samples/vitest-pass.txt
       checks:
@@ -145,7 +145,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/vitest/vitest-compact/tests.cue \ vitest-compact \ samples/vitest-pass.txt ultra
+- name: tests.cue \ vitest-compact \ samples/vitest-pass.txt ultra
   commands:
     - command: lowfat filter plugins/vitest/vitest-compact/filter.lf --sub= --args='run' --exit=0 --level=ultra < plugins/vitest/vitest-compact/samples/vitest-pass.txt
       checks:
@@ -164,7 +164,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/vitest/vitest-compact/tests.cue \ vitest-compact \ samples/vitest-json.txt lite
+- name: tests.cue \ vitest-compact \ samples/vitest-json.txt lite
   commands:
     - command: lowfat filter plugins/vitest/vitest-compact/filter.lf --sub= --args='run --reporter=json' --exit=1 --level=lite < plugins/vitest/vitest-compact/samples/vitest-json.txt
       checks:
@@ -183,7 +183,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/vitest/vitest-compact/tests.cue \ vitest-compact \ samples/vitest-json.txt full
+- name: tests.cue \ vitest-compact \ samples/vitest-json.txt full
   commands:
     - command: lowfat filter plugins/vitest/vitest-compact/filter.lf --sub= --args='run --reporter=json' --exit=1 --level=full < plugins/vitest/vitest-compact/samples/vitest-json.txt
       checks:
@@ -202,7 +202,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/vitest/vitest-compact/tests.cue \ vitest-compact \ samples/vitest-json.txt ultra
+- name: tests.cue \ vitest-compact \ samples/vitest-json.txt ultra
   commands:
     - command: lowfat filter plugins/vitest/vitest-compact/filter.lf --sub= --args='run --reporter=json' --exit=1 --level=ultra < plugins/vitest/vitest-compact/samples/vitest-json.txt
       checks:
@@ -221,7 +221,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/vitest/vitest-compact/tests.cue \ vitest-compact \ samples/vitest-junit.txt lite
+- name: tests.cue \ vitest-compact \ samples/vitest-junit.txt lite
   commands:
     - command: lowfat filter plugins/vitest/vitest-compact/filter.lf --sub= --args='run --reporter=junit' --exit=1 --level=lite < plugins/vitest/vitest-compact/samples/vitest-junit.txt
       checks:
@@ -265,7 +265,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/vitest/vitest-compact/tests.cue \ vitest-compact \ samples/vitest-junit.txt full
+- name: tests.cue \ vitest-compact \ samples/vitest-junit.txt full
   commands:
     - command: lowfat filter plugins/vitest/vitest-compact/filter.lf --sub= --args='run --reporter=junit' --exit=1 --level=full < plugins/vitest/vitest-compact/samples/vitest-junit.txt
       checks:
@@ -309,7 +309,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/vitest/vitest-compact/tests.cue \ vitest-compact \ samples/vitest-junit.txt ultra
+- name: tests.cue \ vitest-compact \ samples/vitest-junit.txt ultra
   commands:
     - command: lowfat filter plugins/vitest/vitest-compact/filter.lf --sub= --args='run --reporter=junit' --exit=1 --level=ultra < plugins/vitest/vitest-compact/samples/vitest-junit.txt
       checks:

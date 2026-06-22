@@ -1,4 +1,4 @@
-- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-up.txt lite
+- name: tests.cue \ pulumi-compact \ samples/pulumi-up.txt lite
   commands:
     - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=up --args='up --yes' --exit=0 --level=lite < plugins/pulumi/pulumi-compact/samples/pulumi-up.txt
       checks:
@@ -76,7 +76,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-up.txt full
+- name: tests.cue \ pulumi-compact \ samples/pulumi-up.txt full
   commands:
     - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=up --args='up --yes' --exit=0 --level=full < plugins/pulumi/pulumi-compact/samples/pulumi-up.txt
       checks:
@@ -124,7 +124,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-up.txt ultra
+- name: tests.cue \ pulumi-compact \ samples/pulumi-up.txt ultra
   commands:
     - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=up --args='up --yes' --exit=0 --level=ultra < plugins/pulumi/pulumi-compact/samples/pulumi-up.txt
       checks:
@@ -157,7 +157,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-up-change.txt full
+- name: tests.cue \ pulumi-compact \ samples/pulumi-up-change.txt full
   commands:
     - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=up --args='up --yes' --exit=0 --level=full < plugins/pulumi/pulumi-compact/samples/pulumi-up-change.txt
       checks:
@@ -199,7 +199,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-up-change.txt ultra
+- name: tests.cue \ pulumi-compact \ samples/pulumi-up-change.txt ultra
   commands:
     - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=up --args='up --yes' --exit=0 --level=ultra < plugins/pulumi/pulumi-compact/samples/pulumi-up-change.txt
       checks:
@@ -230,7 +230,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-preview.txt full
+- name: tests.cue \ pulumi-compact \ samples/pulumi-preview.txt full
   commands:
     - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=preview --args='' --exit=0 --level=full < plugins/pulumi/pulumi-compact/samples/pulumi-preview.txt
       checks:
@@ -260,7 +260,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-preview.txt ultra
+- name: tests.cue \ pulumi-compact \ samples/pulumi-preview.txt ultra
   commands:
     - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=preview --args='' --exit=0 --level=ultra < plugins/pulumi/pulumi-compact/samples/pulumi-preview.txt
       checks:
@@ -283,7 +283,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-preview-diff.txt full
+- name: tests.cue \ pulumi-compact \ samples/pulumi-preview-diff.txt full
   commands:
     - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=preview --args='preview --diff' --exit=0 --level=full < plugins/pulumi/pulumi-compact/samples/pulumi-preview-diff.txt
       checks:
@@ -323,7 +323,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-preview-err.txt lite
+- name: tests.cue \ pulumi-compact \ samples/pulumi-preview-err.txt lite
   commands:
     - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=preview --args='' --exit=1 --level=lite < plugins/pulumi/pulumi-compact/samples/pulumi-preview-err.txt
       checks:
@@ -352,7 +352,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-preview-err.txt full
+- name: tests.cue \ pulumi-compact \ samples/pulumi-preview-err.txt full
   commands:
     - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=preview --args='' --exit=1 --level=full < plugins/pulumi/pulumi-compact/samples/pulumi-preview-err.txt
       checks:
@@ -381,7 +381,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-preview-err.txt ultra
+- name: tests.cue \ pulumi-compact \ samples/pulumi-preview-err.txt ultra
   commands:
     - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=preview --args='' --exit=1 --level=ultra < plugins/pulumi/pulumi-compact/samples/pulumi-preview-err.txt
       checks:
@@ -411,7 +411,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-destroy.txt lite
+- name: tests.cue \ pulumi-compact \ samples/pulumi-destroy.txt lite
   commands:
     - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=destroy --args='destroy --yes' --exit=0 --level=lite < plugins/pulumi/pulumi-compact/samples/pulumi-destroy.txt
       checks:
@@ -489,7 +489,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-destroy.txt full
+- name: tests.cue \ pulumi-compact \ samples/pulumi-destroy.txt full
   commands:
     - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=destroy --args='destroy --yes' --exit=0 --level=full < plugins/pulumi/pulumi-compact/samples/pulumi-destroy.txt
       checks:
@@ -537,7 +537,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-destroy.txt ultra
+- name: tests.cue \ pulumi-compact \ samples/pulumi-destroy.txt ultra
   commands:
     - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=destroy --args='destroy --yes' --exit=0 --level=ultra < plugins/pulumi/pulumi-compact/samples/pulumi-destroy.txt
       checks:
@@ -566,7 +566,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-stack.txt full
+- name: tests.cue \ pulumi-compact \ samples/pulumi-stack.txt full
   commands:
     - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=stack --args='stack' --exit=0 --level=full < plugins/pulumi/pulumi-compact/samples/pulumi-stack.txt
       checks:
@@ -601,7 +601,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-stack.txt ultra
+- name: tests.cue \ pulumi-compact \ samples/pulumi-stack.txt ultra
   commands:
     - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=stack --args='stack' --exit=0 --level=ultra < plugins/pulumi/pulumi-compact/samples/pulumi-stack.txt
       checks:
@@ -634,7 +634,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-stack-ls.txt full
+- name: tests.cue \ pulumi-compact \ samples/pulumi-stack-ls.txt full
   commands:
     - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=stack --args='stack ls' --exit=0 --level=full < plugins/pulumi/pulumi-compact/samples/pulumi-stack-ls.txt
       checks:
@@ -654,7 +654,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-stack-output.txt full
+- name: tests.cue \ pulumi-compact \ samples/pulumi-stack-output.txt full
   commands:
     - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=stack --args='stack output' --exit=0 --level=full < plugins/pulumi/pulumi-compact/samples/pulumi-stack-output.txt
       checks:
@@ -675,7 +675,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-stack-output.txt ultra
+- name: tests.cue \ pulumi-compact \ samples/pulumi-stack-output.txt ultra
   commands:
     - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=stack --args='stack output' --exit=0 --level=ultra < plugins/pulumi/pulumi-compact/samples/pulumi-stack-output.txt
       checks:
@@ -696,7 +696,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-preview-json.txt lite
+- name: tests.cue \ pulumi-compact \ samples/pulumi-preview-json.txt lite
   commands:
     - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=preview --args='preview --json' --exit=0 --level=lite < plugins/pulumi/pulumi-compact/samples/pulumi-preview-json.txt
       checks:
@@ -774,7 +774,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-preview-json.txt full
+- name: tests.cue \ pulumi-compact \ samples/pulumi-preview-json.txt full
   commands:
     - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=preview --args='preview --json' --exit=0 --level=full < plugins/pulumi/pulumi-compact/samples/pulumi-preview-json.txt
       checks:
@@ -852,7 +852,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-preview-json.txt ultra
+- name: tests.cue \ pulumi-compact \ samples/pulumi-preview-json.txt ultra
   commands:
     - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=preview --args='preview --json' --exit=0 --level=ultra < plugins/pulumi/pulumi-compact/samples/pulumi-preview-json.txt
       checks:
@@ -930,7 +930,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-stack-output-json.txt lite
+- name: tests.cue \ pulumi-compact \ samples/pulumi-stack-output-json.txt lite
   commands:
     - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=stack --args='stack output --json' --exit=0 --level=lite < plugins/pulumi/pulumi-compact/samples/pulumi-stack-output-json.txt
       checks:
@@ -956,7 +956,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-stack-output-json.txt full
+- name: tests.cue \ pulumi-compact \ samples/pulumi-stack-output-json.txt full
   commands:
     - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=stack --args='stack output --json' --exit=0 --level=full < plugins/pulumi/pulumi-compact/samples/pulumi-stack-output-json.txt
       checks:
@@ -982,7 +982,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pulumi/pulumi-compact/tests.cue \ pulumi-compact \ samples/pulumi-stack-output-json.txt ultra
+- name: tests.cue \ pulumi-compact \ samples/pulumi-stack-output-json.txt ultra
   commands:
     - command: lowfat filter plugins/pulumi/pulumi-compact/filter.lf --sub=stack --args='stack output --json' --exit=0 --level=ultra < plugins/pulumi/pulumi-compact/samples/pulumi-stack-output-json.txt
       checks:

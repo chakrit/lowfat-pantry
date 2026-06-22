@@ -1,4 +1,4 @@
-- name: plugins/prettier/prettier-compact/tests.cue \ prettier-compact \ samples/prettier-check-issues.txt lite
+- name: tests.cue \ prettier-compact \ samples/prettier-check-issues.txt lite
   commands:
     - command: lowfat filter plugins/prettier/prettier-compact/filter.lf --sub= --args='--check .' --exit=1 --level=lite < plugins/prettier/prettier-compact/samples/prettier-check-issues.txt
       checks:
@@ -21,7 +21,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/prettier/prettier-compact/tests.cue \ prettier-compact \ samples/prettier-check-issues.txt full
+- name: tests.cue \ prettier-compact \ samples/prettier-check-issues.txt full
   commands:
     - command: lowfat filter plugins/prettier/prettier-compact/filter.lf --sub= --args='--check .' --exit=1 --level=full < plugins/prettier/prettier-compact/samples/prettier-check-issues.txt
       checks:
@@ -44,7 +44,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/prettier/prettier-compact/tests.cue \ prettier-compact \ samples/prettier-check-issues.txt ultra
+- name: tests.cue \ prettier-compact \ samples/prettier-check-issues.txt ultra
   commands:
     - command: lowfat filter plugins/prettier/prettier-compact/filter.lf --sub= --args='--check .' --exit=1 --level=ultra < plugins/prettier/prettier-compact/samples/prettier-check-issues.txt
       checks:
@@ -67,7 +67,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/prettier/prettier-compact/tests.cue \ prettier-compact \ samples/prettier-check-clean.txt lite
+- name: tests.cue \ prettier-compact \ samples/prettier-check-clean.txt lite
   commands:
     - command: lowfat filter plugins/prettier/prettier-compact/filter.lf --sub= --args='--check .' --exit=0 --level=lite < plugins/prettier/prettier-compact/samples/prettier-check-clean.txt
       checks:
@@ -87,7 +87,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/prettier/prettier-compact/tests.cue \ prettier-compact \ samples/prettier-check-clean.txt full
+- name: tests.cue \ prettier-compact \ samples/prettier-check-clean.txt full
   commands:
     - command: lowfat filter plugins/prettier/prettier-compact/filter.lf --sub= --args='--check .' --exit=0 --level=full < plugins/prettier/prettier-compact/samples/prettier-check-clean.txt
       checks:
@@ -107,7 +107,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/prettier/prettier-compact/tests.cue \ prettier-compact \ samples/prettier-check-clean.txt ultra
+- name: tests.cue \ prettier-compact \ samples/prettier-check-clean.txt ultra
   commands:
     - command: lowfat filter plugins/prettier/prettier-compact/filter.lf --sub= --args='--check .' --exit=0 --level=ultra < plugins/prettier/prettier-compact/samples/prettier-check-clean.txt
       checks:
@@ -127,7 +127,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/prettier/prettier-compact/tests.cue \ prettier-compact \ samples/prettier-write.txt lite
+- name: tests.cue \ prettier-compact \ samples/prettier-write.txt lite
   commands:
     - command: lowfat filter plugins/prettier/prettier-compact/filter.lf --sub= --args='--write .' --exit=0 --level=lite < plugins/prettier/prettier-compact/samples/prettier-write.txt
       checks:
@@ -177,7 +177,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/prettier/prettier-compact/tests.cue \ prettier-compact \ samples/prettier-write.txt full
+- name: tests.cue \ prettier-compact \ samples/prettier-write.txt full
   commands:
     - command: lowfat filter plugins/prettier/prettier-compact/filter.lf --sub= --args='--write .' --exit=0 --level=full < plugins/prettier/prettier-compact/samples/prettier-write.txt
       checks:
@@ -227,7 +227,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/prettier/prettier-compact/tests.cue \ prettier-compact \ samples/prettier-write.txt ultra
+- name: tests.cue \ prettier-compact \ samples/prettier-write.txt ultra
   commands:
     - command: lowfat filter plugins/prettier/prettier-compact/filter.lf --sub= --args='--write .' --exit=0 --level=ultra < plugins/prettier/prettier-compact/samples/prettier-write.txt
       checks:

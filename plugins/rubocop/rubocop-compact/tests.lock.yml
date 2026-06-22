@@ -1,4 +1,4 @@
-- name: plugins/rubocop/rubocop-compact/tests.cue \ rubocop-compact \ samples/rubocop-clean.txt lite
+- name: tests.cue \ rubocop-compact \ samples/rubocop-clean.txt lite
   commands:
     - command: lowfat filter plugins/rubocop/rubocop-compact/filter.lf --sub= --args='lib/' --exit=0 --level=lite < plugins/rubocop/rubocop-compact/samples/rubocop-clean.txt
       checks:
@@ -17,7 +17,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rubocop/rubocop-compact/tests.cue \ rubocop-compact \ samples/rubocop-clean.txt full
+- name: tests.cue \ rubocop-compact \ samples/rubocop-clean.txt full
   commands:
     - command: lowfat filter plugins/rubocop/rubocop-compact/filter.lf --sub= --args='lib/' --exit=0 --level=full < plugins/rubocop/rubocop-compact/samples/rubocop-clean.txt
       checks:
@@ -36,7 +36,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rubocop/rubocop-compact/tests.cue \ rubocop-compact \ samples/rubocop-clean.txt ultra
+- name: tests.cue \ rubocop-compact \ samples/rubocop-clean.txt ultra
   commands:
     - command: lowfat filter plugins/rubocop/rubocop-compact/filter.lf --sub= --args='lib/' --exit=0 --level=ultra < plugins/rubocop/rubocop-compact/samples/rubocop-clean.txt
       checks:
@@ -55,7 +55,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rubocop/rubocop-compact/tests.cue \ rubocop-compact \ samples/rubocop-findings.txt lite
+- name: tests.cue \ rubocop-compact \ samples/rubocop-findings.txt lite
   commands:
     - command: lowfat filter plugins/rubocop/rubocop-compact/filter.lf --sub= --args='lib/' --exit=1 --level=lite < plugins/rubocop/rubocop-compact/samples/rubocop-findings.txt
       checks:
@@ -83,7 +83,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rubocop/rubocop-compact/tests.cue \ rubocop-compact \ samples/rubocop-findings.txt full
+- name: tests.cue \ rubocop-compact \ samples/rubocop-findings.txt full
   commands:
     - command: lowfat filter plugins/rubocop/rubocop-compact/filter.lf --sub= --args='lib/' --exit=1 --level=full < plugins/rubocop/rubocop-compact/samples/rubocop-findings.txt
       checks:
@@ -111,7 +111,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rubocop/rubocop-compact/tests.cue \ rubocop-compact \ samples/rubocop-findings.txt ultra
+- name: tests.cue \ rubocop-compact \ samples/rubocop-findings.txt ultra
   commands:
     - command: lowfat filter plugins/rubocop/rubocop-compact/filter.lf --sub= --args='lib/' --exit=1 --level=ultra < plugins/rubocop/rubocop-compact/samples/rubocop-findings.txt
       checks:
@@ -139,7 +139,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rubocop/rubocop-compact/tests.cue \ rubocop-compact \ samples/rubocop-error.txt lite
+- name: tests.cue \ rubocop-compact \ samples/rubocop-error.txt lite
   commands:
     - command: lowfat filter plugins/rubocop/rubocop-compact/filter.lf --sub= --args='lib/nonexistent_file.rb' --exit=2 --level=lite < plugins/rubocop/rubocop-compact/samples/rubocop-error.txt
       checks:
@@ -162,7 +162,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rubocop/rubocop-compact/tests.cue \ rubocop-compact \ samples/rubocop-error.txt full
+- name: tests.cue \ rubocop-compact \ samples/rubocop-error.txt full
   commands:
     - command: lowfat filter plugins/rubocop/rubocop-compact/filter.lf --sub= --args='lib/nonexistent_file.rb' --exit=2 --level=full < plugins/rubocop/rubocop-compact/samples/rubocop-error.txt
       checks:
@@ -185,7 +185,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rubocop/rubocop-compact/tests.cue \ rubocop-compact \ samples/rubocop-error.txt ultra
+- name: tests.cue \ rubocop-compact \ samples/rubocop-error.txt ultra
   commands:
     - command: lowfat filter plugins/rubocop/rubocop-compact/filter.lf --sub= --args='lib/nonexistent_file.rb' --exit=2 --level=ultra < plugins/rubocop/rubocop-compact/samples/rubocop-error.txt
       checks:
@@ -208,7 +208,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rubocop/rubocop-compact/tests.cue \ rubocop-compact \ samples/rubocop-json.txt lite
+- name: tests.cue \ rubocop-compact \ samples/rubocop-json.txt lite
   commands:
     - command: lowfat filter plugins/rubocop/rubocop-compact/filter.lf --sub= --args='--format json' --exit=1 --level=lite < plugins/rubocop/rubocop-compact/samples/rubocop-json.txt
       checks:
@@ -227,7 +227,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rubocop/rubocop-compact/tests.cue \ rubocop-compact \ samples/rubocop-json.txt full
+- name: tests.cue \ rubocop-compact \ samples/rubocop-json.txt full
   commands:
     - command: lowfat filter plugins/rubocop/rubocop-compact/filter.lf --sub= --args='--format json' --exit=1 --level=full < plugins/rubocop/rubocop-compact/samples/rubocop-json.txt
       checks:
@@ -246,7 +246,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rubocop/rubocop-compact/tests.cue \ rubocop-compact \ samples/rubocop-json.txt ultra
+- name: tests.cue \ rubocop-compact \ samples/rubocop-json.txt ultra
   commands:
     - command: lowfat filter plugins/rubocop/rubocop-compact/filter.lf --sub= --args='--format json' --exit=1 --level=ultra < plugins/rubocop/rubocop-compact/samples/rubocop-json.txt
       checks:

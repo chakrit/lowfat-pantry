@@ -1,4 +1,4 @@
-- name: plugins/go/go-compact/tests.cue \ go-compact \ samples/go-test-fail.txt lite
+- name: tests.cue \ go-compact \ samples/go-test-fail.txt lite
   commands:
     - command: lowfat filter plugins/go/go-compact/filter.lf --sub=test --args='./...' --exit=1 --level=lite < plugins/go/go-compact/samples/go-test-fail.txt
       checks:
@@ -24,7 +24,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/go/go-compact/tests.cue \ go-compact \ samples/go-test-fail.txt full
+- name: tests.cue \ go-compact \ samples/go-test-fail.txt full
   commands:
     - command: lowfat filter plugins/go/go-compact/filter.lf --sub=test --args='./...' --exit=1 --level=full < plugins/go/go-compact/samples/go-test-fail.txt
       checks:
@@ -50,7 +50,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/go/go-compact/tests.cue \ go-compact \ samples/go-test-fail.txt ultra
+- name: tests.cue \ go-compact \ samples/go-test-fail.txt ultra
   commands:
     - command: lowfat filter plugins/go/go-compact/filter.lf --sub=test --args='./...' --exit=1 --level=ultra < plugins/go/go-compact/samples/go-test-fail.txt
       checks:
@@ -74,7 +74,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/go/go-compact/tests.cue \ go-compact \ samples/go-build-error.txt lite
+- name: tests.cue \ go-compact \ samples/go-build-error.txt lite
   commands:
     - command: lowfat filter plugins/go/go-compact/filter.lf --sub=build --args='./cmd/api' --exit=1 --level=lite < plugins/go/go-compact/samples/go-build-error.txt
       checks:
@@ -95,7 +95,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/go/go-compact/tests.cue \ go-compact \ samples/go-build-error.txt full
+- name: tests.cue \ go-compact \ samples/go-build-error.txt full
   commands:
     - command: lowfat filter plugins/go/go-compact/filter.lf --sub=build --args='./cmd/api' --exit=1 --level=full < plugins/go/go-compact/samples/go-build-error.txt
       checks:
@@ -116,7 +116,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/go/go-compact/tests.cue \ go-compact \ samples/go-build-error.txt ultra
+- name: tests.cue \ go-compact \ samples/go-build-error.txt ultra
   commands:
     - command: lowfat filter plugins/go/go-compact/filter.lf --sub=build --args='./cmd/api' --exit=1 --level=ultra < plugins/go/go-compact/samples/go-build-error.txt
       checks:
@@ -137,7 +137,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/go/go-compact/tests.cue \ go-compact \ samples/go-mod-download.txt lite
+- name: tests.cue \ go-compact \ samples/go-mod-download.txt lite
   commands:
     - command: lowfat filter plugins/go/go-compact/filter.lf --sub=mod --args='download' --exit=0 --level=lite < plugins/go/go-compact/samples/go-mod-download.txt
       checks:
@@ -177,7 +177,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/go/go-compact/tests.cue \ go-compact \ samples/go-mod-download.txt full
+- name: tests.cue \ go-compact \ samples/go-mod-download.txt full
   commands:
     - command: lowfat filter plugins/go/go-compact/filter.lf --sub=mod --args='download' --exit=0 --level=full < plugins/go/go-compact/samples/go-mod-download.txt
       checks:
@@ -217,7 +217,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/go/go-compact/tests.cue \ go-compact \ samples/go-mod-download.txt ultra
+- name: tests.cue \ go-compact \ samples/go-mod-download.txt ultra
   commands:
     - command: lowfat filter plugins/go/go-compact/filter.lf --sub=mod --args='download' --exit=0 --level=ultra < plugins/go/go-compact/samples/go-mod-download.txt
       checks:
@@ -250,7 +250,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/go/go-compact/tests.cue \ go-compact \ samples/go-test-pass.txt lite
+- name: tests.cue \ go-compact \ samples/go-test-pass.txt lite
   commands:
     - command: lowfat filter plugins/go/go-compact/filter.lf --sub=test --args='test -v ./...' --exit=0 --level=lite < plugins/go/go-compact/samples/go-test-pass.txt
       checks:
@@ -272,7 +272,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/go/go-compact/tests.cue \ go-compact \ samples/go-test-pass.txt full
+- name: tests.cue \ go-compact \ samples/go-test-pass.txt full
   commands:
     - command: lowfat filter plugins/go/go-compact/filter.lf --sub=test --args='test -v ./...' --exit=0 --level=full < plugins/go/go-compact/samples/go-test-pass.txt
       checks:
@@ -292,7 +292,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/go/go-compact/tests.cue \ go-compact \ samples/go-test-pass.txt ultra
+- name: tests.cue \ go-compact \ samples/go-test-pass.txt ultra
   commands:
     - command: lowfat filter plugins/go/go-compact/filter.lf --sub=test --args='test -v ./...' --exit=0 --level=ultra < plugins/go/go-compact/samples/go-test-pass.txt
       checks:
@@ -312,7 +312,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/go/go-compact/tests.cue \ go-compact \ samples/go-test-json.txt lite
+- name: tests.cue \ go-compact \ samples/go-test-json.txt lite
   commands:
     - command: lowfat filter plugins/go/go-compact/filter.lf --sub=test --args='test -json ./...' --exit=0 --level=lite < plugins/go/go-compact/samples/go-test-json.txt
       checks:
@@ -342,7 +342,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/go/go-compact/tests.cue \ go-compact \ samples/go-test-json.txt full
+- name: tests.cue \ go-compact \ samples/go-test-json.txt full
   commands:
     - command: lowfat filter plugins/go/go-compact/filter.lf --sub=test --args='test -json ./...' --exit=0 --level=full < plugins/go/go-compact/samples/go-test-json.txt
       checks:
@@ -372,7 +372,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/go/go-compact/tests.cue \ go-compact \ samples/go-test-json.txt ultra
+- name: tests.cue \ go-compact \ samples/go-test-json.txt ultra
   commands:
     - command: lowfat filter plugins/go/go-compact/filter.lf --sub=test --args='test -json ./...' --exit=0 --level=ultra < plugins/go/go-compact/samples/go-test-json.txt
       checks:
@@ -402,7 +402,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/go/go-compact/tests.cue \ go-compact \ samples/go-list-json.txt lite
+- name: tests.cue \ go-compact \ samples/go-list-json.txt lite
   commands:
     - command: lowfat filter plugins/go/go-compact/filter.lf --sub=list --args='list -json ./...' --exit=0 --level=lite < plugins/go/go-compact/samples/go-list-json.txt
       checks:
@@ -481,7 +481,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/go/go-compact/tests.cue \ go-compact \ samples/go-list-json.txt full
+- name: tests.cue \ go-compact \ samples/go-list-json.txt full
   commands:
     - command: lowfat filter plugins/go/go-compact/filter.lf --sub=list --args='list -json ./...' --exit=0 --level=full < plugins/go/go-compact/samples/go-list-json.txt
       checks:
@@ -560,7 +560,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/go/go-compact/tests.cue \ go-compact \ samples/go-list-json.txt ultra
+- name: tests.cue \ go-compact \ samples/go-list-json.txt ultra
   commands:
     - command: lowfat filter plugins/go/go-compact/filter.lf --sub=list --args='list -json ./...' --exit=0 --level=ultra < plugins/go/go-compact/samples/go-list-json.txt
       checks:

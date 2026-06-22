@@ -1,4 +1,4 @@
-- name: plugins/pytest/pytest-compact/tests.cue \ pytest-compact \ samples/pytest-fail.txt lite
+- name: tests.cue \ pytest-compact \ samples/pytest-fail.txt lite
   commands:
     - command: lowfat filter plugins/pytest/pytest-compact/filter.lf --sub= --args='tests/' --exit=1 --level=lite < plugins/pytest/pytest-compact/samples/pytest-fail.txt
       checks:
@@ -36,7 +36,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pytest/pytest-compact/tests.cue \ pytest-compact \ samples/pytest-fail.txt full
+- name: tests.cue \ pytest-compact \ samples/pytest-fail.txt full
   commands:
     - command: lowfat filter plugins/pytest/pytest-compact/filter.lf --sub= --args='tests/' --exit=1 --level=full < plugins/pytest/pytest-compact/samples/pytest-fail.txt
       checks:
@@ -74,7 +74,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pytest/pytest-compact/tests.cue \ pytest-compact \ samples/pytest-fail.txt ultra
+- name: tests.cue \ pytest-compact \ samples/pytest-fail.txt ultra
   commands:
     - command: lowfat filter plugins/pytest/pytest-compact/filter.lf --sub= --args='tests/' --exit=1 --level=ultra < plugins/pytest/pytest-compact/samples/pytest-fail.txt
       checks:
@@ -104,7 +104,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pytest/pytest-compact/tests.cue \ pytest-compact \ samples/pytest-pass.txt lite
+- name: tests.cue \ pytest-compact \ samples/pytest-pass.txt lite
   commands:
     - command: lowfat filter plugins/pytest/pytest-compact/filter.lf --sub= --args='tests/' --exit=0 --level=lite < plugins/pytest/pytest-compact/samples/pytest-pass.txt
       checks:
@@ -123,7 +123,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pytest/pytest-compact/tests.cue \ pytest-compact \ samples/pytest-pass.txt full
+- name: tests.cue \ pytest-compact \ samples/pytest-pass.txt full
   commands:
     - command: lowfat filter plugins/pytest/pytest-compact/filter.lf --sub= --args='tests/' --exit=0 --level=full < plugins/pytest/pytest-compact/samples/pytest-pass.txt
       checks:
@@ -142,7 +142,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pytest/pytest-compact/tests.cue \ pytest-compact \ samples/pytest-pass.txt ultra
+- name: tests.cue \ pytest-compact \ samples/pytest-pass.txt ultra
   commands:
     - command: lowfat filter plugins/pytest/pytest-compact/filter.lf --sub= --args='tests/' --exit=0 --level=ultra < plugins/pytest/pytest-compact/samples/pytest-pass.txt
       checks:
@@ -161,7 +161,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pytest/pytest-compact/tests.cue \ pytest-compact \ samples/pytest-error.txt lite
+- name: tests.cue \ pytest-compact \ samples/pytest-error.txt lite
   commands:
     - command: lowfat filter plugins/pytest/pytest-compact/filter.lf --sub= --args='tests/test_config.py' --exit=2 --level=lite < plugins/pytest/pytest-compact/samples/pytest-error.txt
       checks:
@@ -193,7 +193,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pytest/pytest-compact/tests.cue \ pytest-compact \ samples/pytest-error.txt full
+- name: tests.cue \ pytest-compact \ samples/pytest-error.txt full
   commands:
     - command: lowfat filter plugins/pytest/pytest-compact/filter.lf --sub= --args='tests/test_config.py' --exit=2 --level=full < plugins/pytest/pytest-compact/samples/pytest-error.txt
       checks:
@@ -225,7 +225,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pytest/pytest-compact/tests.cue \ pytest-compact \ samples/pytest-error.txt ultra
+- name: tests.cue \ pytest-compact \ samples/pytest-error.txt ultra
   commands:
     - command: lowfat filter plugins/pytest/pytest-compact/filter.lf --sub= --args='tests/test_config.py' --exit=2 --level=ultra < plugins/pytest/pytest-compact/samples/pytest-error.txt
       checks:

@@ -1,4 +1,4 @@
-- name: plugins/dnf/dnf-compact/tests.cue \ dnf-compact \ samples/dnf-install.txt lite
+- name: tests.cue \ dnf-compact \ samples/dnf-install.txt lite
   commands:
     - command: lowfat filter plugins/dnf/dnf-compact/filter.lf --sub=install --args='install -y jq' --exit=0 --level=lite < plugins/dnf/dnf-compact/samples/dnf-install.txt
       checks:
@@ -28,7 +28,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/dnf/dnf-compact/tests.cue \ dnf-compact \ samples/dnf-install.txt full
+- name: tests.cue \ dnf-compact \ samples/dnf-install.txt full
   commands:
     - command: lowfat filter plugins/dnf/dnf-compact/filter.lf --sub=install --args='install -y jq' --exit=0 --level=full < plugins/dnf/dnf-compact/samples/dnf-install.txt
       checks:
@@ -58,7 +58,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/dnf/dnf-compact/tests.cue \ dnf-compact \ samples/dnf-install.txt ultra
+- name: tests.cue \ dnf-compact \ samples/dnf-install.txt ultra
   commands:
     - command: lowfat filter plugins/dnf/dnf-compact/filter.lf --sub=install --args='install -y jq' --exit=0 --level=ultra < plugins/dnf/dnf-compact/samples/dnf-install.txt
       checks:
@@ -84,7 +84,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/dnf/dnf-compact/tests.cue \ dnf-compact \ samples/dnf-install-error.txt lite
+- name: tests.cue \ dnf-compact \ samples/dnf-install-error.txt lite
   commands:
     - command: lowfat filter plugins/dnf/dnf-compact/filter.lf --sub=install --args='install -y nosuchpkg123' --exit=1 --level=lite < plugins/dnf/dnf-compact/samples/dnf-install-error.txt
       checks:
@@ -105,7 +105,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/dnf/dnf-compact/tests.cue \ dnf-compact \ samples/dnf-install-error.txt full
+- name: tests.cue \ dnf-compact \ samples/dnf-install-error.txt full
   commands:
     - command: lowfat filter plugins/dnf/dnf-compact/filter.lf --sub=install --args='install -y nosuchpkg123' --exit=1 --level=full < plugins/dnf/dnf-compact/samples/dnf-install-error.txt
       checks:
@@ -126,7 +126,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/dnf/dnf-compact/tests.cue \ dnf-compact \ samples/dnf-install-error.txt ultra
+- name: tests.cue \ dnf-compact \ samples/dnf-install-error.txt ultra
   commands:
     - command: lowfat filter plugins/dnf/dnf-compact/filter.lf --sub=install --args='install -y nosuchpkg123' --exit=1 --level=ultra < plugins/dnf/dnf-compact/samples/dnf-install-error.txt
       checks:

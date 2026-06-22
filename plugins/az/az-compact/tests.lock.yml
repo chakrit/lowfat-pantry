@@ -1,4 +1,4 @@
-- name: plugins/az/az-compact/tests.cue \ az-compact \ samples/az-vm-create-help.txt lite
+- name: tests.cue \ az-compact \ samples/az-vm-create-help.txt lite
   commands:
     - command: lowfat filter plugins/az/az-compact/filter.lf --sub=vm --args='vm create --help' --exit=0 --level=lite < plugins/az/az-compact/samples/az-vm-create-help.txt
       checks:
@@ -136,7 +136,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/az/az-compact/tests.cue \ az-compact \ samples/az-vm-create-help.txt full
+- name: tests.cue \ az-compact \ samples/az-vm-create-help.txt full
   commands:
     - command: lowfat filter plugins/az/az-compact/filter.lf --sub=vm --args='vm create --help' --exit=0 --level=full < plugins/az/az-compact/samples/az-vm-create-help.txt
       checks:
@@ -214,7 +214,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/az/az-compact/tests.cue \ az-compact \ samples/az-vm-create-help.txt ultra
+- name: tests.cue \ az-compact \ samples/az-vm-create-help.txt ultra
   commands:
     - command: lowfat filter plugins/az/az-compact/filter.lf --sub=vm --args='vm create --help' --exit=0 --level=ultra < plugins/az/az-compact/samples/az-vm-create-help.txt
       checks:
@@ -262,7 +262,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/az/az-compact/tests.cue \ az-compact \ samples/az-storage-help.txt full
+- name: tests.cue \ az-compact \ samples/az-storage-help.txt full
   commands:
     - command: lowfat filter plugins/az/az-compact/filter.lf --sub=storage --args='storage --help' --exit=0 --level=full < plugins/az/az-compact/samples/az-storage-help.txt
       checks:
@@ -304,7 +304,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/az/az-compact/tests.cue \ az-compact \ samples/az-version.txt full
+- name: tests.cue \ az-compact \ samples/az-version.txt full
   commands:
     - command: lowfat filter plugins/az/az-compact/filter.lf --sub=version --args='version' --exit=0 --level=full < plugins/az/az-compact/samples/az-version.txt
       checks:
@@ -328,7 +328,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/az/az-compact/tests.cue \ az-compact \ samples/az-version.txt ultra
+- name: tests.cue \ az-compact \ samples/az-version.txt ultra
   commands:
     - command: lowfat filter plugins/az/az-compact/filter.lf --sub=version --args='version' --exit=0 --level=ultra < plugins/az/az-compact/samples/az-version.txt
       checks:
@@ -352,7 +352,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/az/az-compact/tests.cue \ az-compact \ samples/az-account-noauth.txt full
+- name: tests.cue \ az-compact \ samples/az-account-noauth.txt full
   commands:
     - command: lowfat filter plugins/az/az-compact/filter.lf --sub=account --args='account show' --exit=1 --level=full < plugins/az/az-compact/samples/az-account-noauth.txt
       checks:
@@ -371,7 +371,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/az/az-compact/tests.cue \ az-compact \ samples/az-account-noauth.txt ultra
+- name: tests.cue \ az-compact \ samples/az-account-noauth.txt ultra
   commands:
     - command: lowfat filter plugins/az/az-compact/filter.lf --sub=account --args='account show' --exit=1 --level=ultra < plugins/az/az-compact/samples/az-account-noauth.txt
       checks:
@@ -390,7 +390,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/az/az-compact/tests.cue \ az-compact \ samples/az-group-noauth.txt full
+- name: tests.cue \ az-compact \ samples/az-group-noauth.txt full
   commands:
     - command: lowfat filter plugins/az/az-compact/filter.lf --sub=group --args='group list' --exit=1 --level=full < plugins/az/az-compact/samples/az-group-noauth.txt
       checks:
@@ -409,7 +409,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/az/az-compact/tests.cue \ az-compact \ samples/az-err-typo.txt full
+- name: tests.cue \ az-compact \ samples/az-err-typo.txt full
   commands:
     - command: lowfat filter plugins/az/az-compact/filter.lf --sub=gruop --args='gruop list' --exit=2 --level=full < plugins/az/az-compact/samples/az-err-typo.txt
       checks:
@@ -431,7 +431,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/az/az-compact/tests.cue \ az-compact \ samples/az-err-typo.txt ultra
+- name: tests.cue \ az-compact \ samples/az-err-typo.txt ultra
   commands:
     - command: lowfat filter plugins/az/az-compact/filter.lf --sub=gruop --args='gruop list' --exit=2 --level=ultra < plugins/az/az-compact/samples/az-err-typo.txt
       checks:
@@ -453,7 +453,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/az/az-compact/tests.cue \ az-compact \ samples/az-cloud-list-table.txt full
+- name: tests.cue \ az-compact \ samples/az-cloud-list-table.txt full
   commands:
     - command: lowfat filter plugins/az/az-compact/filter.lf --sub=cloud --args='cloud list -o table' --exit=0 --level=full < plugins/az/az-compact/samples/az-cloud-list-table.txt
       checks:
@@ -478,7 +478,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/az/az-compact/tests.cue \ az-compact \ samples/az-cloud-list-table.txt ultra
+- name: tests.cue \ az-compact \ samples/az-cloud-list-table.txt ultra
   commands:
     - command: lowfat filter plugins/az/az-compact/filter.lf --sub=cloud --args='cloud list -o table' --exit=0 --level=ultra < plugins/az/az-compact/samples/az-cloud-list-table.txt
       checks:
@@ -503,7 +503,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/az/az-compact/tests.cue \ az-compact \ samples/az-extension-list.txt full
+- name: tests.cue \ az-compact \ samples/az-extension-list.txt full
   commands:
     - command: lowfat filter plugins/az/az-compact/filter.lf --sub=extension --args='extension list' --exit=0 --level=full < plugins/az/az-compact/samples/az-extension-list.txt
       checks:

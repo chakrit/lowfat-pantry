@@ -1,4 +1,4 @@
-- name: plugins/dotnet/dotnet-compact/tests.cue \ dotnet-compact \ samples/dotnet-build-warning.txt lite
+- name: tests.cue \ dotnet-compact \ samples/dotnet-build-warning.txt lite
   commands:
     - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=build --args='' --exit=0 --level=lite < plugins/dotnet/dotnet-compact/samples/dotnet-build-warning.txt
       checks:
@@ -21,7 +21,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/dotnet/dotnet-compact/tests.cue \ dotnet-compact \ samples/dotnet-build-warning.txt full
+- name: tests.cue \ dotnet-compact \ samples/dotnet-build-warning.txt full
   commands:
     - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=build --args='' --exit=0 --level=full < plugins/dotnet/dotnet-compact/samples/dotnet-build-warning.txt
       checks:
@@ -44,7 +44,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/dotnet/dotnet-compact/tests.cue \ dotnet-compact \ samples/dotnet-build-warning.txt ultra
+- name: tests.cue \ dotnet-compact \ samples/dotnet-build-warning.txt ultra
   commands:
     - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=build --args='' --exit=0 --level=ultra < plugins/dotnet/dotnet-compact/samples/dotnet-build-warning.txt
       checks:
@@ -67,7 +67,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/dotnet/dotnet-compact/tests.cue \ dotnet-compact \ samples/dotnet-test-fail.txt lite
+- name: tests.cue \ dotnet-compact \ samples/dotnet-test-fail.txt lite
   commands:
     - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=test --args='' --exit=1 --level=lite < plugins/dotnet/dotnet-compact/samples/dotnet-test-fail.txt
       checks:
@@ -91,7 +91,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/dotnet/dotnet-compact/tests.cue \ dotnet-compact \ samples/dotnet-test-fail.txt full
+- name: tests.cue \ dotnet-compact \ samples/dotnet-test-fail.txt full
   commands:
     - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=test --args='' --exit=1 --level=full < plugins/dotnet/dotnet-compact/samples/dotnet-test-fail.txt
       checks:
@@ -115,7 +115,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/dotnet/dotnet-compact/tests.cue \ dotnet-compact \ samples/dotnet-test-fail.txt ultra
+- name: tests.cue \ dotnet-compact \ samples/dotnet-test-fail.txt ultra
   commands:
     - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=test --args='' --exit=1 --level=ultra < plugins/dotnet/dotnet-compact/samples/dotnet-test-fail.txt
       checks:
@@ -139,7 +139,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/dotnet/dotnet-compact/tests.cue \ dotnet-compact \ samples/dotnet-build-error.txt lite
+- name: tests.cue \ dotnet-compact \ samples/dotnet-build-error.txt lite
   commands:
     - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=build --args='' --exit=1 --level=lite < plugins/dotnet/dotnet-compact/samples/dotnet-build-error.txt
       checks:
@@ -162,7 +162,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/dotnet/dotnet-compact/tests.cue \ dotnet-compact \ samples/dotnet-build-error.txt full
+- name: tests.cue \ dotnet-compact \ samples/dotnet-build-error.txt full
   commands:
     - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=build --args='' --exit=1 --level=full < plugins/dotnet/dotnet-compact/samples/dotnet-build-error.txt
       checks:
@@ -185,7 +185,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/dotnet/dotnet-compact/tests.cue \ dotnet-compact \ samples/dotnet-build-error.txt ultra
+- name: tests.cue \ dotnet-compact \ samples/dotnet-build-error.txt ultra
   commands:
     - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=build --args='' --exit=1 --level=ultra < plugins/dotnet/dotnet-compact/samples/dotnet-build-error.txt
       checks:
@@ -208,7 +208,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/dotnet/dotnet-compact/tests.cue \ dotnet-compact \ samples/dotnet-publish.txt lite
+- name: tests.cue \ dotnet-compact \ samples/dotnet-publish.txt lite
   commands:
     - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=publish --args='-c Release' --exit=0 --level=lite < plugins/dotnet/dotnet-compact/samples/dotnet-publish.txt
       checks:
@@ -230,7 +230,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/dotnet/dotnet-compact/tests.cue \ dotnet-compact \ samples/dotnet-publish.txt full
+- name: tests.cue \ dotnet-compact \ samples/dotnet-publish.txt full
   commands:
     - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=publish --args='-c Release' --exit=0 --level=full < plugins/dotnet/dotnet-compact/samples/dotnet-publish.txt
       checks:
@@ -252,7 +252,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/dotnet/dotnet-compact/tests.cue \ dotnet-compact \ samples/dotnet-publish.txt ultra
+- name: tests.cue \ dotnet-compact \ samples/dotnet-publish.txt ultra
   commands:
     - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=publish --args='-c Release' --exit=0 --level=ultra < plugins/dotnet/dotnet-compact/samples/dotnet-publish.txt
       checks:
@@ -274,7 +274,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/dotnet/dotnet-compact/tests.cue \ dotnet-compact \ samples/dotnet-pack.txt lite
+- name: tests.cue \ dotnet-compact \ samples/dotnet-pack.txt lite
   commands:
     - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=pack --args='-c Release' --exit=0 --level=lite < plugins/dotnet/dotnet-compact/samples/dotnet-pack.txt
       checks:
@@ -293,7 +293,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/dotnet/dotnet-compact/tests.cue \ dotnet-compact \ samples/dotnet-pack.txt full
+- name: tests.cue \ dotnet-compact \ samples/dotnet-pack.txt full
   commands:
     - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=pack --args='-c Release' --exit=0 --level=full < plugins/dotnet/dotnet-compact/samples/dotnet-pack.txt
       checks:
@@ -312,7 +312,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/dotnet/dotnet-compact/tests.cue \ dotnet-compact \ samples/dotnet-pack.txt ultra
+- name: tests.cue \ dotnet-compact \ samples/dotnet-pack.txt ultra
   commands:
     - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=pack --args='-c Release' --exit=0 --level=ultra < plugins/dotnet/dotnet-compact/samples/dotnet-pack.txt
       checks:
@@ -331,7 +331,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/dotnet/dotnet-compact/tests.cue \ dotnet-compact \ samples/dotnet-list-json.txt lite
+- name: tests.cue \ dotnet-compact \ samples/dotnet-list-json.txt lite
   commands:
     - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=list --args='list package --format json' --exit=0 --level=lite < plugins/dotnet/dotnet-compact/samples/dotnet-list-json.txt
       checks:
@@ -375,7 +375,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/dotnet/dotnet-compact/tests.cue \ dotnet-compact \ samples/dotnet-list-json.txt full
+- name: tests.cue \ dotnet-compact \ samples/dotnet-list-json.txt full
   commands:
     - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=list --args='list package --format json' --exit=0 --level=full < plugins/dotnet/dotnet-compact/samples/dotnet-list-json.txt
       checks:
@@ -419,7 +419,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/dotnet/dotnet-compact/tests.cue \ dotnet-compact \ samples/dotnet-list-json.txt ultra
+- name: tests.cue \ dotnet-compact \ samples/dotnet-list-json.txt ultra
   commands:
     - command: lowfat filter plugins/dotnet/dotnet-compact/filter.lf --sub=list --args='list package --format json' --exit=0 --level=ultra < plugins/dotnet/dotnet-compact/samples/dotnet-list-json.txt
       checks:

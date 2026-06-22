@@ -1,4 +1,4 @@
-- name: plugins/ssh/ssh-compact/tests.cue \ ssh-compact \ samples/ssh-verbose.txt lite
+- name: tests.cue \ ssh-compact \ samples/ssh-verbose.txt lite
   commands:
     - command: lowfat filter plugins/ssh/ssh-compact/filter.lf --sub= --args='-v web1.prod' --exit=0 --level=lite < plugins/ssh/ssh-compact/samples/ssh-verbose.txt
       checks:
@@ -41,7 +41,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/ssh/ssh-compact/tests.cue \ ssh-compact \ samples/ssh-verbose.txt full
+- name: tests.cue \ ssh-compact \ samples/ssh-verbose.txt full
   commands:
     - command: lowfat filter plugins/ssh/ssh-compact/filter.lf --sub= --args='-v web1.prod' --exit=0 --level=full < plugins/ssh/ssh-compact/samples/ssh-verbose.txt
       checks:
@@ -63,7 +63,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/ssh/ssh-compact/tests.cue \ ssh-compact \ samples/ssh-verbose.txt ultra
+- name: tests.cue \ ssh-compact \ samples/ssh-verbose.txt ultra
   commands:
     - command: lowfat filter plugins/ssh/ssh-compact/filter.lf --sub= --args='-v web1.prod' --exit=0 --level=ultra < plugins/ssh/ssh-compact/samples/ssh-verbose.txt
       checks:
@@ -85,7 +85,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/ssh/ssh-compact/tests.cue \ ssh-compact \ samples/ssh-error.txt lite
+- name: tests.cue \ ssh-compact \ samples/ssh-error.txt lite
   commands:
     - command: lowfat filter plugins/ssh/ssh-compact/filter.lf --sub= --args='-v web9.prod' --exit=255 --level=lite < plugins/ssh/ssh-compact/samples/ssh-error.txt
       checks:
@@ -106,7 +106,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/ssh/ssh-compact/tests.cue \ ssh-compact \ samples/ssh-error.txt full
+- name: tests.cue \ ssh-compact \ samples/ssh-error.txt full
   commands:
     - command: lowfat filter plugins/ssh/ssh-compact/filter.lf --sub= --args='-v web9.prod' --exit=255 --level=full < plugins/ssh/ssh-compact/samples/ssh-error.txt
       checks:
@@ -126,7 +126,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/ssh/ssh-compact/tests.cue \ ssh-compact \ samples/ssh-error.txt ultra
+- name: tests.cue \ ssh-compact \ samples/ssh-error.txt ultra
   commands:
     - command: lowfat filter plugins/ssh/ssh-compact/filter.lf --sub= --args='-v web9.prod' --exit=255 --level=ultra < plugins/ssh/ssh-compact/samples/ssh-error.txt
       checks:

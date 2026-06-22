@@ -1,4 +1,4 @@
-- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-eslint.txt eslint src lite
+- name: tests.cue \ npx-compact \ samples/npx-eslint.txt eslint src lite
   commands:
     - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=eslint --args='eslint src' --exit=0 --level=lite < plugins/npx/npx-compact/samples/npx-eslint.txt
       checks:
@@ -22,7 +22,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-eslint.txt eslint src full
+- name: tests.cue \ npx-compact \ samples/npx-eslint.txt eslint src full
   commands:
     - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=eslint --args='eslint src' --exit=0 --level=full < plugins/npx/npx-compact/samples/npx-eslint.txt
       checks:
@@ -46,7 +46,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-eslint.txt eslint src ultra
+- name: tests.cue \ npx-compact \ samples/npx-eslint.txt eslint src ultra
   commands:
     - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=eslint --args='eslint src' --exit=0 --level=ultra < plugins/npx/npx-compact/samples/npx-eslint.txt
       checks:
@@ -70,7 +70,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-eslint.txt -y eslint src lite
+- name: tests.cue \ npx-compact \ samples/npx-eslint.txt -y eslint src lite
   commands:
     - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=-y --args='-y eslint src' --exit=0 --level=lite < plugins/npx/npx-compact/samples/npx-eslint.txt
       checks:
@@ -94,7 +94,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-eslint.txt -y eslint src full
+- name: tests.cue \ npx-compact \ samples/npx-eslint.txt -y eslint src full
   commands:
     - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=-y --args='-y eslint src' --exit=0 --level=full < plugins/npx/npx-compact/samples/npx-eslint.txt
       checks:
@@ -118,7 +118,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-eslint.txt -y eslint src ultra
+- name: tests.cue \ npx-compact \ samples/npx-eslint.txt -y eslint src ultra
   commands:
     - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=-y --args='-y eslint src' --exit=0 --level=ultra < plugins/npx/npx-compact/samples/npx-eslint.txt
       checks:
@@ -142,7 +142,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-prettier-check.txt prettier --check src lite
+- name: tests.cue \ npx-compact \ samples/npx-prettier-check.txt prettier --check src lite
   commands:
     - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=prettier --args='prettier --check src' --exit=1 --level=lite < plugins/npx/npx-compact/samples/npx-prettier-check.txt
       checks:
@@ -165,7 +165,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-prettier-check.txt prettier --check src full
+- name: tests.cue \ npx-compact \ samples/npx-prettier-check.txt prettier --check src full
   commands:
     - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=prettier --args='prettier --check src' --exit=1 --level=full < plugins/npx/npx-compact/samples/npx-prettier-check.txt
       checks:
@@ -188,7 +188,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-prettier-check.txt prettier --check src ultra
+- name: tests.cue \ npx-compact \ samples/npx-prettier-check.txt prettier --check src ultra
   commands:
     - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=prettier --args='prettier --check src' --exit=1 --level=ultra < plugins/npx/npx-compact/samples/npx-prettier-check.txt
       checks:
@@ -211,7 +211,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-create.txt create-vite demo lite
+- name: tests.cue \ npx-compact \ samples/npx-create.txt create-vite demo lite
   commands:
     - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=create-vite --args='create-vite demo' --exit=0 --level=lite < plugins/npx/npx-compact/samples/npx-create.txt
       checks:
@@ -236,7 +236,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-create.txt create-vite demo full
+- name: tests.cue \ npx-compact \ samples/npx-create.txt create-vite demo full
   commands:
     - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=create-vite --args='create-vite demo' --exit=0 --level=full < plugins/npx/npx-compact/samples/npx-create.txt
       checks:
@@ -261,7 +261,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-create.txt create-vite demo ultra
+- name: tests.cue \ npx-compact \ samples/npx-create.txt create-vite demo ultra
   commands:
     - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=create-vite --args='create-vite demo' --exit=0 --level=ultra < plugins/npx/npx-compact/samples/npx-create.txt
       checks:
@@ -286,7 +286,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-error.txt tsc --noEmit lite
+- name: tests.cue \ npx-compact \ samples/npx-error.txt tsc --noEmit lite
   commands:
     - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=tsc --args='tsc --noEmit' --exit=2 --level=lite < plugins/npx/npx-compact/samples/npx-error.txt
       checks:
@@ -315,7 +315,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-error.txt tsc --noEmit full
+- name: tests.cue \ npx-compact \ samples/npx-error.txt tsc --noEmit full
   commands:
     - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=tsc --args='tsc --noEmit' --exit=2 --level=full < plugins/npx/npx-compact/samples/npx-error.txt
       checks:
@@ -344,7 +344,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-error.txt tsc --noEmit ultra
+- name: tests.cue \ npx-compact \ samples/npx-error.txt tsc --noEmit ultra
   commands:
     - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=tsc --args='tsc --noEmit' --exit=2 --level=ultra < plugins/npx/npx-compact/samples/npx-error.txt
       checks:
@@ -367,7 +367,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-generic-capped.txt mytool --build lite
+- name: tests.cue \ npx-compact \ samples/npx-generic-capped.txt mytool --build lite
   commands:
     - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=mytool --args='mytool --build' --exit=0 --level=lite < plugins/npx/npx-compact/samples/npx-generic-capped.txt
       checks:
@@ -445,7 +445,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-generic-capped.txt mytool --build full
+- name: tests.cue \ npx-compact \ samples/npx-generic-capped.txt mytool --build full
   commands:
     - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=mytool --args='mytool --build' --exit=0 --level=full < plugins/npx/npx-compact/samples/npx-generic-capped.txt
       checks:
@@ -523,7 +523,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/npx/npx-compact/tests.cue \ npx-compact \ samples/npx-generic-capped.txt mytool --build ultra
+- name: tests.cue \ npx-compact \ samples/npx-generic-capped.txt mytool --build ultra
   commands:
     - command: lowfat filter plugins/npx/npx-compact/filter.lf --sub=mytool --args='mytool --build' --exit=0 --level=ultra < plugins/npx/npx-compact/samples/npx-generic-capped.txt
       checks:

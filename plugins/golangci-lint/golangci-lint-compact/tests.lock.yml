@@ -1,4 +1,4 @@
-- name: plugins/golangci-lint/golangci-lint-compact/tests.cue \ golangci-lint-compact \ samples/golangci-issues.txt lite
+- name: tests.cue \ golangci-lint-compact \ samples/golangci-issues.txt lite
   commands:
     - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run ./...' --exit=1 --level=lite < plugins/golangci-lint/golangci-lint-compact/samples/golangci-issues.txt
       checks:
@@ -28,7 +28,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/golangci-lint/golangci-lint-compact/tests.cue \ golangci-lint-compact \ samples/golangci-issues.txt full
+- name: tests.cue \ golangci-lint-compact \ samples/golangci-issues.txt full
   commands:
     - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run ./...' --exit=1 --level=full < plugins/golangci-lint/golangci-lint-compact/samples/golangci-issues.txt
       checks:
@@ -58,7 +58,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/golangci-lint/golangci-lint-compact/tests.cue \ golangci-lint-compact \ samples/golangci-issues.txt ultra
+- name: tests.cue \ golangci-lint-compact \ samples/golangci-issues.txt ultra
   commands:
     - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run ./...' --exit=1 --level=ultra < plugins/golangci-lint/golangci-lint-compact/samples/golangci-issues.txt
       checks:
@@ -80,7 +80,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/golangci-lint/golangci-lint-compact/tests.cue \ golangci-lint-compact \ samples/golangci-clean.txt lite
+- name: tests.cue \ golangci-lint-compact \ samples/golangci-clean.txt lite
   commands:
     - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run ./...' --exit=0 --level=lite < plugins/golangci-lint/golangci-lint-compact/samples/golangci-clean.txt
       checks:
@@ -99,7 +99,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/golangci-lint/golangci-lint-compact/tests.cue \ golangci-lint-compact \ samples/golangci-clean.txt full
+- name: tests.cue \ golangci-lint-compact \ samples/golangci-clean.txt full
   commands:
     - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run ./...' --exit=0 --level=full < plugins/golangci-lint/golangci-lint-compact/samples/golangci-clean.txt
       checks:
@@ -118,7 +118,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/golangci-lint/golangci-lint-compact/tests.cue \ golangci-lint-compact \ samples/golangci-clean.txt ultra
+- name: tests.cue \ golangci-lint-compact \ samples/golangci-clean.txt ultra
   commands:
     - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run ./...' --exit=0 --level=ultra < plugins/golangci-lint/golangci-lint-compact/samples/golangci-clean.txt
       checks:
@@ -137,7 +137,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/golangci-lint/golangci-lint-compact/tests.cue \ golangci-lint-compact \ samples/golangci-configerr.txt lite
+- name: tests.cue \ golangci-lint-compact \ samples/golangci-configerr.txt lite
   commands:
     - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run ./...' --exit=3 --level=lite < plugins/golangci-lint/golangci-lint-compact/samples/golangci-configerr.txt
       checks:
@@ -157,7 +157,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/golangci-lint/golangci-lint-compact/tests.cue \ golangci-lint-compact \ samples/golangci-configerr.txt full
+- name: tests.cue \ golangci-lint-compact \ samples/golangci-configerr.txt full
   commands:
     - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run ./...' --exit=3 --level=full < plugins/golangci-lint/golangci-lint-compact/samples/golangci-configerr.txt
       checks:
@@ -177,7 +177,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/golangci-lint/golangci-lint-compact/tests.cue \ golangci-lint-compact \ samples/golangci-configerr.txt ultra
+- name: tests.cue \ golangci-lint-compact \ samples/golangci-configerr.txt ultra
   commands:
     - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run ./...' --exit=3 --level=ultra < plugins/golangci-lint/golangci-lint-compact/samples/golangci-configerr.txt
       checks:
@@ -197,7 +197,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/golangci-lint/golangci-lint-compact/tests.cue \ golangci-lint-compact \ samples/golangci-json.txt lite
+- name: tests.cue \ golangci-lint-compact \ samples/golangci-json.txt lite
   commands:
     - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run --output.json.path stdout ./...' --exit=1 --level=lite < plugins/golangci-lint/golangci-lint-compact/samples/golangci-json.txt
       checks:
@@ -218,7 +218,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/golangci-lint/golangci-lint-compact/tests.cue \ golangci-lint-compact \ samples/golangci-json.txt full
+- name: tests.cue \ golangci-lint-compact \ samples/golangci-json.txt full
   commands:
     - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run --output.json.path stdout ./...' --exit=1 --level=full < plugins/golangci-lint/golangci-lint-compact/samples/golangci-json.txt
       checks:
@@ -239,7 +239,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/golangci-lint/golangci-lint-compact/tests.cue \ golangci-lint-compact \ samples/golangci-json.txt ultra
+- name: tests.cue \ golangci-lint-compact \ samples/golangci-json.txt ultra
   commands:
     - command: lowfat filter plugins/golangci-lint/golangci-lint-compact/filter.lf --sub=run --args='run --output.json.path stdout ./...' --exit=1 --level=ultra < plugins/golangci-lint/golangci-lint-compact/samples/golangci-json.txt
       checks:

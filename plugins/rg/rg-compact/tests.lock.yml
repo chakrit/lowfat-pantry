@@ -1,4 +1,4 @@
-- name: plugins/rg/rg-compact/tests.cue \ rg-compact \ samples/rg-search-full.txt lite
+- name: tests.cue \ rg-compact \ samples/rg-search-full.txt lite
   commands:
     - command: lowfat filter plugins/rg/rg-compact/filter.lf --sub= --args='' --exit=0 --level=lite < plugins/rg/rg-compact/samples/rg-search-full.txt
       checks:
@@ -155,7 +155,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rg/rg-compact/tests.cue \ rg-compact \ samples/rg-search-full.txt full
+- name: tests.cue \ rg-compact \ samples/rg-search-full.txt full
   commands:
     - command: lowfat filter plugins/rg/rg-compact/filter.lf --sub= --args='' --exit=0 --level=full < plugins/rg/rg-compact/samples/rg-search-full.txt
       checks:
@@ -233,7 +233,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rg/rg-compact/tests.cue \ rg-compact \ samples/rg-search-full.txt ultra
+- name: tests.cue \ rg-compact \ samples/rg-search-full.txt ultra
   commands:
     - command: lowfat filter plugins/rg/rg-compact/filter.lf --sub= --args='' --exit=0 --level=ultra < plugins/rg/rg-compact/samples/rg-search-full.txt
       checks:
@@ -271,7 +271,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rg/rg-compact/tests.cue \ rg-compact \ samples/rg-numbered-full.txt lite
+- name: tests.cue \ rg-compact \ samples/rg-numbered-full.txt lite
   commands:
     - command: lowfat filter plugins/rg/rg-compact/filter.lf --sub= --args='-n' --exit=0 --level=lite < plugins/rg/rg-compact/samples/rg-numbered-full.txt
       checks:
@@ -325,7 +325,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rg/rg-compact/tests.cue \ rg-compact \ samples/rg-numbered-full.txt full
+- name: tests.cue \ rg-compact \ samples/rg-numbered-full.txt full
   commands:
     - command: lowfat filter plugins/rg/rg-compact/filter.lf --sub= --args='-n' --exit=0 --level=full < plugins/rg/rg-compact/samples/rg-numbered-full.txt
       checks:
@@ -379,7 +379,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rg/rg-compact/tests.cue \ rg-compact \ samples/rg-numbered-full.txt ultra
+- name: tests.cue \ rg-compact \ samples/rg-numbered-full.txt ultra
   commands:
     - command: lowfat filter plugins/rg/rg-compact/filter.lf --sub= --args='-n' --exit=0 --level=ultra < plugins/rg/rg-compact/samples/rg-numbered-full.txt
       checks:
@@ -417,7 +417,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rg/rg-compact/tests.cue \ rg-compact \ samples/rg-count-full.txt lite
+- name: tests.cue \ rg-compact \ samples/rg-count-full.txt lite
   commands:
     - command: lowfat filter plugins/rg/rg-compact/filter.lf --sub= --args='--count' --exit=0 --level=lite < plugins/rg/rg-compact/samples/rg-count-full.txt
       checks:
@@ -445,7 +445,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rg/rg-compact/tests.cue \ rg-compact \ samples/rg-count-full.txt full
+- name: tests.cue \ rg-compact \ samples/rg-count-full.txt full
   commands:
     - command: lowfat filter plugins/rg/rg-compact/filter.lf --sub= --args='--count' --exit=0 --level=full < plugins/rg/rg-compact/samples/rg-count-full.txt
       checks:
@@ -473,7 +473,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rg/rg-compact/tests.cue \ rg-compact \ samples/rg-count-full.txt ultra
+- name: tests.cue \ rg-compact \ samples/rg-count-full.txt ultra
   commands:
     - command: lowfat filter plugins/rg/rg-compact/filter.lf --sub= --args='--count' --exit=0 --level=ultra < plugins/rg/rg-compact/samples/rg-count-full.txt
       checks:
@@ -501,7 +501,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rg/rg-compact/tests.cue \ rg-compact \ samples/rg-files-full.txt lite
+- name: tests.cue \ rg-compact \ samples/rg-files-full.txt lite
   commands:
     - command: lowfat filter plugins/rg/rg-compact/filter.lf --sub= --args='-l' --exit=0 --level=lite < plugins/rg/rg-compact/samples/rg-files-full.txt
       checks:
@@ -529,7 +529,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rg/rg-compact/tests.cue \ rg-compact \ samples/rg-files-full.txt full
+- name: tests.cue \ rg-compact \ samples/rg-files-full.txt full
   commands:
     - command: lowfat filter plugins/rg/rg-compact/filter.lf --sub= --args='-l' --exit=0 --level=full < plugins/rg/rg-compact/samples/rg-files-full.txt
       checks:
@@ -557,7 +557,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rg/rg-compact/tests.cue \ rg-compact \ samples/rg-files-full.txt ultra
+- name: tests.cue \ rg-compact \ samples/rg-files-full.txt ultra
   commands:
     - command: lowfat filter plugins/rg/rg-compact/filter.lf --sub= --args='-l' --exit=0 --level=ultra < plugins/rg/rg-compact/samples/rg-files-full.txt
       checks:
@@ -585,7 +585,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rg/rg-compact/tests.cue \ rg-compact \ samples/rg-json.txt lite
+- name: tests.cue \ rg-compact \ samples/rg-json.txt lite
   commands:
     - command: lowfat filter plugins/rg/rg-compact/filter.lf --sub= --args='--json raw' --exit=0 --level=lite < plugins/rg/rg-compact/samples/rg-json.txt
       checks:
@@ -659,7 +659,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rg/rg-compact/tests.cue \ rg-compact \ samples/rg-json.txt full
+- name: tests.cue \ rg-compact \ samples/rg-json.txt full
   commands:
     - command: lowfat filter plugins/rg/rg-compact/filter.lf --sub= --args='--json raw' --exit=0 --level=full < plugins/rg/rg-compact/samples/rg-json.txt
       checks:
@@ -733,7 +733,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rg/rg-compact/tests.cue \ rg-compact \ samples/rg-json.txt ultra
+- name: tests.cue \ rg-compact \ samples/rg-json.txt ultra
   commands:
     - command: lowfat filter plugins/rg/rg-compact/filter.lf --sub= --args='--json raw' --exit=0 --level=ultra < plugins/rg/rg-compact/samples/rg-json.txt
       checks:

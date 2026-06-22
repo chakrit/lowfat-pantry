@@ -1,4 +1,4 @@
-- name: plugins/kubectl/kubectl-compact/tests.cue \ kubectl-compact \ samples/kubectl-get-pods.txt lite
+- name: tests.cue \ kubectl-compact \ samples/kubectl-get-pods.txt lite
   commands:
     - command: lowfat filter plugins/kubectl/kubectl-compact/filter.lf --sub=get --args='pods -A' --exit=0 --level=lite < plugins/kubectl/kubectl-compact/samples/kubectl-get-pods.txt
       checks:
@@ -37,7 +37,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/kubectl/kubectl-compact/tests.cue \ kubectl-compact \ samples/kubectl-get-pods.txt full
+- name: tests.cue \ kubectl-compact \ samples/kubectl-get-pods.txt full
   commands:
     - command: lowfat filter plugins/kubectl/kubectl-compact/filter.lf --sub=get --args='pods -A' --exit=0 --level=full < plugins/kubectl/kubectl-compact/samples/kubectl-get-pods.txt
       checks:
@@ -76,7 +76,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/kubectl/kubectl-compact/tests.cue \ kubectl-compact \ samples/kubectl-get-pods.txt ultra
+- name: tests.cue \ kubectl-compact \ samples/kubectl-get-pods.txt ultra
   commands:
     - command: lowfat filter plugins/kubectl/kubectl-compact/filter.lf --sub=get --args='pods -A' --exit=0 --level=ultra < plugins/kubectl/kubectl-compact/samples/kubectl-get-pods.txt
       checks:
@@ -106,7 +106,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/kubectl/kubectl-compact/tests.cue \ kubectl-compact \ samples/kubectl-describe-pod.txt lite
+- name: tests.cue \ kubectl-compact \ samples/kubectl-describe-pod.txt lite
   commands:
     - command: lowfat filter plugins/kubectl/kubectl-compact/filter.lf --sub=describe --args='pod checkout-7d9b8f6f6f-2kq9x' --exit=0 --level=lite < plugins/kubectl/kubectl-compact/samples/kubectl-describe-pod.txt
       checks:
@@ -144,7 +144,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/kubectl/kubectl-compact/tests.cue \ kubectl-compact \ samples/kubectl-describe-pod.txt full
+- name: tests.cue \ kubectl-compact \ samples/kubectl-describe-pod.txt full
   commands:
     - command: lowfat filter plugins/kubectl/kubectl-compact/filter.lf --sub=describe --args='pod checkout-7d9b8f6f6f-2kq9x' --exit=0 --level=full < plugins/kubectl/kubectl-compact/samples/kubectl-describe-pod.txt
       checks:
@@ -182,7 +182,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/kubectl/kubectl-compact/tests.cue \ kubectl-compact \ samples/kubectl-describe-pod.txt ultra
+- name: tests.cue \ kubectl-compact \ samples/kubectl-describe-pod.txt ultra
   commands:
     - command: lowfat filter plugins/kubectl/kubectl-compact/filter.lf --sub=describe --args='pod checkout-7d9b8f6f6f-2kq9x' --exit=0 --level=ultra < plugins/kubectl/kubectl-compact/samples/kubectl-describe-pod.txt
       checks:
@@ -215,7 +215,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/kubectl/kubectl-compact/tests.cue \ kubectl-compact \ samples/kubectl-logs.txt lite
+- name: tests.cue \ kubectl-compact \ samples/kubectl-logs.txt lite
   commands:
     - command: lowfat filter plugins/kubectl/kubectl-compact/filter.lf --sub=logs --args='deploy/api --tail=200' --exit=0 --level=lite < plugins/kubectl/kubectl-compact/samples/kubectl-logs.txt
       checks:
@@ -265,7 +265,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/kubectl/kubectl-compact/tests.cue \ kubectl-compact \ samples/kubectl-logs.txt full
+- name: tests.cue \ kubectl-compact \ samples/kubectl-logs.txt full
   commands:
     - command: lowfat filter plugins/kubectl/kubectl-compact/filter.lf --sub=logs --args='deploy/api --tail=200' --exit=0 --level=full < plugins/kubectl/kubectl-compact/samples/kubectl-logs.txt
       checks:
@@ -312,7 +312,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/kubectl/kubectl-compact/tests.cue \ kubectl-compact \ samples/kubectl-logs.txt ultra
+- name: tests.cue \ kubectl-compact \ samples/kubectl-logs.txt ultra
   commands:
     - command: lowfat filter plugins/kubectl/kubectl-compact/filter.lf --sub=logs --args='deploy/api --tail=200' --exit=0 --level=ultra < plugins/kubectl/kubectl-compact/samples/kubectl-logs.txt
       checks:
@@ -344,7 +344,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/kubectl/kubectl-compact/tests.cue \ kubectl-compact \ samples/kubectl-apply-rollout.txt lite
+- name: tests.cue \ kubectl-compact \ samples/kubectl-apply-rollout.txt lite
   commands:
     - command: lowfat filter plugins/kubectl/kubectl-compact/filter.lf --sub=apply --args='-f k8s/' --exit=0 --level=lite < plugins/kubectl/kubectl-compact/samples/kubectl-apply-rollout.txt
       checks:
@@ -375,7 +375,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/kubectl/kubectl-compact/tests.cue \ kubectl-compact \ samples/kubectl-apply-rollout.txt full
+- name: tests.cue \ kubectl-compact \ samples/kubectl-apply-rollout.txt full
   commands:
     - command: lowfat filter plugins/kubectl/kubectl-compact/filter.lf --sub=apply --args='-f k8s/' --exit=0 --level=full < plugins/kubectl/kubectl-compact/samples/kubectl-apply-rollout.txt
       checks:
@@ -406,7 +406,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/kubectl/kubectl-compact/tests.cue \ kubectl-compact \ samples/kubectl-apply-rollout.txt ultra
+- name: tests.cue \ kubectl-compact \ samples/kubectl-apply-rollout.txt ultra
   commands:
     - command: lowfat filter plugins/kubectl/kubectl-compact/filter.lf --sub=apply --args='-f k8s/' --exit=0 --level=ultra < plugins/kubectl/kubectl-compact/samples/kubectl-apply-rollout.txt
       checks:
@@ -437,7 +437,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/kubectl/kubectl-compact/tests.cue \ kubectl-compact \ samples/kubectl-get-noserver.txt full
+- name: tests.cue \ kubectl-compact \ samples/kubectl-get-noserver.txt full
   commands:
     - command: lowfat filter plugins/kubectl/kubectl-compact/filter.lf --sub=get --args='pods' --exit=1 --level=full < plugins/kubectl/kubectl-compact/samples/kubectl-get-noserver.txt
       checks:
@@ -461,7 +461,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/kubectl/kubectl-compact/tests.cue \ kubectl-compact \ samples/kubectl-get-noserver.txt ultra
+- name: tests.cue \ kubectl-compact \ samples/kubectl-get-noserver.txt ultra
   commands:
     - command: lowfat filter plugins/kubectl/kubectl-compact/filter.lf --sub=get --args='pods' --exit=1 --level=ultra < plugins/kubectl/kubectl-compact/samples/kubectl-get-noserver.txt
       checks:

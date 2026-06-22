@@ -1,4 +1,4 @@
-- name: plugins/tsc/tsc-compact/tests.cue \ tsc-compact \ samples/tsc-errors.txt lite
+- name: tests.cue \ tsc-compact \ samples/tsc-errors.txt lite
   commands:
     - command: lowfat filter plugins/tsc/tsc-compact/filter.lf --sub= --args='--noEmit' --exit=2 --level=lite < plugins/tsc/tsc-compact/samples/tsc-errors.txt
       checks:
@@ -42,7 +42,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/tsc/tsc-compact/tests.cue \ tsc-compact \ samples/tsc-errors.txt full
+- name: tests.cue \ tsc-compact \ samples/tsc-errors.txt full
   commands:
     - command: lowfat filter plugins/tsc/tsc-compact/filter.lf --sub= --args='--noEmit' --exit=2 --level=full < plugins/tsc/tsc-compact/samples/tsc-errors.txt
       checks:
@@ -86,7 +86,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/tsc/tsc-compact/tests.cue \ tsc-compact \ samples/tsc-errors.txt ultra
+- name: tests.cue \ tsc-compact \ samples/tsc-errors.txt ultra
   commands:
     - command: lowfat filter plugins/tsc/tsc-compact/filter.lf --sub= --args='--noEmit' --exit=2 --level=ultra < plugins/tsc/tsc-compact/samples/tsc-errors.txt
       checks:
@@ -116,7 +116,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/tsc/tsc-compact/tests.cue \ tsc-compact \ samples/tsc-clean.txt lite
+- name: tests.cue \ tsc-compact \ samples/tsc-clean.txt lite
   commands:
     - command: lowfat filter plugins/tsc/tsc-compact/filter.lf --sub= --args='--noEmit' --exit=0 --level=lite < plugins/tsc/tsc-compact/samples/tsc-clean.txt
       checks:
@@ -135,7 +135,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/tsc/tsc-compact/tests.cue \ tsc-compact \ samples/tsc-clean.txt full
+- name: tests.cue \ tsc-compact \ samples/tsc-clean.txt full
   commands:
     - command: lowfat filter plugins/tsc/tsc-compact/filter.lf --sub= --args='--noEmit' --exit=0 --level=full < plugins/tsc/tsc-compact/samples/tsc-clean.txt
       checks:
@@ -154,7 +154,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/tsc/tsc-compact/tests.cue \ tsc-compact \ samples/tsc-clean.txt ultra
+- name: tests.cue \ tsc-compact \ samples/tsc-clean.txt ultra
   commands:
     - command: lowfat filter plugins/tsc/tsc-compact/filter.lf --sub= --args='--noEmit' --exit=0 --level=ultra < plugins/tsc/tsc-compact/samples/tsc-clean.txt
       checks:

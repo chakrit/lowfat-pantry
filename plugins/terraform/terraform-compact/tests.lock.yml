@@ -1,4 +1,4 @@
-- name: plugins/terraform/terraform-compact/tests.cue \ terraform-compact \ samples/terraform-plan.txt lite
+- name: tests.cue \ terraform-compact \ samples/terraform-plan.txt lite
   commands:
     - command: lowfat filter plugins/terraform/terraform-compact/filter.lf --sub=plan --args='-out=tfplan' --exit=0 --level=lite < plugins/terraform/terraform-compact/samples/terraform-plan.txt
       checks:
@@ -93,7 +93,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/terraform/terraform-compact/tests.cue \ terraform-compact \ samples/terraform-plan.txt full
+- name: tests.cue \ terraform-compact \ samples/terraform-plan.txt full
   commands:
     - command: lowfat filter plugins/terraform/terraform-compact/filter.lf --sub=plan --args='-out=tfplan' --exit=0 --level=full < plugins/terraform/terraform-compact/samples/terraform-plan.txt
       checks:
@@ -188,7 +188,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/terraform/terraform-compact/tests.cue \ terraform-compact \ samples/terraform-plan.txt ultra
+- name: tests.cue \ terraform-compact \ samples/terraform-plan.txt ultra
   commands:
     - command: lowfat filter plugins/terraform/terraform-compact/filter.lf --sub=plan --args='-out=tfplan' --exit=0 --level=ultra < plugins/terraform/terraform-compact/samples/terraform-plan.txt
       checks:
@@ -212,7 +212,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/terraform/terraform-compact/tests.cue \ terraform-compact \ samples/terraform-apply.txt lite
+- name: tests.cue \ terraform-compact \ samples/terraform-apply.txt lite
   commands:
     - command: lowfat filter plugins/terraform/terraform-compact/filter.lf --sub=apply --args='-auto-approve tfplan' --exit=0 --level=lite < plugins/terraform/terraform-compact/samples/terraform-apply.txt
       checks:
@@ -240,7 +240,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/terraform/terraform-compact/tests.cue \ terraform-compact \ samples/terraform-apply.txt full
+- name: tests.cue \ terraform-compact \ samples/terraform-apply.txt full
   commands:
     - command: lowfat filter plugins/terraform/terraform-compact/filter.lf --sub=apply --args='-auto-approve tfplan' --exit=0 --level=full < plugins/terraform/terraform-compact/samples/terraform-apply.txt
       checks:
@@ -268,7 +268,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/terraform/terraform-compact/tests.cue \ terraform-compact \ samples/terraform-apply.txt ultra
+- name: tests.cue \ terraform-compact \ samples/terraform-apply.txt ultra
   commands:
     - command: lowfat filter plugins/terraform/terraform-compact/filter.lf --sub=apply --args='-auto-approve tfplan' --exit=0 --level=ultra < plugins/terraform/terraform-compact/samples/terraform-apply.txt
       checks:
@@ -295,7 +295,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/terraform/terraform-compact/tests.cue \ terraform-compact \ samples/terraform-init-error.txt lite
+- name: tests.cue \ terraform-compact \ samples/terraform-init-error.txt lite
   commands:
     - command: lowfat filter plugins/terraform/terraform-compact/filter.lf --sub=init --args='-upgrade' --exit=1 --level=lite < plugins/terraform/terraform-compact/samples/terraform-init-error.txt
       checks:
@@ -326,7 +326,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/terraform/terraform-compact/tests.cue \ terraform-compact \ samples/terraform-init-error.txt full
+- name: tests.cue \ terraform-compact \ samples/terraform-init-error.txt full
   commands:
     - command: lowfat filter plugins/terraform/terraform-compact/filter.lf --sub=init --args='-upgrade' --exit=1 --level=full < plugins/terraform/terraform-compact/samples/terraform-init-error.txt
       checks:
@@ -357,7 +357,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/terraform/terraform-compact/tests.cue \ terraform-compact \ samples/terraform-init-error.txt ultra
+- name: tests.cue \ terraform-compact \ samples/terraform-init-error.txt ultra
   commands:
     - command: lowfat filter plugins/terraform/terraform-compact/filter.lf --sub=init --args='-upgrade' --exit=1 --level=ultra < plugins/terraform/terraform-compact/samples/terraform-init-error.txt
       checks:
@@ -388,7 +388,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/terraform/terraform-compact/tests.cue \ terraform-compact \ samples/terraform-plan-json.txt lite
+- name: tests.cue \ terraform-compact \ samples/terraform-plan-json.txt lite
   commands:
     - command: lowfat filter plugins/terraform/terraform-compact/filter.lf --sub=plan --args='-json -out=tfplan' --exit=0 --level=lite < plugins/terraform/terraform-compact/samples/terraform-plan-json.txt
       checks:
@@ -409,7 +409,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/terraform/terraform-compact/tests.cue \ terraform-compact \ samples/terraform-plan-json.txt full
+- name: tests.cue \ terraform-compact \ samples/terraform-plan-json.txt full
   commands:
     - command: lowfat filter plugins/terraform/terraform-compact/filter.lf --sub=plan --args='-json -out=tfplan' --exit=0 --level=full < plugins/terraform/terraform-compact/samples/terraform-plan-json.txt
       checks:
@@ -430,7 +430,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/terraform/terraform-compact/tests.cue \ terraform-compact \ samples/terraform-plan-json.txt ultra
+- name: tests.cue \ terraform-compact \ samples/terraform-plan-json.txt ultra
   commands:
     - command: lowfat filter plugins/terraform/terraform-compact/filter.lf --sub=plan --args='-json -out=tfplan' --exit=0 --level=ultra < plugins/terraform/terraform-compact/samples/terraform-plan-json.txt
       checks:
@@ -451,7 +451,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/terraform/terraform-compact/tests.cue \ terraform-compact \ samples/terraform-output-json.txt lite
+- name: tests.cue \ terraform-compact \ samples/terraform-output-json.txt lite
   commands:
     - command: lowfat filter plugins/terraform/terraform-compact/filter.lf --sub=output --args='output -json' --exit=0 --level=lite < plugins/terraform/terraform-compact/samples/terraform-output-json.txt
       checks:
@@ -517,7 +517,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/terraform/terraform-compact/tests.cue \ terraform-compact \ samples/terraform-output-json.txt full
+- name: tests.cue \ terraform-compact \ samples/terraform-output-json.txt full
   commands:
     - command: lowfat filter plugins/terraform/terraform-compact/filter.lf --sub=output --args='output -json' --exit=0 --level=full < plugins/terraform/terraform-compact/samples/terraform-output-json.txt
       checks:
@@ -583,7 +583,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/terraform/terraform-compact/tests.cue \ terraform-compact \ samples/terraform-output-json.txt ultra
+- name: tests.cue \ terraform-compact \ samples/terraform-output-json.txt ultra
   commands:
     - command: lowfat filter plugins/terraform/terraform-compact/filter.lf --sub=output --args='output -json' --exit=0 --level=ultra < plugins/terraform/terraform-compact/samples/terraform-output-json.txt
       checks:

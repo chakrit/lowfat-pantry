@@ -1,4 +1,4 @@
-// Golden-file drift tests for rubocop-compact, run by chakrit/smoke (>= v0.3.0).
+// Golden-file drift tests for rubocop-compact, run by chakrit/smoke (>= v0.4.0).
 // Invoke from the REPO ROOT:
 //   smoke plugins/rubocop/rubocop-compact/tests.cue        # UNCHANGED/0 = no drift
 //   smoke -c plugins/rubocop/rubocop-compact/tests.cue     # re-lock intentionally

@@ -1,4 +1,4 @@
-- name: plugins/pip/pip-compact/tests.cue \ pip-compact \ samples/pip-install.txt lite
+- name: tests.cue \ pip-compact \ samples/pip-install.txt lite
   commands:
     - command: lowfat filter plugins/pip/pip-compact/filter.lf --sub=install --args='install requests' --exit=0 --level=lite < plugins/pip/pip-compact/samples/pip-install.txt
       checks:
@@ -18,7 +18,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pip/pip-compact/tests.cue \ pip-compact \ samples/pip-install.txt full
+- name: tests.cue \ pip-compact \ samples/pip-install.txt full
   commands:
     - command: lowfat filter plugins/pip/pip-compact/filter.lf --sub=install --args='install requests' --exit=0 --level=full < plugins/pip/pip-compact/samples/pip-install.txt
       checks:
@@ -38,7 +38,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pip/pip-compact/tests.cue \ pip-compact \ samples/pip-install.txt ultra
+- name: tests.cue \ pip-compact \ samples/pip-install.txt ultra
   commands:
     - command: lowfat filter plugins/pip/pip-compact/filter.lf --sub=install --args='install requests' --exit=0 --level=ultra < plugins/pip/pip-compact/samples/pip-install.txt
       checks:
@@ -58,7 +58,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pip/pip-compact/tests.cue \ pip-compact \ samples/pip-install-error.txt lite
+- name: tests.cue \ pip-compact \ samples/pip-install-error.txt lite
   commands:
     - command: lowfat filter plugins/pip/pip-compact/filter.lf --sub=install --args='install nonexistent-package-xyz' --exit=1 --level=lite < plugins/pip/pip-compact/samples/pip-install-error.txt
       checks:
@@ -79,7 +79,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pip/pip-compact/tests.cue \ pip-compact \ samples/pip-install-error.txt full
+- name: tests.cue \ pip-compact \ samples/pip-install-error.txt full
   commands:
     - command: lowfat filter plugins/pip/pip-compact/filter.lf --sub=install --args='install nonexistent-package-xyz' --exit=1 --level=full < plugins/pip/pip-compact/samples/pip-install-error.txt
       checks:
@@ -100,7 +100,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pip/pip-compact/tests.cue \ pip-compact \ samples/pip-install-error.txt ultra
+- name: tests.cue \ pip-compact \ samples/pip-install-error.txt ultra
   commands:
     - command: lowfat filter plugins/pip/pip-compact/filter.lf --sub=install --args='install nonexistent-package-xyz' --exit=1 --level=ultra < plugins/pip/pip-compact/samples/pip-install-error.txt
       checks:
@@ -120,7 +120,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pip/pip-compact/tests.cue \ pip-compact \ samples/pip-list.txt lite
+- name: tests.cue \ pip-compact \ samples/pip-list.txt lite
   commands:
     - command: lowfat filter plugins/pip/pip-compact/filter.lf --sub=list --args='list' --exit=0 --level=lite < plugins/pip/pip-compact/samples/pip-list.txt
       checks:
@@ -145,7 +145,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pip/pip-compact/tests.cue \ pip-compact \ samples/pip-list.txt full
+- name: tests.cue \ pip-compact \ samples/pip-list.txt full
   commands:
     - command: lowfat filter plugins/pip/pip-compact/filter.lf --sub=list --args='list' --exit=0 --level=full < plugins/pip/pip-compact/samples/pip-list.txt
       checks:
@@ -170,7 +170,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pip/pip-compact/tests.cue \ pip-compact \ samples/pip-list.txt ultra
+- name: tests.cue \ pip-compact \ samples/pip-list.txt ultra
   commands:
     - command: lowfat filter plugins/pip/pip-compact/filter.lf --sub=list --args='list' --exit=0 --level=ultra < plugins/pip/pip-compact/samples/pip-list.txt
       checks:
@@ -194,7 +194,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pip/pip-compact/tests.cue \ pip-compact \ samples/pip-list-json.txt lite
+- name: tests.cue \ pip-compact \ samples/pip-list-json.txt lite
   commands:
     - command: lowfat filter plugins/pip/pip-compact/filter.lf --sub=list --args='list --format json' --exit=0 --level=lite < plugins/pip/pip-compact/samples/pip-list-json.txt
       checks:
@@ -213,7 +213,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pip/pip-compact/tests.cue \ pip-compact \ samples/pip-list-json.txt full
+- name: tests.cue \ pip-compact \ samples/pip-list-json.txt full
   commands:
     - command: lowfat filter plugins/pip/pip-compact/filter.lf --sub=list --args='list --format json' --exit=0 --level=full < plugins/pip/pip-compact/samples/pip-list-json.txt
       checks:
@@ -232,7 +232,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/pip/pip-compact/tests.cue \ pip-compact \ samples/pip-list-json.txt ultra
+- name: tests.cue \ pip-compact \ samples/pip-list-json.txt ultra
   commands:
     - command: lowfat filter plugins/pip/pip-compact/filter.lf --sub=list --args='list --format json' --exit=0 --level=ultra < plugins/pip/pip-compact/samples/pip-list-json.txt
       checks:

@@ -1,4 +1,4 @@
-- name: plugins/env/env-compact/tests.cue \ env-compact \ samples/env-dump.txt lite
+- name: tests.cue \ env-compact \ samples/env-dump.txt lite
   commands:
     - command: lowfat filter plugins/env/env-compact/filter.lf --sub= --args='' --exit=0 --level=lite < plugins/env/env-compact/samples/env-dump.txt
       checks:
@@ -44,7 +44,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/env/env-compact/tests.cue \ env-compact \ samples/env-dump.txt full
+- name: tests.cue \ env-compact \ samples/env-dump.txt full
   commands:
     - command: lowfat filter plugins/env/env-compact/filter.lf --sub= --args='' --exit=0 --level=full < plugins/env/env-compact/samples/env-dump.txt
       checks:
@@ -90,7 +90,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/env/env-compact/tests.cue \ env-compact \ samples/env-dump.txt ultra
+- name: tests.cue \ env-compact \ samples/env-dump.txt ultra
   commands:
     - command: lowfat filter plugins/env/env-compact/filter.lf --sub= --args='' --exit=0 --level=ultra < plugins/env/env-compact/samples/env-dump.txt
       checks:
@@ -128,7 +128,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/env/env-compact/tests.cue \ env-compact \ samples/printenv-small.txt lite
+- name: tests.cue \ env-compact \ samples/printenv-small.txt lite
   commands:
     - command: lowfat filter plugins/env/env-compact/filter.lf --sub= --args='' --exit=0 --level=lite < plugins/env/env-compact/samples/printenv-small.txt
       checks:
@@ -156,7 +156,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/env/env-compact/tests.cue \ env-compact \ samples/printenv-small.txt full
+- name: tests.cue \ env-compact \ samples/printenv-small.txt full
   commands:
     - command: lowfat filter plugins/env/env-compact/filter.lf --sub= --args='' --exit=0 --level=full < plugins/env/env-compact/samples/printenv-small.txt
       checks:
@@ -184,7 +184,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/env/env-compact/tests.cue \ env-compact \ samples/printenv-small.txt ultra
+- name: tests.cue \ env-compact \ samples/printenv-small.txt ultra
   commands:
     - command: lowfat filter plugins/env/env-compact/filter.lf --sub= --args='' --exit=0 --level=ultra < plugins/env/env-compact/samples/printenv-small.txt
       checks:

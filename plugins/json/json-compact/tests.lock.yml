@@ -1,4 +1,4 @@
-- name: plugins/json/json-compact/tests.cue \ json-compact \ samples/json-array.txt lite
+- name: tests.cue \ json-compact \ samples/json-array.txt lite
   commands:
     - command: lowfat filter plugins/json/json-compact/filter.lf --sub=pretty --args='' --exit=0 --level=lite < plugins/json/json-compact/samples/json-array.txt
       checks:
@@ -93,7 +93,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/json/json-compact/tests.cue \ json-compact \ samples/json-array.txt full
+- name: tests.cue \ json-compact \ samples/json-array.txt full
   commands:
     - command: lowfat filter plugins/json/json-compact/filter.lf --sub=pretty --args='' --exit=0 --level=full < plugins/json/json-compact/samples/json-array.txt
       checks:
@@ -188,7 +188,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/json/json-compact/tests.cue \ json-compact \ samples/json-array.txt ultra
+- name: tests.cue \ json-compact \ samples/json-array.txt ultra
   commands:
     - command: lowfat filter plugins/json/json-compact/filter.lf --sub=pretty --args='' --exit=0 --level=ultra < plugins/json/json-compact/samples/json-array.txt
       checks:
@@ -269,7 +269,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/json/json-compact/tests.cue \ json-compact \ samples/json-object.txt lite
+- name: tests.cue \ json-compact \ samples/json-object.txt lite
   commands:
     - command: lowfat filter plugins/json/json-compact/filter.lf --sub=compact --args='' --exit=0 --level=lite < plugins/json/json-compact/samples/json-object.txt
       checks:
@@ -305,7 +305,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/json/json-compact/tests.cue \ json-compact \ samples/json-object.txt full
+- name: tests.cue \ json-compact \ samples/json-object.txt full
   commands:
     - command: lowfat filter plugins/json/json-compact/filter.lf --sub=compact --args='' --exit=0 --level=full < plugins/json/json-compact/samples/json-object.txt
       checks:
@@ -341,7 +341,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/json/json-compact/tests.cue \ json-compact \ samples/json-object.txt ultra
+- name: tests.cue \ json-compact \ samples/json-object.txt ultra
   commands:
     - command: lowfat filter plugins/json/json-compact/filter.lf --sub=compact --args='' --exit=0 --level=ultra < plugins/json/json-compact/samples/json-object.txt
       checks:

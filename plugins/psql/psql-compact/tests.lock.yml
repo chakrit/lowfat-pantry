@@ -1,4 +1,4 @@
-- name: plugins/psql/psql-compact/tests.cue \ psql-compact \ samples/psql-select.txt lite
+- name: tests.cue \ psql-compact \ samples/psql-select.txt lite
   commands:
     - command: lowfat filter plugins/psql/psql-compact/filter.lf --sub= --args='-c \"select * from orders\' --exit=0 --level=lite < plugins/psql/psql-compact/samples/psql-select.txt
       checks:
@@ -36,7 +36,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/psql/psql-compact/tests.cue \ psql-compact \ samples/psql-select.txt full
+- name: tests.cue \ psql-compact \ samples/psql-select.txt full
   commands:
     - command: lowfat filter plugins/psql/psql-compact/filter.lf --sub= --args='-c \"select * from orders\' --exit=0 --level=full < plugins/psql/psql-compact/samples/psql-select.txt
       checks:
@@ -74,7 +74,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/psql/psql-compact/tests.cue \ psql-compact \ samples/psql-select.txt ultra
+- name: tests.cue \ psql-compact \ samples/psql-select.txt ultra
   commands:
     - command: lowfat filter plugins/psql/psql-compact/filter.lf --sub= --args='-c \"select * from orders\' --exit=0 --level=ultra < plugins/psql/psql-compact/samples/psql-select.txt
       checks:
@@ -108,7 +108,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/psql/psql-compact/tests.cue \ psql-compact \ samples/psql-dt.txt lite
+- name: tests.cue \ psql-compact \ samples/psql-dt.txt lite
   commands:
     - command: lowfat filter plugins/psql/psql-compact/filter.lf --sub= --args='-c \"\\dt\' --exit=0 --level=lite < plugins/psql/psql-compact/samples/psql-dt.txt
       checks:
@@ -141,7 +141,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/psql/psql-compact/tests.cue \ psql-compact \ samples/psql-dt.txt full
+- name: tests.cue \ psql-compact \ samples/psql-dt.txt full
   commands:
     - command: lowfat filter plugins/psql/psql-compact/filter.lf --sub= --args='-c \"\\dt\' --exit=0 --level=full < plugins/psql/psql-compact/samples/psql-dt.txt
       checks:
@@ -174,7 +174,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/psql/psql-compact/tests.cue \ psql-compact \ samples/psql-dt.txt ultra
+- name: tests.cue \ psql-compact \ samples/psql-dt.txt ultra
   commands:
     - command: lowfat filter plugins/psql/psql-compact/filter.lf --sub= --args='-c \"\\dt\' --exit=0 --level=ultra < plugins/psql/psql-compact/samples/psql-dt.txt
       checks:
@@ -207,7 +207,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/psql/psql-compact/tests.cue \ psql-compact \ samples/psql-error.txt lite
+- name: tests.cue \ psql-compact \ samples/psql-error.txt lite
   commands:
     - command: lowfat filter plugins/psql/psql-compact/filter.lf --sub= --args='-c \"select id, totl from orders\' --exit=1 --level=lite < plugins/psql/psql-compact/samples/psql-error.txt
       checks:
@@ -229,7 +229,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/psql/psql-compact/tests.cue \ psql-compact \ samples/psql-error.txt full
+- name: tests.cue \ psql-compact \ samples/psql-error.txt full
   commands:
     - command: lowfat filter plugins/psql/psql-compact/filter.lf --sub= --args='-c \"select id, totl from orders\' --exit=1 --level=full < plugins/psql/psql-compact/samples/psql-error.txt
       checks:
@@ -251,7 +251,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/psql/psql-compact/tests.cue \ psql-compact \ samples/psql-error.txt ultra
+- name: tests.cue \ psql-compact \ samples/psql-error.txt ultra
   commands:
     - command: lowfat filter plugins/psql/psql-compact/filter.lf --sub= --args='-c \"select id, totl from orders\' --exit=1 --level=ultra < plugins/psql/psql-compact/samples/psql-error.txt
       checks:

@@ -1,4 +1,4 @@
-- name: plugins/poetry/poetry-compact/tests.cue \ poetry-compact \ samples/poetry-install.txt install lite
+- name: tests.cue \ poetry-compact \ samples/poetry-install.txt install lite
   commands:
     - command: lowfat filter plugins/poetry/poetry-compact/filter.lf --sub=install --args='install --no-root' --exit=0 --level=lite < plugins/poetry/poetry-compact/samples/poetry-install.txt
       checks:
@@ -19,7 +19,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/poetry/poetry-compact/tests.cue \ poetry-compact \ samples/poetry-install.txt install full
+- name: tests.cue \ poetry-compact \ samples/poetry-install.txt install full
   commands:
     - command: lowfat filter plugins/poetry/poetry-compact/filter.lf --sub=install --args='install --no-root' --exit=0 --level=full < plugins/poetry/poetry-compact/samples/poetry-install.txt
       checks:
@@ -40,7 +40,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/poetry/poetry-compact/tests.cue \ poetry-compact \ samples/poetry-install.txt install ultra
+- name: tests.cue \ poetry-compact \ samples/poetry-install.txt install ultra
   commands:
     - command: lowfat filter plugins/poetry/poetry-compact/filter.lf --sub=install --args='install --no-root' --exit=0 --level=ultra < plugins/poetry/poetry-compact/samples/poetry-install.txt
       checks:
@@ -59,7 +59,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/poetry/poetry-compact/tests.cue \ poetry-compact \ samples/poetry-lock.txt lock lite
+- name: tests.cue \ poetry-compact \ samples/poetry-lock.txt lock lite
   commands:
     - command: lowfat filter plugins/poetry/poetry-compact/filter.lf --sub=lock --args='lock' --exit=0 --level=lite < plugins/poetry/poetry-compact/samples/poetry-lock.txt
       checks:
@@ -82,7 +82,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/poetry/poetry-compact/tests.cue \ poetry-compact \ samples/poetry-lock.txt lock full
+- name: tests.cue \ poetry-compact \ samples/poetry-lock.txt lock full
   commands:
     - command: lowfat filter plugins/poetry/poetry-compact/filter.lf --sub=lock --args='lock' --exit=0 --level=full < plugins/poetry/poetry-compact/samples/poetry-lock.txt
       checks:
@@ -105,7 +105,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/poetry/poetry-compact/tests.cue \ poetry-compact \ samples/poetry-lock.txt lock ultra
+- name: tests.cue \ poetry-compact \ samples/poetry-lock.txt lock ultra
   commands:
     - command: lowfat filter plugins/poetry/poetry-compact/filter.lf --sub=lock --args='lock' --exit=0 --level=ultra < plugins/poetry/poetry-compact/samples/poetry-lock.txt
       checks:
@@ -124,7 +124,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/poetry/poetry-compact/tests.cue \ poetry-compact \ samples/poetry-fail.txt lock lite
+- name: tests.cue \ poetry-compact \ samples/poetry-fail.txt lock lite
   commands:
     - command: lowfat filter plugins/poetry/poetry-compact/filter.lf --sub=lock --args='lock' --exit=1 --level=lite < plugins/poetry/poetry-compact/samples/poetry-fail.txt
       checks:
@@ -148,7 +148,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/poetry/poetry-compact/tests.cue \ poetry-compact \ samples/poetry-fail.txt lock full
+- name: tests.cue \ poetry-compact \ samples/poetry-fail.txt lock full
   commands:
     - command: lowfat filter plugins/poetry/poetry-compact/filter.lf --sub=lock --args='lock' --exit=1 --level=full < plugins/poetry/poetry-compact/samples/poetry-fail.txt
       checks:
@@ -172,7 +172,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/poetry/poetry-compact/tests.cue \ poetry-compact \ samples/poetry-fail.txt lock ultra
+- name: tests.cue \ poetry-compact \ samples/poetry-fail.txt lock ultra
   commands:
     - command: lowfat filter plugins/poetry/poetry-compact/filter.lf --sub=lock --args='lock' --exit=1 --level=ultra < plugins/poetry/poetry-compact/samples/poetry-fail.txt
       checks:
@@ -192,7 +192,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/poetry/poetry-compact/tests.cue \ poetry-compact \ samples/poetry-show-json.txt show lite
+- name: tests.cue \ poetry-compact \ samples/poetry-show-json.txt show lite
   commands:
     - command: lowfat filter plugins/poetry/poetry-compact/filter.lf --sub=show --args='show -f json' --exit=0 --level=lite < plugins/poetry/poetry-compact/samples/poetry-show-json.txt
       checks:
@@ -211,7 +211,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/poetry/poetry-compact/tests.cue \ poetry-compact \ samples/poetry-show-json.txt show full
+- name: tests.cue \ poetry-compact \ samples/poetry-show-json.txt show full
   commands:
     - command: lowfat filter plugins/poetry/poetry-compact/filter.lf --sub=show --args='show -f json' --exit=0 --level=full < plugins/poetry/poetry-compact/samples/poetry-show-json.txt
       checks:
@@ -230,7 +230,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/poetry/poetry-compact/tests.cue \ poetry-compact \ samples/poetry-show-json.txt show ultra
+- name: tests.cue \ poetry-compact \ samples/poetry-show-json.txt show ultra
   commands:
     - command: lowfat filter plugins/poetry/poetry-compact/filter.lf --sub=show --args='show -f json' --exit=0 --level=ultra < plugins/poetry/poetry-compact/samples/poetry-show-json.txt
       checks:

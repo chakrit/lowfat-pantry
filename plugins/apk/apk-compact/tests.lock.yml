@@ -1,4 +1,4 @@
-- name: plugins/apk/apk-compact/tests.cue \ apk-compact \ samples/apk-add.txt lite
+- name: tests.cue \ apk-compact \ samples/apk-add.txt lite
   commands:
     - command: lowfat filter plugins/apk/apk-compact/filter.lf --sub=add --args='add jq' --exit=0 --level=lite < plugins/apk/apk-compact/samples/apk-add.txt
       checks:
@@ -17,7 +17,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/apk/apk-compact/tests.cue \ apk-compact \ samples/apk-add.txt full
+- name: tests.cue \ apk-compact \ samples/apk-add.txt full
   commands:
     - command: lowfat filter plugins/apk/apk-compact/filter.lf --sub=add --args='add jq' --exit=0 --level=full < plugins/apk/apk-compact/samples/apk-add.txt
       checks:
@@ -36,7 +36,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/apk/apk-compact/tests.cue \ apk-compact \ samples/apk-add.txt ultra
+- name: tests.cue \ apk-compact \ samples/apk-add.txt ultra
   commands:
     - command: lowfat filter plugins/apk/apk-compact/filter.lf --sub=add --args='add jq' --exit=0 --level=ultra < plugins/apk/apk-compact/samples/apk-add.txt
       checks:
@@ -55,7 +55,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/apk/apk-compact/tests.cue \ apk-compact \ samples/apk-add-error.txt lite
+- name: tests.cue \ apk-compact \ samples/apk-add-error.txt lite
   commands:
     - command: lowfat filter plugins/apk/apk-compact/filter.lf --sub=add --args='add nosuchpkg123' --exit=1 --level=lite < plugins/apk/apk-compact/samples/apk-add-error.txt
       checks:
@@ -76,7 +76,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/apk/apk-compact/tests.cue \ apk-compact \ samples/apk-add-error.txt full
+- name: tests.cue \ apk-compact \ samples/apk-add-error.txt full
   commands:
     - command: lowfat filter plugins/apk/apk-compact/filter.lf --sub=add --args='add nosuchpkg123' --exit=1 --level=full < plugins/apk/apk-compact/samples/apk-add-error.txt
       checks:
@@ -97,7 +97,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/apk/apk-compact/tests.cue \ apk-compact \ samples/apk-add-error.txt ultra
+- name: tests.cue \ apk-compact \ samples/apk-add-error.txt ultra
   commands:
     - command: lowfat filter plugins/apk/apk-compact/filter.lf --sub=add --args='add nosuchpkg123' --exit=1 --level=ultra < plugins/apk/apk-compact/samples/apk-add-error.txt
       checks:

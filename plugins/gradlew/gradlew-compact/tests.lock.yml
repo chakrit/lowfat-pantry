@@ -1,4 +1,4 @@
-- name: plugins/gradlew/gradlew-compact/tests.cue \ gradlew-compact \ samples/gradlew-build-success.txt lite
+- name: tests.cue \ gradlew-compact \ samples/gradlew-build-success.txt lite
   commands:
     - command: lowfat filter plugins/gradlew/gradlew-compact/filter.lf --sub=build --args='build' --exit=0 --level=lite < plugins/gradlew/gradlew-compact/samples/gradlew-build-success.txt
       checks:
@@ -21,7 +21,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/gradlew/gradlew-compact/tests.cue \ gradlew-compact \ samples/gradlew-build-success.txt full
+- name: tests.cue \ gradlew-compact \ samples/gradlew-build-success.txt full
   commands:
     - command: lowfat filter plugins/gradlew/gradlew-compact/filter.lf --sub=build --args='build' --exit=0 --level=full < plugins/gradlew/gradlew-compact/samples/gradlew-build-success.txt
       checks:
@@ -44,7 +44,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/gradlew/gradlew-compact/tests.cue \ gradlew-compact \ samples/gradlew-build-success.txt ultra
+- name: tests.cue \ gradlew-compact \ samples/gradlew-build-success.txt ultra
   commands:
     - command: lowfat filter plugins/gradlew/gradlew-compact/filter.lf --sub=build --args='build' --exit=0 --level=ultra < plugins/gradlew/gradlew-compact/samples/gradlew-build-success.txt
       checks:
@@ -64,7 +64,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/gradlew/gradlew-compact/tests.cue \ gradlew-compact \ samples/gradlew-build-downloads.txt lite
+- name: tests.cue \ gradlew-compact \ samples/gradlew-build-downloads.txt lite
   commands:
     - command: lowfat filter plugins/gradlew/gradlew-compact/filter.lf --sub=build --args='build' --exit=0 --level=lite < plugins/gradlew/gradlew-compact/samples/gradlew-build-downloads.txt
       checks:
@@ -87,7 +87,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/gradlew/gradlew-compact/tests.cue \ gradlew-compact \ samples/gradlew-build-downloads.txt full
+- name: tests.cue \ gradlew-compact \ samples/gradlew-build-downloads.txt full
   commands:
     - command: lowfat filter plugins/gradlew/gradlew-compact/filter.lf --sub=build --args='build' --exit=0 --level=full < plugins/gradlew/gradlew-compact/samples/gradlew-build-downloads.txt
       checks:
@@ -110,7 +110,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/gradlew/gradlew-compact/tests.cue \ gradlew-compact \ samples/gradlew-build-downloads.txt ultra
+- name: tests.cue \ gradlew-compact \ samples/gradlew-build-downloads.txt ultra
   commands:
     - command: lowfat filter plugins/gradlew/gradlew-compact/filter.lf --sub=build --args='build' --exit=0 --level=ultra < plugins/gradlew/gradlew-compact/samples/gradlew-build-downloads.txt
       checks:
@@ -130,7 +130,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/gradlew/gradlew-compact/tests.cue \ gradlew-compact \ samples/gradlew-test-failure.txt lite
+- name: tests.cue \ gradlew-compact \ samples/gradlew-test-failure.txt lite
   commands:
     - command: lowfat filter plugins/gradlew/gradlew-compact/filter.lf --sub=test --args='test' --exit=1 --level=lite < plugins/gradlew/gradlew-compact/samples/gradlew-test-failure.txt
       checks:
@@ -158,7 +158,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/gradlew/gradlew-compact/tests.cue \ gradlew-compact \ samples/gradlew-test-failure.txt full
+- name: tests.cue \ gradlew-compact \ samples/gradlew-test-failure.txt full
   commands:
     - command: lowfat filter plugins/gradlew/gradlew-compact/filter.lf --sub=test --args='test' --exit=1 --level=full < plugins/gradlew/gradlew-compact/samples/gradlew-test-failure.txt
       checks:
@@ -186,7 +186,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/gradlew/gradlew-compact/tests.cue \ gradlew-compact \ samples/gradlew-test-failure.txt ultra
+- name: tests.cue \ gradlew-compact \ samples/gradlew-test-failure.txt ultra
   commands:
     - command: lowfat filter plugins/gradlew/gradlew-compact/filter.lf --sub=test --args='test' --exit=1 --level=ultra < plugins/gradlew/gradlew-compact/samples/gradlew-test-failure.txt
       checks:

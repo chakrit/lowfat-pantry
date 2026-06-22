@@ -1,4 +1,4 @@
-- name: plugins/bun/bun-compact/tests.cue \ bun-compact \ samples/bun-install.txt lite
+- name: tests.cue \ bun-compact \ samples/bun-install.txt lite
   commands:
     - command: lowfat filter plugins/bun/bun-compact/filter.lf --sub=add --args='add react' --exit=0 --level=lite < plugins/bun/bun-compact/samples/bun-install.txt
       checks:
@@ -38,7 +38,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/bun/bun-compact/tests.cue \ bun-compact \ samples/bun-install.txt full
+- name: tests.cue \ bun-compact \ samples/bun-install.txt full
   commands:
     - command: lowfat filter plugins/bun/bun-compact/filter.lf --sub=add --args='add react' --exit=0 --level=full < plugins/bun/bun-compact/samples/bun-install.txt
       checks:
@@ -78,7 +78,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/bun/bun-compact/tests.cue \ bun-compact \ samples/bun-install.txt ultra
+- name: tests.cue \ bun-compact \ samples/bun-install.txt ultra
   commands:
     - command: lowfat filter plugins/bun/bun-compact/filter.lf --sub=add --args='add react' --exit=0 --level=ultra < plugins/bun/bun-compact/samples/bun-install.txt
       checks:
@@ -98,7 +98,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/bun/bun-compact/tests.cue \ bun-compact \ samples/bun-test-fail.txt lite
+- name: tests.cue \ bun-compact \ samples/bun-test-fail.txt lite
   commands:
     - command: lowfat filter plugins/bun/bun-compact/filter.lf --sub=test --args='test' --exit=1 --level=lite < plugins/bun/bun-compact/samples/bun-test-fail.txt
       checks:
@@ -133,7 +133,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/bun/bun-compact/tests.cue \ bun-compact \ samples/bun-test-fail.txt full
+- name: tests.cue \ bun-compact \ samples/bun-test-fail.txt full
   commands:
     - command: lowfat filter plugins/bun/bun-compact/filter.lf --sub=test --args='test' --exit=1 --level=full < plugins/bun/bun-compact/samples/bun-test-fail.txt
       checks:
@@ -168,7 +168,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/bun/bun-compact/tests.cue \ bun-compact \ samples/bun-test-fail.txt ultra
+- name: tests.cue \ bun-compact \ samples/bun-test-fail.txt ultra
   commands:
     - command: lowfat filter plugins/bun/bun-compact/filter.lf --sub=test --args='test' --exit=1 --level=ultra < plugins/bun/bun-compact/samples/bun-test-fail.txt
       checks:
@@ -195,7 +195,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/bun/bun-compact/tests.cue \ bun-compact \ samples/bun-run-capped.txt lite
+- name: tests.cue \ bun-compact \ samples/bun-run-capped.txt lite
   commands:
     - command: lowfat filter plugins/bun/bun-compact/filter.lf --sub=run --args='run build' --exit=0 --level=lite < plugins/bun/bun-compact/samples/bun-run-capped.txt
       checks:
@@ -255,7 +255,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/bun/bun-compact/tests.cue \ bun-compact \ samples/bun-run-capped.txt full
+- name: tests.cue \ bun-compact \ samples/bun-run-capped.txt full
   commands:
     - command: lowfat filter plugins/bun/bun-compact/filter.lf --sub=run --args='run build' --exit=0 --level=full < plugins/bun/bun-compact/samples/bun-run-capped.txt
       checks:
@@ -315,7 +315,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/bun/bun-compact/tests.cue \ bun-compact \ samples/bun-run-capped.txt ultra
+- name: tests.cue \ bun-compact \ samples/bun-run-capped.txt ultra
   commands:
     - command: lowfat filter plugins/bun/bun-compact/filter.lf --sub=run --args='run build' --exit=0 --level=ultra < plugins/bun/bun-compact/samples/bun-run-capped.txt
       checks:

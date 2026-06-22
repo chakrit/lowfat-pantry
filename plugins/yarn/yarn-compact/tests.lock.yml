@@ -1,4 +1,4 @@
-- name: plugins/yarn/yarn-compact/tests.cue \ yarn-compact \ samples/yarn-install.txt lite
+- name: tests.cue \ yarn-compact \ samples/yarn-install.txt lite
   commands:
     - command: lowfat filter plugins/yarn/yarn-compact/filter.lf --sub=install --args='install' --exit=0 --level=lite < plugins/yarn/yarn-compact/samples/yarn-install.txt
       checks:
@@ -21,7 +21,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/yarn/yarn-compact/tests.cue \ yarn-compact \ samples/yarn-install.txt full
+- name: tests.cue \ yarn-compact \ samples/yarn-install.txt full
   commands:
     - command: lowfat filter plugins/yarn/yarn-compact/filter.lf --sub=install --args='install' --exit=0 --level=full < plugins/yarn/yarn-compact/samples/yarn-install.txt
       checks:
@@ -44,7 +44,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/yarn/yarn-compact/tests.cue \ yarn-compact \ samples/yarn-install.txt ultra
+- name: tests.cue \ yarn-compact \ samples/yarn-install.txt ultra
   commands:
     - command: lowfat filter plugins/yarn/yarn-compact/filter.lf --sub=install --args='install' --exit=0 --level=ultra < plugins/yarn/yarn-compact/samples/yarn-install.txt
       checks:
@@ -66,7 +66,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/yarn/yarn-compact/tests.cue \ yarn-compact \ samples/yarn-install-error.txt lite
+- name: tests.cue \ yarn-compact \ samples/yarn-install-error.txt lite
   commands:
     - command: lowfat filter plugins/yarn/yarn-compact/filter.lf --sub=install --args='install' --exit=1 --level=lite < plugins/yarn/yarn-compact/samples/yarn-install-error.txt
       checks:
@@ -88,7 +88,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/yarn/yarn-compact/tests.cue \ yarn-compact \ samples/yarn-install-error.txt full
+- name: tests.cue \ yarn-compact \ samples/yarn-install-error.txt full
   commands:
     - command: lowfat filter plugins/yarn/yarn-compact/filter.lf --sub=install --args='install' --exit=1 --level=full < plugins/yarn/yarn-compact/samples/yarn-install-error.txt
       checks:
@@ -110,7 +110,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/yarn/yarn-compact/tests.cue \ yarn-compact \ samples/yarn-install-error.txt ultra
+- name: tests.cue \ yarn-compact \ samples/yarn-install-error.txt ultra
   commands:
     - command: lowfat filter plugins/yarn/yarn-compact/filter.lf --sub=install --args='install' --exit=1 --level=ultra < plugins/yarn/yarn-compact/samples/yarn-install-error.txt
       checks:
@@ -132,7 +132,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/yarn/yarn-compact/tests.cue \ yarn-compact \ samples/yarn-test.txt lite
+- name: tests.cue \ yarn-compact \ samples/yarn-test.txt lite
   commands:
     - command: lowfat filter plugins/yarn/yarn-compact/filter.lf --sub=test --args='test' --exit=1 --level=lite < plugins/yarn/yarn-compact/samples/yarn-test.txt
       checks:
@@ -163,7 +163,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/yarn/yarn-compact/tests.cue \ yarn-compact \ samples/yarn-test.txt full
+- name: tests.cue \ yarn-compact \ samples/yarn-test.txt full
   commands:
     - command: lowfat filter plugins/yarn/yarn-compact/filter.lf --sub=test --args='test' --exit=1 --level=full < plugins/yarn/yarn-compact/samples/yarn-test.txt
       checks:
@@ -194,7 +194,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/yarn/yarn-compact/tests.cue \ yarn-compact \ samples/yarn-test.txt ultra
+- name: tests.cue \ yarn-compact \ samples/yarn-test.txt ultra
   commands:
     - command: lowfat filter plugins/yarn/yarn-compact/filter.lf --sub=test --args='test' --exit=1 --level=ultra < plugins/yarn/yarn-compact/samples/yarn-test.txt
       checks:
@@ -225,7 +225,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/yarn/yarn-compact/tests.cue \ yarn-compact \ samples/yarn-run-capped.txt lite
+- name: tests.cue \ yarn-compact \ samples/yarn-run-capped.txt lite
   commands:
     - command: lowfat filter plugins/yarn/yarn-compact/filter.lf --sub=run --args='run build' --exit=0 --level=lite < plugins/yarn/yarn-compact/samples/yarn-run-capped.txt
       checks:
@@ -284,7 +284,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/yarn/yarn-compact/tests.cue \ yarn-compact \ samples/yarn-run-capped.txt full
+- name: tests.cue \ yarn-compact \ samples/yarn-run-capped.txt full
   commands:
     - command: lowfat filter plugins/yarn/yarn-compact/filter.lf --sub=run --args='run build' --exit=0 --level=full < plugins/yarn/yarn-compact/samples/yarn-run-capped.txt
       checks:
@@ -343,7 +343,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/yarn/yarn-compact/tests.cue \ yarn-compact \ samples/yarn-run-capped.txt ultra
+- name: tests.cue \ yarn-compact \ samples/yarn-run-capped.txt ultra
   commands:
     - command: lowfat filter plugins/yarn/yarn-compact/filter.lf --sub=run --args='run build' --exit=0 --level=ultra < plugins/yarn/yarn-compact/samples/yarn-run-capped.txt
       checks:

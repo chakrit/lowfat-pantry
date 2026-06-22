@@ -1,4 +1,4 @@
-- name: plugins/rake/rake-compact/tests.cue \ rake-compact \ samples/rake-build.txt lite
+- name: tests.cue \ rake-compact \ samples/rake-build.txt lite
   commands:
     - command: lowfat filter plugins/rake/rake-compact/filter.lf --sub=build --args='build' --exit=0 --level=lite < plugins/rake/rake-compact/samples/rake-build.txt
       checks:
@@ -19,7 +19,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rake/rake-compact/tests.cue \ rake-compact \ samples/rake-build.txt full
+- name: tests.cue \ rake-compact \ samples/rake-build.txt full
   commands:
     - command: lowfat filter plugins/rake/rake-compact/filter.lf --sub=build --args='build' --exit=0 --level=full < plugins/rake/rake-compact/samples/rake-build.txt
       checks:
@@ -40,7 +40,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rake/rake-compact/tests.cue \ rake-compact \ samples/rake-build.txt ultra
+- name: tests.cue \ rake-compact \ samples/rake-build.txt ultra
   commands:
     - command: lowfat filter plugins/rake/rake-compact/filter.lf --sub=build --args='build' --exit=0 --level=ultra < plugins/rake/rake-compact/samples/rake-build.txt
       checks:
@@ -61,7 +61,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rake/rake-compact/tests.cue \ rake-compact \ samples/rake-fail.txt lite
+- name: tests.cue \ rake-compact \ samples/rake-fail.txt lite
   commands:
     - command: lowfat filter plugins/rake/rake-compact/filter.lf --sub=boom --args='boom' --exit=1 --level=lite < plugins/rake/rake-compact/samples/rake-fail.txt
       checks:
@@ -83,7 +83,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rake/rake-compact/tests.cue \ rake-compact \ samples/rake-fail.txt full
+- name: tests.cue \ rake-compact \ samples/rake-fail.txt full
   commands:
     - command: lowfat filter plugins/rake/rake-compact/filter.lf --sub=boom --args='boom' --exit=1 --level=full < plugins/rake/rake-compact/samples/rake-fail.txt
       checks:
@@ -105,7 +105,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rake/rake-compact/tests.cue \ rake-compact \ samples/rake-fail.txt ultra
+- name: tests.cue \ rake-compact \ samples/rake-fail.txt ultra
   commands:
     - command: lowfat filter plugins/rake/rake-compact/filter.lf --sub=boom --args='boom' --exit=1 --level=ultra < plugins/rake/rake-compact/samples/rake-fail.txt
       checks:
@@ -127,7 +127,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rake/rake-compact/tests.cue \ rake-compact \ samples/rake-list.txt lite
+- name: tests.cue \ rake-compact \ samples/rake-list.txt lite
   commands:
     - command: lowfat filter plugins/rake/rake-compact/filter.lf --sub=-T --args='-T' --exit=0 --level=lite < plugins/rake/rake-compact/samples/rake-list.txt
       checks:
@@ -149,7 +149,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rake/rake-compact/tests.cue \ rake-compact \ samples/rake-list.txt full
+- name: tests.cue \ rake-compact \ samples/rake-list.txt full
   commands:
     - command: lowfat filter plugins/rake/rake-compact/filter.lf --sub=-T --args='-T' --exit=0 --level=full < plugins/rake/rake-compact/samples/rake-list.txt
       checks:
@@ -171,7 +171,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/rake/rake-compact/tests.cue \ rake-compact \ samples/rake-list.txt ultra
+- name: tests.cue \ rake-compact \ samples/rake-list.txt ultra
   commands:
     - command: lowfat filter plugins/rake/rake-compact/filter.lf --sub=-T --args='-T' --exit=0 --level=ultra < plugins/rake/rake-compact/samples/rake-list.txt
       checks:

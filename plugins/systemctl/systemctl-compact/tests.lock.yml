@@ -1,4 +1,4 @@
-- name: plugins/systemctl/systemctl-compact/tests.cue \ systemctl-compact \ samples/systemctl-status.txt lite
+- name: tests.cue \ systemctl-compact \ samples/systemctl-status.txt lite
   commands:
     - command: lowfat filter plugins/systemctl/systemctl-compact/filter.lf --sub=status --args='status nginx' --exit=0 --level=lite < plugins/systemctl/systemctl-compact/samples/systemctl-status.txt
       checks:
@@ -32,7 +32,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/systemctl/systemctl-compact/tests.cue \ systemctl-compact \ samples/systemctl-status.txt full
+- name: tests.cue \ systemctl-compact \ samples/systemctl-status.txt full
   commands:
     - command: lowfat filter plugins/systemctl/systemctl-compact/filter.lf --sub=status --args='status nginx' --exit=0 --level=full < plugins/systemctl/systemctl-compact/samples/systemctl-status.txt
       checks:
@@ -59,7 +59,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/systemctl/systemctl-compact/tests.cue \ systemctl-compact \ samples/systemctl-status.txt ultra
+- name: tests.cue \ systemctl-compact \ samples/systemctl-status.txt ultra
   commands:
     - command: lowfat filter plugins/systemctl/systemctl-compact/filter.lf --sub=status --args='status nginx' --exit=0 --level=ultra < plugins/systemctl/systemctl-compact/samples/systemctl-status.txt
       checks:
@@ -81,7 +81,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/systemctl/systemctl-compact/tests.cue \ systemctl-compact \ samples/systemctl-list-units.txt lite
+- name: tests.cue \ systemctl-compact \ samples/systemctl-list-units.txt lite
   commands:
     - command: lowfat filter plugins/systemctl/systemctl-compact/filter.lf --sub=list-units --args='list-units --type=service' --exit=0 --level=lite < plugins/systemctl/systemctl-compact/samples/systemctl-list-units.txt
       checks:
@@ -117,7 +117,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/systemctl/systemctl-compact/tests.cue \ systemctl-compact \ samples/systemctl-list-units.txt full
+- name: tests.cue \ systemctl-compact \ samples/systemctl-list-units.txt full
   commands:
     - command: lowfat filter plugins/systemctl/systemctl-compact/filter.lf --sub=list-units --args='list-units --type=service' --exit=0 --level=full < plugins/systemctl/systemctl-compact/samples/systemctl-list-units.txt
       checks:
@@ -153,7 +153,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/systemctl/systemctl-compact/tests.cue \ systemctl-compact \ samples/systemctl-list-units.txt ultra
+- name: tests.cue \ systemctl-compact \ samples/systemctl-list-units.txt ultra
   commands:
     - command: lowfat filter plugins/systemctl/systemctl-compact/filter.lf --sub=list-units --args='list-units --type=service' --exit=0 --level=ultra < plugins/systemctl/systemctl-compact/samples/systemctl-list-units.txt
       checks:
@@ -188,7 +188,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/systemctl/systemctl-compact/tests.cue \ systemctl-compact \ samples/systemctl-is-active.txt lite
+- name: tests.cue \ systemctl-compact \ samples/systemctl-is-active.txt lite
   commands:
     - command: lowfat filter plugins/systemctl/systemctl-compact/filter.lf --sub=is-active --args='is-active nginx' --exit=0 --level=lite < plugins/systemctl/systemctl-compact/samples/systemctl-is-active.txt
       checks:
@@ -207,7 +207,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/systemctl/systemctl-compact/tests.cue \ systemctl-compact \ samples/systemctl-is-active.txt full
+- name: tests.cue \ systemctl-compact \ samples/systemctl-is-active.txt full
   commands:
     - command: lowfat filter plugins/systemctl/systemctl-compact/filter.lf --sub=is-active --args='is-active nginx' --exit=0 --level=full < plugins/systemctl/systemctl-compact/samples/systemctl-is-active.txt
       checks:
@@ -226,7 +226,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/systemctl/systemctl-compact/tests.cue \ systemctl-compact \ samples/systemctl-is-active.txt ultra
+- name: tests.cue \ systemctl-compact \ samples/systemctl-is-active.txt ultra
   commands:
     - command: lowfat filter plugins/systemctl/systemctl-compact/filter.lf --sub=is-active --args='is-active nginx' --exit=0 --level=ultra < plugins/systemctl/systemctl-compact/samples/systemctl-is-active.txt
       checks:
@@ -245,7 +245,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/systemctl/systemctl-compact/tests.cue \ systemctl-compact \ samples/systemctl-status-failed.txt lite
+- name: tests.cue \ systemctl-compact \ samples/systemctl-status-failed.txt lite
   commands:
     - command: lowfat filter plugins/systemctl/systemctl-compact/filter.lf --sub=status --args='status checkout-worker' --exit=3 --level=lite < plugins/systemctl/systemctl-compact/samples/systemctl-status-failed.txt
       checks:
@@ -275,7 +275,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/systemctl/systemctl-compact/tests.cue \ systemctl-compact \ samples/systemctl-status-failed.txt full
+- name: tests.cue \ systemctl-compact \ samples/systemctl-status-failed.txt full
   commands:
     - command: lowfat filter plugins/systemctl/systemctl-compact/filter.lf --sub=status --args='status checkout-worker' --exit=3 --level=full < plugins/systemctl/systemctl-compact/samples/systemctl-status-failed.txt
       checks:
@@ -305,7 +305,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/systemctl/systemctl-compact/tests.cue \ systemctl-compact \ samples/systemctl-status-failed.txt ultra
+- name: tests.cue \ systemctl-compact \ samples/systemctl-status-failed.txt ultra
   commands:
     - command: lowfat filter plugins/systemctl/systemctl-compact/filter.lf --sub=status --args='status checkout-worker' --exit=3 --level=ultra < plugins/systemctl/systemctl-compact/samples/systemctl-status-failed.txt
       checks:

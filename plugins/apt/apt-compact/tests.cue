@@ -1,4 +1,4 @@
-// Golden-file drift tests for apt-compact, run by chakrit/smoke (>= v0.3.0).
+// Golden-file drift tests for apt-compact, run by chakrit/smoke (>= v0.4.0).
 // Invoke from the REPO ROOT (smoke runs commands in the invocation cwd):
 //   smoke plugins/apt/apt-compact/tests.cue        # UNCHANGED/0 = no drift
 //   smoke -c plugins/apt/apt-compact/tests.cue     # re-lock intentionally

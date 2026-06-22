@@ -1,4 +1,4 @@
-- name: plugins/mvn/mvn-compact/tests.cue \ mvn-compact \ samples/mvn-test-success.txt lite
+- name: tests.cue \ mvn-compact \ samples/mvn-test-success.txt lite
   commands:
     - command: lowfat filter plugins/mvn/mvn-compact/filter.lf --sub=test --args='test' --exit=0 --level=lite < plugins/mvn/mvn-compact/samples/mvn-test-success.txt
       checks:
@@ -50,7 +50,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/mvn/mvn-compact/tests.cue \ mvn-compact \ samples/mvn-test-success.txt full
+- name: tests.cue \ mvn-compact \ samples/mvn-test-success.txt full
   commands:
     - command: lowfat filter plugins/mvn/mvn-compact/filter.lf --sub=test --args='test' --exit=0 --level=full < plugins/mvn/mvn-compact/samples/mvn-test-success.txt
       checks:
@@ -102,7 +102,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/mvn/mvn-compact/tests.cue \ mvn-compact \ samples/mvn-test-success.txt ultra
+- name: tests.cue \ mvn-compact \ samples/mvn-test-success.txt ultra
   commands:
     - command: lowfat filter plugins/mvn/mvn-compact/filter.lf --sub=test --args='test' --exit=0 --level=ultra < plugins/mvn/mvn-compact/samples/mvn-test-success.txt
       checks:
@@ -124,7 +124,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/mvn/mvn-compact/tests.cue \ mvn-compact \ samples/mvn-reactor-success.txt lite
+- name: tests.cue \ mvn-compact \ samples/mvn-reactor-success.txt lite
   commands:
     - command: lowfat filter plugins/mvn/mvn-compact/filter.lf --sub=install --args='install' --exit=0 --level=lite < plugins/mvn/mvn-compact/samples/mvn-reactor-success.txt
       checks:
@@ -179,7 +179,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/mvn/mvn-compact/tests.cue \ mvn-compact \ samples/mvn-reactor-success.txt full
+- name: tests.cue \ mvn-compact \ samples/mvn-reactor-success.txt full
   commands:
     - command: lowfat filter plugins/mvn/mvn-compact/filter.lf --sub=install --args='install' --exit=0 --level=full < plugins/mvn/mvn-compact/samples/mvn-reactor-success.txt
       checks:
@@ -234,7 +234,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/mvn/mvn-compact/tests.cue \ mvn-compact \ samples/mvn-reactor-success.txt ultra
+- name: tests.cue \ mvn-compact \ samples/mvn-reactor-success.txt ultra
   commands:
     - command: lowfat filter plugins/mvn/mvn-compact/filter.lf --sub=install --args='install' --exit=0 --level=ultra < plugins/mvn/mvn-compact/samples/mvn-reactor-success.txt
       checks:
@@ -259,7 +259,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/mvn/mvn-compact/tests.cue \ mvn-compact \ samples/mvn-test-failure.txt lite
+- name: tests.cue \ mvn-compact \ samples/mvn-test-failure.txt lite
   commands:
     - command: lowfat filter plugins/mvn/mvn-compact/filter.lf --sub=test --args='test' --exit=1 --level=lite < plugins/mvn/mvn-compact/samples/mvn-test-failure.txt
       checks:
@@ -309,7 +309,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/mvn/mvn-compact/tests.cue \ mvn-compact \ samples/mvn-test-failure.txt full
+- name: tests.cue \ mvn-compact \ samples/mvn-test-failure.txt full
   commands:
     - command: lowfat filter plugins/mvn/mvn-compact/filter.lf --sub=test --args='test' --exit=1 --level=full < plugins/mvn/mvn-compact/samples/mvn-test-failure.txt
       checks:
@@ -359,7 +359,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/mvn/mvn-compact/tests.cue \ mvn-compact \ samples/mvn-test-failure.txt ultra
+- name: tests.cue \ mvn-compact \ samples/mvn-test-failure.txt ultra
   commands:
     - command: lowfat filter plugins/mvn/mvn-compact/filter.lf --sub=test --args='test' --exit=1 --level=ultra < plugins/mvn/mvn-compact/samples/mvn-test-failure.txt
       checks:

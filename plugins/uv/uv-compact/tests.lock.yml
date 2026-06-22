@@ -1,4 +1,4 @@
-- name: plugins/uv/uv-compact/tests.cue \ uv-compact \ samples/uv-run-pytest-fail.txt lite
+- name: tests.cue \ uv-compact \ samples/uv-run-pytest-fail.txt lite
   commands:
     - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=run --args='run pytest tests/' --exit=1 --level=lite < plugins/uv/uv-compact/samples/uv-run-pytest-fail.txt
       checks:
@@ -32,7 +32,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/uv/uv-compact/tests.cue \ uv-compact \ samples/uv-run-pytest-fail.txt full
+- name: tests.cue \ uv-compact \ samples/uv-run-pytest-fail.txt full
   commands:
     - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=run --args='run pytest tests/' --exit=1 --level=full < plugins/uv/uv-compact/samples/uv-run-pytest-fail.txt
       checks:
@@ -66,7 +66,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/uv/uv-compact/tests.cue \ uv-compact \ samples/uv-run-pytest-fail.txt ultra
+- name: tests.cue \ uv-compact \ samples/uv-run-pytest-fail.txt ultra
   commands:
     - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=run --args='run pytest tests/' --exit=1 --level=ultra < plugins/uv/uv-compact/samples/uv-run-pytest-fail.txt
       checks:
@@ -95,7 +95,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/uv/uv-compact/tests.cue \ uv-compact \ samples/uv-run-ruff.txt lite
+- name: tests.cue \ uv-compact \ samples/uv-run-ruff.txt lite
   commands:
     - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=ruff --args='ruff check src/' --exit=1 --level=lite < plugins/uv/uv-compact/samples/uv-run-ruff.txt
       checks:
@@ -121,7 +121,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/uv/uv-compact/tests.cue \ uv-compact \ samples/uv-run-ruff.txt full
+- name: tests.cue \ uv-compact \ samples/uv-run-ruff.txt full
   commands:
     - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=ruff --args='ruff check src/' --exit=1 --level=full < plugins/uv/uv-compact/samples/uv-run-ruff.txt
       checks:
@@ -147,7 +147,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/uv/uv-compact/tests.cue \ uv-compact \ samples/uv-run-ruff.txt ultra
+- name: tests.cue \ uv-compact \ samples/uv-run-ruff.txt ultra
   commands:
     - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=ruff --args='ruff check src/' --exit=1 --level=ultra < plugins/uv/uv-compact/samples/uv-run-ruff.txt
       checks:
@@ -173,7 +173,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/uv/uv-compact/tests.cue \ uv-compact \ samples/uv-sync.txt lite
+- name: tests.cue \ uv-compact \ samples/uv-sync.txt lite
   commands:
     - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=sync --args='sync' --exit=0 --level=lite < plugins/uv/uv-compact/samples/uv-sync.txt
       checks:
@@ -207,7 +207,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/uv/uv-compact/tests.cue \ uv-compact \ samples/uv-sync.txt full
+- name: tests.cue \ uv-compact \ samples/uv-sync.txt full
   commands:
     - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=sync --args='sync' --exit=0 --level=full < plugins/uv/uv-compact/samples/uv-sync.txt
       checks:
@@ -241,7 +241,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/uv/uv-compact/tests.cue \ uv-compact \ samples/uv-sync.txt ultra
+- name: tests.cue \ uv-compact \ samples/uv-sync.txt ultra
   commands:
     - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=sync --args='sync' --exit=0 --level=ultra < plugins/uv/uv-compact/samples/uv-sync.txt
       checks:
@@ -274,7 +274,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/uv/uv-compact/tests.cue \ uv-compact \ samples/uv-run-app.txt lite
+- name: tests.cue \ uv-compact \ samples/uv-run-app.txt lite
   commands:
     - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=run --args='run uvicorn app:api' --exit=0 --level=lite < plugins/uv/uv-compact/samples/uv-run-app.txt
       checks:
@@ -302,7 +302,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/uv/uv-compact/tests.cue \ uv-compact \ samples/uv-run-app.txt full
+- name: tests.cue \ uv-compact \ samples/uv-run-app.txt full
   commands:
     - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=run --args='run uvicorn app:api' --exit=0 --level=full < plugins/uv/uv-compact/samples/uv-run-app.txt
       checks:
@@ -330,7 +330,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/uv/uv-compact/tests.cue \ uv-compact \ samples/uv-run-app.txt ultra
+- name: tests.cue \ uv-compact \ samples/uv-run-app.txt ultra
   commands:
     - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=run --args='run uvicorn app:api' --exit=0 --level=ultra < plugins/uv/uv-compact/samples/uv-run-app.txt
       checks:
@@ -358,7 +358,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/uv/uv-compact/tests.cue \ uv-compact \ samples/uv-pip-list-json.txt lite
+- name: tests.cue \ uv-compact \ samples/uv-pip-list-json.txt lite
   commands:
     - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=pip --args='pip list --format json' --exit=0 --level=lite < plugins/uv/uv-compact/samples/uv-pip-list-json.txt
       checks:
@@ -377,7 +377,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/uv/uv-compact/tests.cue \ uv-compact \ samples/uv-pip-list-json.txt full
+- name: tests.cue \ uv-compact \ samples/uv-pip-list-json.txt full
   commands:
     - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=pip --args='pip list --format json' --exit=0 --level=full < plugins/uv/uv-compact/samples/uv-pip-list-json.txt
       checks:
@@ -396,7 +396,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/uv/uv-compact/tests.cue \ uv-compact \ samples/uv-pip-list-json.txt ultra
+- name: tests.cue \ uv-compact \ samples/uv-pip-list-json.txt ultra
   commands:
     - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=pip --args='pip list --format json' --exit=0 --level=ultra < plugins/uv/uv-compact/samples/uv-pip-list-json.txt
       checks:
@@ -415,7 +415,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/uv/uv-compact/tests.cue \ uv-compact \ samples/uv-ruff-json-clean.txt lite
+- name: tests.cue \ uv-compact \ samples/uv-ruff-json-clean.txt lite
   commands:
     - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=ruff --args='ruff check --output-format json .' --exit=0 --level=lite < plugins/uv/uv-compact/samples/uv-ruff-json-clean.txt
       checks:
@@ -434,7 +434,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/uv/uv-compact/tests.cue \ uv-compact \ samples/uv-ruff-json-clean.txt full
+- name: tests.cue \ uv-compact \ samples/uv-ruff-json-clean.txt full
   commands:
     - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=ruff --args='ruff check --output-format json .' --exit=0 --level=full < plugins/uv/uv-compact/samples/uv-ruff-json-clean.txt
       checks:
@@ -453,7 +453,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/uv/uv-compact/tests.cue \ uv-compact \ samples/uv-ruff-json-clean.txt ultra
+- name: tests.cue \ uv-compact \ samples/uv-ruff-json-clean.txt ultra
   commands:
     - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=ruff --args='ruff check --output-format json .' --exit=0 --level=ultra < plugins/uv/uv-compact/samples/uv-ruff-json-clean.txt
       checks:
@@ -472,7 +472,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/uv/uv-compact/tests.cue \ uv-compact \ samples/uv-run-capped.txt lite
+- name: tests.cue \ uv-compact \ samples/uv-run-capped.txt lite
   commands:
     - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=run --args='run myapp' --exit=0 --level=lite < plugins/uv/uv-compact/samples/uv-run-capped.txt
       checks:
@@ -531,7 +531,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/uv/uv-compact/tests.cue \ uv-compact \ samples/uv-run-capped.txt full
+- name: tests.cue \ uv-compact \ samples/uv-run-capped.txt full
   commands:
     - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=run --args='run myapp' --exit=0 --level=full < plugins/uv/uv-compact/samples/uv-run-capped.txt
       checks:
@@ -590,7 +590,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/uv/uv-compact/tests.cue \ uv-compact \ samples/uv-run-capped.txt ultra
+- name: tests.cue \ uv-compact \ samples/uv-run-capped.txt ultra
   commands:
     - command: lowfat filter plugins/uv/uv-compact/filter.lf --sub=run --args='run myapp' --exit=0 --level=ultra < plugins/uv/uv-compact/samples/uv-run-capped.txt
       checks:

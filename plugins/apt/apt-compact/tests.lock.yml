@@ -1,4 +1,4 @@
-- name: plugins/apt/apt-compact/tests.cue \ apt-compact \ samples/apt-install.txt lite
+- name: tests.cue \ apt-compact \ samples/apt-install.txt lite
   commands:
     - command: lowfat filter plugins/apt/apt-compact/filter.lf --sub=install --args='install -y --no-install-recommends jq' --exit=0 --level=lite < plugins/apt/apt-compact/samples/apt-install.txt
       checks:
@@ -25,7 +25,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/apt/apt-compact/tests.cue \ apt-compact \ samples/apt-install.txt full
+- name: tests.cue \ apt-compact \ samples/apt-install.txt full
   commands:
     - command: lowfat filter plugins/apt/apt-compact/filter.lf --sub=install --args='install -y --no-install-recommends jq' --exit=0 --level=full < plugins/apt/apt-compact/samples/apt-install.txt
       checks:
@@ -52,7 +52,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/apt/apt-compact/tests.cue \ apt-compact \ samples/apt-install.txt ultra
+- name: tests.cue \ apt-compact \ samples/apt-install.txt ultra
   commands:
     - command: lowfat filter plugins/apt/apt-compact/filter.lf --sub=install --args='install -y --no-install-recommends jq' --exit=0 --level=ultra < plugins/apt/apt-compact/samples/apt-install.txt
       checks:
@@ -76,7 +76,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/apt/apt-compact/tests.cue \ apt-compact \ samples/apt-install-error.txt lite
+- name: tests.cue \ apt-compact \ samples/apt-install-error.txt lite
   commands:
     - command: lowfat filter plugins/apt/apt-compact/filter.lf --sub=install --args='install -y nosuchpkg123' --exit=100 --level=lite < plugins/apt/apt-compact/samples/apt-install-error.txt
       checks:
@@ -95,7 +95,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/apt/apt-compact/tests.cue \ apt-compact \ samples/apt-install-error.txt full
+- name: tests.cue \ apt-compact \ samples/apt-install-error.txt full
   commands:
     - command: lowfat filter plugins/apt/apt-compact/filter.lf --sub=install --args='install -y nosuchpkg123' --exit=100 --level=full < plugins/apt/apt-compact/samples/apt-install-error.txt
       checks:
@@ -114,7 +114,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/apt/apt-compact/tests.cue \ apt-compact \ samples/apt-install-error.txt ultra
+- name: tests.cue \ apt-compact \ samples/apt-install-error.txt ultra
   commands:
     - command: lowfat filter plugins/apt/apt-compact/filter.lf --sub=install --args='install -y nosuchpkg123' --exit=100 --level=ultra < plugins/apt/apt-compact/samples/apt-install-error.txt
       checks:

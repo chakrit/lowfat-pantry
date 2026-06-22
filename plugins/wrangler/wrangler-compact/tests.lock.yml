@@ -1,4 +1,4 @@
-- name: plugins/wrangler/wrangler-compact/tests.cue \ wrangler-compact \ samples/wrangler-deploy-dryrun.txt lite
+- name: tests.cue \ wrangler-compact \ samples/wrangler-deploy-dryrun.txt lite
   commands:
     - command: lowfat filter plugins/wrangler/wrangler-compact/filter.lf --sub=deploy --args='deploy --dry-run --outdir dist' --exit=0 --level=lite < plugins/wrangler/wrangler-compact/samples/wrangler-deploy-dryrun.txt
       checks:
@@ -19,7 +19,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/wrangler/wrangler-compact/tests.cue \ wrangler-compact \ samples/wrangler-deploy-dryrun.txt full
+- name: tests.cue \ wrangler-compact \ samples/wrangler-deploy-dryrun.txt full
   commands:
     - command: lowfat filter plugins/wrangler/wrangler-compact/filter.lf --sub=deploy --args='deploy --dry-run --outdir dist' --exit=0 --level=full < plugins/wrangler/wrangler-compact/samples/wrangler-deploy-dryrun.txt
       checks:
@@ -40,7 +40,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/wrangler/wrangler-compact/tests.cue \ wrangler-compact \ samples/wrangler-deploy-dryrun.txt ultra
+- name: tests.cue \ wrangler-compact \ samples/wrangler-deploy-dryrun.txt ultra
   commands:
     - command: lowfat filter plugins/wrangler/wrangler-compact/filter.lf --sub=deploy --args='deploy --dry-run --outdir dist' --exit=0 --level=ultra < plugins/wrangler/wrangler-compact/samples/wrangler-deploy-dryrun.txt
       checks:
@@ -61,7 +61,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/wrangler/wrangler-compact/tests.cue \ wrangler-compact \ samples/wrangler-deploy-err.txt lite
+- name: tests.cue \ wrangler-compact \ samples/wrangler-deploy-err.txt lite
   commands:
     - command: lowfat filter plugins/wrangler/wrangler-compact/filter.lf --sub=deploy --args='deploy --dry-run --outdir dist' --exit=1 --level=lite < plugins/wrangler/wrangler-compact/samples/wrangler-deploy-err.txt
       checks:
@@ -87,7 +87,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/wrangler/wrangler-compact/tests.cue \ wrangler-compact \ samples/wrangler-deploy-err.txt full
+- name: tests.cue \ wrangler-compact \ samples/wrangler-deploy-err.txt full
   commands:
     - command: lowfat filter plugins/wrangler/wrangler-compact/filter.lf --sub=deploy --args='deploy --dry-run --outdir dist' --exit=1 --level=full < plugins/wrangler/wrangler-compact/samples/wrangler-deploy-err.txt
       checks:
@@ -113,7 +113,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/wrangler/wrangler-compact/tests.cue \ wrangler-compact \ samples/wrangler-deploy-err.txt ultra
+- name: tests.cue \ wrangler-compact \ samples/wrangler-deploy-err.txt ultra
   commands:
     - command: lowfat filter plugins/wrangler/wrangler-compact/filter.lf --sub=deploy --args='deploy --dry-run --outdir dist' --exit=1 --level=ultra < plugins/wrangler/wrangler-compact/samples/wrangler-deploy-err.txt
       checks:
@@ -139,7 +139,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/wrangler/wrangler-compact/tests.cue \ wrangler-compact \ samples/wrangler-deploy-noauth.txt full
+- name: tests.cue \ wrangler-compact \ samples/wrangler-deploy-noauth.txt full
   commands:
     - command: lowfat filter plugins/wrangler/wrangler-compact/filter.lf --sub=deploy --args='deploy' --exit=1 --level=full < plugins/wrangler/wrangler-compact/samples/wrangler-deploy-noauth.txt
       checks:
@@ -158,7 +158,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/wrangler/wrangler-compact/tests.cue \ wrangler-compact \ samples/wrangler-deploy-noauth.txt ultra
+- name: tests.cue \ wrangler-compact \ samples/wrangler-deploy-noauth.txt ultra
   commands:
     - command: lowfat filter plugins/wrangler/wrangler-compact/filter.lf --sub=deploy --args='deploy' --exit=1 --level=ultra < plugins/wrangler/wrangler-compact/samples/wrangler-deploy-noauth.txt
       checks:
@@ -177,7 +177,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/wrangler/wrangler-compact/tests.cue \ wrangler-compact \ samples/wrangler-kv-noauth.txt full
+- name: tests.cue \ wrangler-compact \ samples/wrangler-kv-noauth.txt full
   commands:
     - command: lowfat filter plugins/wrangler/wrangler-compact/filter.lf --sub=kv --args='kv namespace list' --exit=1 --level=full < plugins/wrangler/wrangler-compact/samples/wrangler-kv-noauth.txt
       checks:
@@ -196,7 +196,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/wrangler/wrangler-compact/tests.cue \ wrangler-compact \ samples/wrangler-types.txt full
+- name: tests.cue \ wrangler-compact \ samples/wrangler-types.txt full
   commands:
     - command: lowfat filter plugins/wrangler/wrangler-compact/filter.lf --sub=types --args='types' --exit=0 --level=full < plugins/wrangler/wrangler-compact/samples/wrangler-types.txt
       checks:
@@ -227,7 +227,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/wrangler/wrangler-compact/tests.cue \ wrangler-compact \ samples/wrangler-types.txt ultra
+- name: tests.cue \ wrangler-compact \ samples/wrangler-types.txt ultra
   commands:
     - command: lowfat filter plugins/wrangler/wrangler-compact/filter.lf --sub=types --args='types' --exit=0 --level=ultra < plugins/wrangler/wrangler-compact/samples/wrangler-types.txt
       checks:

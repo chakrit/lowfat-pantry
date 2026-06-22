@@ -1,4 +1,4 @@
-- name: plugins/curl/curl-compact/tests.cue \ curl-compact \ samples/curl-verbose-json.txt lite
+- name: tests.cue \ curl-compact \ samples/curl-verbose-json.txt lite
   commands:
     - command: lowfat filter plugins/curl/curl-compact/filter.lf --sub= --args='-v https://api.example.test/v1/users' --exit=0 --level=lite < plugins/curl/curl-compact/samples/curl-verbose-json.txt
       checks:
@@ -46,7 +46,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/curl/curl-compact/tests.cue \ curl-compact \ samples/curl-verbose-json.txt full
+- name: tests.cue \ curl-compact \ samples/curl-verbose-json.txt full
   commands:
     - command: lowfat filter plugins/curl/curl-compact/filter.lf --sub= --args='-v https://api.example.test/v1/users' --exit=0 --level=full < plugins/curl/curl-compact/samples/curl-verbose-json.txt
       checks:
@@ -94,7 +94,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/curl/curl-compact/tests.cue \ curl-compact \ samples/curl-verbose-json.txt ultra
+- name: tests.cue \ curl-compact \ samples/curl-verbose-json.txt ultra
   commands:
     - command: lowfat filter plugins/curl/curl-compact/filter.lf --sub= --args='-v https://api.example.test/v1/users' --exit=0 --level=ultra < plugins/curl/curl-compact/samples/curl-verbose-json.txt
       checks:
@@ -131,7 +131,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/curl/curl-compact/tests.cue \ curl-compact \ samples/curl-headers-body.txt lite
+- name: tests.cue \ curl-compact \ samples/curl-headers-body.txt lite
   commands:
     - command: lowfat filter plugins/curl/curl-compact/filter.lf --sub= --args='-i https://example.test/' --exit=0 --level=lite < plugins/curl/curl-compact/samples/curl-headers-body.txt
       checks:
@@ -172,7 +172,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/curl/curl-compact/tests.cue \ curl-compact \ samples/curl-headers-body.txt full
+- name: tests.cue \ curl-compact \ samples/curl-headers-body.txt full
   commands:
     - command: lowfat filter plugins/curl/curl-compact/filter.lf --sub= --args='-i https://example.test/' --exit=0 --level=full < plugins/curl/curl-compact/samples/curl-headers-body.txt
       checks:
@@ -213,7 +213,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/curl/curl-compact/tests.cue \ curl-compact \ samples/curl-headers-body.txt ultra
+- name: tests.cue \ curl-compact \ samples/curl-headers-body.txt ultra
   commands:
     - command: lowfat filter plugins/curl/curl-compact/filter.lf --sub= --args='-i https://example.test/' --exit=0 --level=ultra < plugins/curl/curl-compact/samples/curl-headers-body.txt
       checks:
@@ -250,7 +250,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/curl/curl-compact/tests.cue \ curl-compact \ samples/curl-error.txt lite
+- name: tests.cue \ curl-compact \ samples/curl-error.txt lite
   commands:
     - command: lowfat filter plugins/curl/curl-compact/filter.lf --sub= --args='-v https://missing.example.test/' --exit=6 --level=lite < plugins/curl/curl-compact/samples/curl-error.txt
       checks:
@@ -271,7 +271,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/curl/curl-compact/tests.cue \ curl-compact \ samples/curl-error.txt full
+- name: tests.cue \ curl-compact \ samples/curl-error.txt full
   commands:
     - command: lowfat filter plugins/curl/curl-compact/filter.lf --sub= --args='-v https://missing.example.test/' --exit=6 --level=full < plugins/curl/curl-compact/samples/curl-error.txt
       checks:
@@ -292,7 +292,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/curl/curl-compact/tests.cue \ curl-compact \ samples/curl-error.txt ultra
+- name: tests.cue \ curl-compact \ samples/curl-error.txt ultra
   commands:
     - command: lowfat filter plugins/curl/curl-compact/filter.lf --sub= --args='-v https://missing.example.test/' --exit=6 --level=ultra < plugins/curl/curl-compact/samples/curl-error.txt
       checks:

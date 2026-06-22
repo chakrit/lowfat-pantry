@@ -1,4 +1,4 @@
-- name: plugins/deno/deno-compact/tests.cue \ deno-compact \ samples/deno-test-fail.txt lite
+- name: tests.cue \ deno-compact \ samples/deno-test-fail.txt lite
   commands:
     - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=test --args='test' --exit=1 --level=lite < plugins/deno/deno-compact/samples/deno-test-fail.txt
       checks:
@@ -43,7 +43,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/deno/deno-compact/tests.cue \ deno-compact \ samples/deno-test-fail.txt full
+- name: tests.cue \ deno-compact \ samples/deno-test-fail.txt full
   commands:
     - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=test --args='test' --exit=1 --level=full < plugins/deno/deno-compact/samples/deno-test-fail.txt
       checks:
@@ -88,7 +88,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/deno/deno-compact/tests.cue \ deno-compact \ samples/deno-test-fail.txt ultra
+- name: tests.cue \ deno-compact \ samples/deno-test-fail.txt ultra
   commands:
     - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=test --args='test' --exit=1 --level=ultra < plugins/deno/deno-compact/samples/deno-test-fail.txt
       checks:
@@ -111,7 +111,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/deno/deno-compact/tests.cue \ deno-compact \ samples/deno-check-clean.txt lite
+- name: tests.cue \ deno-compact \ samples/deno-check-clean.txt lite
   commands:
     - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=check --args='check main.ts' --exit=0 --level=lite < plugins/deno/deno-compact/samples/deno-check-clean.txt
       checks:
@@ -130,7 +130,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/deno/deno-compact/tests.cue \ deno-compact \ samples/deno-check-clean.txt full
+- name: tests.cue \ deno-compact \ samples/deno-check-clean.txt full
   commands:
     - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=check --args='check main.ts' --exit=0 --level=full < plugins/deno/deno-compact/samples/deno-check-clean.txt
       checks:
@@ -149,7 +149,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/deno/deno-compact/tests.cue \ deno-compact \ samples/deno-check-clean.txt ultra
+- name: tests.cue \ deno-compact \ samples/deno-check-clean.txt ultra
   commands:
     - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=check --args='check main.ts' --exit=0 --level=ultra < plugins/deno/deno-compact/samples/deno-check-clean.txt
       checks:
@@ -168,7 +168,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/deno/deno-compact/tests.cue \ deno-compact \ samples/deno-lint-json.txt lite
+- name: tests.cue \ deno-compact \ samples/deno-lint-json.txt lite
   commands:
     - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=lint --args='lint --json mod.ts' --exit=1 --level=lite < plugins/deno/deno-compact/samples/deno-lint-json.txt
       checks:
@@ -285,7 +285,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/deno/deno-compact/tests.cue \ deno-compact \ samples/deno-lint-json.txt full
+- name: tests.cue \ deno-compact \ samples/deno-lint-json.txt full
   commands:
     - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=lint --args='lint --json mod.ts' --exit=1 --level=full < plugins/deno/deno-compact/samples/deno-lint-json.txt
       checks:
@@ -402,7 +402,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/deno/deno-compact/tests.cue \ deno-compact \ samples/deno-lint-json.txt ultra
+- name: tests.cue \ deno-compact \ samples/deno-lint-json.txt ultra
   commands:
     - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=lint --args='lint --json mod.ts' --exit=1 --level=ultra < plugins/deno/deno-compact/samples/deno-lint-json.txt
       checks:
@@ -519,7 +519,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/deno/deno-compact/tests.cue \ deno-compact \ samples/deno-info-json.txt lite
+- name: tests.cue \ deno-compact \ samples/deno-info-json.txt lite
   commands:
     - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=info --args='info --json mod.ts' --exit=0 --level=lite < plugins/deno/deno-compact/samples/deno-info-json.txt
       checks:
@@ -554,7 +554,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/deno/deno-compact/tests.cue \ deno-compact \ samples/deno-info-json.txt full
+- name: tests.cue \ deno-compact \ samples/deno-info-json.txt full
   commands:
     - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=info --args='info --json mod.ts' --exit=0 --level=full < plugins/deno/deno-compact/samples/deno-info-json.txt
       checks:
@@ -589,7 +589,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/deno/deno-compact/tests.cue \ deno-compact \ samples/deno-info-json.txt ultra
+- name: tests.cue \ deno-compact \ samples/deno-info-json.txt ultra
   commands:
     - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=info --args='info --json mod.ts' --exit=0 --level=ultra < plugins/deno/deno-compact/samples/deno-info-json.txt
       checks:
@@ -624,7 +624,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/deno/deno-compact/tests.cue \ deno-compact \ samples/deno-run-capped.txt lite
+- name: tests.cue \ deno-compact \ samples/deno-run-capped.txt lite
   commands:
     - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=run --args='run server.ts' --exit=0 --level=lite < plugins/deno/deno-compact/samples/deno-run-capped.txt
       checks:
@@ -683,7 +683,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/deno/deno-compact/tests.cue \ deno-compact \ samples/deno-run-capped.txt full
+- name: tests.cue \ deno-compact \ samples/deno-run-capped.txt full
   commands:
     - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=run --args='run server.ts' --exit=0 --level=full < plugins/deno/deno-compact/samples/deno-run-capped.txt
       checks:
@@ -742,7 +742,7 @@
         - name: exitcode
           data:
             - "0"
-- name: plugins/deno/deno-compact/tests.cue \ deno-compact \ samples/deno-run-capped.txt ultra
+- name: tests.cue \ deno-compact \ samples/deno-run-capped.txt ultra
   commands:
     - command: lowfat filter plugins/deno/deno-compact/filter.lf --sub=run --args='run server.ts' --exit=0 --level=ultra < plugins/deno/deno-compact/samples/deno-run-capped.txt
       checks:
