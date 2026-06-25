@@ -1,6 +1,6 @@
 #!/bin/sh
 # Run the full smoke golden-test suite over every plugin's tests.cue, through the
-# repo's pinned smoke wrapper (scripts/smoke.sh — provisions chakrit/smoke v0.4
+# repo's pinned smoke wrapper (scripts/smoke.sh — provisions chakrit/smoke v0.5
 # into .bin/). Args pass through to smoke:
 #   scripts/test.sh           # UNCHANGED/0 = no drift across all plugins
 #   scripts/test.sh -c        # re-lock everything (review the diff before commit)
