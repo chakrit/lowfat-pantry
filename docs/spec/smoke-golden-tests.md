@@ -32,25 +32,46 @@ for obvious per-plugin attribution and uniform behaviour under `-c`.
 
 ## What a spec looks like
 
-One `tests.cue` per plugin, beside its `filter.lf`. The committed golden is
-`tests.lock.yml` next to it. See `plugins/go/go-compact/tests.cue` for the
-annotated reference. The shape:
+One `tests.cue` per plugin, beside its `filter.lf`; the committed golden is
+`tests.lock.yml` next to it. Each spec imports the shared `testkit` package
+(`testkit/`, under the repo's `cue.mod`) and supplies just its data:
 
-- `_`-prefixed (CUE-hidden) fields hold the case matrix — `_dir`, `_cases`
-  (sample/sub/args/exit/levels). CUE drops hidden fields on export, so smoke's
-  **closed schema never sees them** (a typo'd schema field is a hard error,
-  exit 65). This is why specs are CUE, not YAML: the matrix templates cleanly
-  while the validated surface stays closed.
-- A comprehension expands `_cases × levels` into one smoke test each.
+```cue
+import "github.com/chakrit/lowfat-pantry/testkit"
+
+_suite: testkit.#Suite & {
+	dir:  "plugins/go/go-compact"
+	name: "go-compact"
+	cases: [
+		{sample: "samples/go-build.txt", sub: "build", args: "", exit: 0, levels: ["lite", "full", "ultra"]},
+		// …
+	]
+}
+config: _suite.config
+tests:  _suite.tests
+```
+
+`testkit.#Suite` owns the shape once for all 64 specs: it expands cases × levels
+into the two-commands-per-case matrix, sets `config` (`/bin/sh`, `10s`) and
+`checks: [stdout, exitcode]`, and names each test `"\(sample) \(level)"` under a
+group named `name`. The per-spec diff is just `dir`, `name`, `cases` (and rarely
+`nameParts`). See `plugins/go/go-compact/tests.cue`.
+
+- **`#Case` validates every case.** `testkit.#Case` is closed and all-required
+  (`sample!/sub!/args!/exit!/levels!`), so a typo'd or wrong-typed field fails at
+  cue eval, not silently as a broken command. Needs smoke **≥ v0.5.0**, whose
+  `cue/load` loader resolves the `cue.mod` import — older smoke can't load these.
+- **Inputs stay off the closed surface.** `_suite` is hidden (`_`-prefixed), so
+  smoke's closed `#Test` sees only the exposed `config`/`tests`; `dir`/`name`/
+  `cases` never collide with it.
 - **Lock keys use the spec BASENAME (smoke v0.4).** A test's full key is
   `<basename> \ <name> \ …`, so every lock here roots at `tests.cue \ …`, not
   the path. An older `smoke` keyed by the path as typed and mis-keys (re-NEWs)
   these locks — always run via `scripts/smoke.sh`.
-- **Test names must be unique.** The default name is `"\(c.sample) \(l)"`. If two
-  cases reuse the *same sample* (e.g. one filter invoked two ways over one
-  fixture), that name collides → duplicate test → smoke **exit 65** standalone.
-  When a sample is reused, include sub+args:
-  `name: "\(c.sample) \(c.sub) \(c.args) \(l)"`. (npx, redis-cli hit this.)
+- **`nameParts` for reused samples.** The leaf name defaults to
+  `"\(sample) \(level)"`. A spec that reuses one sample across cases (npx,
+  redis-cli) sets `nameParts: ["sample", "sub", "args"]` (any case fields,
+  space-joined) to keep names unique — otherwise the duplicate is smoke **exit 65**.
 - Each test locks **two commands**:
   1. the raw `lowfat filter … < sample` — the literal golden, catches any
      content drift;
@@ -69,7 +90,7 @@ line; never add a pass/fail branch.
 ## Adding / changing a filter
 
 1. Edit `filter.lf`, add or adjust cases in `tests.cue`.
-2. `smoke -c plugins/<cmd>/<plugin>/tests.cue` to lock.
+2. `scripts/smoke.sh -c plugins/<cmd>/<plugin>/tests.cue` to lock.
 3. **Review the lock diff** — this is the correctness gate. A NEW or CHANGED
    golden is only trustworthy because a human read it.
 4. Commit `tests.cue` + `tests.lock.yml` together.
