@@ -1,31 +1,22 @@
-// Golden-file drift tests for poetry-compact, run by chakrit/smoke (>= v0.4.0).
-// Invoke from the REPO ROOT (smoke runs commands in the invocation cwd):
-//   smoke plugins/poetry/poetry-compact/tests.cue        # UNCHANGED/0 = no drift
-//   smoke -c plugins/poetry/poetry-compact/tests.cue     # re-lock intentionally
-//
-// `_`-hidden fields template the case x level matrix and never reach smoke's
-// closed schema. Each case locks the raw filter output (literal golden) and the
-// same piped through scripts/measure.py (size metrics); smoke is the sole judge.
-_dir: "plugins/poetry/poetry-compact"
-_cases: [
-	{sample: "samples/poetry-install.txt", sub: "install", args: "install --no-root", exit: 0, levels: ["lite", "full", "ultra"]},
-	{sample: "samples/poetry-lock.txt", sub: "lock", args: "lock", exit: 0, levels: ["lite", "full", "ultra"]},
-	{sample: "samples/poetry-fail.txt", sub: "lock", args: "lock", exit: 1, levels: ["lite", "full", "ultra"]},
-	{sample: "samples/poetry-show-json.txt", sub: "show", args: "show -f json", exit: 0, levels: ["lite", "full", "ultra"]},
-]
+// Golden-file drift tests for poetry-compact, run by chakrit/smoke (>= v0.5.0).
+// Cases below; the suite scaffold + #Case schema live in the shared `testkit`
+// cue.mod package. Invoke from the REPO ROOT:
+//   scripts/smoke.sh plugins/poetry/poetry-compact/tests.cue        # UNCHANGED/0 = no drift
+//   scripts/smoke.sh -c plugins/poetry/poetry-compact/tests.cue     # re-lock intentionally
+// nameParts keys by sample+sub to match the committed lock.
+import "github.com/chakrit/lowfat-pantry/testkit"
 
-config: {
-	interpreter: "/bin/sh"
-	timeout:     "10s"
-}
-tests: [{
+_suite: testkit.#Suite & {
+	dir:  "plugins/poetry/poetry-compact"
 	name: "poetry-compact"
-	checks: ["stdout", "exitcode"]
-	tests: [
-		for c in _cases for l in c.levels {
-			let base = "lowfat filter \(_dir)/filter.lf --sub=\(c.sub) --args='\(c.args)' --exit=\(c.exit) --level=\(l) < \(_dir)/\(c.sample)"
-			name: "\(c.sample) \(c.sub) \(l)"
-			commands: [base, "\(base) | scripts/measure.py"]
-		},
+	nameParts: ["sample", "sub"]
+	cases: [
+		{sample: "samples/poetry-install.txt", sub: "install", args: "install --no-root", exit: 0, levels: ["lite", "full", "ultra"]},
+		{sample: "samples/poetry-lock.txt", sub: "lock", args: "lock", exit: 0, levels: ["lite", "full", "ultra"]},
+		{sample: "samples/poetry-fail.txt", sub: "lock", args: "lock", exit: 1, levels: ["lite", "full", "ultra"]},
+		{sample: "samples/poetry-show-json.txt", sub: "show", args: "show -f json", exit: 0, levels: ["lite", "full", "ultra"]},
 	]
-}]
+}
+
+config: _suite.config
+tests:  _suite.tests

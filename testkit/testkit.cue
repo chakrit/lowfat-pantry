@@ -4,6 +4,8 @@
 // See docs/spec/smoke-golden-tests.md.
 package testkit
 
+import "strings"
+
 // #Case validates one filter invocation. Required (`!`) + closed, so a typo'd or
 // wrong-typed field fails at cue eval instead of producing a broken command.
 #Case: {
@@ -22,6 +24,10 @@ package testkit
 	dir!:   string
 	name!:  string
 	cases!: [...#Case]
+	// Case fields joined (space-separated) into each leaf test name. Defaults to
+	// keying by sample; a spec that reuses a sample across cases overrides (e.g.
+	// ["sample", "sub", "args"]) to keep names unique and avoid smoke exit 65.
+	nameParts: [...string] | *["sample"]
 
 	// `let` aliases dodge CUE scope-shadowing: a bare `name`/`dir` inside a struct
 	// that has those field names self-references and stays non-concrete.
@@ -38,7 +44,8 @@ package testkit
 		tests: [
 			for c in cases for l in c.levels {
 				let base = "lowfat filter \(_dir)/filter.lf --sub=\(c.sub) --args='\(c.args)' --exit=\(c.exit) --level=\(l) < \(_dir)/\(c.sample)"
-				name: "\(c.sample) \(l)"
+				let leaf = strings.Join([for p in nameParts {c[p]}], " ")
+				name: "\(leaf) \(l)"
 				commands: [base, "\(base) | scripts/measure.py"]
 			},
 		]
