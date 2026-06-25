@@ -1,36 +1,23 @@
-// Golden-file drift tests for go-compact, run by chakrit/smoke (>= v0.4.0).
-// Source of truth: the smoke golden spec for this plugin.
-// Invoke from the REPO ROOT (smoke runs commands in the invocation cwd):
-//   smoke plugins/go/go-compact/tests.cue        # UNCHANGED/0 = no drift
-//   smoke -c plugins/go/go-compact/tests.cue     # re-lock intentionally
-//
-// `_`-hidden fields template the case x level matrix and never reach
-// smoke's closed schema. Each case locks the raw filter output (literal
-// golden) and the same piped through scripts/measure.py (size metrics);
-// smoke is the sole judge, measure.py only emits.
-_dir: "plugins/go/go-compact"
-_cases: [
-	{sample: "samples/go-test-fail.txt", sub: "test", args: "./...", exit: 1, levels: ["lite", "full", "ultra"]},
-	{sample: "samples/go-build-error.txt", sub: "build", args: "./cmd/api", exit: 1, levels: ["lite", "full", "ultra"]},
-	{sample: "samples/go-mod-download.txt", sub: "mod", args: "download", exit: 0, levels: ["lite", "full", "ultra"]},
-	{sample: "samples/go-test-pass.txt", sub: "test", args: "test -v ./...", exit: 0, levels: ["lite", "full", "ultra"]},
-	// invariant 1: -json is byte-exact machine output; the guard must pass it raw.
-	{sample: "samples/go-test-json.txt", sub: "test", args: "test -json ./...", exit: 0, levels: ["lite", "full", "ultra"]},
-	{sample: "samples/go-list-json.txt", sub: "list", args: "list -json ./...", exit: 0, levels: ["lite", "full", "ultra"]},
-]
+// Golden-file drift tests for go-compact, run by chakrit/smoke (>= v0.5.0).
+// Cases below; the suite scaffold + #Case schema live in the shared `testkit`
+// cue.mod package. Invoke from the REPO ROOT:
+//   scripts/smoke.sh plugins/go/go-compact/tests.cue        # UNCHANGED/0 = no drift
+//   scripts/smoke.sh -c plugins/go/go-compact/tests.cue     # re-lock intentionally
+import "github.com/chakrit/lowfat-pantry/testkit"
 
-config: {
-	interpreter: "/bin/sh"
-	timeout:     "10s"
-}
-tests: [{
+_suite: testkit.#Suite & {
+	dir:  "plugins/go/go-compact"
 	name: "go-compact"
-	checks: ["stdout", "exitcode"]
-	tests: [
-		for c in _cases for l in c.levels {
-			let base = "lowfat filter \(_dir)/filter.lf --sub=\(c.sub) --args='\(c.args)' --exit=\(c.exit) --level=\(l) < \(_dir)/\(c.sample)"
-			name: "\(c.sample) \(l)"
-			commands: [base, "\(base) | scripts/measure.py"]
-		},
+	cases: [
+		{sample: "samples/go-test-fail.txt", sub: "test", args: "./...", exit: 1, levels: ["lite", "full", "ultra"]},
+		{sample: "samples/go-build-error.txt", sub: "build", args: "./cmd/api", exit: 1, levels: ["lite", "full", "ultra"]},
+		{sample: "samples/go-mod-download.txt", sub: "mod", args: "download", exit: 0, levels: ["lite", "full", "ultra"]},
+		{sample: "samples/go-test-pass.txt", sub: "test", args: "test -v ./...", exit: 0, levels: ["lite", "full", "ultra"]},
+		// invariant 1: -json is byte-exact machine output; the guard must pass it raw.
+		{sample: "samples/go-test-json.txt", sub: "test", args: "test -json ./...", exit: 0, levels: ["lite", "full", "ultra"]},
+		{sample: "samples/go-list-json.txt", sub: "list", args: "list -json ./...", exit: 0, levels: ["lite", "full", "ultra"]},
 	]
-}]
+}
+
+config: _suite.config
+tests:  _suite.tests
