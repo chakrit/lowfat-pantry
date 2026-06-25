@@ -60,6 +60,26 @@ rules — a violation is a bug, not a style nit.
    bloat. The golden harness (`scripts/measure.py` + smoke locks) catches it
    bidirectionally — a size change in either direction surfaces as a locked-value diff.
 
+## Guarding structured output (the recipe)
+
+Invariant 1 in practice. `.lf` has no top-level pre-filter and a macro can't wrap a rule's
+op-cascade, so the guard **repeats in every rule that compacts**. Branch on flag **and
+value**, not mere presence — `-o wide` / `--output table` must still compact:
+
+    get:
+        if exit failed: raw
+        elif -o json:   raw
+        elif -o yaml:   raw
+        else:           <existing compaction>
+
+Copy `aws` / `az` — the reference filters. `aws` raws on `exit failed`, compacts only
+`--output table`/`text`, and lets every other shape (default JSON included) fall to `raw`;
+`az` compacts only `-o table`/`tsv` + `--help`, default JSON → `raw`. Per-plugin flags worth
+guarding: `-o json`/`-o yaml` (kubectl/helm), `-json` (terraform), `--format json`
+(pip/golangci-lint), `--json` (npm/pulumi), `--message-format json` (cargo). Where a tool
+emits the compactable shape only on the no-flag default, invert the cascade: `if --format:
+raw / elif -f: raw / else: <compact>` (rspec/rubocop).
+
 ## The ultra exception
 
 `ultra` deliberately breaks transparency: it emits verdict lines (`pytest: N passed`),
