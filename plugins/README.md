@@ -12,7 +12,7 @@ here into the resolved lowfat home (`<LOWFAT_HOME>/plugins/<category>/<name>/`, 
       filter.lf      the filter rules (the DSL; see docs/spec/lowfat-filter-dsl.md)
       samples/       real or representative command output, one file per case
       tests.cue      smoke golden spec: case matrix over (sample × level)
-      tests.lock.yml committed golden output (written by `smoke -c`)
+      tests.lock.yml committed golden output (written by `scripts/smoke.sh -c`)
 
 `<category>` is the primary command (e.g. `rg`); `<name>` is `<command>-compact`,
 matching lowfat's bundled convention (`git/git-compact`). Disk plugins shadow bundled
@@ -32,14 +32,19 @@ line counts).
 
 The smoke golden spec for a plugin. Each case names a sample and the contexts to run it
 through; smoke snapshots `lowfat filter filter.lf --sub=<sub> --args=<args> --exit=<exit>
---level=<level> < sample` per level and locks the output as the golden. `_`-hidden CUE
-fields template the case×level matrix:
+--level=<level> < sample` per level and locks the output as the golden. The case×level
+matrix scaffold lives in the shared `testkit` cue.mod package; a spec supplies only:
 
 ```cue
-_dir: "plugins/cargo/cargo-compact"
-_cases: [
-	{sample: "samples/cargo-build-full.txt", sub: "build", args: "", exit: 0, levels: ["lite", "full", "ultra"]},
-]
+import "github.com/chakrit/lowfat-pantry/testkit"
+
+_suite: testkit.#Suite & {
+	dir:  "plugins/cargo/cargo-compact"
+	name: "cargo-compact"
+	cases: [
+		{sample: "samples/cargo-build-full.txt", sub: "build", args: "", exit: 0, levels: ["lite", "full", "ultra"]},
+	]
+}
 ```
 
 See `go-compact/tests.cue` for the annotated reference and
@@ -51,8 +56,8 @@ Author against `docs/spec/lowfat-filter-dsl.md`. Test with smoke (no global stat
 no install — each case wraps `lowfat filter <filter.lf> --sub … --exit … --level … < sample`,
 honoring the case's real `exit` so failure samples are tested as failures):
 
-    smoke -c plugins/<cmd>/<plugin>/tests.cue   # lock the golden, REVIEW the diff
-    scripts/test.sh                             # whole suite, exit 0 = no drift
+    scripts/smoke.sh -c plugins/<cmd>/<plugin>/tests.cue   # lock the golden, REVIEW the diff
+    scripts/test.sh                                        # whole suite, exit 0 = no drift
 
 The lock diff is the correctness gate. A regression like over-prune-to-empty surfaces as
 drift on the `measure.py` `lines`/`bytes` metric locked alongside each golden.

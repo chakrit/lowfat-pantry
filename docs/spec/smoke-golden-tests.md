@@ -1,7 +1,7 @@
 # Smoke golden-file tests
 
 How the pantry's filters are tested for output drift. The harness is
-[`chakrit/smoke`](https://github.com/chakrit/smoke) (>= v0.4.0) driving a
+[`chakrit/smoke`](https://github.com/chakrit/smoke) (>= v0.5.0) driving a
 committed golden per plugin. smoke is a **drift detector**, not an assertion
 engine: a clean run means the output still matches the locked golden, not that
 the output is "correct" — correctness is established once, by a human, when the

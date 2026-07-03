@@ -209,7 +209,7 @@ Add a structured-output guard arm above it when step 1 applies; split into per-s
 rules (`status:`, `diff:`, …) when subcommands need different treatment.
 
 ### Test (always, before declaring done)
-Golden-file drift is the gate — `chakrit/smoke` (>= v0.4.0) over `tests.cue`:
+Golden-file drift is the gate — `chakrit/smoke` (>= v0.5.0) over `tests.cue`:
 
     scripts/smoke.sh -c plugins/<command>/<plugin>/tests.cue   # lock; REVIEW the diff
     scripts/test.sh                                            # whole suite, exit 0 = no drift

@@ -499,7 +499,7 @@ build, ultra:  keep /^(Successfully|ERROR)/  tail 3  else "docker build: ok"
 
 ## Authoring pitfalls (from building the pantry)
 
-Practical anti-patterns that cost real debugging time while building the 39
+Practical anti-patterns that cost real debugging time while building the 64
 pantry plugins — distinct from the parser/engine gotchas above:
 
 1. **Alternation is `|`, not comma.** `build|check|clippy:` means "build OR check

@@ -1,5 +1,5 @@
 # lowfat project config (template) — copy to `.lowfat` at a repo root.
-# The `/lowfat` skill seeds this, tuning `level` and filters to the toolchain.
+# The `/lowfat-pantry` skill seeds this, tuning `level` and filters to the toolchain.
 # Format: https://github.com/zdk/lowfat/blob/main/docs/CONFIG.md
 
 # Intensity: lite (~60 lines) · full (~30) · ultra (~10). Default full.

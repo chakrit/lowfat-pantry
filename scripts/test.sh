@@ -12,8 +12,14 @@
 unset CDPATH
 cd "$(dirname "$0")/.." || exit 2
 
+specs=$(find plugins -name tests.cue | sort)
+if [ -z "$specs" ]; then
+    echo "test.sh: no tests.cue specs found under plugins/" >&2
+    exit 2
+fi
+
 rc=0
-for spec in $(find plugins -name tests.cue | sort); do
+for spec in $specs; do
     scripts/smoke.sh "$@" "$spec"
     st=$?
     if [ "$st" -gt "$rc" ]; then

@@ -67,8 +67,8 @@ correct filter without the full spec. Doing it by hand: read
 `docs/spec/lowfat-filter-dsl.md` (the full `.lf` reference + cookbook), mirror an existing
 plugin (`plugins/rg` is the simplest, `plugins/gh` shows flag guards), then:
 
-    smoke -c plugins/<your-plugin>/tests.cue   # lock the golden, REVIEW the diff
-    scripts/test.sh                            # whole suite, exit 0 = no drift
+    scripts/smoke.sh -c plugins/<cmd>/<plugin>/tests.cue   # lock the golden, REVIEW the diff
+    scripts/test.sh                                        # whole suite, exit 0 = no drift
 
 The golden lock is the correctness gate — a NEW/CHANGED golden is only trustworthy because a
 human read the diff. Each case runs the pure `lowfat filter` runner (no install, no trust, no
@@ -89,4 +89,4 @@ deterministic; samples are byte-faithful to real command output. Full harness:
 
 Early — plugins are `v0.1.0` and samples are largely synthetic. Every plugin has a
 `chakrit/smoke` golden-file test (`tests.cue` + committed `tests.lock.yml`); `scripts/test.sh`
-runs the 487-test suite. Real-sample backfill is ongoing (see the backlog).
+runs the 703-test suite. Real-sample backfill is ongoing (see the backlog).
