@@ -80,6 +80,25 @@ matching invented output rather than real).
   far: rg, redis-cli, pulumi, wrangler, az, kubectl-noserver, go-test-pass). Docker
   containers are the proven cheap capture path.
 
+## Chrome / CDP / browser automation — scope ruling (2026-07-03)
+
+Browser-automation output driven through MCP tools (Claude-in-Chrome and kin) **never
+crosses lowfat's surface**: the hook rewrites only `tool_name == "Bash"` commands
+(`hook.rs:31-42`; see `../notes/lowfat-internals.md`), and MCP tool results bypass the
+shell entirely. Compacting those would live in the harness/MCP layer, not the pantry —
+out of scope by architecture, not by choice.
+
+What *can* fire through Bash is already covered or demand-driven:
+
+- `playwright` — built (test-runner output; JSON/JUnit reporters guarded raw).
+- Puppeteer/CDP scripts run as `node script.js` / `python script.py` — selection keys on
+  the runtime word, so no pantry filter ever fires; their stdout is the script author's.
+- Raw CDP over HTTP (`curl localhost:9222/json`…) — curl's body cap + recovery hint
+  already applies.
+- `chrome --headless --dump-dom` / `lighthouse` — plausible bloat sources (huge HTML/JSON
+  dumps) but unobserved in real sessions; per build posture, capture-and-build only when
+  one actually blows a budget.
+
 ## Not pantry plugins — RTK meta/infra
 
 RTK's own management surface, not command filters. Lowfat covers the equivalents differently,
