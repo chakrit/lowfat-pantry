@@ -182,8 +182,10 @@ plugins (git, docker, grep, find, ls, tree) are not listed here.
   mechanical — its `-o json` needs a live cluster, so the golden is install-based.
 - **terraform** (+ **`tofu`**/OpenTofu) — keeps plan/apply signal, drops repetitive
   diff/progress lines. One filter serves both binaries (OpenTofu is a fork with
-  byte-identical output). `-json` passes byte-exact in plan/apply/init/* (invariant 1;
-  without the guard `compact-plan` matched none of the ndjson stream → empty output).
+  format-identical output; the plan-header keep alternates `Terraform|OpenTofu` since
+  OpenTofu rebrands UI strings). `-json` passes byte-exact in plan/apply/init/*
+  (invariant 1; without the guard `compact-plan` matched none of the ndjson stream →
+  empty output).
 - **ansible-playbook** — drops per-host `ok:`/`skipping:` chatter and `TASK [...]`
   banners; keeps `changed:`/`fatal:` and the `PLAY RECAP` tallies. Gotcha: failed runs
   tail to the recap — the recap block is the anchor, not the head of the stream.

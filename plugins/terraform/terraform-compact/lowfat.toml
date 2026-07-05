@@ -3,7 +3,7 @@ name = "terraform-compact"
 version = "0.1.0"
 description = "Compact Terraform/OpenTofu plan/apply/init output while preserving errors and summaries"
 category = "terraform"
-# tofu is OpenTofu — a Terraform fork with byte-identical plan/apply/init/output; one filter serves both.
+# tofu is OpenTofu — a Terraform fork, format-identical plan/apply/init/output (UI strings rebranded); one filter serves both.
 commands = ["terraform", "tofu"]
 # Documentation only - subcommand selection happens inside filter.lf.
 subcommands = ["plan", "apply", "init"]

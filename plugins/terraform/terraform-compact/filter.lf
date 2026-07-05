@@ -1,6 +1,8 @@
 #!/usr/bin/env lowfat-filter
 # terraform-compact - preserve plan/apply signal, drop repetitive diffs/progress.
-# Serves both `terraform` and `tofu` (OpenTofu) — same subcommands, byte-identical output.
+# Serves both `terraform` and `tofu` (OpenTofu) — same subcommands, format-identical output.
+# OpenTofu rebrands UI strings (s/Terraform/OpenTofu/), so brand-keyed keeps must alt both
+# (see the plan header keep below); brand-free patterns (Plan:, Apply complete!, +/~/- rows) match as-is.
 # env: $sub $level $exit $args
 #
 # `-json` is machine output (ndjson stream) — pass byte-exact (invariant 1).
@@ -13,7 +15,7 @@ define compact-plan(limit):
         awk -v lim=$1 -v lvl=$level '
           /^  # .* (will be|must be|has been|will be read during apply)/ { print; count++; next }
           /^Plan: [0-9]+ to add, [0-9]+ to change, [0-9]+ to destroy\./ { print; next }
-          /^No changes\./ || /^Terraform will perform the following actions:/ { print; next }
+          /^No changes\./ || /^(Terraform|OpenTofu) will perform the following actions:/ { print; next }
           lvl=="ultra" { next }
           /^[[:space:]]*[~+-][[:space:]][[:alnum:]_"-]+[[:space:]]+=/ {
             if (count < lim) { print; count++ }

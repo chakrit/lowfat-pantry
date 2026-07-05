@@ -10,6 +10,9 @@ _suite: testkit.#Suite & {
 	name: "terraform-compact"
 	cases: [
 		{sample: "samples/terraform-plan.txt", sub: "plan", args: "-out=tfplan", exit: 0, levels: ["lite", "full", "ultra"]},
+		// OpenTofu rebrands the plan header ("OpenTofu will perform..."); guards the alternation
+		// in compact-plan so a fork of that keep back to Terraform-only is caught.
+		{sample: "samples/tofu-plan.txt", sub: "plan", args: "-out=tfplan", exit: 0, levels: ["lite", "full", "ultra"]},
 		{sample: "samples/terraform-apply.txt", sub: "apply", args: "-auto-approve tfplan", exit: 0, levels: ["lite", "full", "ultra"]},
 		{sample: "samples/terraform-init-error.txt", sub: "init", args: "-upgrade", exit: 1, levels: ["lite", "full", "ultra"]},
 		// invariant 1: -json is byte-exact ndjson/JSON; the guard must pass it raw.
