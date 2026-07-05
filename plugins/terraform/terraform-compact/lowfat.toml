@@ -1,8 +1,9 @@
 [plugin]
 name = "terraform-compact"
 version = "0.1.0"
-description = "Compact Terraform plan/apply/init output while preserving errors and summaries"
+description = "Compact Terraform/OpenTofu plan/apply/init output while preserving errors and summaries"
 category = "terraform"
-commands = ["terraform"]
+# tofu is OpenTofu — a Terraform fork with byte-identical plan/apply/init/output; one filter serves both.
+commands = ["terraform", "tofu"]
 # Documentation only - subcommand selection happens inside filter.lf.
 subcommands = ["plan", "apply", "init"]

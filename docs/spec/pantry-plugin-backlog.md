@@ -21,7 +21,7 @@ VCS/CI: `rg` `gh` `glab` · Rust: `cargo` · TS/JS: `tsc` `eslint` `prettier` `n
 `yarn` `bun` `jest` `vitest` · Python: `pytest` `ruff` `mypy` `black` `pip` `poetry` · PHP:
 `composer` · Ruby: `rspec` `rubocop` `bundle` `gem` `rake` · Go: `go` `golangci-lint` ·
 .NET: `dotnet` · JVM: `mvn` `gradlew` · OS packages: `apt`(+`apt-get`) `apk` `dnf`(+`yum`) ·
-Infra/ops: `kubectl` `helm` `terraform` `ansible-playbook` `systemctl` `journalctl`
+Infra/ops: `kubectl` `helm` `terraform`(+`tofu`) `ansible-playbook` `systemctl` `journalctl`
 `docker-compose` `ssh` `rsync` · Cloud/data: `aws` `gcloud` `psql` `sqlite3` `env` ·
 Runtimes/build: `make` `npx` `deno` `uv` · Net/data: `curl` `wget` `jq` `json` `tar` ·
 Toolchain: `diff` `prisma` `next` `playwright` · Deploy/data (docker-captured real samples,

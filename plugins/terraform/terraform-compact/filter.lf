@@ -1,5 +1,6 @@
 #!/usr/bin/env lowfat-filter
 # terraform-compact - preserve plan/apply signal, drop repetitive diffs/progress.
+# Serves both `terraform` and `tofu` (OpenTofu) — same subcommands, byte-identical output.
 # env: $sub $level $exit $args
 #
 # `-json` is machine output (ndjson stream) — pass byte-exact (invariant 1).
