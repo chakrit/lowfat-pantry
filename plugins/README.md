@@ -9,10 +9,10 @@ here into the resolved lowfat home (`<LOWFAT_HOME>/plugins/<category>/<name>/`, 
 
     plugins/<category>/<name>/
       lowfat.toml    plugin manifest ([plugin] name/commands/subcommands/…)
-      filter.lf      the filter rules (the DSL; see docs/spec/lowfat-filter-dsl.md)
+      filter.lf      the filter rules (the DSL; spec: https://github.com/chakrit/lowfat-pantry/blob/main/docs/spec/lowfat-filter-dsl.md)
       samples/       real or representative command output, one file per case
       tests.cue      smoke golden spec: case matrix over (sample × level)
-      tests.lock.yml committed golden output (written by `scripts/smoke.sh -c`)
+      tests.lock.yml committed golden output (written by the source repo's `scripts/smoke.sh -c`)
 
 `<category>` is the primary command (e.g. `rg`); `<name>` is `<command>-compact`,
 matching lowfat's bundled convention (`git/git-compact`). Disk plugins shadow bundled
@@ -47,14 +47,16 @@ _suite: testkit.#Suite & {
 }
 ```
 
-See `go-compact/tests.cue` for the annotated reference and
-`docs/spec/smoke-golden-tests.md` for the full harness.
+See `go-compact/tests.cue` for the annotated reference and the smoke-golden-tests spec
+(https://github.com/chakrit/lowfat-pantry/blob/main/docs/spec/smoke-golden-tests.md)
+for the full harness.
 
 ## Authoring & testing
 
-Author against `docs/spec/lowfat-filter-dsl.md`. Test with smoke (no global state, no trust,
-no install — each case wraps `lowfat filter <filter.lf> --sub … --exit … --level … < sample`,
-honoring the case's real `exit` so failure samples are tested as failures):
+Author (in the pantry source repo, `chakrit/lowfat-pantry`) against the filter DSL spec
+linked above. Test with smoke (no global state, no trust, no install — each case wraps
+`lowfat filter <filter.lf> --sub … --exit … --level … < sample`, honoring the case's
+real `exit` so failure samples are tested as failures):
 
     scripts/smoke.sh -c plugins/<cmd>/<plugin>/tests.cue   # lock the golden, REVIEW the diff
     scripts/test.sh                                        # whole suite, exit 0 = no drift
@@ -62,7 +64,7 @@ honoring the case's real `exit` so failure samples are tested as failures):
 The lock diff is the correctness gate. A regression like over-prune-to-empty surfaces as
 drift on the `measure.py` `lines`/`bytes` metric locked alongside each golden.
 
-## Design principles (vs RTK)
+## Design principles
 
 - **Filters are data, not code.** Logic lives in `.lf` rules + small `shell:`/`python:`
   escape hatches, never a compiled binary.

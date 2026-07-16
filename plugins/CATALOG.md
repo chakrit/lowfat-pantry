@@ -52,7 +52,7 @@ plugins (git, docker, grep, find, ls, tree) are not listed here.
   tsc logic **ported** from their standalone filters under a drift contract (filter header).
   Bare `npx prettier <file>` and `-f json` pass through raw (no code/JSON corruption);
   unknown tools (`create-*`, etc.) get a conservative cap. Gotcha: the ported bodies drift
-  if the originals change — real fix is wrapper-unwrap in lowfat-core (`docs/spec/lf-wishlist.md`).
+  if the originals change — real fix is wrapper-unwrap in lowfat-core (proposed upstream).
 - **next** — keeps build warnings/errors and summaries; trims the route table at ultra.
 - **prisma** — strips banner/box art; keeps migration progress, client-generation
   markers, and `Error:` lines.
@@ -67,7 +67,7 @@ plugins (git, docker, grep, find, ls, tree) are not listed here.
   summary, drop per-suite `PASS ` noise; ultra trims to `FAIL` headers + assertion lines.
   jest `--json`/`--outputFile` and vitest `--reporter=json|junit`/`--outputFile` pass
   byte-exact (invariant 1). Gotcha: ultra matchers are ASCII-only — a non-ASCII literal in
-  a `.lf` macro body is mangled by lowfat 0.6.8's `$N` arg-expansion (`docs/spec/lf-wishlist.md`);
+  a `.lf` macro body is mangled by lowfat 0.6.8's `$N` arg-expansion (fix proposed upstream);
   full/lite keep the block wholesale so glyph lines survive via passthrough.
 
 ## Python
@@ -95,7 +95,7 @@ plugins (git, docker, grep, find, ls, tree) are not listed here.
   `uv pip list --format json` and wrapped `uvx ruff --output-format json` pass byte-exact
   (invariant 1; the ruff guard is mirrored into the drift-copy per the contract).
   Gotcha: the copied bodies drift if pytest/ruff change — the real fix is wrapper-unwrap in
-  lowfat-core (see backlog "Wrapper commands"). `npx` chose generic-cap instead of dispatch.
+  lowfat-core. `npx` chose generic-cap instead of dispatch.
 - **poetry** — installer shape (like pip): drops per-package `- Installing/Updating/Removing`
   chatter, keeps the `Package operations:` tally + `Writing lock file` + warnings; failed
   resolve keeps the solver/`Because` block, tail recovery. `poetry show -f json`/`--format json`
@@ -232,8 +232,8 @@ plugins (git, docker, grep, find, ls, tree) are not listed here.
 - **curl** — strips progress meters and `\r` artifacts; keeps the HTTP exchange
   (`>`/`<`/headers) and a capped body. Response bodies are the point — capped, never
   keyword-filtered. CAVEAT (invariant 1, open design-call): a multi-line JSON body IS
-  truncated by the body cap, and there's no flag to key on — see the invariant-1 audit
-  note for the proposed body-sniff fix.
+  truncated by the body cap, and there's no flag to key on — proposed fix is sniffing
+  the body for JSON before capping.
 - **wget** — strips progress bars/dots; keeps connection, HTTP status, and the final
   `saved` line (tail-anchored).
 - **jq** / **json** — full/lite pass JSON byte-exact; ultra summarizes huge arrays via
