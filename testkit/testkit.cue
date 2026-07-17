@@ -1,7 +1,7 @@
 // Shared smoke golden-test scaffold for the pantry. Each plugin's tests.cue
 // imports this, supplies dir/name/cases, and exposes config+tests. The case
 // matrix and command template live here once instead of in all 64 specs.
-// See docs/spec/smoke-golden-tests.md.
+// See docs/guides/smoke-golden-tests.md.
 package testkit
 
 import "strings"

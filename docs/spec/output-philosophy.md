@@ -117,6 +117,6 @@ pass. See `docs/spec/pantry-plugin-backlog.md` → Build posture.
 
 - `SKILL.md` → *Authoring a pantry plugin — fast path* — the operational decision tree and
   `.lf` skeleton; this doc is its rationale.
-- `docs/spec/lowfat-filter-dsl.md` — `.lf` authoring reference.
-- `docs/spec/smoke-golden-tests.md` — how the golden harness enforces invariant 5.
+- `docs/vendor/lowfat-filter-dsl.md` — `.lf` authoring reference.
+- `docs/guides/smoke-golden-tests.md` — how the golden harness enforces invariant 5.
 - `plugins/CATALOG.md` — per-plugin behavior and the gotchas these invariants generalize.

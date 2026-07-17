@@ -29,8 +29,6 @@ ace.local.toml
 # session-local scheduler state
 .claude/scheduled_tasks.*
 
-# ace-connect control-mode inbox
-.inbox.log
-
-# ace-afk unattended handoff report
-.afk.log
+# ACE session state — resume trail (save.md/save.ledger.md), ace-connect inbox
+# (connect.log), ace-afk handoff report (afk.log)
+/.ace/

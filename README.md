@@ -64,7 +64,7 @@ lowfat home (`<LOWFAT_HOME>/plugins/`). lowfat itself: `cargo install lowfat`.
 Letting an agent do it? Point it at the [fast-path
 guide](SKILL.md#authoring-a-pantry-plugin--fast-path) in the skill — enough to write a
 correct filter without the full spec. Doing it by hand: read
-`docs/spec/lowfat-filter-dsl.md` (the full `.lf` reference + cookbook), mirror an existing
+`docs/vendor/lowfat-filter-dsl.md` (the full `.lf` reference + cookbook), mirror an existing
 plugin (`plugins/rg` is the simplest, `plugins/gh` shows flag guards), then:
 
     scripts/smoke.sh -c plugins/<cmd>/<plugin>/tests.cue   # lock the golden, REVIEW the diff
@@ -74,13 +74,13 @@ The golden lock is the correctness gate — a NEW/CHANGED golden is only trustwo
 human read the diff. Each case runs the pure `lowfat filter` runner (no install, no trust, no
 global state) and locks the compacted output plus `measure.py` size metrics. Filters must be
 deterministic; samples are byte-faithful to real command output. Full harness:
-`docs/spec/smoke-golden-tests.md`.
+`docs/guides/smoke-golden-tests.md`.
 
 ## Docs
 
-- `docs/spec/lowfat-filter-dsl.md` — `.lf` DSL authoring spec.
-- `docs/notes/lowfat-internals.md` — how lowfat works (home/trust/levels/pipeline/CLI).
-- `docs/spec/smoke-golden-tests.md` — the smoke golden-test harness.
+- `docs/vendor/lowfat-filter-dsl.md` — `.lf` DSL authoring spec.
+- `docs/vendor/lowfat-internals.md` — how lowfat works (home/trust/levels/pipeline/CLI).
+- `docs/guides/smoke-golden-tests.md` — the smoke golden-test harness.
 - `docs/spec/lowfat-skill.md` — the skill's design arc.
 - `docs/spec/pantry-plugin-backlog.md` — remaining plugin candidates.
 - `docs/decisions/` — distribution + design rulings.

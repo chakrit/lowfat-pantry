@@ -8,21 +8,22 @@ built.
 ## Source of truth
 
 - `SKILL.md` + `docs/spec/lowfat-skill.md` — skill design
-- `docs/spec/lowfat-filter-dsl.md` — `.lf` authoring spec; read before editing any filter
+- `docs/vendor/lowfat-filter-dsl.md` — `.lf` authoring spec; read before editing any filter
 - `docs/spec/output-philosophy.md` — keep-vs-cut philosophy; the *why* behind filter design
-- `docs/notes/lowfat-internals.md` — how lowfat works
+- `docs/vendor/lowfat-internals.md` — how lowfat works
 - `docs/decisions/` — rulings
 - `docs/spec/pantry-plugin-backlog.md` — what's built + what's left
 
 Test filters with `scripts/test.sh` (smoke golden suite) or `scripts/smoke.sh -c
-plugins/<cmd>/<plugin>/tests.cue` for one plugin; see `docs/spec/smoke-golden-tests.md`.
-Session resume breadcrumb: `.tasks.md`.
+plugins/<cmd>/<plugin>/tests.cue` for one plugin; see `docs/guides/smoke-golden-tests.md`.
+Session resume trail: `.ace/save.md` (+ `.ace/save.ledger.md`), gitignored.
 
 ## Durable artifacts
 
-`docs/{notes,decisions,spec}/` — sorted by permanence (impermanent / point-in-time /
-current). Default to `notes/`. See `docs/README.md` and per-dir READMEs for picker
-details.
+`docs/` — file by the routing gate in `docs/README.md`: a ruling → `decisions/`;
+third-party lookup → `vendor/`; a how-to → `guides/`; our own design/surface → `spec/`;
+unsettled exploration → `scratch/` (last resort, opened with a "not spec/decision
+because ___" line). Nothing defaults to `scratch/`.
 
 ## Coding environment (PRODIGY9 Coding School)
 

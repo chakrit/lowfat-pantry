@@ -109,7 +109,7 @@ semantics and the `.lf` language itself, see lowfat's own docs, not just this
 repo's:
 [`zdk/lowfat` README](https://github.com/zdk/lowfat/blob/main/README.md) and
 [`docs/PLUGINS.md`](https://github.com/zdk/lowfat/blob/main/docs/PLUGINS.md);
-the repo-local authoring spec is `docs/spec/lowfat-filter-dsl.md`.
+the repo-local authoring spec is `docs/vendor/lowfat-filter-dsl.md`.
 
 ## Provenance
 

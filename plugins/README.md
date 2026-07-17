@@ -9,7 +9,7 @@ here into the resolved lowfat home (`<LOWFAT_HOME>/plugins/<category>/<name>/`, 
 
     plugins/<category>/<name>/
       lowfat.toml    plugin manifest ([plugin] name/commands/subcommands/…)
-      filter.lf      the filter rules (the DSL; spec: https://github.com/chakrit/lowfat-pantry/blob/main/docs/spec/lowfat-filter-dsl.md)
+      filter.lf      the filter rules (the DSL; spec: https://github.com/chakrit/lowfat-pantry/blob/main/docs/vendor/lowfat-filter-dsl.md)
       samples/       real or representative command output, one file per case
       tests.cue      smoke golden spec: case matrix over (sample × level)
       tests.lock.yml committed golden output (written by the source repo's `scripts/smoke.sh -c`)
@@ -48,7 +48,7 @@ _suite: testkit.#Suite & {
 ```
 
 See `go-compact/tests.cue` for the annotated reference and the smoke-golden-tests spec
-(https://github.com/chakrit/lowfat-pantry/blob/main/docs/spec/smoke-golden-tests.md)
+(https://github.com/chakrit/lowfat-pantry/blob/main/docs/guides/smoke-golden-tests.md)
 for the full harness.
 
 ## Authoring & testing

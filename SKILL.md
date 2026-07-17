@@ -143,7 +143,7 @@ need trusting), hook wired or not. Mention `/lowfat-pantry` re-runs the sync.
 
 When the user wants a *new* filter, you don't need to read the full DSL spec or lowfat
 source — both were already distilled. Follow this. (Deep cases — `split`, macros, awk
-state machines — are in `docs/spec/lowfat-filter-dsl.md`; reach for it only when the
+state machines — are in `docs/vendor/lowfat-filter-dsl.md`; reach for it only when the
 skeleton below isn't enough.) The *why* behind these rules — the keep-vs-cut philosophy
 inherited from RTK and lowfat — is `docs/spec/output-philosophy.md`; read it when a call
 isn't obvious from the tree below.
@@ -217,7 +217,7 @@ Golden-file drift is the gate — `chakrit/smoke` (>= v0.5.0) over `tests.cue`:
 The lock diff is the correctness gate: a NEW/CHANGED golden is only trustworthy because a
 human read it. Each case locks the compacted output plus `measure.py` size metrics, so an
 over-prune or growth regression surfaces as drift. Full harness:
-`docs/spec/smoke-golden-tests.md`.
+`docs/guides/smoke-golden-tests.md`.
 
 Samples must be **byte-faithful** to real command output; never add inline `# synthetic`
 annotations (they leak into filtered output and skew line counts). Filters must be
@@ -234,11 +234,11 @@ one rule prevents the most damaging class of bug (silently corrupted JSON / hidd
 ## Reference
 - `docs/spec/output-philosophy.md` — keep-vs-cut philosophy (RTK + lowfat lineage, pantry
   invariants); the *why* behind the decision tree above.
-- `docs/spec/lowfat-filter-dsl.md` — authoring `.lf` filters (for adding/editing plugins).
+- `docs/vendor/lowfat-filter-dsl.md` — authoring `.lf` filters (for adding/editing plugins).
   For the engine and `.lf` language upstream, see lowfat's own docs:
   [`zdk/lowfat`](https://github.com/zdk/lowfat) README + `docs/PLUGINS.md` / `docs/CONFIG.md`.
-- `docs/notes/lowfat-internals.md` — how lowfat resolves home/trust/levels/pipeline.
-- `docs/spec/smoke-golden-tests.md` — the smoke golden-test harness (`tests.cue`, locks,
+- `docs/vendor/lowfat-internals.md` — how lowfat resolves home/trust/levels/pipeline.
+- `docs/guides/smoke-golden-tests.md` — the smoke golden-test harness (`tests.cue`, locks,
   `measure.py`).
 - `plugins/README.md` — pantry layout and conventions; `plugins/CATALOG.md` — per-plugin
   inventory + gotchas.

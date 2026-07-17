@@ -10,7 +10,7 @@ merges nothing) and needs trust.
 
 All 64 plugins have a smoke golden-file spec (`tests.cue` + committed `tests.lock.yml`);
 `scripts/test.sh` runs the suite. smoke is the sole judge; `scripts/measure.py` emits size
-metrics it locks. Harness detail: `smoke-golden-tests.md`.
+metrics it locks. Harness detail: `../guides/smoke-golden-tests.md`.
 
 The legacy test path was retired (2026-06-17): the 52 `tests.yml` and `scripts/validate.py`
 are gone, replaced by the smoke golden suite.
@@ -84,7 +84,7 @@ matching invented output rather than real).
 
 Browser-automation output driven through MCP tools (Claude-in-Chrome and kin) **never
 crosses lowfat's surface**: the hook rewrites only `tool_name == "Bash"` commands
-(`hook.rs:31-42`; see `../notes/lowfat-internals.md`), and MCP tool results bypass the
+(`hook.rs:31-42`; see `../vendor/lowfat-internals.md`), and MCP tool results bypass the
 shell entirely. Compacting those would live in the harness/MCP layer, not the pantry —
 out of scope by architecture, not by choice.
 
