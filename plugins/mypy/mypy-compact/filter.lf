@@ -3,33 +3,27 @@
 # env: $sub $level $exit $args
 
 define compact-mypy(limit):
-    python: |
-        import os, re, sys
+    shell: |
+        buf=$(mktemp)
+        trap 'rm -f "$buf"' EXIT
+        cat > "$buf"
 
-        level, code = os.environ.get("level", "full"), os.environ.get("exit", "0")
-        lines = sys.stdin.read().splitlines()
+        errors=$(grep -cE '^[^:]+:[0-9]+: error: ' "$buf") || true
+        if [ "${level:-full}" = "ultra" ]; then
+            findings='^[^:]+:[0-9]+: error: '
+        else
+            findings='^[^:]+:[0-9]+: (error|note): '
+        fi
 
-        shown, errors, summary, clean = [], 0, None, False
-        for line in lines:
-            if re.match(r"^[^:]+:[0-9]+: error: ", line):
-                errors += 1
-                if len(shown) < $1:
-                    shown.append(line)
-            elif level != "ultra" and re.match(r"^[^:]+:[0-9]+: note: ", line):
-                if len(shown) < $1:
-                    shown.append(line)
-            elif re.match(r"^Found [0-9]+ errors? in ", line):
-                summary = line
-            elif re.match(r"^Success: no issues found", line):
-                clean = True
-
-        if errors:
-            out = shown + ([summary] if summary else [])
-        elif code == "0" or clean:
-            out = ["mypy: clean"]
-        else:
-            out = lines
-        sys.stdout.write("\n".join(out) + "\n" if out else "")
+        if [ "$errors" -gt 0 ]; then
+            grep -E "$findings" "$buf" | head -n $1
+            grep -E '^Found [0-9]+ errors? in ' "$buf" | tail -n 1
+        elif [ "${exit:-0}" = "0" ] || grep -qE '^Success: no issues found' "$buf"; then
+            printf 'mypy: clean\n'
+        else
+            cat "$buf"
+        fi
+        exit 0
 
 *:
     match level:

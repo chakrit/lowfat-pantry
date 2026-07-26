@@ -3,23 +3,24 @@
 # env: $sub $level $exit $args
 
 define ultra-json(limit):
-    python: |
-        import json
-        import sys
+    shell: |
+        buf=$(mktemp)
+        trap 'rm -f "$buf"' EXIT
+        cat > "$buf"
 
-        raw = sys.stdin.read()
-        try:
-            value = json.loads(raw)
-        except Exception:
-            sys.stdout.write(raw)
-            raise SystemExit(0)
+        # Reshaping JSON needs a JSON parser. Without jq on PATH, or on anything
+        # unparseable, the stream passes through untouched — a mangled JSON
+        # stream is far worse than an uncompacted one (invariant 1).
+        command -v jq >/dev/null 2>&1 || { cat "$buf"; exit 0; }
+        jq -e . >/dev/null 2>&1 < "$buf" || { cat "$buf"; exit 0; }
 
-        if isinstance(value, list) and len(value) > $1:
-            out = value[:$1] + ["... (%d more)" % (len(value) - $1)]
-            sys.stdout.write(json.dumps(out, indent=2, ensure_ascii=False))
-            sys.stdout.write("\n")
-        else:
-            sys.stdout.write(raw)
+        count=$(jq 'if type == "array" then length else -1 end' < "$buf")
+        if [ "$count" -gt $1 ]; then
+            jq --indent 2 ".[:$1] + [\"... ($((count - $1)) more)\"]" < "$buf"
+        else
+            cat "$buf"
+        fi
+        exit 0
 
 pretty|compact:
     if exit failed:

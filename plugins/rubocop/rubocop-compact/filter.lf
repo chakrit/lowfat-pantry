@@ -6,30 +6,22 @@
 # env: $sub $level $exit $args
 
 define compact-rubocop(limit):
-    python: |
-        import os, re, sys
+    shell: |
+        buf=$(mktemp)
+        trap 'rm -f "$buf"' EXIT
+        cat > "$buf"
 
-        code = os.environ.get("exit", "0")
-        lines = sys.stdin.read().splitlines()
-
-        shown, findings, summary = [], 0, None
-        for line in lines:
-            if re.match(r"^[^:]+:[0-9]+:[0-9]+: [A-Z]: ", line):
-                findings += 1
-                if len(shown) < $1:
-                    shown.append(line)
-            elif re.match(r"^[0-9]+ files? inspected", line):
-                summary = line
-
-        if findings:
-            out = shown + ([summary] if summary else [])
-            if findings > len(shown):
-                out.append(f"... ({findings} offenses total)")
-        elif code == "0":
-            out = ["rubocop: clean"]
-        else:
-            out = lines
-        sys.stdout.write("\n".join(out) + "\n" if out else "")
+        findings=$(grep -cE '^[^:]+:[0-9]+:[0-9]+: [A-Z]: ' "$buf") || true
+        if [ "$findings" -gt 0 ]; then
+            grep -E '^[^:]+:[0-9]+:[0-9]+: [A-Z]: ' "$buf" | head -n $1
+            grep -E '^[0-9]+ files? inspected' "$buf" | tail -n 1
+            [ "$findings" -gt $1 ] && printf '... (%d offenses total)\n' "$findings"
+        elif [ "${exit:-0}" = "0" ]; then
+            printf 'rubocop: clean\n'
+        else
+            cat "$buf"
+        fi
+        exit 0
 
 # Any explicit --format/-f (json, junit, sarif, …) is caller-chosen machine
 # output — pass byte-exact (invariant 1). The text extraction only ever fit the

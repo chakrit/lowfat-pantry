@@ -9,28 +9,21 @@
 # Any explicit format -> raw (same posture as rspec/rubocop).
 
 define compact-ruff(limit):
-    python: |
-        import os, re, sys
+    shell: |
+        buf=$(mktemp)
+        trap 'rm -f "$buf"' EXIT
+        cat > "$buf"
 
-        code = os.environ.get("exit", "0")
-        lines = sys.stdin.read().splitlines()
-
-        shown, findings, summary = [], 0, None
-        for line in lines:
-            if re.match(r"^[^:]+:[0-9]+:[0-9]+: [A-Z][A-Z0-9]+ ", line):
-                findings += 1
-                if len(shown) < $1:
-                    shown.append(line)
-            elif re.match(r"^(Found [0-9]+ error|All checks passed)", line):
-                summary = line
-
-        if findings:
-            out = shown + ([summary] if summary else [])
-        elif code == "0":
-            out = ["ruff: clean"]
-        else:
-            out = lines
-        sys.stdout.write("\n".join(out) + "\n" if out else "")
+        findings=$(grep -cE '^[^:]+:[0-9]+:[0-9]+: [A-Z][A-Z0-9]+ ' "$buf") || true
+        if [ "$findings" -gt 0 ]; then
+            grep -E '^[^:]+:[0-9]+:[0-9]+: [A-Z][A-Z0-9]+ ' "$buf" | head -n $1
+            grep -E '^(Found [0-9]+ error|All checks passed)' "$buf" | tail -n 1
+        elif [ "${exit:-0}" = "0" ]; then
+            printf 'ruff: clean\n'
+        else
+            cat "$buf"
+        fi
+        exit 0
 
 *:
     if --output-format:

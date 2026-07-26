@@ -6,17 +6,23 @@
 
 # First N lines (level-scaled) plus an "... (N lines total)" trailer.
 define cap-with-count:
-    python: |
-        import os, sys
+    shell: |
+        case "${level:-full}" in
+            ultra) limit=15 ;;
+            lite)  limit=60 ;;
+            *)     limit=30 ;;
+        esac
 
-        level = os.environ.get("level", "full")
-        limit = {"ultra": 15, "lite": 60}.get(level, 30)
-        lines = sys.stdin.read().splitlines()
+        buf=$(mktemp)
+        trap 'rm -f "$buf"' EXIT
+        cat > "$buf"
 
-        out = lines[:limit]
-        if len(lines) > limit:
-            out.append(f"... ({len(lines)} lines total)")
-        sys.stdout.write("\n".join(out) + "\n" if out else "")
+        total=$(grep -c '' < "$buf")
+        [ "$total" -gt 0 ] || exit 0
+
+        head -n "$limit" < "$buf"
+        [ "$total" -gt "$limit" ] && printf '... (%d lines total)\n' "$total"
+        exit 0
 
 info|INFO:
     if exit failed:

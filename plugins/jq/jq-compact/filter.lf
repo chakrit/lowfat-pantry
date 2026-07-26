@@ -5,23 +5,24 @@
 include ../../lib/truncation.lf
 
 define ultra-json-array(limit):
-    python: |
-        import json
-        import sys
+    shell: |
+        buf=$(mktemp)
+        trap 'rm -f "$buf"' EXIT
+        cat > "$buf"
 
-        raw = sys.stdin.read()
-        try:
-            value = json.loads(raw)
-        except Exception:
-            sys.stdout.write(raw)
-            raise SystemExit(0)
+        # Reshaping JSON needs a JSON parser, and jq is the command being
+        # filtered — but never assume: anything unparseable, or a jq that isn't
+        # there, passes through untouched rather than risking a mangled stream.
+        command -v jq >/dev/null 2>&1 || { cat "$buf"; exit 0; }
+        jq -e . >/dev/null 2>&1 < "$buf" || { cat "$buf"; exit 0; }
 
-        if isinstance(value, list) and len(value) > $1:
-            out = value[:$1] + [{"lowfat_truncated": "%d more elements" % (len(value) - $1)}]
-            sys.stdout.write(json.dumps(out, indent=2, ensure_ascii=False))
-            sys.stdout.write("\n")
-        else:
-            sys.stdout.write(raw)
+        count=$(jq 'if type == "array" then length else -1 end' < "$buf")
+        if [ "$count" -gt $1 ]; then
+            jq --indent 2 ".[:$1] + [{\"lowfat_truncated\": \"$((count - $1)) more elements\"}]" < "$buf"
+        else
+            cat "$buf"
+        fi
+        exit 0
 
 *:
     if exit failed:
