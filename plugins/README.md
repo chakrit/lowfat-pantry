@@ -56,8 +56,13 @@ degraded one. Two rules, from
    `define` of the same name still shadows the library one when a plugin genuinely needs
    its own variant.
 
-Named-subcommand rules may still use bare `head`/`tail`: their author knew the output
-shape. The catch-all is by definition the branch where nobody did.
+This holds for **every** rule, not just the catch-all (ruling 2026-07-27, superseding the
+earlier "named-subcommand rules knew their output shape" exemption). Extraction paths are
+the subtle case: a reader can tell that a keyword-extracted view isn't the whole stream,
+but not whether the part that survived is complete — `mypy-compact` was showing 15 of 34
+errors at ultra and saying nothing. Bare `head`/`tail` ops are therefore gone from the
+pantry; a budget-limited loop counts what it discarded and prints the same marker as a
+trailer.
 
 Use `shell:` for extraction the ops can't express — POSIX sh, and **never `awk`**, which
 is banned repo-wide. `python:` is banned in filters too, for a different reason: a filter

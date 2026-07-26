@@ -59,6 +59,18 @@ cut without a marker; fixing it there would fix all plugins *and* the six bundle
 once, and belongs upstream. But `zdk/lowfat` is not ours to land, and the pantry cannot
 ship a known silent-loss bug while waiting on someone else's release.
 
+## Amendment — 2026-07-27: no exemption for named rules
+
+The original sweep's radius was catch-alls, and `plugins/README.md` carried an exemption
+for named-subcommand rules ("their author knew the output shape") that this doc's rule 2
+never granted. chakrit ruled the invariant applies everywhere: **any** cut marks, including
+extraction paths that keyword-filter first and cap after.
+
+Radius: 69 bare `head`/`tail` ops across 17 filters, plus every budget-limited loop in a
+`shell:` body (mypy, ruff, pytest, jest, vitest, terraform, kubectl, psql, helm, systemctl,
+diff, aws, env, uv). Eleven goldens re-locked, all additive — no output line was removed
+anywhere, only markers added.
+
 ## Consequences
 
 - `.lf` had no include mechanism, so `head-auto-marked` was duplicated per filter.
