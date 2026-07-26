@@ -53,11 +53,11 @@ plugins (git, docker, grep, find, ls, tree) are not listed here.
   are never keyword-filtered. (No `--json` guard: bun ignores `--json` on these and emits
   text — verified, not applicable.)
 - **npx** — wrapper-aware (like `uv`): strips npm install/fetch preamble, detects the
-  wrapped tool from args (handling `-y`, `-p typescript`), and dispatches — eslint/prettier/
-  tsc logic **ported** from their standalone filters under a drift contract (filter header).
+  wrapped tool from args (handling `-y`, `-p typescript`), and **delegates** to
+  eslint/prettier/tsc's own filters by re-invoking `lowfat filter` on them.
   Bare `npx prettier <file>` and `-f json` pass through raw (no code/JSON corruption);
-  unknown tools (`create-*`, etc.) get a conservative cap. Gotcha: the ported bodies drift
-  if the originals change — real fix is wrapper-unwrap in lowfat-core (proposed upstream).
+  unknown tools (`create-*`, etc.), and any wrapped tool whose plugin isn't installed, get a
+  marked cap. `scripts/drift.py` proves the dispatch still reaches the real filters.
 - **next** — keeps build warnings/errors and summaries; trims the route table at ultra.
 - **prisma** — strips banner/box art; keeps migration progress, client-generation
   markers, and `Error:` lines.
@@ -93,14 +93,13 @@ plugins (git, docker, grep, find, ls, tree) are not listed here.
   `pip list --format json`) passes byte-exact (invariant 1).
 - **uv** (also `uvx`) — wrapper-aware: parses the arg string to find the wrapped tool
   (`uv run pytest`, `uvx ruff`, `uv tool run`, `python -m`, skipping value-flags like
-  `--with X`) and applies that tool's compaction — pytest/ruff logic is **copied** from
-  their standalone filters under a drift contract (filter header). uv's own
+  `--with X`) and **delegates** to that tool's own filter by re-invoking `lowfat filter` on
+  it, so nothing is duplicated; an uninstalled wrapped plugin falls back to a marked cap. uv's own
   `sync`/`lock`/`pip`/`add` collapse to the install summary (`+ pkg==ver`, `Resolved`/
   `Installed`/`Audited`); arbitrary `uv run <prog>` is head-capped, never keyword-filtered.
   `uv pip list --format json` and wrapped `uvx ruff --output-format json` pass byte-exact
-  (invariant 1; the ruff guard is mirrored into the drift-copy per the contract).
-  Gotcha: the copied bodies drift if pytest/ruff change — the real fix is wrapper-unwrap in
-  lowfat-core. `npx` chose generic-cap instead of dispatch.
+  (invariant 1 — the guard is the wrapped filter's own, since the stream is handed to it).
+  Wrapper-unwrap in lowfat-core (wishlist #2) would retire the dispatch code entirely.
 - **poetry** — installer shape (like pip): drops per-package `- Installing/Updating/Removing`
   chatter, keeps the `Package operations:` tally + `Writing lock file` + warnings; failed
   resolve keeps the solver/`Because` block, tail recovery. `poetry show -f json`/`--format json`
@@ -154,8 +153,9 @@ plugins (git, docker, grep, find, ls, tree) are not listed here.
   `--output.<fmt>.path` machine formats are residual.
 - **mvn** — drops transfer/plugin noise; extraction runs on failure too (a failed build
   is exactly when `[ERROR]` needs pulling out of hundreds of progress lines).
-- **gradlew** — drops task/download progress; failures run an awk state machine that
-  extracts the `FAILURE:`/`What went wrong:` block, with a capped tail fallback.
+- **gradlew** — drops task/download progress; failures tag each line's class in one sed
+  pass and walk the tags to extract the `FAILURE:`/`What went wrong:` block, with a capped
+  tail fallback.
 - **dotnet** — strips restore/project chatter; keeps compiler `error CS…` diagnostics,
   build verdicts, and vstest failure blocks (test name + Error Message/Stack Trace).
   Extraction runs on failure too. `publish`/`pack` share the build output shape and route
@@ -235,7 +235,7 @@ plugins (git, docker, grep, find, ls, tree) are not listed here.
 - **sqlite3** — caps big SELECTs; pipe-delimited default mode is already compact.
   Gotcha: a bad query can print `Error:` while exiting 0 — error lines are preserved.
 - **redis-cli** — INFO compacts 224→~36 lines via metric keep-lists; listings
-  (SCAN/KEYS/SLOWLOG) get a level-scaled cap with an `... (N lines total)` trailer.
+  (SCAN/KEYS/SLOWLOG) get a level-scaled cap with the house dropped-count trailer.
   Gotcha: `ERR` replies exit 0 — errors survive by line shape, not exit code.
 - **env** — masks secret-looking values (`*key*`/`*token*`/`*password*`/credential
   URIs) BEFORE sorting/capping. Gotcha: masking is deliberately over-eager; don't use
@@ -250,8 +250,9 @@ plugins (git, docker, grep, find, ls, tree) are not listed here.
   the body for JSON before capping.
 - **wget** — strips progress bars/dots; keeps connection, HTTP status, and the final
   `saved` line (tail-anchored).
-- **jq** / **json** — full/lite pass JSON byte-exact; ultra summarizes huge arrays via
-  a python op that emits an explicit `lowfat_truncated` marker. Gotcha: ultra output is
+- **jq** / **json** — full/lite pass JSON byte-exact; ultra summarizes huge arrays by
+  shelling out to `jq`, emitting an explicit `lowfat_truncated` marker (and passing the
+  stream through untouched when `jq` is absent or the input doesn't parse). Gotcha: ultra output is
   NOT valid input for further piping — look for the marker.
 - **diff** — keeps hunk headers and changed lines. Gotcha: exit 1 means "files differ"
   (signal, not failure); exit 2 (real error) passes raw.
