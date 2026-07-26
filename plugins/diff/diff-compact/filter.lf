@@ -9,6 +9,10 @@ define compact-diff(limit):
             exit 0
         fi
 
+        buf=$(mktemp)
+        trap 'rm -f "$buf"' EXIT
+        cat > "$buf"
+
         # Changed lines and hunk headers share the main budget; surrounding
         # context gets its own small allowance, and none at ultra.
         sed -E '
@@ -18,10 +22,11 @@ define compact-diff(limit):
         }
         /^[[:space:]]*$/{s/^/B/;b
         }
-        s/^/C/' | {
+        s/^/C/' < "$buf" | {
             kept=0
             context=0
             dropped=0
+            emitted=0
             while IFS= read -r tagged || [ -n "$tagged" ]; do
                 line=${tagged#?}
                 case $tagged in
@@ -29,6 +34,7 @@ define compact-diff(limit):
                         if [ "$kept" -lt $1 ]; then
                             printf '%s\n' "$line"
                             kept=$((kept + 1))
+                            emitted=1
                         else
                             dropped=$((dropped + 1))
                         fi
@@ -38,10 +44,18 @@ define compact-diff(limit):
                         if [ "$context" -lt 6 ]; then
                             printf '%s\n' "$line"
                             context=$((context + 1))
+                            emitted=1
                         fi
                         ;;
                 esac
             done
+
+            # Nothing matched — an unrecognized shape must not read as silence.
+            if [ "$emitted" = 0 ]; then
+                total=$(grep -c '' < "$buf")
+                [ "$total" -gt $1 ] && printf '[lowfat] +%d earlier lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((total - $1))" "${level:-full}"
+                tail -n $1 < "$buf"
+            fi
 
             [ "$dropped" -gt 0 ] && printf '[lowfat] +%d lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$dropped" "${level:-full}"
         }

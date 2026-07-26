@@ -43,6 +43,18 @@ define compact-vitest(limit):
             sed -n "$at,\$p" "$buf" | grep -E "$summary"
         } > "$cut"
 
+        # Nothing matched: the run's shape isn't one this filter knows (a new
+        # reporter, a plugin's own format, a crash before the section headers).
+        # Silence would read as "the command printed nothing" — fall back to a
+        # marked tail of what actually arrived.
+        if [ ! -s "$cut" ]; then
+            kept=$(( $1 + 8 ))
+            total=$(grep -c '' < "$buf")
+            [ "$total" -gt "$kept" ] && printf '[lowfat] +%d earlier lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((total - kept))" "${level:-full}"
+            tail -n "$kept" < "$buf"
+            exit 0
+        fi
+
         total=$(grep -c '' < "$cut")
         head -n $(( $1 + 8 )) < "$cut"
         [ "$total" -gt $(( $1 + 8 )) ] && printf '[lowfat] +%d lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((total - $1 - 8))" "${level:-full}"

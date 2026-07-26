@@ -15,6 +15,10 @@ include ../../lib/truncation.lf
 
 define compact-describe(limit):
     shell: |
+        buf=$(mktemp)
+        trap 'rm -f "$buf"' EXIT
+        cat > "$buf"
+
         # Tag by line class in one sed pass; the loop below owns the state the
         # tags can't carry: whether we're inside the Events table, and how many
         # event rows have been kept.
@@ -29,10 +33,11 @@ define compact-describe(limit):
         }
         /^[[:blank:]]*$/{s/^/B/;b
         }
-        s/^/X/' | {
+        s/^/X/' < "$buf" | {
             in_events=0
             events=0
             dropped=0
+            emitted=0
             while IFS= read -r tagged || [ -n "$tagged" ]; do
                 line=${tagged#?}
                 tag=${tagged%"$line"}
@@ -44,15 +49,16 @@ define compact-describe(limit):
                 fi
 
                 case $tag in
-                    N) printf '%s\n' "$line" ;;
-                    V) printf '%s\n' "$line"; in_events=1 ;;
-                    T) [ "$in_events" = 1 ] && printf '%s\n' "$line" ;;
-                    L) [ "${level:-full}" = "ultra" ] || printf '%s\n' "$line" ;;
+                    N) printf '%s\n' "$line"; emitted=1 ;;
+                    V) printf '%s\n' "$line"; in_events=1; emitted=1 ;;
+                    T) [ "$in_events" = 1 ] && { printf '%s\n' "$line"; emitted=1; } ;;
+                    L) [ "${level:-full}" = "ultra" ] || { printf '%s\n' "$line"; emitted=1; } ;;
                     X)
                         if [ "$in_events" = 1 ]; then
                             if [ "$events" -lt $1 ]; then
                                 printf '%s\n' "$line"
                                 events=$((events + 1))
+                                emitted=1
                             else
                                 dropped=$((dropped + 1))
                             fi
@@ -60,6 +66,13 @@ define compact-describe(limit):
                         ;;
                 esac
             done
+
+            # Nothing matched — an unrecognized shape must not read as silence.
+            if [ "$emitted" = 0 ]; then
+                total=$(grep -c '' < "$buf")
+                [ "$total" -gt $1 ] && printf '[lowfat] +%d earlier lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((total - $1))" "${level:-full}"
+                tail -n $1 < "$buf"
+            fi
 
             [ "$dropped" -gt 0 ] && printf '[lowfat] +%d lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$dropped" "${level:-full}"
         }

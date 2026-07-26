@@ -14,6 +14,10 @@ include ../../lib/truncation.lf
 
 define compact-plan(limit):
     shell: |
+        buf=$(mktemp)
+        trap 'rm -f "$buf"' EXIT
+        cat > "$buf"
+
         # One sed pass tags each line with its class, then a pure-builtin loop
         # walks the tags — that keeps the running count (shared between resource
         # headers and attribute rows) without forking per line. Tags are stripped
@@ -32,26 +36,35 @@ define compact-plan(limit):
         }
         /^Changes to Outputs:/{s/^/O/;b
         }
-        s/^/D/' | {
+        s/^/D/' < "$buf" | {
             count=0
             dropped=0
+            emitted=0
             while IFS= read -r tagged || [ -n "$tagged" ]; do
                 line=${tagged#?}
                 case $tagged in
-                    H*) printf '%s\n' "$line"; count=$((count + 1)) ;;
-                    K*) printf '%s\n' "$line" ;;
+                    H*) printf '%s\n' "$line"; count=$((count + 1)); emitted=1 ;;
+                    K*) printf '%s\n' "$line"; emitted=1 ;;
                     A*)
                         [ "${level:-full}" = "ultra" ] && continue
                         if [ "$count" -lt $1 ]; then
                             printf '%s\n' "$line"
                             count=$((count + 1))
+                            emitted=1
                         else
                             dropped=$((dropped + 1))
                         fi
                         ;;
-                    O*) [ "${level:-full}" = "ultra" ] || printf '%s\n' "$line" ;;
+                    O*) [ "${level:-full}" = "ultra" ] || { printf '%s\n' "$line"; emitted=1; } ;;
                 esac
             done
+
+            # Nothing matched — an unrecognized shape must not read as silence.
+            if [ "$emitted" = 0 ]; then
+                total=$(grep -c '' < "$buf")
+                [ "$total" -gt $1 ] && printf '[lowfat] +%d earlier lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((total - $1))" "${level:-full}"
+                tail -n $1 < "$buf"
+            fi
 
             [ "$dropped" -gt 0 ] && printf '[lowfat] +%d lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$dropped" "${level:-full}"
         }
@@ -79,6 +92,7 @@ apply:
                 drop /Still (creating|modifying|destroying|reading)\.\.\. \[[0-9]+s elapsed\]/
                 keep /(Creating|Modifying|Destroying|Reading|Creation complete|Modifications complete|Destruction complete|Read complete|Apply complete! Resources:)/
                 tail-marked 30
+                or-shell: s=$(cat); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt 30 ]; then printf '[lowfat] +%d earlier lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((n-30))" "${level:-full}"; fi; printf '%s\n' "$s" | tail -30
             lite:
                 drop /Still (creating|modifying|destroying|reading)\.\.\. \[[0-9]+s elapsed\]/
                 tail-marked 120

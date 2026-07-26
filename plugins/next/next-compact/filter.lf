@@ -22,6 +22,7 @@ build:
                 drop-next-banner
                 keep /(Compiled successfully|Failed to compile|Warning:|Error:|[0-9]+ warnings?)/
                 head-marked 45
+                or-shell: s=$(cat); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt 20 ]; then printf '[lowfat] +%d earlier lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((n-20))" "${level:-full}"; fi; printf '%s\n' "$s" | tail -20
             lite:
                 drop-next-banner
                 head-marked 140

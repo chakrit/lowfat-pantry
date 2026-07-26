@@ -18,23 +18,57 @@ if [ -z "$specs" ]; then
     exit 2
 fi
 
+# One smoke run per spec, but several at a time: each spec is an independent set
+# of subprocess invocations against its own lock file, so the only shared thing is
+# the pinned binary — provisioned once, below, before any of them start. Output is
+# buffered per spec and replayed in order, so a parallel run reads exactly like a
+# serial one. JOBS=1 to serialize while debugging.
+scripts/smoke.sh --version >/dev/null 2>&1
+
+out_dir=$(mktemp -d)
+trap 'rm -rf "$out_dir"' EXIT
+
+slot() { echo "$out_dir/$(echo "$1" | tr / _)"; }
+
+running=0
+for spec in $specs; do
+    (
+        scripts/smoke.sh "$@" "$spec" > "$(slot "$spec")" 2>&1
+        echo $? > "$(slot "$spec").status"
+    ) &
+
+    running=$((running + 1))
+    if [ "$running" -ge "${JOBS:-4}" ]; then
+        wait
+        running=0
+    fi
+done
+wait
+
+# Replay in spec order and aggregate the worst exit, exactly as the serial loop did —
+# smoke's codes carry meaning (1 CHANGED, 3 NEW, 64/65 spec errors) that a boolean
+# pass/fail would throw away.
 rc=0
 for spec in $specs; do
-    scripts/smoke.sh "$@" "$spec"
-    st=$?
+    cat "$(slot "$spec")"
+    st=$(cat "$(slot "$spec").status" 2>/dev/null || echo 2)
     if [ "$st" -gt "$rc" ]; then
         rc=$st
     fi
 done
 
-# Goldens can't see cross-plugin drift: edit pytest-compact and only pytest's
-# lock moves, while uv-compact's copy of it silently rots. drift.py compares the
-# two directly. Not re-lockable — a mismatch is a real bug, so `-c` skips it.
+# Two gates goldens structurally cannot provide, both skipped under `-c` because
+# neither is re-lockable — a failure in either is a real bug:
+#   drift.py     — the wrappers delegate to other plugins' filters; nothing in
+#                  their own locks notices when that dispatch breaks.
+#   overprune.py — a sample a filter recognizes never reaches its fallback, so
+#                  the arms that catch reworded output sit unexecuted forever.
 case " $* " in
     *" -c "*) ;;
     *)
         scripts/drift.py || rc=1
+        scripts/overprune.py || rc=1
         ;;
 esac
 
-exit $rc
+exit "$rc"

@@ -20,6 +20,7 @@ define drop-wget-progress:
                 drop-wget-progress
                 keep /^(--[0-9-]+|Resolving |Connecting to |HTTP request sent|Length: |Saving to:|[0-9-]+ [0-9:]+:[0-9:]+ .* saved|ERROR|Error|wget:)/
                 tail-marked 25
+                or-shell: s=$(cat); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt 25 ]; then printf '[lowfat] +%d earlier lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((n-25))" "${level:-full}"; fi; printf '%s\n' "$s" | tail -25
             lite:
                 drop-wget-progress
                 tail-marked 120

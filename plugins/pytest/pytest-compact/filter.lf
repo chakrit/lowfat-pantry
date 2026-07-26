@@ -14,8 +14,10 @@ define compact-pytest(limit):
         # the whole FAILURES/ERRORS section body, which is a sed *range* — the
         # `b` skips later rules so a log line starting "ERROR " inside the section
         # isn't printed twice.
+        buf=$(mktemp)
         cut=$(mktemp)
-        trap 'rm -f "$cut"' EXIT
+        trap 'rm -f "$buf" "$cut"' EXIT
+        cat > "$buf"
 
         if [ "${level:-full}" = "ultra" ]; then
             grep -E '^(=+ (FAILURES|ERRORS) =+|=+ short test summary info =+|=+ .*(failed|error|errors).* =+|FAILED |ERROR |_____|E   )'
@@ -32,7 +34,19 @@ define compact-pytest(limit):
         p
         b
         }'
-        fi > "$cut"
+        fi < "$buf" > "$cut"
+
+        # Nothing matched: the run's shape isn't one this filter knows (a new
+        # reporter, a plugin's own format, a crash before the section headers).
+        # Silence would read as "the command printed nothing" — fall back to a
+        # marked tail of what actually arrived.
+        if [ ! -s "$cut" ]; then
+            kept=$(( $1 + 8 ))
+            total=$(grep -c '' < "$buf")
+            [ "$total" -gt "$kept" ] && printf '[lowfat] +%d earlier lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((total - kept))" "${level:-full}"
+            tail -n "$kept" < "$buf"
+            exit 0
+        fi
 
         total=$(grep -c '' < "$cut")
         head -n $(( $1 + 8 )) < "$cut"
