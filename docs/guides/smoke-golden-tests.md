@@ -14,8 +14,14 @@ scripts/test.sh          # whole suite; exit 0 = no drift
 scripts/test.sh -c       # re-lock everything (review the diff, then commit)
 scripts/smoke.sh plugins/go/go-compact/tests.cue        # one plugin
 scripts/smoke.sh -c plugins/go/go-compact/tests.cue     # re-lock one plugin
-scripts/drift.py         # wrapper/original agreement (test.sh runs it last)
+scripts/drift.py         # wrapper/original agreement (test.sh runs it)
+scripts/overprune.py     # no filter swallows a stream whole (test.sh runs it)
 ```
+
+The suite runs four specs concurrently — each spec is independent work against its own
+lock, output is buffered per spec and replayed in order, and smoke's exit codes are still
+aggregated worst-first, so a parallel run reads and behaves like a serial one. `JOBS=1`
+serializes while debugging.
 
 **Goldens don't see cross-plugin drift.** `uv-compact` and `npx-compact` re-implement
 their wrapped tools' compaction as Python branches (a `python:` body can't call an `.lf`
