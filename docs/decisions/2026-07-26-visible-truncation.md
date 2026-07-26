@@ -78,7 +78,9 @@ anywhere, only markers added.
   macros now live once in `plugins/lib/truncation.lf`. Self-containment is still a
   distribution requirement — it is met by the sync linking `plugins/lib` into the lowfat
   home next to the plugins, so the `../../lib/` path resolves in both trees.
-- The macro is `python:`, not `awk` — `awk` is banned repo-wide. Measured suite cost of the
-  swap was ~0.4s across 703 tests.
+- The macro was `python:`, not `awk` — `awk` is banned repo-wide. Measured suite cost of
+  that swap was ~0.4s across 703 tests. **Superseded 2026-07-27:** `python:` is banned in
+  filters too and the macros are POSIX sh; an interpreter the user lacks kills a filter
+  rather than degrading it.
 - Every new plugin classifies each subcommand as inventory / structured / compactable before
   writing a rule. Added to the `SKILL.md` decision tree.
