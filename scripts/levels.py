@@ -54,6 +54,11 @@ def probe(case):
 
 def main():
     jobs = list(cases())
+    if len(jobs) < 100:
+        print(f"levels.py: only {len(jobs)} cases parsed out of ~250 — the spec format "
+              f"changed and this gate is checking almost nothing", file=sys.stderr)
+        return 2
+
     with ThreadPoolExecutor(max_workers=16) as pool:
         failures = [f for f in pool.map(probe, jobs) if f]
 

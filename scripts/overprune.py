@@ -78,6 +78,11 @@ def main():
             for exit_code in EXITS
             for level in LEVELS]
 
+    if len(specs) < 50:
+        print(f"overprune.py: only {len(specs)} filters found — expected the whole pantry",
+              file=sys.stderr)
+        return 2
+
     # Each probe is a process spawn doing almost nothing; serially that is 20s of
     # waiting on fork, which is 20s nobody will keep paying on every test run.
     with ThreadPoolExecutor(max_workers=16) as pool:

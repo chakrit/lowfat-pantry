@@ -101,8 +101,14 @@ def main():
         print("lint.py: no library macros found under plugins/lib/", file=sys.stderr)
         return 2
 
+    specs = sorted(ROOT.glob("plugins/*/*/filter.lf"))
+    if len(specs) < 50:
+        print(f"lint.py: only {len(specs)} filters found — expected the whole pantry",
+              file=sys.stderr)
+        return 2
+
     failures = 0
-    for spec in sorted(ROOT.glob("plugins/*/*/filter.lf")):
+    for spec in specs:
         findings = check(spec, macros)
         manifest = spec.parent / "lowfat.toml"
         if manifest.exists():
@@ -119,8 +125,7 @@ def main():
         print(f"lint.py: {failures} standing-ruling violation(s)", file=sys.stderr)
         return 1
 
-    print(f"CONVENTIONS HOLD — {len(list(ROOT.glob('plugins/*/*/filter.lf')))} filters, "
-          f"{len(macros)} library macros")
+    print(f"CONVENTIONS HOLD — {len(specs)} filters, {len(macros)} library macros")
     return 0
 
 
