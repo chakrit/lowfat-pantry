@@ -62,6 +62,76 @@
         - name: exitcode
           data:
             - "0"
+- name: tests.cue \ composer-compact \ install samples/composer-broken-json.txt lite
+  commands:
+    - command: lowfat filter plugins/composer/composer-compact/filter.lf --sub=install --args='install --no-interaction' --exit=1 --level=lite < plugins/composer/composer-compact/samples/composer-broken-json.txt
+      checks:
+        - name: stdout
+          data:
+            - 'In JsonFile.php line 398:'
+            - '                                                 '
+            - '  "./composer.json" does not contain valid JSON  '
+            - '  Parse error on line 1:                         '
+            - '  ...nope/nope": "^1.0"                          '
+            - '  ---------------------^                         '
+            - '  Expected one of: ''}'', '',''                      '
+            - '                                                 '
+            - ""
+            - install [--prefer-source] [--prefer-dist] [--prefer-install PREFER-INSTALL] [--dry-run] [--download-only] [--dev] [--no-suggest] [--no-dev] [--no-security-blocking] [--no-blocking] [--no-autoloader] [--no-progress] [--no-install] [--audit] [--audit-format AUDIT-FORMAT] [-v|vv|vvv|--verbose] [-o|--optimize-autoloader] [-a|--classmap-authoritative] [--strict-psr-autoloader] [--apcu-autoloader] [--apcu-autoloader-prefix APCU-AUTOLOADER-PREFIX] [--ignore-platform-req IGNORE-PLATFORM-REQ] [--ignore-platform-reqs] [--] [<packages>...]
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/composer/composer-compact/filter.lf --sub=install --args='install --no-interaction' --exit=1 --level=lite < plugins/composer/composer-compact/samples/composer-broken-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 11
+            - bytes 913
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ composer-compact \ install samples/composer-broken-json.txt full
+  commands:
+    - command: lowfat filter plugins/composer/composer-compact/filter.lf --sub=install --args='install --no-interaction' --exit=1 --level=full < plugins/composer/composer-compact/samples/composer-broken-json.txt
+      checks:
+        - name: stdout
+          data:
+            - 'In JsonFile.php line 398:'
+            - '  "./composer.json" does not contain valid JSON  '
+            - '  Parse error on line 1:                         '
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/composer/composer-compact/filter.lf --sub=install --args='install --no-interaction' --exit=1 --level=full < plugins/composer/composer-compact/samples/composer-broken-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 3
+            - bytes 126
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ composer-compact \ install samples/composer-broken-json.txt ultra
+  commands:
+    - command: lowfat filter plugins/composer/composer-compact/filter.lf --sub=install --args='install --no-interaction' --exit=1 --level=ultra < plugins/composer/composer-compact/samples/composer-broken-json.txt
+      checks:
+        - name: stdout
+          data:
+            - 'In JsonFile.php line 398:'
+            - '  "./composer.json" does not contain valid JSON  '
+            - '  Parse error on line 1:                         '
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/composer/composer-compact/filter.lf --sub=install --args='install --no-interaction' --exit=1 --level=ultra < plugins/composer/composer-compact/samples/composer-broken-json.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 3
+            - bytes 126
+        - name: exitcode
+          data:
+            - "0"
 - name: tests.cue \ composer-compact \ install samples/composer-install-error.txt lite
   commands:
     - command: lowfat filter plugins/composer/composer-compact/filter.lf --sub=install --args='install' --exit=2 --level=lite < plugins/composer/composer-compact/samples/composer-install-error.txt

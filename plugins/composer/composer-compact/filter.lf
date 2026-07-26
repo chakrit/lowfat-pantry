@@ -27,13 +27,13 @@ define drop-progress:
     elif exit failed:
         match level:
             ultra:
-                keep /(could not be resolved|Problem |requires |conflict|but it does not|ERROR|error|Fatal|Exception|No such|not found|Failed|Aborting)/
+                keep /(could not be resolved|Problem |requires |conflict|but it does not|ERROR|error|Fatal|Exception|No such|not found|Failed|Aborting|does not contain valid|In [A-Za-z]+\.php line)/
                 head-marked 30
                 or-shell: s=$(cat); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt 30 ]; then printf '[lowfat] +%d earlier lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((n-30))" "${level:-full}"; fi; printf '%s\n' "$s" | tail -30
             lite:
                 head-marked 200
             else:
-                keep /(could not be resolved|Problem |requires |conflict|but it does not|ERROR|error|Fatal|Exception|No such|not found|Failed|Aborting|Warning|Deprecat)/
+                keep /(could not be resolved|Problem |requires |conflict|but it does not|ERROR|error|Fatal|Exception|No such|not found|Failed|Aborting|does not contain valid|In [A-Za-z]+\.php line|Warning|Deprecat)/
                 head-marked 60
                 or-shell: s=$(cat); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt 60 ]; then printf '[lowfat] +%d earlier lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((n-60))" "${level:-full}"; fi; printf '%s\n' "$s" | tail -60
     else:

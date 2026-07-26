@@ -11,6 +11,7 @@ _suite: testkit.#Suite & {
 	cases: [
 		{sample: "samples/mvn-test-success.txt", sub: "test", args: "test", exit: 0, levels: ["lite", "full", "ultra"]},
 		{sample: "samples/mvn-reactor-success.txt", sub: "install", args: "install", exit: 0, levels: ["lite", "full", "ultra"]},
+		{sample: "samples/mvn-broken-pom.txt", sub: "compile", args: "-B compile", exit: 1, levels: ["lite", "full", "ultra"]},
 		{sample: "samples/mvn-test-failure.txt", sub: "test", args: "test", exit: 1, levels: ["lite", "full", "ultra"]},
 	]
 }

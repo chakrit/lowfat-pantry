@@ -18,7 +18,7 @@ define drop-maven-noise:
 *:
     match level:
         ultra:
-            keep /^(\[ERROR\]|\[WARNING\]|Tests run: [0-9]+,|(\[INFO\] )?BUILD (SUCCESS|FAILURE)|\[INFO\] Reactor Summary|\[INFO\] [[:alnum:]._-]+[[:space:]]+\.+[[:space:]]+(SUCCESS|FAILURE))/
+            keep /^(\[ERROR\]|\[FATAL\]|\[WARNING\]|Tests run: [0-9]+,|(\[INFO\] )?BUILD (SUCCESS|FAILURE)|\[INFO\] Reactor Summary|\[INFO\] [[:alnum:]._-]+[[:space:]]+\.+[[:space:]]+(SUCCESS|FAILURE))/
             tail-marked 40
             or-shell: s=$(cat); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt 40 ]; then printf '[lowfat] +%d earlier lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((n-40))" "${level:-full}"; fi; printf '%s\n' "$s" | tail -40
         lite:
