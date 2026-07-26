@@ -17,6 +17,7 @@ scripts/smoke.sh -c plugins/go/go-compact/tests.cue     # re-lock one plugin
 scripts/drift.py         # wrapper/original agreement (test.sh runs it)
 scripts/overprune.py     # no filter swallows a stream whole (test.sh runs it)
 scripts/passthrough.py   # guarded structured output stays byte-exact (test.sh runs it)
+scripts/lint.py          # standing rulings, statically (test.sh runs it first)
 ```
 
 The suite runs four specs concurrently — each spec is independent work against its own
@@ -40,7 +41,11 @@ subcommand × level × exit and asserts something came back.
 `scripts/passthrough.py` reads each filter's structured-output guards out of its `.lf`,
 replays each exactly as written, and requires a JSON payload back byte-identical.
 
-None of the three is **re-lockable** — a failure is a filter bug — so `test.sh -c` skips
+`scripts/lint.py` covers the static half: the conventions that cost a pantry-wide sweep
+each (no `python:`, no `awk`, no bare `head`/`tail`, one marker sentence, no library macro
+without its `include`).
+
+None of the four is **re-lockable** — a failure is a filter bug — so `test.sh -c` skips
 them.
 
 Both wrap `scripts/smoke.sh`, which provisions a pinned `chakrit/smoke` into a

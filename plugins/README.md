@@ -127,6 +127,7 @@ real `exit` so failure samples are tested as failures):
 
     scripts/smoke.sh -c plugins/<cmd>/<plugin>/tests.cue   # lock the golden, REVIEW the diff
     scripts/test.sh                                        # whole suite, exit 0 = no drift
+    scripts/lint.py                                        # the standing rulings, statically
     scripts/drift.py                                       # wrapper/original agreement
     scripts/overprune.py                                   # nothing swallows a stream whole
     scripts/passthrough.py                                 # guarded flags stay byte-exact
@@ -147,6 +148,9 @@ goldens structurally can't replace. Neither is re-lockable — a failure in eith
   something came back. Every rule needs a fallback — an `or "<tool>: ok"` verdict, an
   `or-shell:` marked tail, or an in-body `emitted` check.
 
+- **`lint.py`** — the rulings that cost a sweep each: no `python:` body, no `awk`, no bare
+  `head`/`tail`, one marker sentence, no library macro called without its `include`. Static,
+  instant, and the reason a new filter can't quietly reintroduce a retired class.
 - **`passthrough.py`** — reads each filter's own structured-output guards and replays them
   *exactly as written* (`--format=json` and `--format json` are different arguments), then
   requires a JSON payload back unchanged at every level and both exits. It also knows which
