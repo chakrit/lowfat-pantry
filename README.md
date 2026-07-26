@@ -81,6 +81,8 @@ deterministic; samples are byte-faithful to real command output. Full harness:
 - `docs/vendor/lowfat-filter-dsl.md` — `.lf` DSL authoring spec.
 - `docs/vendor/lowfat-internals.md` — how lowfat works (home/trust/levels/pipeline/CLI).
 - `docs/guides/smoke-golden-tests.md` — the smoke golden-test harness.
+- `docs/guides/issue-triage.md` — how a bug report becomes a bug *class* fixed across
+  every plugin at once.
 - `docs/spec/lowfat-skill.md` — the skill's design arc.
 - `docs/spec/pantry-plugin-backlog.md` — remaining plugin candidates.
 - `docs/decisions/` — distribution + design rulings.

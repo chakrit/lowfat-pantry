@@ -167,7 +167,8 @@ Mirror `plugins/rg/rg-compact/` (simplest) or `plugins/gh/` (flag guards). Copy 
 - Env in `shell:`/`python:` ops: `$sub` `$level` (ultra/full/lite) `$exit` `$args`.
   Current text arrives on **stdin**.
 - The everyday ops: `keep /re/` · `drop /re/` · `head N` · `tail N` · `head auto`
-  (=15/30/60 by level) · `or "text"` (fallback when stream went blank) ·
+  (=15/30/60 by level; cuts silently, so never end a catch-all with it — see step 4) ·
+  `or "text"` (fallback when stream went blank) ·
   `or-shell: <cmd>` (run cmd on the RAW input when blank) · `raw` (pass unchanged) ·
   `shell: <cmd>`. Regex is the Rust `regex` crate: **no backreferences/lookaround**.
 - Branch with `match level:` (arms `ultra:`/`full:`/`lite:`/`else:`) or
@@ -188,25 +189,49 @@ Mirror `plugins/rg/rg-compact/` (simplest) or `plugins/gh/` (flag guards). Copy 
    - Caveat: exit code is a *signal*, not a failure proxy. `rg`/`diff`/`black` exit
      non-zero as information (no match / files differ / unformatted); `redis-cli`/`sqlite3`
      errors exit zero. Branch on output shape (error-line patterns), not `$exit` alone.
-3. **Otherwise, scale by level.** `match level:` with `head auto`, or explicit
-   `ultra/full/lite` head/tail caps. Drop progress/spinner noise with `drop /re/` first.
-   When you cap a list, leave a recovery hint (`... (N lines total)`, "use
-   `LOWFAT_LEVEL=lite` for the rest") so the agent knows what was dropped and can get it.
+3. **Is it an inventory listing?** One load-bearing identifier per line, nothing redundant
+   (`terraform state list`, `kubectl get`, `helm list`, `gh issue list`, `npm ls`). Then the
+   whole value is completeness and nothing is safe to cut — give it its own rule returning
+   `raw`, above the catch-all. There is no honest 30-line summary of a 200-item list.
+4. **Otherwise, scale by level** — but never with a bare `head`/`tail` at the end of a
+   catch-all. `head` cuts without a trace, so a truncated stream and a genuinely short one
+   are byte-identical and the reader acts on a confident wrong answer. Use the
+   `head-auto-marked` macro (below); it mirrors `head auto`'s limits and appends the dropped
+   count. Drop progress/spinner noise with `drop /re/` first.
 
 ### Skeleton to adapt (covers most tools)
 ```
+# Truncation must be visible: bare `head`/`tail` cut without a trace, so a cut stream
+# reads as a short one. Mirrors `head auto` (ultra 15 / full 30 / lite 60) and says
+# what it dropped. Copy verbatim — `.lf` has no include, and plugins ship standalone.
+define head-auto-marked:
+    python: |
+        import os, sys
+
+        level = os.environ.get("level", "full")
+        limit = {"ultra": 15, "lite": 60}.get(level, 30)
+        lines = sys.stdin.read().splitlines()
+
+        kept = lines[:limit]
+        dropped = len(lines) - len(kept)
+        if dropped > 0:
+            kept.append(f"[lowfat] +{dropped} lines dropped (level={level}) -- output truncated, re-run raw for the full list")
+        print("\n".join(kept))
+
+# Inventory: every line load-bearing, nothing redundant. Exempt from compaction.
+list:
+    raw
+
 *:
     if exit failed:
         raw
         or "<tool>: nothing to report"
     else:
-        match level:
-            ultra: head 20
-            lite:  head 200
-            else:  head 60
+        head-auto-marked
 ```
 Add a structured-output guard arm above it when step 1 applies; split into per-subcommand
-rules (`status:`, `diff:`, …) when subcommands need different treatment.
+rules (`status:`, `diff:`, …) when subcommands need different treatment. Use `shell:` or
+`python:` for extraction that ops can't express — **never `awk`, which is banned repo-wide.**
 
 ### Test (always, before declaring done)
 Golden-file drift is the gate — `chakrit/smoke` (>= v0.5.0) over `tests.cue`:
@@ -240,6 +265,8 @@ one rule prevents the most damaging class of bug (silently corrupted JSON / hidd
 - `docs/vendor/lowfat-internals.md` — how lowfat resolves home/trust/levels/pipeline.
 - `docs/guides/smoke-golden-tests.md` — the smoke golden-test harness (`tests.cue`, locks,
   `measure.py`).
+- `docs/guides/issue-triage.md` — turning a bug report into a bug *class* and fixing it
+  across every plugin at once.
 - `plugins/README.md` — pantry layout and conventions; `plugins/CATALOG.md` — per-plugin
   inventory + gotchas.
 - `scripts/test.sh` — run the whole smoke golden suite. `scripts/measure.py` — size-metric

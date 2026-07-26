@@ -59,6 +59,15 @@ rules — a violation is a bug, not a style nit.
 5. **Over-prune is drift too.** Pruning to empty or near-empty is as much a regression as
    bloat. The golden harness (`scripts/measure.py` + smoke locks) catches it
    bidirectionally — a size change in either direction surfaces as a locked-value diff.
+6. **Inventory listings are exempt from compaction.** One load-bearing identifier per line,
+   nothing redundant: `terraform state list`, `kubectl get`, `helm list`, `gh issue list`,
+   `npm ls`. The whole value is completeness, so there is nothing safe to cut — these are
+   `raw`. A line-per-item listing is the worst possible input for a lossy summarizer.
+7. **Truncation is always visible.** A filter that drops lines says so, at every level, with
+   the count. Silent truncation is the one failure mode that produces a *confident wrong
+   answer*: a cut list and a genuinely short list are byte-indistinguishable, so the reader
+   cannot tell they need to re-run. Bare `head`/`tail` cut without a trace and must not
+   terminate a catch-all — use a marked variant (`head-auto-marked`).
 
 ## Guarding structured output (the recipe)
 
@@ -85,9 +94,11 @@ raw / elif -f: raw / else: <compact>` (rspec/rubocop).
 `ultra` deliberately breaks transparency: it emits verdict lines (`pytest: N passed`),
 synthesized clean-states (`git status: clean`), and truncation markers (`lowfat_truncated`,
 trailing counts). That is the point of the tier — a decision-grade summary, not a subset.
-The constraint: **`ultra` must mark what it dropped** (invariant: recovery hint), and its
-output is explicitly *not* guaranteed re-pipeable. Transparency as the ancestors defined it
-holds at `full` and `lite`; `ultra` trades it for density, on the record.
+The constraint: **`ultra` must mark what it dropped**, and its output is explicitly *not*
+guaranteed re-pipeable. Transparency as the ancestors defined it holds at `full` and `lite`;
+`ultra` trades it for density, on the record. The marking half of that constraint is no
+longer an `ultra` speciality — invariant 7 generalized it to every level, because the reader
+of a `full` cut is just as blind to it as the reader of an `ultra` one.
 
 ## Signal vs noise
 
