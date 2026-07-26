@@ -21,6 +21,12 @@ Captured files land in `plugins/<cmd>/<cmd>-compact/samples/` and are **reviewed
 before committing — a capture that didn't actually fail the intended way is worse than no
 sample, because it locks a golden that proves nothing.
 
+Recipes name the sample the spec already expects, so a re-capture overwrites in place and
+the lock diff tells you whether real output matches what was there before. Re-run any
+capture twice before committing: merging stdout and stderr into one file is racy, and a
+run that glues an error line onto the tail of another (`Building dependency tree...E:
+Unable to locate…`) is an artifact, not the shape the tool normally emits.
+
 ## Stacks
 
 | stack    | base                    | covers                              |

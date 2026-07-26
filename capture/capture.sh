@@ -23,9 +23,9 @@ usage() {
 # stack → the tools it captures, as "<tool> <plugin-dir> <sample-name>" rows
 recipes_for() {
     case "$1" in
-        alpine) echo 'apk apk/apk-compact apk-add-missing
+        alpine) echo 'apk apk/apk-compact apk-add-error
 deno deno/deno-compact deno-run-error' ;;
-        debian) printf '%s\n' 'apt apt/apt-compact apt-install-missing' ;;
+        debian) printf '%s\n' 'apt apt/apt-compact apt-install-error' ;;
         fedora) printf '%s\n' 'dnf dnf/dnf-compact dnf-install-missing' ;;
         python) echo 'poetry poetry/poetry-compact poetry-broken-pyproject
 black black/black-compact black-syntax-error
@@ -42,9 +42,9 @@ ansible-playbook ansible-playbook/ansible-playbook-compact ansible-playbook-synt
 # that isn't there — never a printf of something error-shaped.
 recipe_script() {
     case "$1" in
-        apk)    printf '%s\n' 'apk add --no-cache definitely-not-a-real-package-9z' ;;
+        apk)    printf '%s\n' 'apk add --no-cache nosuchpkg123' ;;
         deno)   printf '%s\n' 'cd /tmp && deno run --allow-read does-not-exist.ts' ;;
-        apt)    printf '%s\n' 'apt-get update && apt-get install -y definitely-not-a-real-package-9z' ;;
+        apt)    printf '%s\n' 'apt-get install -y nosuchpkg123' ;;
         dnf)    printf '%s\n' 'dnf install -y definitely-not-a-real-package-9z' ;;
         poetry) printf '%s\n' 'mkdir -p /w && cd /w && printf "[tool.poetry\nname = broken\n" > pyproject.toml && poetry install' ;;
         black)  printf '%s\n' 'mkdir -p /w && cd /w && printf "def f(:\n    return 1\n" > broken.py && black --check broken.py' ;;

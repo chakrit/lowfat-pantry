@@ -14,6 +14,7 @@ _suite: testkit.#Suite & {
 		// invariant 1: --json is byte-exact machine output; the guard must pass it raw.
 		{sample: "samples/deno-lint-json.txt", sub: "lint", args: "lint --json mod.ts", exit: 1, levels: ["lite", "full", "ultra"]},
 		{sample: "samples/deno-info-json.txt", sub: "info", args: "info --json mod.ts", exit: 0, levels: ["lite", "full", "ultra"]},
+		{sample: "samples/deno-run-error.txt", sub: "run", args: "run does-not-exist.ts", exit: 1, levels: ["lite", "full", "ultra"]},
 		// recovery hint: a capped `deno run` program body announces "... (N lines total)".
 		{sample: "samples/deno-run-capped.txt", sub: "run", args: "run server.ts", exit: 0, levels: ["lite", "full", "ultra"]},
 	]
