@@ -4,8 +4,8 @@
 #     include ../../lib/columns.lf
 
 define squeeze-columns:
-    python: |
-        import re, sys
+    shell: |
+        body=$(cat)
+        [ -n "$body" ] || exit 0
 
-        for line in sys.stdin.read().rstrip("\n").splitlines():
-            print(re.sub(r"[ \t]{2,}", " ", line))
+        printf '%s\n' "$body" | sed -E 's/[[:blank:]]{2,}/ /g'

@@ -7,54 +7,62 @@
 # source (plugins/<cat>/<name>/) and the install (<LOWFAT_HOME>/plugins/<cat>/<name>/).
 # A filter needing its own variant just defines the name locally — a local define wins
 # over an included one.
+#
+# POSIX sh only, and ERE only (`grep -E`, `sed -nE`): BSD sed has no `\|` alternation
+# and matches *nothing* for it, silently, so a BRE alternation ships a filter that works
+# on Linux and blanks the output on macOS.
 
 define head-marked(limit):
-    python: |
-        import os, sys
+    shell: |
+        body=$(cat)
+        [ -n "$body" ] || exit 0
 
-        level = os.environ.get("level", "full")
-        lines = sys.stdin.read().rstrip("\n").splitlines()
+        total=$(printf '%s\n' "$body" | grep -c '')
+        printf '%s\n' "$body" | head -n $1
 
-        kept = lines[:$1]
-        dropped = len(lines) - len(kept)
-        if dropped > 0:
-            kept.append(f"[lowfat] +{dropped} lines dropped (level={level}) -- output truncated, re-run raw for the full list")
-        sys.stdout.write("\n".join(kept) + "\n" if kept else "")
+        [ "$total" -gt $1 ] && printf '[lowfat] +%d lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((total - $1))" "${level:-full}"
+        exit 0
 
 define head-auto-marked:
-    python: |
-        import os, sys
+    shell: |
+        case "${level:-full}" in
+            ultra) limit=15 ;;
+            lite)  limit=60 ;;
+            *)     limit=30 ;;
+        esac
 
-        level = os.environ.get("level", "full")
-        limit = {"ultra": 15, "lite": 60}.get(level, 30)
-        lines = sys.stdin.read().rstrip("\n").splitlines()
+        body=$(cat)
+        [ -n "$body" ] || exit 0
 
-        kept = lines[:limit]
-        dropped = len(lines) - len(kept)
-        if dropped > 0:
-            kept.append(f"[lowfat] +{dropped} lines dropped (level={level}) -- output truncated, re-run raw for the full list")
-        sys.stdout.write("\n".join(kept) + "\n" if kept else "")
+        total=$(printf '%s\n' "$body" | grep -c '')
+        printf '%s\n' "$body" | head -n "$limit"
+
+        [ "$total" -gt "$limit" ] && printf '[lowfat] +%d lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((total - limit))" "${level:-full}"
+        exit 0
 
 define tail-marked(limit):
-    python: |
-        import os, sys
+    shell: |
+        body=$(cat)
+        [ -n "$body" ] || exit 0
 
-        level = os.environ.get("level", "full")
-        lines = sys.stdin.read().rstrip("\n").splitlines()
+        total=$(printf '%s\n' "$body" | grep -c '')
+        [ "$total" -gt $1 ] && printf '[lowfat] +%d earlier lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((total - $1))" "${level:-full}"
 
-        kept = lines[-$1:]
-        dropped = len(lines) - len(kept)
-        if dropped > 0:
-            kept.insert(0, f"[lowfat] +{dropped} earlier lines dropped (level={level}) -- output truncated, re-run raw for the full list")
-        sys.stdout.write("\n".join(kept) + "\n" if kept else "")
+        printf '%s\n' "$body" | tail -n $1
+        exit 0
 
+# `cap` counts what the reader lost, not what the stream held: unlike the marked
+# macros above it keeps trailing blank lines in the tally, so it buffers to a file
+# rather than to a variable (command substitution eats them).
 define cap(limit):
-    python: |
-        import sys
+    shell: |
+        buf=$(mktemp)
+        trap 'rm -f "$buf"' EXIT
+        cat > "$buf"
 
-        lines = sys.stdin.read().splitlines()
+        total=$(grep -c '' < "$buf")
+        [ "$total" -gt 0 ] || exit 0
 
-        kept = lines[:$1]
-        if len(lines) > len(kept):
-            kept.append(f"... ({len(lines)} lines total)")
-        sys.stdout.write("\n".join(kept) + "\n" if kept else "")
+        head -n $1 < "$buf"
+        [ "$total" -gt $1 ] && printf '... (%d lines total)\n' "$total"
+        exit 0
