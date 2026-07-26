@@ -65,9 +65,13 @@ done
 #                  the arms that catch reworded output sit unexecuted forever.
 #   passthrough.py — a structured-output guard is only as good as the flag
 #                  spellings and levels someone wrote a sample for.
+#   lint.py      — the standing rulings (no python:, no awk, no bare cut, one
+#                  marker form, no library macro without its include), checked
+#                  rather than remembered.
 case " $* " in
     *" -c "*) ;;
     *)
+        scripts/lint.py || rc=1
         scripts/drift.py || rc=1
         scripts/overprune.py || rc=1
         scripts/passthrough.py || rc=1
