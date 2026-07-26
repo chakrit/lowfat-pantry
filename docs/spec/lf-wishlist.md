@@ -31,22 +31,23 @@ distribution question — absolute paths are rejected and plugins sync per-plugi
 `<LOWFAT_HOME>/plugins/<cat>/<name>/` — resolved because the install tree mirrors the
 pantry layout, with the sync linking `plugins/lib` alongside.
 
-The wrapper duplication below is **not** fixed by it, contrary to the original filing.
-`include` moves `.lf` *macros*; a wrapper's copies are Python functions inside one
-`python:` dispatch body, chosen at runtime from `$args`, and a `python:` body cannot call
-an `.lf` macro. Only wrapper-unwrap (#2) removes that duplication. Until then the copies
-are held honest mechanically by `scripts/drift.py`, which runs the wrapped tool's own
-samples through both filters at every level and requires identical output.
+The wrapper duplication below is **not** fixed by it, contrary to the original filing:
+`include` moves `.lf` *macros*, while a wrapper dispatches on `$args` at runtime inside a
+shell body, which cannot call a macro. It was solved another way — the wrappers now
+**delegate**, re-invoking `lowfat filter` on the wrapped tool's own filter (2026-07-26),
+so the duplication is gone without waiting for #2. `scripts/drift.py` guards the dispatch.
 
 **Problem** (as originally filed). Macros are file-local (`collect_macro_names` runs per
 file; no include op), so a `.lf` filter can't reuse another's logic. A wrapper filter that
 wants the wrapped tool's compaction must **copy** that tool's macro body verbatim.
 
-**Workaround in pantry.** `uv-compact` and `npx-compact` each copy their wrapped tools'
-bodies (pytest/ruff into uv; eslint/prettier/tsc into npx) under a "drift contract" comment.
-`scripts/drift.py` (in `scripts/test.sh`) enforces that contract — it caught npx's eslint
-branch capping silently where eslint-compact marks the cut. See backlog → "Wrapper
-commands".
+**Resolved in pantry without upstream** (2026-07-26). `uv-compact` and `npx-compact` used
+to copy their wrapped tools' bodies (pytest/ruff into uv; eslint/prettier/tsc into npx)
+under a "drift contract"; the copies are gone. Each wrapper resolves the wrapped tool,
+probes `$LOWFAT_HOME`/`~/.lowfat`/`~/.config/lowfat`/`$PWD` for that plugin, and `exec`s
+`lowfat filter` on it — byte-identical to invoking the wrapped filter directly, with a
+marked generic cap when the plugin isn't installed. Wrapper-unwrap (#2) would still be
+better: it would retire the dispatch code itself. See backlog → "Wrapper commands".
 
 **Proposed shape.** An `include path/to/lib.lf` (or `use`) directive that pulls another
 file's `define`d macros into the current namespace at parse time. Lets shared tool logic
@@ -93,12 +94,16 @@ content-blind shared dispatchers.
 
 ## 4. `lowfat filter --plugin <name>` (run a discovered plugin's filter on stdin)
 
-**Problem.** `lowfat filter <path.lf>` runs a `.lf` against stdin, but only by **path**. A
-wrapper that wanted to delegate to a tool's real filter via a `shell:` op would have to
-hardcode the install path (`<home>/plugins/<cat>/<name>/filter.lf`), which varies with home
-resolution and runs under a scrubbed env — too brittle to use.
+**Problem.** `lowfat filter <path.lf>` runs a `.lf` against stdin, but only by **path**, so
+a wrapper delegating to a tool's real filter has to reconstruct the install path
+(`<home>/plugins/<cat>/<name>/filter.lf`), which varies with home resolution.
 
-**Workaround in pantry.** We don't delegate; we copy (#1). Brittle shell-out was rejected.
+**Workaround in pantry.** The wrappers *do* delegate (2026-07-26): they probe
+`$LOWFAT_HOME`, `~/.lowfat`, `~/.config/lowfat` and `$PWD` for the sibling plugin and
+`exec lowfat filter` on it, falling back to a marked cap when it isn't installed. This was
+previously called off as "brittle shell-out under a scrubbed env" — the env claim was
+wrong: `shell:` bodies inherit the full parent environment at v0.8.0, `$HOME` included.
+What remains brittle is the probe list itself, which is exactly what this ask retires.
 
 **Proposed shape.** `lowfat filter --plugin pytest-compact` resolves the named plugin through
 normal discovery and runs its filter against stdin, with `--sub/--args/--exit/--level`

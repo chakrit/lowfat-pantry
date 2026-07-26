@@ -599,9 +599,14 @@ build, ultra:  keep /^(Successfully|ERROR)/  tail 3  else "docker build: ok"
   loudly rather than degrading.
 - **`$N` is not an op argument** — `head $1` is a parse error; `$N` substitutes
   only inside `shell:`/`python:`/`or-shell:` bodies (`lf.rs:1570, 1591, 1595`).
-- Subprocess ops run with a **scrubbed env** (allowlist only) — don't rely on
-  arbitrary inherited env vars inside `shell:`/`python:` (see security.rs in the
-  internals doc).
+- `.lf` subprocess ops inherit the **full parent environment** — `run_shell`
+  builds `Command::new("sh")` with no `env_clear()` and no `sanitized_env()`
+  (`lf.rs:1804-1808`), so `$HOME`, `$PWD`, `$LOWFAT_HOME` and everything else
+  are visible inside `shell:`/`python:`. (Corrected 2026-07-26: this said
+  "scrubbed env, allowlist only" — that applies to legacy `filter.sh` process
+  plugins, not to `.lf` ops. Verified by probe and at source.) Secrets are
+  therefore *not* stripped on this path; a filter must never echo the
+  environment.
 
 ## Authoring pitfalls (from building the pantry)
 

@@ -59,8 +59,19 @@ degraded one. Two rules, from
 Named-subcommand rules may still use bare `head`/`tail`: their author knew the output
 shape. The catch-all is by definition the branch where nobody did.
 
-Use `shell:` or `python:` for extraction the ops can't express — **never `awk`**, which is
-banned repo-wide.
+Use `shell:` for extraction the ops can't express — POSIX sh, and **never `awk`**, which
+is banned repo-wide. `python:` is banned in filters too, for a different reason: a filter
+that needs an interpreter the user doesn't have doesn't degrade, it dies. Two portability
+rules follow from BSD/GNU divergence, and both fail *silently* when broken:
+
+- **ERE only** (`grep -E`, `sed -nE`). BSD sed has no `\|` alternation — it matches
+  nothing, without an error, so a BRE alternation ships a filter that works on Linux and
+  blanks the output on macOS.
+- **POSIX classes only** — `[[:blank:]]`, not `\t`; spell case folding out per letter
+  (`[Ss][Ee]…`), since BSD has no `(?i)`.
+
+When a shape genuinely needs a parser — reshaping JSON — shell out to the real tool (`jq`)
+and pass the stream through untouched when it's absent.
 
 ## Sample naming
 
@@ -106,19 +117,20 @@ real `exit` so failure samples are tested as failures):
     scripts/test.sh                                        # whole suite, exit 0 = no drift
     scripts/drift.py                                       # wrapper/original agreement
 
-`scripts/test.sh` ends with `drift.py`, which goldens can't replace: a wrapper filter
-(`uv-compact`, `npx-compact`) re-implements its wrapped tools' compaction, so editing
-`pytest-compact` moves only pytest's lock while uv's copy rots. It runs the wrapped tool's
-own samples through both filters at every level and requires identical output. A mismatch
-is a bug to fix in the wrapper, never something to re-lock.
+`scripts/test.sh` ends with `drift.py`, which goldens can't replace. The wrappers
+(`uv-compact`, `npx-compact`) delegate to their wrapped tools' filters by re-invoking
+`lowfat filter`, so a broken dispatch — wrong args mapping, a probe that stops finding the
+sibling — shows up nowhere in their own locks. It runs the wrapped tool's own samples
+through wrapper and original at every level and requires identical output. A mismatch is a
+bug to fix in the wrapper, never something to re-lock.
 
 The lock diff is the correctness gate. A regression like over-prune-to-empty surfaces as
 drift on the `measure.py` `lines`/`bytes` metric locked alongside each golden.
 
 ## Design principles
 
-- **Filters are data, not code.** Logic lives in `.lf` rules + small `shell:`/`python:`
-  escape hatches, never a compiled binary.
+- **Filters are data, not code.** Logic lives in `.lf` rules + small POSIX `shell:` escape
+  hatches, never a compiled binary and never an interpreter the user may not have.
 - **Three levels, every plugin.** `ultra` (~10 lines) · `full` (~30) · `lite` (~60).
   Default `full`. Every plugin degrades gracefully across all three.
 - **Preserve the signal, drop the bloat.** Keep errors, failures, summaries, and

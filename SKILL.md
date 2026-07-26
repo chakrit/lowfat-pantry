@@ -175,7 +175,7 @@ Mirror `plugins/rg/rg-compact/` (simplest) or `plugins/gh/` (flag guards). Copy 
 - A filter is a list of **rules**: `<sub>[, <level>]:` then an indented op body.
   First rule whose `(subcommand, level)` matches wins; **only that one runs**. Put the
   catch-all `*:` LAST. No subcommands (ls/grep/rg)? One `*:` rule.
-- Env in `shell:`/`python:` ops: `$sub` `$level` (ultra/full/lite) `$exit` `$args`.
+- Env in `shell:` ops: `$sub` `$level` (ultra/full/lite) `$exit` `$args`.
   Current text arrives on **stdin**.
 - The everyday ops: `keep /re/` · `drop /re/` · `head N` · `tail N` · `head auto`
   (=15/30/60 by level; cuts silently, so never end a catch-all with it — see step 4) ·
@@ -231,8 +231,10 @@ list:
         head-auto-marked
 ```
 Add a structured-output guard arm above it when step 1 applies; split into per-subcommand
-rules (`status:`, `diff:`, …) when subcommands need different treatment. Use `shell:` or
-`python:` for extraction that ops can't express — **never `awk`, which is banned repo-wide.**
+rules (`status:`, `diff:`, …) when subcommands need different treatment. Use `shell:` for
+extraction that ops can't express — POSIX sh, ERE only (`grep -E`/`sed -nE`; BSD sed
+silently matches nothing for `\|`), **never `awk`, and never `python:`** — see
+`plugins/README.md § Truncation conventions` for why both are banned.
 
 ### Test (always, before declaring done)
 Golden-file drift is the gate — `chakrit/smoke` (>= v0.5.0) over `tests.cue`:

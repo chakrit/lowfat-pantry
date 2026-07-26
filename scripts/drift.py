@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
-"""drift.py — enforce the wrapper filters' drift contract.
+"""drift.py — check that the wrappers still reach their wrapped tools' filters.
 
-`uv-compact` and `npx-compact` re-implement their wrapped tools' compaction as
-Python branches inside one dispatch macro: the runner prefix keeps `uv run
-pytest` from ever reaching `pytest-compact`, and `include` can't help — it
-carries `.lf` macros, which a `python:` body cannot call. The copies are
-deliberate; what was missing is a check that they still agree.
+`uv-compact` and `npx-compact` don't compact pytest/ruff/eslint/prettier/tsc
+themselves: they resolve the wrapped tool out of `$args` and re-invoke `lowfat
+filter` on that plugin's own filter. Nothing in their locks can tell you that
+dispatch still works — a wrong args mapping, a probe that stops finding the
+sibling plugin, a renamed directory, and the wrapper quietly falls back to its
+generic cap while its own golden stays UNCHANGED.
 
 For every pair below, the wrapped tool's own sample goes through both filters at
-every level and the outputs must match byte-for-byte. Edit an original without
-mirroring it into the wrapper and this fails, naming the pair.
+every level and the outputs must match byte-for-byte.
 """
 import subprocess
 import sys
@@ -20,7 +20,7 @@ ROOT = Path(__file__).resolve().parent.parent
 
 # (wrapper plugin, wrapper args) ⇄ (original plugin, original args), over the
 # original's samples. Samples stay flag-free so both sides take the compacting
-# branch — the guard arms are each filter's own business, not the contract's.
+# branch — the guard arms are each filter's own business, not this check's.
 PAIRS = (
     ("uv/uv-compact", "run pytest tests/", "pytest/pytest-compact", "tests/",
      (("pytest/pytest-compact/samples/pytest-pass.txt", 0),
@@ -48,7 +48,7 @@ PAIRS = (
 
 
 def filtered(plugin, args, sample, exit_code, level):
-    """Output of one filter over one sample — the observable the contract binds."""
+    """Output of one filter over one sample — the observable both sides must share."""
     run = subprocess.run(
         ["lowfat", "filter", str(ROOT / "plugins" / plugin / "filter.lf"),
          f"--sub={args.split()[0]}", f"--args={args}",
@@ -77,8 +77,8 @@ def main():
               file=sys.stderr)
 
     if mismatches:
-        print(f"drift.py: {len(mismatches)} mismatch(es); mirror the original's "
-              f"change into the wrapper's branch", file=sys.stderr)
+        print(f"drift.py: {len(mismatches)} mismatch(es); the wrapper stopped reaching "
+              f"the wrapped tool's filter", file=sys.stderr)
         return 1
 
     print(f"IN SYNC — {sum(len(p[4]) for p in PAIRS) * len(LEVELS)} wrapper/original "

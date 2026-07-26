@@ -184,10 +184,13 @@ Load-time security checks, independent of trust, run for every disk plugin
   path inside the plugin dir (`security.rs:28-33`).
 - **Dangerous-hook scan**: rejects `rm -rf /`, `curl … | bash`, fork bombs, etc.
   in `on_install`/`on_update`/`on_remove` (`security.rs:59-106`).
-- **Env sanitization**: subprocess filters (`ProcessFilter`, and `shell:`/
-  `python:` ops) run with a scrubbed env — only an allowlist of ~25 vars passes
-  (`security.rs:161-194`); secrets like `AWS_SECRET_ACCESS_KEY`/`GITHUB_TOKEN`
-  are stripped.
+- **Env sanitization**: `ProcessFilter` — the legacy `filter.sh`-style disk
+  plugin path — runs with a scrubbed env, only an allowlist passing
+  (`sanitized_env`, `security.rs:189`; applied at `process.rs:22` behind
+  `env_clear()`). **`.lf` `shell:`/`python:` ops do not go through it**: they
+  inherit the full parent env (`run_shell`, `lf.rs:1804-1808`). Corrected
+  2026-07-26 — the two paths were previously described as one, which is what
+  made cross-filter delegation look impossible.
 
 ## Levels (`level.rs`)
 
