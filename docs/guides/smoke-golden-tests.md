@@ -18,6 +18,7 @@ scripts/drift.py         # wrapper/original agreement (test.sh runs it)
 scripts/overprune.py     # no filter swallows a stream whole (test.sh runs it)
 scripts/passthrough.py   # guarded structured output stays byte-exact (test.sh runs it)
 scripts/lint.py          # standing rulings, statically (test.sh runs it first)
+scripts/levels.py        # ultra <= full <= lite (test.sh runs it)
 ```
 
 The suite runs four specs concurrently — each spec is independent work against its own
@@ -45,7 +46,12 @@ replays each exactly as written, and requires a JSON payload back byte-identical
 each (no `python:`, no `awk`, no bare `head`/`tail`, one marker sentence, no library macro
 without its `include`).
 
-None of the four is **re-lockable** — a failure is a filter bug — so `test.sh -c` skips
+And **goldens never compare the levels to each other** — each is locked separately, so a
+level-specific rule that forgets a sibling's `drop` can make ultra longer than full inside
+three UNCHANGED locks. `scripts/levels.py` requires `ultra <= full <= lite` across every
+spec's own cases.
+
+None of the five is **re-lockable** — a failure is a filter bug — so `test.sh -c` skips
 them.
 
 Both wrap `scripts/smoke.sh`, which provisions a pinned `chakrit/smoke` into a

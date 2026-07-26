@@ -128,6 +128,7 @@ real `exit` so failure samples are tested as failures):
     scripts/smoke.sh -c plugins/<cmd>/<plugin>/tests.cue   # lock the golden, REVIEW the diff
     scripts/test.sh                                        # whole suite, exit 0 = no drift
     scripts/lint.py                                        # the standing rulings, statically
+    scripts/levels.py                                      # ultra <= full <= lite
     scripts/drift.py                                       # wrapper/original agreement
     scripts/overprune.py                                   # nothing swallows a stream whole
     scripts/passthrough.py                                 # guarded flags stay byte-exact
@@ -156,6 +157,11 @@ goldens structurally can't replace. Neither is re-lockable — a failure in eith
   requires a JSON payload back unchanged at every level and both exits. It also knows which
   rule holds each guard, which is how it caught `--json` guarded on gh's resource rules but
   not its catch-all.
+
+- **`levels.py`** — the three levels promise a budget, and each level's golden is locked
+  alone, so a level-specific rule that forgets one of its siblings' `drop`s inverts the
+  order inside three UNCHANGED locks. It replays every spec's cases across all three and
+  requires `ultra <= full <= lite`.
 
 Real failure output for tools that aren't installed comes from `capture/` — one container
 image per stack, samples reviewed by hand before they're committed. See `capture/README.md`.
