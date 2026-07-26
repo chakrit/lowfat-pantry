@@ -113,7 +113,7 @@ apply|rollout:
     else:
         keep /^([[:alnum:]._\/-]+ (created|configured|unchanged|deleted)|deployment ".+" successfully|Waiting for|rollout status|error:)/
         head-auto-marked
-        or-shell: s=$(grep -E '[^[:space:]]'); n=$(printf '%s\n' "$s" | wc -l); printf '%s\n' "$s" | head -30; if [ "$n" -gt 30 ]; then printf '[lowfat] +%d lines dropped -- re-run raw for the full list\n' "$((n-30))"; fi
+        or-shell: s=$(grep -E '[^[:space:]]'); n=$(printf '%s\n' "$s" | wc -l); printf '%s\n' "$s" | head -30; if [ "$n" -gt 30 ]; then printf '[lowfat] +%d lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((n-30))" "${level:-full}"; fi
 
 *:
     if exit failed:

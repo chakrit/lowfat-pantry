@@ -29,7 +29,7 @@ test:
             ultra:
                 keep /^(--- FAIL|FAIL|panic:|[[:space:]]+panic|[[:space:]]+.+\.go:[0-9]+:|[[:space:]]+Error Trace:|[[:space:]]+Error:|ok[[:space:]]|[?][[:space:]]|# )/
                 head-marked 40
-                or-shell: s=$(grep -E '[^[:space:]]'); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt 40 ]; then printf '[lowfat] +%d earlier lines dropped -- re-run raw for the full list\n' "$((n-40))"; fi; printf '%s\n' "$s" | tail -40
+                or-shell: s=$(grep -E '[^[:space:]]'); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt 40 ]; then printf '[lowfat] +%d earlier lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((n-40))" "${level:-full}"; fi; printf '%s\n' "$s" | tail -40
             full:
                 drop /^=== RUN /
                 drop /^--- PASS: /

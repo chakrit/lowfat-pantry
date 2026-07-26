@@ -13,7 +13,7 @@ define compact-pnpm-install(limit):
     drop /^Resolving: /
     keep /^(WARN|ERR_PNPM|Packages:[[:space:]]|Done in |dependencies:|devDependencies:|[[:space:]]*[+][[:space:]])/
     shell: head -$1
-    or-shell: s=$(grep -E '[^[:space:]]'); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt $1 ]; then printf '[lowfat] +%d earlier lines dropped -- re-run raw for the full list\n' "$((n-$1))"; fi; printf '%s\n' "$s" | tail -$1
+    or-shell: s=$(grep -E '[^[:space:]]'); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt $1 ]; then printf '[lowfat] +%d earlier lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((n-$1))" "${level:-full}"; fi; printf '%s\n' "$s" | tail -$1
 
 install|i:
     if exit failed:

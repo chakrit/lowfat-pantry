@@ -47,13 +47,13 @@ define compact-gradle-failure(limit):
         match level:
             ultra:
                 compact-gradle-failure 50
-                or-shell: s=$(cat); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt 50 ]; then printf '[lowfat] +%d earlier lines dropped -- re-run raw for the full list\n' "$((n-50))"; fi; printf '%s\n' "$s" | tail -50
+                or-shell: s=$(cat); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt 50 ]; then printf '[lowfat] +%d earlier lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((n-50))" "${level:-full}"; fi; printf '%s\n' "$s" | tail -50
             lite:
                 compact-gradle-failure 180
-                or-shell: s=$(cat); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt 180 ]; then printf '[lowfat] +%d earlier lines dropped -- re-run raw for the full list\n' "$((n-180))"; fi; printf '%s\n' "$s" | tail -180
+                or-shell: s=$(cat); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt 180 ]; then printf '[lowfat] +%d earlier lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((n-180))" "${level:-full}"; fi; printf '%s\n' "$s" | tail -180
             else:
                 compact-gradle-failure 90
-                or-shell: s=$(cat); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt 90 ]; then printf '[lowfat] +%d earlier lines dropped -- re-run raw for the full list\n' "$((n-90))"; fi; printf '%s\n' "$s" | tail -90
+                or-shell: s=$(cat); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt 90 ]; then printf '[lowfat] +%d earlier lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((n-90))" "${level:-full}"; fi; printf '%s\n' "$s" | tail -90
     else:
         match level:
             ultra:

@@ -14,7 +14,7 @@ define compact-npm-install(limit):
     # vulnerability totals, and every npm warn/error line
     keep /^(added [0-9]+ packages|removed [0-9]+ packages|changed [0-9]+ packages|audited [0-9]+ packages|[0-9]+ packages are looking for funding|found [0-9]+ vulnerabilities|[0-9]+ .+ vulnerabilities|[0-9]+ vulnerabilities|npm warn|npm error|npm ERR!)/
     shell: head -$1
-    or-shell: s=$(grep -E '[^[:space:]]'); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt $1 ]; then printf '[lowfat] +%d earlier lines dropped -- re-run raw for the full list\n' "$((n-$1))"; fi; printf '%s\n' "$s" | tail -$1
+    or-shell: s=$(grep -E '[^[:space:]]'); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt $1 ]; then printf '[lowfat] +%d earlier lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((n-$1))" "${level:-full}"; fi; printf '%s\n' "$s" | tail -$1
 
 # --json is machine output on any subcommand — pass byte-exact (invariant 1).
 install|i|ci:

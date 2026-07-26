@@ -19,7 +19,7 @@ define drop-ok-noise:
             ultra:
                 keep /^(fatal:|.*FAILED!|.*=> \{|PLAY RECAP|[A-Za-z0-9._-]+[[:space:]]+: ok=[0-9]|ERROR!|unreachable:)/
                 tail-marked 40
-                or-shell: s=$(cat); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt 40 ]; then printf '[lowfat] +%d earlier lines dropped -- re-run raw for the full list\n' "$((n-40))"; fi; printf '%s\n' "$s" | tail -40
+                or-shell: s=$(cat); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt 40 ]; then printf '[lowfat] +%d earlier lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((n-40))" "${level:-full}"; fi; printf '%s\n' "$s" | tail -40
             lite:
                 drop-ok-noise
                 tail-marked 200

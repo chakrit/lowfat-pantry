@@ -14,7 +14,7 @@ define compact-dotnet(limit):
     # bodies), and run summaries (one-line "Failed!  -" and multi-line formats)
     keep /(error CS[0-9]+|warning CS[0-9]+|Build succeeded\.|Build FAILED\.|Successfully created package|Passed!|Failed!|Total tests:|(Passed|Failed|Skipped):[[:space:]]+[0-9]+|Test Run (Failed|Successful)|^[[:space:]]+(Failed [A-Za-z_]|Error Message:|Stack Trace:|at )|^[[:space:]]{3}[^[:space:]])/
     shell: head -$1
-    or-shell: s=$(grep -E '[^[:space:]]'); n=$(printf '%s\n' "$s" | wc -l); printf '%s\n' "$s" | head -$1; if [ "$n" -gt $1 ]; then printf '[lowfat] +%d lines dropped -- re-run raw for the full list\n' "$((n-$1))"; fi
+    or-shell: s=$(grep -E '[^[:space:]]'); n=$(printf '%s\n' "$s" | wc -l); printf '%s\n' "$s" | head -$1; if [ "$n" -gt $1 ]; then printf '[lowfat] +%d lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((n-$1))" "${level:-full}"; fi
 
 # Extraction runs on failure too — a failed build is restore chatter + error
 # CS lines, exactly what the keep-list pulls out; the macro's or-shell guards

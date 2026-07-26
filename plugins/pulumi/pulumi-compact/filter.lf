@@ -24,7 +24,7 @@ up|preview|destroy|refresh, ultra:
         drop /^ [-+~]{1,2} /
         drop /^$/
         tail-marked 15
-        or-shell: s=$(cat); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt 15 ]; then printf '[lowfat] +%d earlier lines dropped -- re-run raw for the full list\n' "$((n-15))"; fi; printf '%s\n' "$s" | tail -15
+        or-shell: s=$(cat); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt 15 ]; then printf '[lowfat] +%d earlier lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((n-15))" "${level:-full}"; fi; printf '%s\n' "$s" | tail -15
 
 up|preview|destroy|refresh:
     if --json:

@@ -17,7 +17,7 @@ include ../../lib/truncation.lf
             ultra:
                 keep /(error TS[0-9]+|^Found [0-9]+ error|^Errors  Files|^[[:space:]]*[0-9]+[[:space:]]+[^[:space:]])/
                 head-marked 40
-                or-shell: s=$(grep -E 'error TS[0-9]+'); n=$(printf '%s\n' "$s" | wc -l); printf '%s\n' "$s" | head -40; if [ "$n" -gt 40 ]; then printf '[lowfat] +%d lines dropped -- re-run raw for the full list\n' "$((n-40))"; fi
+                or-shell: s=$(grep -E 'error TS[0-9]+'); n=$(printf '%s\n' "$s" | wc -l); printf '%s\n' "$s" | head -40; if [ "$n" -gt 40 ]; then printf '[lowfat] +%d lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((n-40))" "${level:-full}"; fi
             lite:
                 head-marked 200
             else:
