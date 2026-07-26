@@ -199,3 +199,29 @@ aggregate exit code should be when specs disagree). **Workaround:** `scripts/tes
 one spec per invocation, which we keep anyway for per-plugin attribution.
 
 **Upstream issue.** _none filed yet_
+
+## 8. A fallback that can call a macro (`or-macro` / macro-valued `or-shell`)
+
+**Problem.** `or "text"` takes a literal and `or-shell:` takes a one-line shell command —
+neither can call a `define`d macro. The fallback is exactly where a filter most wants one:
+it fires on over-pruning, so it must re-truncate the *raw* input and mark what it dropped,
+which is precisely what `tail-marked`/`head-marked` already do. Since a macro is
+unreachable there, every fallback re-implements the macro inline, on one line, per rule.
+
+**Workaround in pantry.** 33 near-identical `or-shell:` one-liners across 25 filters, each
+a hand-inlined copy of `tail-marked <n>`:
+
+    or-shell: s=$(cat); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt 40 ]; then printf '[lowfat] +%d earlier lines dropped (level=%s) -- …\n' "$((n-40))" "${level:-full}"; fi; printf '%s\n' "$s" | tail -40
+
+They drift as a class: a marker-format change means editing all 33 (done twice now), and
+`scripts/overprune.py` exists partly because a typo in one of them fails silently. The
+`include` work removed this duplication everywhere *except* here, because here it isn't a
+macro-sharing problem — the fallback slot simply can't hold a macro call.
+
+**Proposed shape.** Let a fallback name a macro: `or-macro tail-marked 40`, or accept a
+macro call wherever `or-shell:` takes a command. Same "fires only when blank, runs against
+the raw rule input" semantics — only the callee changes. That collapses 33 inline copies to
+33 one-word calls and makes the fallback path share the library everything else already
+shares.
+
+**Upstream issue.** _none filed yet_
