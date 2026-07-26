@@ -80,7 +80,8 @@ Issue #1 — `tofu state list` returned 15 of 36 resources with no marker.
 3. **Radius:** 40 of 64 catch-alls ended in a silent truncator.
 4. **Fix:** invariants 6 and 7 + [decision](../decisions/2026-07-26-visible-truncation.md)
    (convention), `head-auto-marked` and inventory `raw` rules across every affected filter
-   (sweep), marker-in-builtin filed on `zdk/lowfat` (upstream).
+   (sweep). The marker-in-builtin fix belongs upstream on `zdk/lowfat` and is not yet
+   filed — the in-repo mitigation shipped without waiting for it.
 5. **Proof:** the radius grep returns zero.
 
 One report, two bug classes, 40 plugins fixed. That ratio is the point of this guide.

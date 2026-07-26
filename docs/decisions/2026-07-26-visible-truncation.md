@@ -56,7 +56,7 @@ times. See `docs/guides/issue-triage.md`.
 
 **Wait for an upstream fix.** The true root cause is that lowfat's builtin `head`/`tail`
 cut without a marker; fixing it there would fix all plugins *and* the six bundled filters at
-once, and is filed upstream. But `zdk/lowfat` is not ours to land, and the pantry cannot
+once, and belongs upstream. But `zdk/lowfat` is not ours to land, and the pantry cannot
 ship a known silent-loss bug while waiting on someone else's release.
 
 ## Consequences
