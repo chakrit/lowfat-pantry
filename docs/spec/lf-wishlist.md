@@ -25,10 +25,15 @@ only. #5 survives but was **mis-scoped** — see the item for the corrected trig
 **Status.** Shipped upstream, essentially as proposed: `include <relative-path>` merges
 the included file's `define`s at parse time, rules excluded. Transitive, cycle-checked,
 diamond-safe, local-define-wins. Full semantics in `docs/vendor/lowfat-filter-dsl.md §
-include`. **The pantry has not adopted it yet** — a shared library file has to survive the
-per-plugin sync into `<LOWFAT_HOME>/plugins/<cat>/<name>/`, and absolute include paths are
-rejected by design, so adoption is a distribution question, not a syntax one. Tracked as a
-queued all-tools pass.
+include`. **Adopted 2026-07-26** for the truncation macros: they live once in
+`plugins/lib/truncation.lf` and every filter includes `../../lib/truncation.lf`. The
+distribution question — absolute paths are rejected and plugins sync per-plugin into
+`<LOWFAT_HOME>/plugins/<cat>/<name>/` — resolved because the install tree mirrors the
+pantry layout, with the sync linking `plugins/lib` alongside.
+
+The wrapper duplication below is **still open**: `include` fits it (rules are excluded, so
+a wrapper can pull `../../pytest/pytest-compact/filter.lf` for its macros alone), but no
+pass has done it.
 
 **Problem** (as originally filed). Macros are file-local (`collect_macro_names` runs per
 file; no include op), so a `.lf` filter can't reuse another's logic. A wrapper filter that

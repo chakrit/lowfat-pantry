@@ -92,9 +92,9 @@ For each selected plugin, between the pantry source and `<home>/plugins/<cat>/<n
 **First, always:** symlink `<home>/plugins/lib -> <pantry>/lib` (skip if already correct;
 never clobber a real dir — report and ask). Filters `include ../../lib/truncation.lf`,
 resolved two levels up from the plugin dir. A *symlinked* plugin resolves it either way —
-`..` walks back out through the symlink into the pantry — but a plugin that was ever copied
-instead has no pantry to walk back to, and a missing include is a hard parse error that
-kills the whole filter (`lowfat: parsing …`, rc 1). The link makes the home tree
+`..` walks back out through the symlink into the pantry — but a plugin that was ever
+copied instead has no pantry to walk back to, and a missing include is a hard parse error
+that kills the whole filter (`lowfat: parsing …`, rc 1). The link makes the home tree
 self-sufficient. It carries no `lowfat.toml`, so lowfat never treats it as a plugin.
 
 For each approved plugin, idempotently:
@@ -165,6 +165,9 @@ A pantry plugin is a directory `plugins/<command>/<command>-compact/` holding:
     tests.lock.yml # committed golden output (scripts/smoke.sh -c writes it)
     samples/       # byte-faithful captured output, one file per case
 
+Shared macros live one level above the categories, in `plugins/lib/*.lf`, pulled in with
+`include ../../lib/<file>.lf` — never copied into a filter.
+
 Mirror `plugins/rg/rg-compact/` (simplest) or `plugins/gh/` (flag guards). Copy its
 `lowfat.toml` and swap the command.
 
@@ -204,27 +207,17 @@ Mirror `plugins/rg/rg-compact/` (simplest) or `plugins/gh/` (flag guards). Copy 
 4. **Otherwise, scale by level** — but never with a bare `head`/`tail` at the end of a
    catch-all. `head` cuts without a trace, so a truncated stream and a genuinely short one
    are byte-identical and the reader acts on a confident wrong answer. Use the
-   `head-auto-marked` macro (below); it mirrors `head auto`'s limits and appends the dropped
-   count. Drop progress/spinner noise with `drop /re/` first.
+   `head-auto-marked` macro from `plugins/lib/truncation.lf` (below); it mirrors `head
+   auto`'s limits and appends the dropped count. Never re-copy a library macro into a
+   filter. Drop progress/spinner noise with `drop /re/` first.
 
 ### Skeleton to adapt (covers most tools)
 ```
 # Truncation must be visible: bare `head`/`tail` cut without a trace, so a cut stream
-# reads as a short one. Mirrors `head auto` (ultra 15 / full 30 / lite 60) and says
-# what it dropped. Copy verbatim — `.lf` has no include, and plugins ship standalone.
-define head-auto-marked:
-    python: |
-        import os, sys
-
-        level = os.environ.get("level", "full")
-        limit = {"ultra": 15, "lite": 60}.get(level, 30)
-        lines = sys.stdin.read().splitlines()
-
-        kept = lines[:limit]
-        dropped = len(lines) - len(kept)
-        if dropped > 0:
-            kept.append(f"[lowfat] +{dropped} lines dropped (level={level}) -- output truncated, re-run raw for the full list")
-        print("\n".join(kept))
+# reads as a short one. The library's marked macros say what they dropped —
+# head-auto-marked (mirrors `head auto`: ultra 15 / full 30 / lite 60),
+# head-marked <n> / tail-marked <n> (explicit cap), cap <n>.
+include ../../lib/truncation.lf
 
 # Inventory: every line load-bearing, nothing redundant. Exempt from compaction.
 list:

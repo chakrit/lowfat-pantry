@@ -1,13 +1,14 @@
 # Pantry — lowfat plugins
 
 Community `.lf` filter plugins for [lowfat](https://github.com/zdk/lowfat), the
-token-aware command-output compactor. The `/lowfat-pantry` skill symlinks selected plugins from
-here into the resolved lowfat home (`<LOWFAT_HOME>/plugins/<category>/<name>/`, default
-`~/.config/lowfat/plugins/` — `~/.lowfat/plugins/` when `$LOWFAT_HOME=~/.lowfat`).
+token-aware command-output compactor. The `/lowfat-pantry` skill symlinks selected plugins
+from here into the resolved lowfat home (`<LOWFAT_HOME>/plugins/<category>/<name>/`, default
+`~/.config/lowfat/plugins/` — `~/.lowfat/plugins/` when `$LOWFAT_HOME=~/.lowfat`), plus
+`plugins/lib` alongside them so filter includes resolve there too.
 
 ## Layout
 
-    plugins/lib/       shared macro libraries, pulled in with `include ../../lib/<file>.lf`
+    plugins/lib/       shared macros, pulled in with `include ../../lib/<file>.lf`
       truncation.lf    head-marked / head-auto-marked / tail-marked / cap
       columns.lf       squeeze-columns
 
@@ -44,8 +45,9 @@ degraded one. Two rules, from
             head-auto-marked
 
    `head-auto-marked` mirrors `head auto`'s level limits (ultra 15 / full 30 / lite 60);
-   `head-marked <n>` / `tail-marked <n>` take an explicit cap. `or-shell:` recovery
-   fallbacks cap the raw dump too and mark it the same way.
+   `head-marked <n>` / `tail-marked <n>` take an explicit cap. `cap <n>` is the older
+   variant, marking with `... (N lines total)` instead. `or-shell:` recovery fallbacks cap
+   the raw dump too and mark it the same way.
 
    Never re-copy a library macro into a filter. The include path is relative to the
    including filter and holds in both trees — pantry source and

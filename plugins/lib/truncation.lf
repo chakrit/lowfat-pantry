@@ -5,7 +5,8 @@
 #
 # The path is relative to the including filter and holds in both trees: the pantry
 # source (plugins/<cat>/<name>/) and the install (<LOWFAT_HOME>/plugins/<cat>/<name>/).
-# Rules below the includes are ignored by `include` — only these defines cross over.
+# A filter needing its own variant just defines the name locally — a local define wins
+# over an included one.
 
 define head-marked(limit):
     python: |
