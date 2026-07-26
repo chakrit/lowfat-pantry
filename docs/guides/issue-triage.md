@@ -45,14 +45,14 @@ Work down; take the first tier that is actually available to you.
 
 | Tier | When | Artifact |
 |-------------------|--------------------------------------------------|---------------------------------------|
-| **Upstream** | The defect is in lowfat itself — a builtin op, the pipeline, the CLI | Issue on `zdk/lowfat`; note it here |
+| **Upstream** | The defect is in lowfat itself — a builtin op, the pipeline, the CLI | Note it in the decision record. **Do not file on `zdk/lowfat` without explicit say-so.** |
 | **Convention** | Our authoring guidance produces the bug | `docs/spec/output-philosophy.md` invariant + `SKILL.md` decision tree |
 | **Sweep** | The bad shape is already in N filters | One commit across all of them, goldens re-locked |
 | **Instance** | Genuinely specific to one tool's output | The single plugin |
 
 Upstream and convention are not alternatives to the sweep — an upstream fix ships on
-someone else's schedule, and a convention only governs filters written *after* it. Filed
-upstream, codified, and swept is the complete response.
+someone else's schedule, and a convention only governs filters written *after* it. Codified
+and swept is the complete response on our side.
 
 **A convention change without a sweep is a lie**, and a sweep without a convention change
 just resets the clock until the next plugin reintroduces the shape.
@@ -63,12 +63,14 @@ Re-run the step-3 grep. It should return zero, and be cheap enough that anyone c
 it later. Where the invariant is mechanically checkable, that grep belongs in the test
 suite, not in this guide.
 
-## Filing upward
+## When the root cause is upstream
 
-When the root cause is lowfat's, file it on `zdk/lowfat` with the same evidence standard we
-ask of our own reporters (see the troubleshooting page in the Outline collection), and link
-the upstream issue from the decision record. Then ship the in-repo mitigation anyway. We do
+Record it in the decision record with the evidence, and ship the in-repo mitigation. We do
 not ship a known silent-loss bug while waiting on someone else's release.
+
+**Do not open issues or PRs on `zdk/lowfat`, or any third-party repo, unless the user
+explicitly asks.** Posting outward is their call, not the agent's — write up the finding
+here and stop.
 
 ## Worked example
 
