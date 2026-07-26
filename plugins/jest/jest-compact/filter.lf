@@ -13,7 +13,8 @@ define compact-jest(limit):
         fi
 
         buf=$(mktemp)
-        trap 'rm -f "$buf"' EXIT
+        cut=$(mktemp)
+        trap 'rm -f "$buf" "$cut"' EXIT
         cat > "$buf"
 
         # The final summary block latches: once "Test Suites:"/"Tests:"/… appears,
@@ -35,7 +36,11 @@ define compact-jest(limit):
             fi
 
             sed -n "$at,\$p" "$buf" | grep -E "$summary"
-        } | head -n $(( $1 + 8 ))
+        } > "$cut"
+
+        total=$(grep -c '' < "$cut")
+        head -n $(( $1 + 8 )) < "$cut"
+        [ "$total" -gt $(( $1 + 8 )) ] && printf '[lowfat] +%d lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((total - $1 - 8))" "${level:-full}"
         exit 0
 
 *:

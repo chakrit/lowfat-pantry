@@ -104,6 +104,7 @@
             - 'tests/test_config.py:27:5: PT018 Assertion should be broken down into multiple parts'
             - 'tests/test_config.py:61:9: B017 `assertRaises(Exception)` should be considered evil'
             - Found 45 errors.
+            - '[lowfat] +10 lines dropped (level=full) -- output truncated, re-run raw for the full list'
         - name: exitcode
           data:
             - "0"
@@ -111,8 +112,8 @@
       checks:
         - name: stdout
           data:
-            - lines 36
-            - bytes 2668
+            - lines 37
+            - bytes 2758
         - name: exitcode
           data:
             - "0"
@@ -138,6 +139,7 @@
             - 'tests/test_models.py:18:5: PT011 `pytest.raises(ValueError)` is too broad'
             - 'tests/test_tasks.py:77:13: SIM118 Use `key in dict` instead of `key in dict.keys()`'
             - Found 45 errors.
+            - '[lowfat] +30 lines dropped (level=ultra) -- output truncated, re-run raw for the full list'
         - name: exitcode
           data:
             - "0"
@@ -145,8 +147,8 @@
       checks:
         - name: stdout
           data:
-            - lines 16
-            - bytes 1200
+            - lines 17
+            - bytes 1291
         - name: exitcode
           data:
             - "0"

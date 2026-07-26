@@ -101,11 +101,15 @@ define uv-dispatch:
             keep=$(grep -E "^[[:blank:]]*(Resolved|Installed|Audited|Prepared|Uninstalled|Removed|Updated|Built|Downloaded) |^[[:blank:]]*[+-] [^[:blank:]]|$noise" "$buf")
 
             if [ -n "$keep" ]; then
+                shown=$(printf '%s\n' "$keep" | grep -c '')
                 printf '%s\n' "$keep" | head -n "$limit"
+                [ "$shown" -gt "$limit" ] && printf '[lowfat] +%d lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((shown - limit))" "${level:-full}"
             elif [ "${exit:-0}" = "0" ]; then
                 printf 'uv %s: ok\n' "${1:-}" | sed -E 's/ +:/:/'
             else
+                total=$(grep -c '' < "$buf")
                 head -n "$limit" < "$buf"
+                [ "$total" -gt "$limit" ] && printf '[lowfat] +%d lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((total - limit))" "${level:-full}"
             fi
             exit 0
         }

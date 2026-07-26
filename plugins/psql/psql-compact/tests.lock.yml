@@ -96,6 +96,7 @@
             - 13 user13@example.com paid 51.20
             - 14 user14@example.com paid 82.00
             - (18 rows)
+            - '[lowfat] +4 lines dropped (level=ultra) -- output truncated, re-run raw for the full list'
         - name: exitcode
           data:
             - "0"
@@ -103,8 +104,8 @@
       checks:
         - name: stdout
           data:
-            - lines 16
-            - bytes 498
+            - lines 17
+            - bytes 588
         - name: exitcode
           data:
             - "0"

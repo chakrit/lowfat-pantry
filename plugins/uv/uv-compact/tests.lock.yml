@@ -262,6 +262,7 @@
             - ' + sqlalchemy==2.0.31'
             - ' + starlette==0.37.2'
             - ' + uvicorn==0.30.3'
+            - '[lowfat] +1 lines dropped (level=ultra) -- output truncated, re-run raw for the full list'
         - name: exitcode
           data:
             - "0"
@@ -269,8 +270,8 @@
       checks:
         - name: stdout
           data:
-            - lines 15
-            - bytes 344
+            - lines 16
+            - bytes 434
         - name: exitcode
           data:
             - "0"

@@ -9,12 +9,19 @@ define mask-env(limit):
         # PWD/OLDPWD (cwd paths). "passwd"/"password" still cover real password keys.
         # Case folding is spelled out per letter: BSD sed has no case-insensitive
         # flag, so [Ss][Ee]… is the portable way to say (?i).
+        cut=$(mktemp)
+        trap 'rm -f "$cut"' EXIT
+
         secret='[Ss][Ee][Cc][Rr][Ee][Tt]|[Tt][Oo][Kk][Ee][Nn]|[Kk][Ee][Yy]|[Pp][Aa][Ss][Ss][Ww][Oo][Rr][Dd]|[Pp][Aa][Ss][Ss][Ww][Dd]|[Aa][Pp][Ii]|[Aa][Uu][Tt][Hh]|[Cc][Rr][Ee][Dd]|[Pp][Rr][Ii][Vv][Aa][Tt][Ee]'
 
         # LC_ALL=C so the sort is by byte, matching a codepoint sort exactly.
         sed -E -e "s/^([^=]*($secret)[^=]*)=.*/\1=***/" \
                -e 's|^([^=]*)=.*://[^/[:space:]:@]+:[^/[:space:]@]+@.*|\1=***|' \
-            | LC_ALL=C sort | head -n $1
+            | LC_ALL=C sort > "$cut"
+
+        total=$(grep -c '' < "$cut")
+        head -n $1 < "$cut"
+        [ "$total" -gt $1 ] && printf '[lowfat] +%d lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((total - $1))" "${level:-full}"
         exit 0
 
 *:

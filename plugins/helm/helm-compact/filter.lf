@@ -27,6 +27,7 @@ define helm-summary(limit):
             in_notes=0
             notes=0
             seen=0
+            dropped=0
             while IFS= read -r tagged || [ -n "$tagged" ]; do
                 line=${tagged#?}
                 tag=${tagged%"$line"}
@@ -35,6 +36,8 @@ define helm-summary(limit):
                     if [ "${level:-full}" != "ultra" ] && [ "$notes" -lt $1 ]; then
                         printf '%s\n' "$line"
                         notes=$((notes + 1))
+                    else
+                        dropped=$((dropped + 1))
                     fi
                     continue
                 fi
@@ -46,10 +49,14 @@ define helm-summary(limit):
                         if [ "$seen" -lt $1 ]; then
                             printf '%s\n' "$line"
                             seen=$((seen + 1))
+                        else
+                            dropped=$((dropped + 1))
                         fi
                         ;;
                 esac
             done
+
+            [ "$dropped" -gt 0 ] && printf '[lowfat] +%d lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$dropped" "${level:-full}"
         }
         exit 0
 

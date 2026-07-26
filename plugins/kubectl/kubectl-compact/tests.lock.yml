@@ -212,6 +212,7 @@
             - '  Warning  BackOff    7m35s (x9 over 10m)  kubelet            Back-off restarting failed container checkout'
             - '  Normal   Pulled     6m12s                kubelet            Container image already present on machine'
             - '  Normal   Created    6m12s                kubelet            Created container: checkout'
+            - '[lowfat] +1 lines dropped (level=ultra) -- output truncated, re-run raw for the full list'
         - name: exitcode
           data:
             - "0"
@@ -219,8 +220,8 @@
       checks:
         - name: stdout
           data:
-            - lines 15
-            - bytes 1166
+            - lines 16
+            - bytes 1256
         - name: exitcode
           data:
             - "0"

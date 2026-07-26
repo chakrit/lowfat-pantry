@@ -16,8 +16,10 @@ define compact-mypy(limit):
         fi
 
         if [ "$errors" -gt 0 ]; then
+            shown=$(grep -cE "$findings" "$buf")
             grep -E "$findings" "$buf" | head -n $1
             grep -E '^Found [0-9]+ errors? in ' "$buf" | tail -n 1
+            [ "$shown" -gt $1 ] && printf '[lowfat] +%d lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((shown - $1))" "${level:-full}"
         elif [ "${exit:-0}" = "0" ] || grep -qE '^Success: no issues found' "$buf"; then
             printf 'mypy: clean\n'
         else

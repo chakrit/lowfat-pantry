@@ -21,6 +21,7 @@ define compact-diff(limit):
         s/^/C/' | {
             kept=0
             context=0
+            dropped=0
             while IFS= read -r tagged || [ -n "$tagged" ]; do
                 line=${tagged#?}
                 case $tagged in
@@ -28,6 +29,8 @@ define compact-diff(limit):
                         if [ "$kept" -lt $1 ]; then
                             printf '%s\n' "$line"
                             kept=$((kept + 1))
+                        else
+                            dropped=$((dropped + 1))
                         fi
                         ;;
                     C*)
@@ -39,6 +42,8 @@ define compact-diff(limit):
                         ;;
                 esac
             done
+
+            [ "$dropped" -gt 0 ] && printf '[lowfat] +%d lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$dropped" "${level:-full}"
         }
         exit 0
 

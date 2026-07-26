@@ -24,6 +24,7 @@ define compact-status(limit):
         }
         s/^/D/' | {
             logs=0
+            dropped=0
             while IFS= read -r tagged || [ -n "$tagged" ]; do
                 line=${tagged#?}
                 case $tagged in
@@ -33,10 +34,14 @@ define compact-status(limit):
                         if [ "$logs" -lt $1 ]; then
                             printf '%s\n' "$line"
                             logs=$((logs + 1))
+                        else
+                            dropped=$((dropped + 1))
                         fi
                         ;;
                 esac
             done
+
+            [ "$dropped" -gt 0 ] && printf '[lowfat] +%d lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$dropped" "${level:-full}"
         }
         exit 0
 

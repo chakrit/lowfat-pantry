@@ -15,6 +15,9 @@ define compact-gradle-failure(limit):
         # Error-shaped lines are kept wherever they appear; once the FAILURE
         # block opens, its whole body is signal too. The cap is a plain head
         # because the reference stops appending at the limit.
+        cut=$(mktemp)
+        trap 'rm -f "$cut"' EXIT
+
         sed -E '
         /^(FAILURE:|\* What went wrong:|\* Try:|\* Exception is:)/{s/^/O/;b
         }
@@ -32,7 +35,11 @@ define compact-gradle-failure(limit):
                     X*) [ "$in_failure" = 1 ] && printf '%s\n' "$line" ;;
                 esac
             done
-        } | head -n $1
+        } > "$cut"
+
+        total=$(grep -c '' < "$cut")
+        head -n $1 < "$cut"
+        [ "$total" -gt $1 ] && printf '[lowfat] +%d lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((total - $1))" "${level:-full}"
         exit 0
 
 *:

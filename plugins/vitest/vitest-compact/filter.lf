@@ -18,7 +18,8 @@ define compact-vitest(limit):
 
         buf=$(mktemp)
         detail=$(mktemp)
-        trap 'rm -f "$buf" "$detail"' EXIT
+        cut=$(mktemp)
+        trap 'rm -f "$buf" "$detail" "$cut"' EXIT
         cat > "$buf"
 
         # Two boundaries: the "Failed Tests" header opens the detail block, and the
@@ -40,7 +41,11 @@ define compact-vitest(limit):
             fi
 
             sed -n "$at,\$p" "$buf" | grep -E "$summary"
-        } | head -n $(( $1 + 8 ))
+        } > "$cut"
+
+        total=$(grep -c '' < "$cut")
+        head -n $(( $1 + 8 )) < "$cut"
+        [ "$total" -gt $(( $1 + 8 )) ] && printf '[lowfat] +%d lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((total - $1 - 8))" "${level:-full}"
         exit 0
 
 *:

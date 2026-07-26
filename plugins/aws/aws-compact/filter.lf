@@ -7,6 +7,9 @@ define compact-aws-table(limit):
         # Rules and separators go; pipe rows lose their column bars, prose loses
         # run-on blanks. Both classes share one budget, so the cap is a single
         # head over the reshaped stream.
+        cut=$(mktemp)
+        trap 'rm -f "$cut"' EXIT
+
         sed -E '
         /^-+$|^\|[+-]+\|$|^\+[-+]+\+$/d
         /^\|/{
@@ -16,7 +19,11 @@ define compact-aws-table(limit):
         b
         }
         /^[[:blank:]]*$/d
-        s/[[:blank:]][[:blank:]]+/ /g' | head -n $1
+        s/[[:blank:]][[:blank:]]+/ /g' > "$cut"
+
+        total=$(grep -c '' < "$cut")
+        head -n $1 < "$cut"
+        [ "$total" -gt $1 ] && printf '[lowfat] +%d lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((total - $1))" "${level:-full}"
         exit 0
 
 *:

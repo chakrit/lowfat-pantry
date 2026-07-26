@@ -23,6 +23,7 @@ define compact-psql(limit):
         s/[[:blank:]][[:blank:]]+/ /g
         s/^/X/' | {
             kept=0
+            dropped=0
             summary=
             while IFS= read -r tagged || [ -n "$tagged" ]; do
                 line=${tagged#?}
@@ -32,11 +33,14 @@ define compact-psql(limit):
                         if [ "$kept" -lt $1 ]; then
                             printf '%s\n' "$line"
                             kept=$((kept + 1))
+                        else
+                            dropped=$((dropped + 1))
                         fi
                         ;;
                 esac
             done
             [ -n "$summary" ] && printf '%s\n' "$summary"
+            [ "$dropped" -gt 0 ] && printf '[lowfat] +%d lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$dropped" "${level:-full}"
         }
         exit 0
 

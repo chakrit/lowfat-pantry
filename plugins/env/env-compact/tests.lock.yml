@@ -116,6 +116,7 @@
             - PATH=/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin
             - PRIVATE_KEY=***
             - PWD=/repo/app
+            - '[lowfat] +8 lines dropped (level=ultra) -- output truncated, re-run raw for the full list'
         - name: exitcode
           data:
             - "0"
@@ -123,8 +124,8 @@
       checks:
         - name: stdout
           data:
-            - lines 20
-            - bytes 458
+            - lines 21
+            - bytes 548
         - name: exitcode
           data:
             - "0"
