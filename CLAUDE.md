@@ -12,6 +12,9 @@ built.
 - `docs/spec/output-philosophy.md` — keep-vs-cut philosophy; the *why* behind filter design
 - `docs/vendor/lowfat-internals.md` — how lowfat works
 - `docs/decisions/` — rulings
+- `docs/guides/issue-triage.md` — turn a bug report into a bug *class*; fix it across every
+  plugin at once
+- `plugins/README.md` — pantry layout + the truncation conventions every filter must hold
 - `docs/spec/pantry-plugin-backlog.md` — what's built + what's left
 
 Test filters with `scripts/test.sh` (smoke golden suite) or `scripts/smoke.sh -c

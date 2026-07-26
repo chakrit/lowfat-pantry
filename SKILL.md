@@ -252,9 +252,14 @@ deterministic (smoke compares bytes).
 Hand it: this section + the target plugin dir + 2-3 real captured samples (`<command> … |
 tee samples/<case>.txt`). Tell it to (1) classify each subcommand via the decision tree
 above, (2) write `filter.lf` + `lowfat.toml` + `tests.cue` (cases), (3) lock with
-`scripts/smoke.sh -c …`, review the golden diff, and iterate until green. The single highest-leverage instruction: **"structured and
-passthrough output must survive byte-exact — branch and `raw` it, never filter it."** That
-one rule prevents the most damaging class of bug (silently corrupted JSON / hidden results).
+`scripts/smoke.sh -c …`, review the golden diff, and iterate until green. The two
+highest-leverage instructions, which between them prevent the most damaging bug classes:
+
+1. **"Structured and passthrough output must survive byte-exact — branch and `raw` it,
+   never filter it."** Prevents silently corrupted JSON / hidden results.
+2. **"Never cut without saying so, and never cut an inventory listing at all."** A cut list
+   is byte-identical to a short one, so silent truncation yields a *confident wrong
+   answer* — the class behind issue #1.
 
 ## Reference
 - `docs/spec/output-philosophy.md` — keep-vs-cut philosophy (RTK + lowfat lineage, pantry

@@ -2,7 +2,12 @@
 
 What each plugin actually does beyond a dumb head-cap, and the gotchas to know before
 trusting it. Grouped by area; every plugin scales across `ultra`/`full`/`lite` and ships
-samples + a `tests.cue` smoke golden spec. Conventions and layout: [README.md](README.md). Bundled lowfat
+samples + a `tests.cue` smoke golden spec.
+
+Pantry-wide guarantees: structured output passes byte-exact (invariant 1); **inventory
+listings never lose a row** (invariant 6); and **any truncation is marked with its dropped
+count** (invariant 7) — no plugin cuts silently. See
+[README.md § Truncation conventions](README.md#truncation-conventions-hard-rules). Conventions and layout: [README.md](README.md). Bundled lowfat
 plugins (git, docker, grep, find, ls, tree) are not listed here.
 
 ## VCS / forges
@@ -173,25 +178,34 @@ plugins (git, docker, grep, find, ls, tree) are not listed here.
 
 ## Infra / ops
 
-- **kubectl** — compacts get/describe/logs/apply/rollout per subcommand shape. `-o json`/
-  `-o yaml` pass byte-exact (invariant 1; without the guard the get/describe awk shredded
-  structured output). `-o jsonpath`/`go-template` are residual, not yet guarded.
-- **helm** — preserves release metadata; caps bulky NOTES/tables. `-o json`/`-o yaml`
+- **kubectl** — compacts describe/logs/apply/rollout per subcommand shape. `get` is an
+  inventory listing: every row survives at every level, columns squeezed only (invariant 6;
+  it previously capped at 12 rows on ultra, hiding pods). `-o json`/`-o yaml` pass
+  byte-exact (invariant 1; without the guard get/describe shredded structured output).
+  `-o jsonpath`/`go-template` are residual, not yet guarded.
+- **helm** — preserves release metadata; caps bulky NOTES. `list` is an inventory
+  listing: rows are never dropped, columns squeezed only (invariant 6). `-o json`/`-o yaml`
   (+ `--output` long form) pass byte-exact in every compacting rule (invariant 1; without
-  the guard the summary/table awk collapsed their whitespace). The `list` rule's guard is
+  the guard the summary/table collapsed their whitespace). The `list` rule's guard is
   mechanical — its `-o json` needs a live cluster, so the golden is install-based.
 - **terraform** (+ **`tofu`**/OpenTofu) — keeps plan/apply signal, drops repetitive
   diff/progress lines. One filter serves both binaries (OpenTofu is a fork with
   format-identical output; the plan-header keep alternates `Terraform|OpenTofu` since
   OpenTofu rebrands UI strings). `-json` passes byte-exact in plan/apply/init/*
   (invariant 1; without the guard `compact-plan` matched none of the ndjson stream →
-  empty output).
+  empty output). `state`/`output`/`providers`/`workspace` pass verbatim as inventory
+  listings — the bug that started invariant 6/7
+  ([#1](https://github.com/chakrit/lowfat-pantry/issues/1): `state list` returned 15 of 36
+  resources with no marker).
 - **ansible-playbook** — drops per-host `ok:`/`skipping:` chatter and `TASK [...]`
   banners; keeps `changed:`/`fatal:` and the `PLAY RECAP` tallies. Gotcha: failed runs
   tail to the recap — the recap block is the anchor, not the head of the stream.
-- **docker-compose** — compacts up/logs/ps/build (legacy v1 output format).
+- **docker-compose** — compacts up/logs/build (legacy v1 output format). `ps` is an
+  inventory listing: rows never dropped, columns squeezed only (invariant 6).
 - **systemctl** — status keeps identity lines (Loaded/Active/Main PID) and a
   level-scaled journal tail; ultra shows identity only, zero journal lines.
+  `list-units` is an inventory listing: every unit survives, legend dropped, columns
+  squeezed (invariant 6).
 - **journalctl** — tail-anchored (newest/error lines are last). `-o json` byte-exact.
 - **ssh** — drops `debug1:`–`debug3:` spam from `-v` modes. Gotcha: the remote
   command's output is only capped, never keyword-filtered.

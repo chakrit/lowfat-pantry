@@ -18,6 +18,46 @@ here into the resolved lowfat home (`<LOWFAT_HOME>/plugins/<category>/<name>/`, 
 matching lowfat's bundled convention (`git/git-compact`). Disk plugins shadow bundled
 ones of the same name.
 
+## Truncation conventions (hard rules)
+
+A compactor that drops lines must never be indistinguishable from a genuinely short
+listing — that is the one failure mode producing a *confident wrong answer* rather than a
+degraded one. Two rules, from
+[`docs/decisions/2026-07-26-visible-truncation.md`](../docs/decisions/2026-07-26-visible-truncation.md):
+
+1. **Inventory listings are exempt from compaction.** One load-bearing identifier per line
+   with nothing redundant (`terraform state list`, `kubectl get`, `helm list`,
+   `gh issue list`, `npm ls`) — the whole value is completeness. Give them their own rule
+   returning `raw`, or squeeze columns only; never drop rows. There is no honest 30-line
+   summary of a 200-item list.
+2. **Truncation is always visible.** Any rule that drops lines says so, at every level,
+   with the count. The `.lf` ops `head`/`tail` cut *without* a marker, so they must not
+   terminate a `*:` catch-all — use a marked macro instead:
+
+        define head-auto-marked:
+            python: |
+                import os, sys
+
+                level = os.environ.get("level", "full")
+                limit = {"ultra": 15, "lite": 60}.get(level, 30)
+                lines = sys.stdin.read().rstrip("\n").splitlines()
+
+                kept = lines[:limit]
+                dropped = len(lines) - len(kept)
+                if dropped > 0:
+                    kept.append(f"[lowfat] +{dropped} lines dropped (level={level}) -- output truncated, re-run raw for the full list")
+                sys.stdout.write("\n".join(kept) + "\n" if kept else "")
+
+   Copy it into each filter verbatim — `.lf` has no include mechanism, and plugins are
+   synced individually, so self-containment is a distribution requirement. `or-shell:`
+   recovery fallbacks cap the raw dump too and mark it the same way.
+
+Named-subcommand rules may still use bare `head`/`tail`: their author knew the output
+shape. The catch-all is by definition the branch where nobody did.
+
+Use `shell:` or `python:` for extraction the ops can't express — **never `awk`**, which is
+banned repo-wide.
+
 ## Sample naming
 
     <command>-<subcommand>-<level>.txt    e.g. cargo-build-full.txt

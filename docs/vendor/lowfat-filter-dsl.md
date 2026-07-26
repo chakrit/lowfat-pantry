@@ -108,6 +108,20 @@ is an error.
   **ultra 15 / full 30 / lite 60** (`lf.rs:1490-1495, 1143-1155`). Use `auto`
   when you want level-scaled truncation without hardcoding per-level rules.
 
+🚨 **The `.lf` ops cut silently — the identically-named pipeline processor does
+not.** `head`/`truncate` as *pipeline stages* run `proc_truncate`
+(`lowfat-core/src/pipeline.rs`), which appends `... (N lines truncated)`. The
+`.lf` ops above are a separate code path in `lf.rs` and emit nothing, so a
+truncated stream is byte-indistinguishable from a genuinely short one. Same
+name, different contract — verified against upstream at v0.6.8.
+
+Marking is otherwise lowfat's own house style: the bundled `git-compact`
+reference filter prints `... [git-compact: truncated; %d more files, %d more
+lines omitted - use LOWFAT_LEVEL=lite for the full diff]`, and `tree-compact`
+keeps totals "even when the body is truncated". The pantry therefore never ends
+a catch-all with a bare `head`/`tail` — see `plugins/README.md § Truncation
+conventions` and `docs/decisions/2026-07-26-visible-truncation.md`.
+
 ### Fallbacks (fire only when the stream is empty)
 
 - **`or "text"`** / **`else "text"`** — if the current text is blank
