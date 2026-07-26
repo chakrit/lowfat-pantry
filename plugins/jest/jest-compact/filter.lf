@@ -5,58 +5,38 @@
 # env: $sub $level $exit $args
 
 define compact-jest(limit):
-    python: |
-        import os
-        import re
-        import sys
+    shell: |
+        if [ "${exit:-0}" = "0" ]; then
+            tally=$(grep -m1 -E 'Tests:[[:space:]]+' | sed -E 's/.*Tests:[[:space:]]+//; s/[[:space:]]+$//')
+            if [ -n "$tally" ]; then printf 'jest: %s\n' "$tally"; else printf 'jest: passed\n'; fi
+            exit 0
+        fi
 
-        limit = $1
-        level = os.environ.get("level", "full")
-        exit_code = os.environ.get("exit", "0")
-        lines = sys.stdin.buffer.read().decode("utf-8", "replace").splitlines()
+        buf=$(mktemp)
+        trap 'rm -f "$buf"' EXIT
+        cat > "$buf"
 
-        if exit_code == "0":
-            for line in lines:
-                m = re.search(r"Tests:\s+(.*)", line)
-                if m:
-                    print(f"jest: {m.group(1).strip()}")
-                    break
-            else:
-                print("jest: passed")
-            raise SystemExit(0)
+        # The final summary block latches: once "Test Suites:"/"Tests:"/… appears,
+        # nothing but further summary lines survives. So the stream splits there —
+        # failure blocks above, summary lines below.
+        summary='^(Test Suites|Tests|Snapshots|Time|Ran all):'
+        at=$(grep -nE "$summary" "$buf" | head -n 1 | cut -d: -f1)
+        [ -n "$at" ] || at=$(( $(grep -c '' < "$buf") + 1 ))
 
-        out = []
-        in_summary = False
-        for line in lines:
-            # final summary block: Test Suites: / Tests: / Snapshots: / Time:
-            if re.match(r"(Test Suites|Tests|Snapshots|Time|Ran all):", line):
-                in_summary = True
-                out.append(line)
-                continue
-            if in_summary:
-                # blank/continuation after the summary started — keep collapsing
-                continue
-            # failing-test header and failure block body
-            if line.startswith("FAIL "):
-                out.append(line)
-                continue
-            if level == "ultra":
-                # ultra: FAIL headers (above) + the assertion verdict lines. The
-                # per-test bullet line is matched structurally (a short indented
-                # line right after FAIL, before the blank gap) rather than by its
-                # non-ASCII glyph: a literal multibyte char in a macro body is
-                # corrupted by lowfat's $N arg-expansion, so we avoid it.
-                stripped = line.lstrip()
-                if re.match(r"(Expected|Received|expect\()", stripped):
-                    out.append(line)
-            else:
-                # full/lite: the whole failure block (code frame, location, etc.),
-                # minus the per-suite PASS noise which never reaches here
-                if not line.startswith("PASS "):
-                    out.append(line)
+        {
+            if [ "${level:-full}" = "ultra" ]; then
+                # ultra: FAIL headers + assertion verdicts. The per-test bullet is
+                # matched structurally, never by its glyph — a non-ASCII literal in
+                # a parameterized macro body is corrupted by lowfat's $N expansion.
+                sed -n "1,$((at - 1))p" "$buf" | grep -E '^FAIL |^[[:space:]]*(Expected|Received|expect\()'
+            else
+                # full/lite: the whole failure block minus per-suite PASS noise
+                sed -n "1,$((at - 1))p" "$buf" | grep -vE '^PASS '
+            fi
 
-        for line in out[:limit + 8]:
-            print(line)
+            sed -n "$at,\$p" "$buf" | grep -E "$summary"
+        } | head -n $(( $1 + 8 ))
+        exit 0
 
 *:
     if --json:

@@ -3,32 +3,42 @@
 # env: $sub $level $exit $args
 
 define compact-psql(limit):
-    python: |
-        import re, sys
-
-        lines = sys.stdin.read().splitlines()
-
-        out, summary = [], None
-        for line in lines:
-            if re.match(r"^[+][-+]+[+]$", line):
-                continue
-            if re.match(r"^\([0-9]+ rows?\)$", line):
-                summary = line
-                continue
-            if line.startswith("|"):
-                if len(out) < $1:
-                    cell = re.sub(r"^[|][ \t]*", "", line)
-                    cell = re.sub(r"[ \t]*[|][ \t]*", " ", cell)
-                    out.append(re.sub(r"[ \t]+$", "", cell))
-                continue
-            if re.match(r"^[ \t]*[-][-+ \t]+$", line):
-                continue
-            if line.strip() and len(out) < $1:
-                out.append(re.sub(r"[ \t][ \t]+", " ", line))
-
-        if summary:
-            out.append(summary)
-        sys.stdout.write("\n".join(out) + "\n" if out else "")
+    shell: |
+        # The sed pass both classifies and reshapes (pipe rows lose their column
+        # separators, prose loses run-on blanks); the loop only has to count kept
+        # lines and hold the row tally back for the end.
+        sed -E '
+        /^\+[-+]+\+$/d
+        /^\([0-9]+ rows?\)$/{s/^/S/;b
+        }
+        /^\|/{
+        s/^\|[[:blank:]]*//
+        s/[[:blank:]]*\|[[:blank:]]*/ /g
+        s/[[:blank:]]+$//
+        s/^/P/
+        b
+        }
+        /^[[:blank:]]*-[-+[:blank:]]*$/d
+        /^[[:blank:]]*$/d
+        s/[[:blank:]][[:blank:]]+/ /g
+        s/^/X/' | {
+            kept=0
+            summary=
+            while IFS= read -r tagged || [ -n "$tagged" ]; do
+                line=${tagged#?}
+                case $tagged in
+                    S*) summary=$line ;;
+                    *)
+                        if [ "$kept" -lt $1 ]; then
+                            printf '%s\n' "$line"
+                            kept=$((kept + 1))
+                        fi
+                        ;;
+                esac
+            done
+            [ -n "$summary" ] && printf '%s\n' "$summary"
+        }
+        exit 0
 
 *:
     if exit failed:

@@ -9,53 +9,39 @@
 # env: $sub $level $exit $args
 
 define compact-vitest(limit):
-    python: |
-        import os
-        import re
-        import sys
+    shell: |
+        if [ "${exit:-0}" = "0" ]; then
+            tally=$(grep -m1 -E '^[[:space:]]*Tests[[:space:]]+' | sed -E 's/^[[:space:]]*Tests[[:space:]]+//; s/[[:space:]]+$//')
+            if [ -n "$tally" ]; then printf 'vitest: %s\n' "$tally"; else printf 'vitest: passed\n'; fi
+            exit 0
+        fi
 
-        limit = $1
-        level = os.environ.get("level", "full")
-        exit_code = os.environ.get("exit", "0")
-        lines = sys.stdin.buffer.read().decode("utf-8", "replace").splitlines()
+        buf=$(mktemp)
+        detail=$(mktemp)
+        trap 'rm -f "$buf" "$detail"' EXIT
+        cat > "$buf"
 
-        if exit_code == "0":
-            for line in lines:
-                m = re.match(r"\s*Tests\s+(.*)", line)
-                if m:
-                    print(f"vitest: {m.group(1).strip()}")
-                    break
-            else:
-                print("vitest: passed")
-            raise SystemExit(0)
+        # Two boundaries: the "Failed Tests" header opens the detail block, and the
+        # first summary line closes it for good (everything after it is dropped
+        # except further summary lines).
+        summary='^[[:space:]]*(Test Files|Tests|Start at|Duration)([^A-Za-z0-9_]|$)'
+        at=$(grep -nE "$summary" "$buf" | head -n 1 | cut -d: -f1)
+        [ -n "$at" ] || at=$(( $(grep -c '' < "$buf") + 1 ))
 
-        out = []
-        in_section = False
-        in_summary = False
-        for line in lines:
-            # final summary block: Test Files / Tests / Start at / Duration
-            if re.match(r"\s*(Test Files|Tests|Start at|Duration)\b", line):
-                in_summary = True
-                in_section = False
-                out.append(line)
-                continue
-            if in_summary:
-                continue
-            # the failing section header opens the detailed block
-            if "Failed Tests" in line:
-                in_section = True
-                out.append(line)
-                continue
-            if in_section:
-                if level == "ultra":
-                    # ultra: FAIL headers + the assertion/error verdict only
-                    if line.startswith(" FAIL ") or "Error:" in line or "Error" in line.split(":")[0]:
-                        out.append(line)
-                else:
-                    out.append(line)
+        sed -n "1,$((at - 1))p" "$buf" | sed -n '/Failed Tests/,$p' > "$detail"
 
-        for line in out[:limit + 8]:
-            print(line)
+        {
+            if [ "${level:-full}" = "ultra" ]; then
+                # the section header survives at every level; below it, only the
+                # assertion/error verdicts
+                grep -E 'Failed Tests|^ FAIL |Error:|^[^:]*Error' "$detail"
+            else
+                cat "$detail"
+            fi
+
+            sed -n "$at,\$p" "$buf" | grep -E "$summary"
+        } | head -n $(( $1 + 8 ))
+        exit 0
 
 *:
     if --reporter=json:

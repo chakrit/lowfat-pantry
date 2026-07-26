@@ -13,35 +13,44 @@
 include ../../lib/truncation.lf
 
 define compact-plan(limit):
-    python: |
-        import os, re, sys
-
-        level = os.environ.get("level", "full")
-        lines = sys.stdin.read().splitlines()
-
-        out, count = [], 0
-        for line in lines:
-            if re.match(r"^  # .* (will be|must be|has been|will be read during apply)", line):
-                out.append(line)
-                count += 1
-                continue
-            if re.match(r"^Plan: [0-9]+ to add, [0-9]+ to change, [0-9]+ to destroy\.", line):
-                out.append(line)
-                continue
-            if line.startswith("No changes.") or re.match(r"^(Terraform|OpenTofu) will perform the following actions:", line):
-                out.append(line)
-                continue
-            if level == "ultra":
-                continue
-            if re.match(r"^[ \t]*[~+-][ \t][A-Za-z0-9_\"-]+[ \t]+=", line):
-                if count < $1:
-                    out.append(line)
-                    count += 1
-                continue
-            if line.startswith("Changes to Outputs:"):
-                out.append(line)
-
-        sys.stdout.write("\n".join(out) + "\n" if out else "")
+    shell: |
+        # One sed pass tags each line with its class, then a pure-builtin loop
+        # walks the tags — that keeps the running count (shared between resource
+        # headers and attribute rows) without forking per line. Tags are stripped
+        # back off on the way out, so a tag character can never collide with
+        # real output.
+        sed -E '
+        /^  # .*(will be|must be|has been|will be read during apply)/{s/^/H/;b
+        }
+        /^Plan: [0-9]+ to add, [0-9]+ to change, [0-9]+ to destroy\./{s/^/K/;b
+        }
+        /^No changes\./{s/^/K/;b
+        }
+        /^(Terraform|OpenTofu) will perform the following actions:/{s/^/K/;b
+        }
+        /^[[:blank:]]*[~+-][[:blank:]][A-Za-z0-9_"-]+[[:blank:]]+=/{s/^/A/;b
+        }
+        /^Changes to Outputs:/{s/^/O/;b
+        }
+        s/^/D/' | {
+            count=0
+            while IFS= read -r tagged || [ -n "$tagged" ]; do
+                line=${tagged#?}
+                case $tagged in
+                    H*) printf '%s\n' "$line"; count=$((count + 1)) ;;
+                    K*) printf '%s\n' "$line" ;;
+                    A*)
+                        [ "${level:-full}" = "ultra" ] && continue
+                        if [ "$count" -lt $1 ]; then
+                            printf '%s\n' "$line"
+                            count=$((count + 1))
+                        fi
+                        ;;
+                    O*) [ "${level:-full}" = "ultra" ] || printf '%s\n' "$line" ;;
+                esac
+            done
+        }
+        exit 0
 
 plan:
     if exit failed:

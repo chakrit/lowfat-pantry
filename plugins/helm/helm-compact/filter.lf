@@ -13,31 +13,45 @@ include ../../lib/columns.lf
 include ../../lib/truncation.lf
 
 define helm-summary(limit):
-    python: |
-        import os, re, sys
+    shell: |
+        # NOTES: opens a block with its own budget; everything before it is
+        # release metadata with a separate one. The loop owns both counters.
+        sed -E '
+        /^(NAME:|LAST DEPLOYED:|NAMESPACE:|STATUS:|REVISION:|TEST SUITE:)/{s/^/K/;b
+        }
+        /^NOTES:/{s/^/N/;b
+        }
+        /^[[:blank:]]*$/{s/^/B/;b
+        }
+        s/^/X/' | {
+            in_notes=0
+            notes=0
+            seen=0
+            while IFS= read -r tagged || [ -n "$tagged" ]; do
+                line=${tagged#?}
+                tag=${tagged%"$line"}
 
-        level = os.environ.get("level", "full")
-        lines = sys.stdin.read().splitlines()
+                if [ "$in_notes" = 1 ] && [ "$tag" != N ]; then
+                    if [ "${level:-full}" != "ultra" ] && [ "$notes" -lt $1 ]; then
+                        printf '%s\n' "$line"
+                        notes=$((notes + 1))
+                    fi
+                    continue
+                fi
 
-        out, notes, seen, in_notes = [], 0, 0, False
-        for line in lines:
-            if re.match(r"^(NAME:|LAST DEPLOYED:|NAMESPACE:|STATUS:|REVISION:|TEST SUITE:)", line):
-                out.append(line)
-                continue
-            if line.startswith("NOTES:"):
-                out.append(line)
-                in_notes, notes = True, 0
-                continue
-            if in_notes:
-                if level != "ultra" and notes < $1:
-                    out.append(line)
-                    notes += 1
-                continue
-            if line.strip() and seen < $1:
-                out.append(line)
-                seen += 1
-
-        sys.stdout.write("\n".join(out) + "\n" if out else "")
+                case $tag in
+                    K) printf '%s\n' "$line" ;;
+                    N) printf '%s\n' "$line"; in_notes=1; notes=0 ;;
+                    X)
+                        if [ "$seen" -lt $1 ]; then
+                            printf '%s\n' "$line"
+                            seen=$((seen + 1))
+                        fi
+                        ;;
+                esac
+            done
+        }
+        exit 0
 
 install|upgrade|status:
     if exit failed:

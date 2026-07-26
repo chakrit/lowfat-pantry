@@ -14,33 +14,49 @@ include ../../lib/columns.lf
 include ../../lib/truncation.lf
 
 define compact-describe(limit):
-    python: |
-        import os, re, sys
+    shell: |
+        # Tag by line class in one sed pass; the loop below owns the state the
+        # tags can't carry: whether we're inside the Events table, and how many
+        # event rows have been kept.
+        sed -E '
+        /^(Name:|Namespace:|Status:|Controlled By:)/{s/^/N/;b
+        }
+        /^Events:/{s/^/V/;b
+        }
+        /^  (Type[[:blank:]]+Reason|----)/{s/^/T/;b
+        }
+        /^(Labels:|Annotations:|Containers:|Conditions:|Replicas:|StrategyType:)/{s/^/L/;b
+        }
+        /^[[:blank:]]*$/{s/^/B/;b
+        }
+        s/^/X/' | {
+            in_events=0
+            events=0
+            while IFS= read -r tagged || [ -n "$tagged" ]; do
+                line=${tagged#?}
+                tag=${tagged%"$line"}
 
-        level = os.environ.get("level", "full")
-        lines = sys.stdin.read().splitlines()
+                # inside the Events table every non-blank row is an event row,
+                # whatever it looks like — mirrors the reference order of checks
+                if [ "$in_events" = 1 ] && [ "$tag" = L ]; then
+                    tag=X
+                fi
 
-        out, events, in_events = [], 0, False
-        for line in lines:
-            if re.match(r"^(Name:|Namespace:|Status:|Controlled By:|Events:)", line):
-                out.append(line)
-                if line.startswith("Events:"):
-                    in_events = True
-                continue
-            if in_events and (re.match(r"^  Type[ \t]+Reason", line) or line.startswith("  ----")):
-                out.append(line)
-                continue
-            if in_events:
-                if line.strip():
-                    if events < $1:
-                        out.append(line)
-                        events += 1
-                    continue
-                continue
-            if level != "ultra" and re.match(r"^(Labels:|Annotations:|Containers:|Conditions:|Replicas:|StrategyType:)", line):
-                out.append(line)
-
-        sys.stdout.write("\n".join(out) + "\n" if out else "")
+                case $tag in
+                    N) printf '%s\n' "$line" ;;
+                    V) printf '%s\n' "$line"; in_events=1 ;;
+                    T) [ "$in_events" = 1 ] && printf '%s\n' "$line" ;;
+                    L) [ "${level:-full}" = "ultra" ] || printf '%s\n' "$line" ;;
+                    X)
+                        if [ "$in_events" = 1 ] && [ "$events" -lt $1 ]; then
+                            printf '%s\n' "$line"
+                            events=$((events + 1))
+                        fi
+                        ;;
+                esac
+            done
+        }
+        exit 0
 
 get:
     if exit failed:
