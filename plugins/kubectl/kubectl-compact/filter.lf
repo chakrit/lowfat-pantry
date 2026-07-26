@@ -1,36 +1,70 @@
 #!/usr/bin/env lowfat-filter
-# kubectl-compact — preserve cluster signal while capping table/log verbosity.
+# kubectl-compact — preserve cluster signal while capping log verbosity.
+# `get` is an inventory listing: every row is load-bearing, so rows are never capped,
+# only column-squeezed (invariant 6).
 # env: $sub $level $exit $args
 #
 # `-o json` / `-o yaml` is machine output — pass byte-exact (invariant 1).
-# Without the guard, compact-get/describe shred JSON/YAML to a few lines. The
+# Without the guard, squeeze-columns/describe shred JSON/YAML. The
 # guard repeats per compacting rule because `.lf` has no top-level pre-filter
 # and macros can't wrap a cascade. (`-o jsonpath`/`go-template`/`custom-columns`
 # emit caller-formatted text — residual risk, not yet guarded.)
 
-define compact-get(limit):
-    shell: |
-        awk -v lim=$1 '
-          /^NAME[[:space:]]/ { gsub(/[[:space:]][[:space:]]+/, " "); print; next }
-          /^[[:alnum:]._-]+[[:space:]]/ {
-            if (rows < lim) { gsub(/[[:space:]][[:space:]]+/, " "); print; rows++ }
-            next
-          }
-          NF && other < 3 { print; other++ }
-        '
+# `head auto` cuts without a trace, so a truncated stream is indistinguishable from a
+# genuinely short one and the reader acts on a confident wrong answer (issue #1). Mirrors
+# `head auto`'s level limits (ultra 15 / full 30 / lite 60) and names what it dropped.
+# Inventory listings are one load-bearing row per line: nothing is redundant, so no row
+# may be dropped (invariant 6). Column padding is the only slack — squeezing runs of
+# whitespace saves tokens without losing an item.
+define squeeze-columns:
+    python: |
+        import re, sys
+
+        for line in sys.stdin.read().rstrip("\n").splitlines():
+            print(re.sub(r"[ \t]{2,}", " ", line))
+
+define head-auto-marked:
+    python: |
+        import os, sys
+
+        level = os.environ.get("level", "full")
+        limit = {"ultra": 15, "lite": 60}.get(level, 30)
+        lines = sys.stdin.read().rstrip("\n").splitlines()
+
+        kept = lines[:limit]
+        dropped = len(lines) - len(kept)
+        if dropped > 0:
+            kept.append(f"[lowfat] +{dropped} lines dropped (level={level}) -- output truncated, re-run raw for the full list")
+        sys.stdout.write("\n".join(kept) + "\n" if kept else "")
 
 define compact-describe(limit):
-    shell: |
-        awk -v lim=$1 -v lvl=$level '
-          /^Name:|^Namespace:|^Status:|^Controlled By:|^Events:/ { print; if (/^Events:/) in_events=1; next }
-          in_events && /^  Type[[:space:]]+Reason/ { print; next }
-          in_events && /^  ----/ { print; next }
-          in_events && NF {
-            if (events < lim) { print; events++ }
-            next
-          }
-          lvl != "ultra" && /^(Labels:|Annotations:|Containers:|Conditions:|Replicas:|StrategyType:)/ { print; next }
-        '
+    python: |
+        import os, re, sys
+
+        level = os.environ.get("level", "full")
+        lines = sys.stdin.read().splitlines()
+
+        out, events, in_events = [], 0, False
+        for line in lines:
+            if re.match(r"^(Name:|Namespace:|Status:|Controlled By:|Events:)", line):
+                out.append(line)
+                if line.startswith("Events:"):
+                    in_events = True
+                continue
+            if in_events and (re.match(r"^  Type[ \t]+Reason", line) or line.startswith("  ----")):
+                out.append(line)
+                continue
+            if in_events:
+                if line.strip():
+                    if events < $1:
+                        out.append(line)
+                        events += 1
+                    continue
+                continue
+            if level != "ultra" and re.match(r"^(Labels:|Annotations:|Containers:|Conditions:|Replicas:|StrategyType:)", line):
+                out.append(line)
+
+        sys.stdout.write("\n".join(out) + "\n" if out else "")
 
 get:
     if exit failed:
@@ -40,10 +74,7 @@ get:
     elif -o yaml:
         raw
     else:
-        match level:
-            ultra: compact-get 12
-            full:  compact-get 30
-            lite:  compact-get 60
+        squeeze-columns
 
 describe:
     if exit failed:
@@ -86,7 +117,7 @@ apply|rollout:
     else:
         keep /^([[:alnum:]._\/-]+ (created|configured|unchanged|deleted)|deployment ".+" successfully|Waiting for|rollout status|error:)/
         head auto
-        or-shell: awk 'NF' | head -30
+        or-shell: s=$(grep -E '[^[:space:]]'); n=$(printf '%s\n' "$s" | wc -l); printf '%s\n' "$s" | head -30; if [ "$n" -gt 30 ]; then printf '[lowfat] +%d lines dropped -- re-run raw for the full list\n' "$((n-30))"; fi
 
 *:
     if exit failed:
@@ -96,5 +127,5 @@ apply|rollout:
     elif -o yaml:
         raw
     else:
-        head auto
+        head-auto-marked
 

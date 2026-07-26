@@ -96,6 +96,7 @@
       checks:
         - name: stdout
           data:
+            - '[lowfat] +14 earlier lines dropped (level=full) -- output truncated, re-run raw for the full list'
             - 'Jun 08 11:58:13 host checkout-api[1401]: ERROR payment gateway timeout provider=stripe request_id=req_123'
             - 'Jun 08 11:58:14 host checkout-api[1401]: retrying payment intent id=pi_123 attempt=2'
             - 'Jun 08 11:58:15 host checkout-api[1401]: POST /checkout status=200 elapsed=61ms'
@@ -163,8 +164,8 @@
       checks:
         - name: stdout
           data:
-            - lines 60
-            - bytes 4754
+            - lines 61
+            - bytes 4852
         - name: exitcode
           data:
             - "0"
@@ -174,6 +175,7 @@
       checks:
         - name: stdout
           data:
+            - '[lowfat] +54 earlier lines dropped (level=ultra) -- output truncated, re-run raw for the full list'
             - 'Jun 08 11:58:53 host checkout-api[1401]: GET /products/sku-10 status=200 elapsed=10ms'
             - 'Jun 08 11:58:54 host checkout-api[1401]: GET /products/sku-11 status=200 elapsed=11ms'
             - 'Jun 08 11:58:55 host checkout-api[1401]: GET /cart status=200 elapsed=9ms'
@@ -201,8 +203,8 @@
       checks:
         - name: stdout
           data:
-            - lines 20
-            - bytes 1595
+            - lines 21
+            - bytes 1694
         - name: exitcode
           data:
             - "0"

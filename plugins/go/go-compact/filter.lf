@@ -8,6 +8,23 @@
 # "go test: ok"; list/mod/* truncate the JSON. The guard repeats per compacting
 # rule because `.lf` has no top-level pre-filter.
 
+# `head auto` cuts without a trace, so a truncated stream is indistinguishable from a
+# genuinely short one and the reader acts on a confident wrong answer (issue #1). Mirrors
+# `head auto`'s level limits (ultra 15 / full 30 / lite 60) and names what it dropped.
+define head-auto-marked:
+    python: |
+        import os, sys
+
+        level = os.environ.get("level", "full")
+        limit = {"ultra": 15, "lite": 60}.get(level, 30)
+        lines = sys.stdin.read().rstrip("\n").splitlines()
+
+        kept = lines[:limit]
+        dropped = len(lines) - len(kept)
+        if dropped > 0:
+            kept.append(f"[lowfat] +{dropped} lines dropped (level={level}) -- output truncated, re-run raw for the full list")
+        sys.stdout.write("\n".join(kept) + "\n" if kept else "")
+
 build:
     if exit failed:
         raw
@@ -27,7 +44,7 @@ test:
             ultra:
                 keep /^(--- FAIL|FAIL|panic:|[[:space:]]+panic|[[:space:]]+.+\.go:[0-9]+:|[[:space:]]+Error Trace:|[[:space:]]+Error:|ok[[:space:]]|[?][[:space:]]|# )/
                 head 40
-                or-shell: awk 'NF' | tail -40
+                or-shell: s=$(grep -E '[^[:space:]]'); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt 40 ]; then printf '[lowfat] +%d earlier lines dropped -- re-run raw for the full list\n' "$((n-40))"; fi; printf '%s\n' "$s" | tail -40
             full:
                 drop /^=== RUN /
                 drop /^--- PASS: /
@@ -78,4 +95,4 @@ mod:
     elif -json:
         raw
     else:
-        head auto
+        head-auto-marked

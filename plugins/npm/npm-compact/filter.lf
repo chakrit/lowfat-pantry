@@ -2,6 +2,23 @@
 # npm-compact - drop install progress, keep summaries, warnings, audit, and raw failures.
 # env: $sub $level $exit $args
 
+# `head auto` cuts without a trace, so a truncated stream is indistinguishable from a
+# genuinely short one and the reader acts on a confident wrong answer (issue #1). Mirrors
+# `head auto`'s level limits (ultra 15 / full 30 / lite 60) and names what it dropped.
+define head-auto-marked:
+    python: |
+        import os, sys
+
+        level = os.environ.get("level", "full")
+        limit = {"ultra": 15, "lite": 60}.get(level, 30)
+        lines = sys.stdin.read().rstrip("\n").splitlines()
+
+        kept = lines[:limit]
+        dropped = len(lines) - len(kept)
+        if dropped > 0:
+            kept.append(f"[lowfat] +{dropped} lines dropped (level={level}) -- output truncated, re-run raw for the full list")
+        sys.stdout.write("\n".join(kept) + "\n" if kept else "")
+
 define compact-npm-install(limit):
     drop /^npm notice /
     drop /^npm http /
@@ -12,7 +29,7 @@ define compact-npm-install(limit):
     # vulnerability totals, and every npm warn/error line
     keep /^(added [0-9]+ packages|removed [0-9]+ packages|changed [0-9]+ packages|audited [0-9]+ packages|[0-9]+ packages are looking for funding|found [0-9]+ vulnerabilities|[0-9]+ .+ vulnerabilities|[0-9]+ vulnerabilities|npm warn|npm error|npm ERR!)/
     shell: head -$1
-    or-shell: awk 'NF' | tail -$1
+    or-shell: s=$(grep -E '[^[:space:]]'); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt $1 ]; then printf '[lowfat] +%d earlier lines dropped -- re-run raw for the full list\n' "$((n-$1))"; fi; printf '%s\n' "$s" | tail -$1
 
 # --json is machine output on any subcommand — pass byte-exact (invariant 1).
 install|i|ci:
@@ -43,4 +60,4 @@ run|test:
     elif exit failed:
         raw
     else:
-        head auto
+        head-auto-marked

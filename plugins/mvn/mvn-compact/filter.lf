@@ -2,6 +2,22 @@
 # mvn-compact - drop Maven transfer/plugin noise while preserving build signal.
 # env: $sub $level $exit $args
 
+# Bare `tail` cuts without a trace, leaving a truncated stream indistinguishable from a
+# genuinely short one (issue #1). Same cap, but it names what it dropped — leading, since
+# the drop happened above what survived.
+define tail-marked(limit):
+    python: |
+        import os, sys
+
+        level = os.environ.get("level", "full")
+        lines = sys.stdin.read().rstrip("\n").splitlines()
+
+        kept = lines[-$1:]
+        dropped = len(lines) - len(kept)
+        if dropped > 0:
+            kept.insert(0, f"[lowfat] +{dropped} earlier lines dropped (level={level}) -- output truncated, re-run raw for the full list")
+        sys.stdout.write("\n".join(kept) + "\n" if kept else "")
+
 define drop-maven-noise:
     drop /^\[INFO\] (Downloading|Downloaded) /
     drop /^\[INFO\][[:space:]]+-+$/
@@ -17,12 +33,12 @@ define drop-maven-noise:
     match level:
         ultra:
             keep /^(\[ERROR\]|\[WARNING\]|Tests run: [0-9]+,|(\[INFO\] )?BUILD (SUCCESS|FAILURE)|\[INFO\] Reactor Summary|\[INFO\] [[:alnum:]._-]+[[:space:]]+\.+[[:space:]]+(SUCCESS|FAILURE))/
-            tail 40
-            or-shell: tail -40
+            tail-marked 40
+            or-shell: s=$(cat); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt 40 ]; then printf '[lowfat] +%d earlier lines dropped -- re-run raw for the full list\n' "$((n-40))"; fi; printf '%s\n' "$s" | tail -40
         lite:
             drop-maven-noise
-            tail 200
+            tail-marked 200
         else:
             drop-maven-noise
-            tail 80
+            tail-marked 80
 

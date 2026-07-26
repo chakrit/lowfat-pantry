@@ -2,6 +2,21 @@
 # jq-compact - keep full/lite JSON byte-exact; ultra summarizes large arrays.
 # env: $sub $level $exit $args
 
+# Bare `head` cuts without a trace, leaving a truncated stream indistinguishable from a
+# genuinely short one (issue #1). Same cap, but it names what it dropped.
+define head-marked(limit):
+    python: |
+        import os, sys
+
+        level = os.environ.get("level", "full")
+        lines = sys.stdin.read().rstrip("\n").splitlines()
+
+        kept = lines[:$1]
+        dropped = len(lines) - len(kept)
+        if dropped > 0:
+            kept.append(f"[lowfat] +{dropped} lines dropped (level={level}) -- output truncated, re-run raw for the full list")
+        sys.stdout.write("\n".join(kept) + "\n" if kept else "")
+
 define ultra-json-array(limit):
     python: |
         import json
@@ -26,14 +41,14 @@ define ultra-json-array(limit):
         raw
     elif -r:
         match level:
-            ultra: head 30
-            lite:  head 120
-            else:  head 60
+            ultra: head-marked 30
+            lite:  head-marked 120
+            else:  head-marked 60
     elif --raw-output:
         match level:
-            ultra: head 30
-            lite:  head 120
-            else:  head 60
+            ultra: head-marked 30
+            lite:  head-marked 120
+            else:  head-marked 60
     else:
         match level:
             ultra: ultra-json-array 12

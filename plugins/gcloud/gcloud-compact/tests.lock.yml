@@ -117,6 +117,7 @@
             - web-22     us-central1-a  e2-medium                  10.0.0.22    34.10.20.22    RUNNING
             - web-23     us-central1-a  e2-medium                  10.0.0.23    34.10.20.23    RUNNING
             - web-24     us-central1-a  e2-medium                  10.0.0.24    34.10.20.24    RUNNING
+            - '[lowfat] +1 lines dropped (level=ultra) -- output truncated, re-run raw for the full list'
         - name: exitcode
           data:
             - "0"
@@ -124,8 +125,8 @@
       checks:
         - name: stdout
           data:
-            - lines 25
-            - bytes 2224
+            - lines 26
+            - bytes 2314
         - name: exitcode
           data:
             - "0"

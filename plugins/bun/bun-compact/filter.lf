@@ -10,8 +10,31 @@
 
 # cap that announces itself — a silently head-capped program body looks
 # complete; the hint tells the agent output was truncated.
+# Bare `head` cuts without a trace, leaving a truncated stream indistinguishable from a
+# genuinely short one (issue #1). Same cap, but it names what it dropped.
+define head-marked(limit):
+    python: |
+        import os, sys
+
+        level = os.environ.get("level", "full")
+        lines = sys.stdin.read().rstrip("\n").splitlines()
+
+        kept = lines[:$1]
+        dropped = len(lines) - len(kept)
+        if dropped > 0:
+            kept.append(f"[lowfat] +{dropped} lines dropped (level={level}) -- output truncated, re-run raw for the full list")
+        sys.stdout.write("\n".join(kept) + "\n" if kept else "")
+
 define cap(limit):
-    shell: awk -v lim=$1 'NR<=lim; END { if (NR>lim) printf "... (%d lines total)\n", NR }'
+    python: |
+        import sys
+
+        lines = sys.stdin.read().splitlines()
+
+        kept = lines[:$1]
+        if len(lines) > len(kept):
+            kept.append(f"... ({len(lines)} lines total)")
+        sys.stdout.write("\n".join(kept) + "\n" if kept else "")
 
 # ── install / dependency mutation ─────────────────────────────────────────
 install|add|remove|update|pm|link|unlink:
@@ -37,7 +60,7 @@ test:
         ultra:
             keep /(✗|✘|✕|\(fail\)|error:|panic|[0-9]+ (pass|fail|error|skip)|Ran [0-9]+ test|\.test\.|^bun test)/
             tail 30
-            or-shell: tail -30
+            or-shell: s=$(cat); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt 30 ]; then printf '[lowfat] +%d earlier lines dropped -- re-run raw for the full list\n' "$((n-30))"; fi; printf '%s\n' "$s" | tail -30
         lite:
             head 200
         else:
@@ -60,4 +83,4 @@ run|build|x|exec:
     if exit failed:
         raw
     else:
-        head 40
+        head-marked 40

@@ -6,8 +6,15 @@
 # env: $sub $level $exit $args
 
 define cap(limit):
-    shell: |
-        awk -v lim=$1 'NR<=lim; END { if (NR>lim) printf "... (%d lines total)\n", NR }'
+    python: |
+        import sys
+
+        lines = sys.stdin.read().splitlines()
+
+        kept = lines[:$1]
+        if len(lines) > len(kept):
+            kept.append(f"... ({len(lines)} lines total)")
+        sys.stdout.write("\n".join(kept) + "\n" if kept else "")
 
 install|update|add:
     match exit:
@@ -16,14 +23,14 @@ install|update|add:
                 ultra:
                     drop /^  \* [a-z0-9._-]+-[0-9]/
                     head 20
-                    or-shell: tail -20
+                    or-shell: s=$(cat); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt 20 ]; then printf '[lowfat] +%d earlier lines dropped -- re-run raw for the full list\n' "$((n-20))"; fi; printf '%s\n' "$s" | tail -20
                 lite:
                     drop /^  \* [a-z0-9._-]+-[0-9]/
                     head 200
                 full:
                     drop /^  \* [a-z0-9._-]+-[0-9]/
                     head 50
-                    or-shell: tail -40
+                    or-shell: s=$(cat); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt 40 ]; then printf '[lowfat] +%d earlier lines dropped -- re-run raw for the full list\n' "$((n-40))"; fi; printf '%s\n' "$s" | tail -40
         else:
             match level:
                 ultra:
@@ -36,7 +43,7 @@ install|update|add:
                 full:
                     drop /^(Fetching |Resolving dep|Using )/
                     head 50
-                    or-shell: tail -40
+                    or-shell: s=$(cat); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt 40 ]; then printf '[lowfat] +%d earlier lines dropped -- re-run raw for the full list\n' "$((n-40))"; fi; printf '%s\n' "$s" | tail -40
 
 exec:
     match level:

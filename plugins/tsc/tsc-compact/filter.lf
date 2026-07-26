@@ -9,17 +9,32 @@
 # TSxxxx: message` lines, the `Found N errors` summary, and the per-file
 # `Errors  Files` table (tsc --pretty). At ultra we keep just those.
 
+# Bare `head` cuts without a trace, leaving a truncated stream indistinguishable from a
+# genuinely short one (issue #1). Same cap, but it names what it dropped.
+define head-marked(limit):
+    python: |
+        import os, sys
+
+        level = os.environ.get("level", "full")
+        lines = sys.stdin.read().rstrip("\n").splitlines()
+
+        kept = lines[:$1]
+        dropped = len(lines) - len(kept)
+        if dropped > 0:
+            kept.append(f"[lowfat] +{dropped} lines dropped (level={level}) -- output truncated, re-run raw for the full list")
+        sys.stdout.write("\n".join(kept) + "\n" if kept else "")
+
 *:
     if exit failed:
         match level:
             ultra:
                 keep /(error TS[0-9]+|^Found [0-9]+ error|^Errors  Files|^[[:space:]]*[0-9]+[[:space:]]+[^[:space:]])/
-                head 40
-                or-shell: grep -E 'error TS[0-9]+' | head -40
+                head-marked 40
+                or-shell: s=$(grep -E 'error TS[0-9]+'); n=$(printf '%s\n' "$s" | wc -l); printf '%s\n' "$s" | head -40; if [ "$n" -gt 40 ]; then printf '[lowfat] +%d lines dropped -- re-run raw for the full list\n' "$((n-40))"; fi
             lite:
-                head 200
+                head-marked 200
             else:
-                head 80
+                head-marked 80
     else:
-        head 10
+        head-marked 10
         or "tsc: no errors"

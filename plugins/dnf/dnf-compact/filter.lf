@@ -10,24 +10,39 @@
 # prints `Failed to resolve` / `No match for argument` — keep it. No JSON output
 # path → no byte-exact guard needed.
 
+# Bare `head` cuts without a trace, leaving a truncated stream indistinguishable from a
+# genuinely short one (issue #1). Same cap, but it names what it dropped.
+define head-marked(limit):
+    python: |
+        import os, sys
+
+        level = os.environ.get("level", "full")
+        lines = sys.stdin.read().rstrip("\n").splitlines()
+
+        kept = lines[:$1]
+        dropped = len(lines) - len(kept)
+        if dropped > 0:
+            kept.append(f"[lowfat] +{dropped} lines dropped (level={level}) -- output truncated, re-run raw for the full list")
+        sys.stdout.write("\n".join(kept) + "\n" if kept else "")
+
 define drop-chatter:
     drop /(100% \||^-{10,}$|^Updating and loading repositories|^Repositories loaded\.|^Running transaction$)/
 
 *:
     if exit failed:
         keep /(error:|Error:|Failed|No match for argument|Problem|conflict|cannot|Unable|nothing provides|--skip)/
-        head 40
-        or-shell: tail -40
+        head-marked 40
+        or-shell: s=$(cat); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt 40 ]; then printf '[lowfat] +%d earlier lines dropped -- re-run raw for the full list\n' "$((n-40))"; fi; printf '%s\n' "$s" | tail -40
     else:
         match level:
             ultra:
                 drop-chatter
                 keep /(^Installing|^Removing|^Upgrading|^ [a-z]|Transaction Summary|packages$|Total size|^Complete!|error:|warning:)/
-                head 30
+                head-marked 30
                 or "dnf: ok"
             lite:
                 drop-chatter
-                head 200
+                head-marked 200
             else:
                 drop-chatter
-                head 60
+                head-marked 60

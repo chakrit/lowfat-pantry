@@ -108,6 +108,7 @@
       checks:
         - name: stdout
           data:
+            - '[lowfat] +19 earlier lines dropped (level=ultra) -- output truncated, re-run raw for the full list'
             - src/checkout/file19.ts
             - src/checkout/file20.ts
             - src/checkout/file21.ts
@@ -130,8 +131,8 @@
       checks:
         - name: stdout
           data:
-            - lines 15
-            - bytes 376
+            - lines 16
+            - bytes 475
         - name: exitcode
           data:
             - "0"

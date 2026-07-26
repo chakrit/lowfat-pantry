@@ -175,6 +175,7 @@
             - ' timers.target loaded active active Timers'
             - ' basic.target loaded active active Basic System'
             - ' multi-user.target loaded active active Multi-User System'
+            - ' sockets.target loaded active active Socket Units'
             - 16 loaded units listed. Pass --all to see loaded but inactive units, too.
         - name: exitcode
           data:
@@ -183,8 +184,8 @@
       checks:
         - name: stdout
           data:
-            - lines 17
-            - bytes 1088
+            - lines 18
+            - bytes 1138
         - name: exitcode
           data:
             - "0"

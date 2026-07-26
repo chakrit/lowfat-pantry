@@ -9,26 +9,28 @@
 # Any explicit format -> raw (same posture as rspec/rubocop).
 
 define compact-ruff(limit):
-    shell: |
-        awk -v lim=$1 -v ex=$exit '
-          { raw[NR]=$0 }
-          /^[^:]+:[0-9]+:[0-9]+: [A-Z][A-Z0-9]+ / {
-            findings++
-            if (shown < lim) { out[++outn]=$0; shown++ }
-            next
-          }
-          /^(Found [0-9]+ error|All checks passed)/ { summary=$0; next }
-          END {
-            if (findings) {
-              for (i=1; i<=outn; i++) print out[i]
-              if (summary) print summary
-            } else if (ex == "0") {
-              print "ruff: clean"
-            } else {
-              for (i=1; i<=NR; i++) print raw[i]
-            }
-          }
-        '
+    python: |
+        import os, re, sys
+
+        code = os.environ.get("exit", "0")
+        lines = sys.stdin.read().splitlines()
+
+        shown, findings, summary = [], 0, None
+        for line in lines:
+            if re.match(r"^[^:]+:[0-9]+:[0-9]+: [A-Z][A-Z0-9]+ ", line):
+                findings += 1
+                if len(shown) < $1:
+                    shown.append(line)
+            elif re.match(r"^(Found [0-9]+ error|All checks passed)", line):
+                summary = line
+
+        if findings:
+            out = shown + ([summary] if summary else [])
+        elif code == "0":
+            out = ["ruff: clean"]
+        else:
+            out = lines
+        sys.stdout.write("\n".join(out) + "\n" if out else "")
 
 *:
     if --output-format:

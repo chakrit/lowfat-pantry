@@ -8,6 +8,37 @@
 # `host : ok=N changed=M failed=K` tallies — always the anchor. A failed run
 # (exit != 0) tails to the recap; `or-shell: tail` guards over-prune.
 
+# Bare `head` cuts without a trace, leaving a truncated stream indistinguishable from a
+# genuinely short one (issue #1). Same cap, but it names what it dropped.
+define head-marked(limit):
+    python: |
+        import os, sys
+
+        level = os.environ.get("level", "full")
+        lines = sys.stdin.read().rstrip("\n").splitlines()
+
+        kept = lines[:$1]
+        dropped = len(lines) - len(kept)
+        if dropped > 0:
+            kept.append(f"[lowfat] +{dropped} lines dropped (level={level}) -- output truncated, re-run raw for the full list")
+        sys.stdout.write("\n".join(kept) + "\n" if kept else "")
+
+# Bare `tail` cuts without a trace, leaving a truncated stream indistinguishable from a
+# genuinely short one (issue #1). Same cap, but it names what it dropped — leading, since
+# the drop happened above what survived.
+define tail-marked(limit):
+    python: |
+        import os, sys
+
+        level = os.environ.get("level", "full")
+        lines = sys.stdin.read().rstrip("\n").splitlines()
+
+        kept = lines[-$1:]
+        dropped = len(lines) - len(kept)
+        if dropped > 0:
+            kept.insert(0, f"[lowfat] +{dropped} earlier lines dropped (level={level}) -- output truncated, re-run raw for the full list")
+        sys.stdout.write("\n".join(kept) + "\n" if kept else "")
+
 define drop-ok-noise:
     drop /^(ok: |skipping: |included: )/
 
@@ -16,23 +47,23 @@ define drop-ok-noise:
         match level:
             ultra:
                 keep /^(fatal:|.*FAILED!|.*=> \{|PLAY RECAP|[A-Za-z0-9._-]+[[:space:]]+: ok=[0-9]|ERROR!|unreachable:)/
-                tail 40
-                or-shell: tail -40
+                tail-marked 40
+                or-shell: s=$(cat); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt 40 ]; then printf '[lowfat] +%d earlier lines dropped -- re-run raw for the full list\n' "$((n-40))"; fi; printf '%s\n' "$s" | tail -40
             lite:
                 drop-ok-noise
-                tail 200
+                tail-marked 200
             else:
                 drop-ok-noise
-                tail 100
+                tail-marked 100
     else:
         match level:
             ultra:
                 keep /^(changed:|fatal:|PLAY RECAP|[A-Za-z0-9._-]+[[:space:]]+: ok=[0-9])/
-                tail 30
+                tail-marked 30
                 or "ansible: ok (no changes)"
             lite:
                 drop-ok-noise
-                head 200
+                head-marked 200
             else:
                 drop-ok-noise
-                head 100
+                head-marked 100

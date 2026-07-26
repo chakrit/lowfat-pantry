@@ -3,23 +3,25 @@
 # env: $sub $level $exit $args
 
 define compact-aws-table(limit):
-    shell: |
-        awk -v lim=$1 '
-          /^-+$/ { next }
-          /^[|][+-]+[|]$/ { next }
-          /^[+][-+]+[+]$/ { next }
-          /^\|/ {
-            gsub(/^\|[[:space:]]*/, "")
-            gsub(/[[:space:]]*\|[[:space:]]*/, " ")
-            gsub(/[[:space:]]+$/, "")
-            if (rows < lim) { print; rows++ }
-            next
-          }
-          NF {
-            gsub(/[[:space:]][[:space:]]+/, " ")
-            if (rows < lim) { print; rows++ }
-          }
-        '
+    python: |
+        import re, sys
+
+        lines = sys.stdin.read().splitlines()
+
+        out = []
+        for line in lines:
+            if re.match(r"^-+$|^[|][+-]+[|]$|^[+][-+]+[+]$", line):
+                continue
+            if line.startswith("|"):
+                if len(out) < $1:
+                    cell = re.sub(r"^[|][ \t]*", "", line)
+                    cell = re.sub(r"[ \t]*[|][ \t]*", " ", cell)
+                    out.append(re.sub(r"[ \t]+$", "", cell))
+                continue
+            if line.strip() and len(out) < $1:
+                out.append(re.sub(r"[ \t][ \t]+", " ", line))
+
+        sys.stdout.write("\n".join(out) + "\n" if out else "")
 
 *:
     if exit failed:

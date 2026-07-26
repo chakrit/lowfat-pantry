@@ -18,6 +18,21 @@
 # (dropping the summary record) into corrupt ndjson. --json is checked first so
 # it raws on any exit (a no-match run still emits a valid summary record).
 
+# Bare `head` cuts without a trace, leaving a truncated stream indistinguishable from a
+# genuinely short one (issue #1). Same cap, but it names what it dropped.
+define head-marked(limit):
+    python: |
+        import os, sys
+
+        level = os.environ.get("level", "full")
+        lines = sys.stdin.read().rstrip("\n").splitlines()
+
+        kept = lines[:$1]
+        dropped = len(lines) - len(kept)
+        if dropped > 0:
+            kept.append(f"[lowfat] +{dropped} lines dropped (level={level}) -- output truncated, re-run raw for the full list")
+        sys.stdout.write("\n".join(kept) + "\n" if kept else "")
+
 *:
     if --json:
         raw
@@ -26,6 +41,6 @@
         or "rg: no matches"
     else:
         match level:
-            ultra: head 20
-            lite:  head 200
-            else:  head 60
+            ultra: head-marked 20
+            lite:  head-marked 200
+            else:  head-marked 60

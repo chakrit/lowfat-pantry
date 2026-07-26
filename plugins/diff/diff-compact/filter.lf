@@ -3,16 +3,27 @@
 # env: $sub $level $exit $args
 
 define compact-diff(limit):
-    shell: |
-        if [ "$exit" = "2" ]; then
-          cat
-          exit 0
-        fi
-        awk -v lim=$1 -v lvl=$level '
-          /^(--- |\+\+\+ |@@ )/ { if (n < lim) { print; n++ }; next }
-          /^[+-]/ { if (n < lim) { print; n++ }; next }
-          lvl != "ultra" && NF && ctx < 6 { print; ctx++; next }
-        '
+    python: |
+        import os, re, sys
+
+        level, code = os.environ.get("level", "full"), os.environ.get("exit", "0")
+        text = sys.stdin.read()
+
+        if code == "2":
+            sys.stdout.write(text)
+            raise SystemExit(0)
+
+        out, context = [], 0
+        for line in text.splitlines():
+            if re.match(r"^(--- |\+\+\+ |@@ )", line) or re.match(r"^[+-]", line):
+                if len(out) < $1:
+                    out.append(line)
+                continue
+            if level != "ultra" and line.strip() and context < 6:
+                out.append(line)
+                context += 1
+
+        sys.stdout.write("\n".join(out) + "\n" if out else "")
 
 *:
     match level:

@@ -5,15 +5,22 @@
 # env: $sub $level $exit $args
 
 define cap(limit):
-    shell: |
-        awk -v lim=$1 'NR<=lim; END { if (NR>lim) printf "... (%d lines total)\n", NR }'
+    python: |
+        import sys
+
+        lines = sys.stdin.read().splitlines()
+
+        kept = lines[:$1]
+        if len(lines) > len(kept):
+            kept.append(f"... ({len(lines)} lines total)")
+        sys.stdout.write("\n".join(kept) + "\n" if kept else "")
 
 install|update:
     match exit:
         failed:
             keep /(ERROR|error:|Could not|Unable|conflict|Failed|alternatives)/
             head 30
-            or-shell: tail -30
+            or-shell: s=$(cat); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt 30 ]; then printf '[lowfat] +%d earlier lines dropped -- re-run raw for the full list\n' "$((n-30))"; fi; printf '%s\n' "$s" | tail -30
         else:
             keep /(Successfully installed|gems? installed|gems? updated|ERROR|error|warning|Building native)/
             head 20

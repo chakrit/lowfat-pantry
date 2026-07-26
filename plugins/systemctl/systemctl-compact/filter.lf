@@ -5,33 +5,56 @@
 # limit = max journal lines to keep; 0 means identity lines only (header,
 # Loaded, Active, Main PID). Resource lines (Tasks/Memory/CPU/CGroup) appear
 # from limit > 10 up.
-define compact-status(limit):
-    shell: |
-        awk -v lim=$1 '
-          NR == 1 { print; next }
-          /^[[:space:]]+Loaded:/ { print; next }
-          /^[[:space:]]+Active:/ { print; next }
-          /^[[:space:]]+Main PID:/ { print; next }
-          /^[[:space:]]+Tasks:/ && lim > 10 { print; next }
-          /^[[:space:]]+Memory:/ && lim > 10 { print; next }
-          /^[[:space:]]+CPU:/ && lim > 10 { print; next }
-          /^[[:space:]]+CGroup:/ && lim > 10 { print; next }
-          /^[[:space:]]*[A-Z][a-z][a-z] [ 0-9][0-9] / {
-            if (logs < lim) { print; logs++ }
-            next
-          }
-        '
+# `head auto` cuts without a trace, so a truncated stream is indistinguishable from a
+# genuinely short one and the reader acts on a confident wrong answer (issue #1). Mirrors
+# `head auto`'s level limits (ultra 15 / full 30 / lite 60) and names what it dropped.
+# Inventory listings are one load-bearing row per line: nothing is redundant, so no row
+# may be dropped (invariant 6). Column padding is the only slack — squeezing runs of
+# whitespace saves tokens without losing an item.
+define squeeze-columns:
+    python: |
+        import re, sys
 
-define compact-units(limit):
-    shell: |
-        awk -v lim=$1 '
-          /^  UNIT[[:space:]]+LOAD[[:space:]]+ACTIVE/ { gsub(/[[:space:]][[:space:]]+/, " "); print; next }
-          /^[[:space:]]*[[:alnum:]_.@-]+\.(service|socket|timer|target|mount|device)[[:space:]]/ {
-            if (rows < lim) { gsub(/[[:space:]][[:space:]]+/, " "); print; rows++ }
-            next
-          }
-          /loaded units listed/ { print; next }
-        '
+        for line in sys.stdin.read().rstrip("\n").splitlines():
+            print(re.sub(r"[ \t]{2,}", " ", line))
+
+define head-auto-marked:
+    python: |
+        import os, sys
+
+        level = os.environ.get("level", "full")
+        limit = {"ultra": 15, "lite": 60}.get(level, 30)
+        lines = sys.stdin.read().rstrip("\n").splitlines()
+
+        kept = lines[:limit]
+        dropped = len(lines) - len(kept)
+        if dropped > 0:
+            kept.append(f"[lowfat] +{dropped} lines dropped (level={level}) -- output truncated, re-run raw for the full list")
+        sys.stdout.write("\n".join(kept) + "\n" if kept else "")
+
+define compact-status(limit):
+    python: |
+        import re, sys
+
+        lines = sys.stdin.read().splitlines()
+
+        out, logs = [], 0
+        for index, line in enumerate(lines):
+            if index == 0:
+                out.append(line)
+                continue
+            if re.match(r"^[ \t]+(Loaded|Active|Main PID):", line):
+                out.append(line)
+                continue
+            if $1 > 10 and re.match(r"^[ \t]+(Tasks|Memory|CPU|CGroup):", line):
+                out.append(line)
+                continue
+            if re.match(r"^[ \t]*[A-Z][a-z][a-z] [ 0-9][0-9] ", line):
+                if logs < $1:
+                    out.append(line)
+                    logs += 1
+
+        sys.stdout.write("\n".join(out) + "\n" if out else "")
 
 status:
     if exit failed:
@@ -46,10 +69,9 @@ list-units:
     if exit failed:
         raw
     else:
-        match level:
-            ultra: compact-units 15
-            full:  compact-units 35
-            lite:  compact-units 80
+        drop /^(LOAD|ACTIVE|SUB)[[:space:]]+= /
+        drop /^[[:space:]]*$/
+        squeeze-columns
 
 is-active|is-enabled:
     if exit failed:
@@ -61,4 +83,4 @@ is-active|is-enabled:
     if exit failed:
         raw
     else:
-        head auto
+        head-auto-marked

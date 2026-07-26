@@ -8,6 +8,21 @@
 # `ERROR`/build failure. `pip list`/`freeze` are `name version` tables — keep
 # rows, cap by level. On failure, keep the error (tail, where pip prints it).
 
+# Bare `head` cuts without a trace, leaving a truncated stream indistinguishable from a
+# genuinely short one (issue #1). Same cap, but it names what it dropped.
+define head-marked(limit):
+    python: |
+        import os, sys
+
+        level = os.environ.get("level", "full")
+        lines = sys.stdin.read().rstrip("\n").splitlines()
+
+        kept = lines[:$1]
+        dropped = len(lines) - len(kept)
+        if dropped > 0:
+            kept.append(f"[lowfat] +{dropped} lines dropped (level={level}) -- output truncated, re-run raw for the full list")
+        sys.stdout.write("\n".join(kept) + "\n" if kept else "")
+
 define drop-progress:
     drop /^(Collecting |[[:space:]]+Downloading |[[:space:]]+Using cached |Requirement already satisfied|[[:space:]]+Preparing |[[:space:]]+Getting |[[:space:]]+Building wheel|[[:space:]]+Created wheel|[[:space:]]+Stored in directory|[[:space:]]+Attempting uninstall)/
 
@@ -18,22 +33,22 @@ define drop-progress:
         match level:
             ultra:
                 keep /(ERROR|error:|Could not|No matching distribution|Successfully|Installing collected)/
-                head 30
-                or-shell: tail -30
+                head-marked 30
+                or-shell: s=$(cat); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt 30 ]; then printf '[lowfat] +%d earlier lines dropped -- re-run raw for the full list\n' "$((n-30))"; fi; printf '%s\n' "$s" | tail -30
             lite:
-                head 200
+                head-marked 200
             else:
-                head 80
+                head-marked 80
     else:
         match level:
             ultra:
                 drop-progress
                 keep /(Successfully |Installing collected|^Package[[:space:]]|^[A-Za-z0-9._-]+[[:space:]]+[0-9])/
-                head 20
+                head-marked 20
                 or "pip: ok"
             lite:
                 drop-progress
-                head 200
+                head-marked 200
             else:
                 drop-progress
-                head 60
+                head-marked 60

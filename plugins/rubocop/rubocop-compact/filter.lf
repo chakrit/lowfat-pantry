@@ -6,30 +6,33 @@
 # env: $sub $level $exit $args
 
 define compact-rubocop(limit):
-    shell: |
-        awk -v lim=$1 -v ex=$exit '
-          { raw[NR]=$0 }
-          /^[^:]+:[0-9]+:[0-9]+: [A-Z]: / {
-            findings++
-            if (shown < lim) { out[++outn]=$0; shown++ }
-            next
-          }
-          /^[0-9]+ files? inspected/ { summary=$0; next }
-          END {
-            if (findings) {
-              for (i=1; i<=outn; i++) print out[i]
-              if (summary) print summary
-              if (findings > shown) printf "... (%d offenses total)\n", findings
-            } else if (ex == "0") {
-              print "rubocop: clean"
-            } else {
-              for (i=1; i<=NR; i++) print raw[i]
-            }
-          }
-        '
+    python: |
+        import os, re, sys
+
+        code = os.environ.get("exit", "0")
+        lines = sys.stdin.read().splitlines()
+
+        shown, findings, summary = [], 0, None
+        for line in lines:
+            if re.match(r"^[^:]+:[0-9]+:[0-9]+: [A-Z]: ", line):
+                findings += 1
+                if len(shown) < $1:
+                    shown.append(line)
+            elif re.match(r"^[0-9]+ files? inspected", line):
+                summary = line
+
+        if findings:
+            out = shown + ([summary] if summary else [])
+            if findings > len(shown):
+                out.append(f"... ({findings} offenses total)")
+        elif code == "0":
+            out = ["rubocop: clean"]
+        else:
+            out = lines
+        sys.stdout.write("\n".join(out) + "\n" if out else "")
 
 # Any explicit --format/-f (json, junit, sarif, …) is caller-chosen machine
-# output — pass byte-exact (invariant 1). The awk extraction only ever fit the
+# output — pass byte-exact (invariant 1). The text extraction only ever fit the
 # default offense format; the default (no flag) is the common case below.
 *:
     if --format:

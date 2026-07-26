@@ -1,35 +1,67 @@
 #!/usr/bin/env lowfat-filter
-# helm-compact - preserve release metadata and cap bulky notes/tables.
+# helm-compact - preserve release metadata and cap bulky notes.
+# `list` is an inventory listing: rows are never capped, only column-squeezed (invariant 6).
 # env: $sub $level $exit $args
 #
 # `-o json`/`-o yaml` (and the `--output` long form) is machine output — pass
-# byte-exact (invariant 1). Without the guard, helm-summary/helm-table awk
-# collapses its whitespace and caps it (corrupt JSON/YAML). The guard repeats
+# byte-exact (invariant 1). Without the guard, squeeze-columns collapses its
+# whitespace (corrupt JSON/YAML). The guard repeats
 # per compacting rule because `.lf` has no top-level pre-filter and macros can't
 # wrap a cascade; the default (table) output still compacts.
 
-define helm-summary(limit):
-    shell: |
-        awk -v lim=$1 -v lvl=$level '
-          /^NAME:/ || /^LAST DEPLOYED:/ || /^NAMESPACE:/ || /^STATUS:/ || /^REVISION:/ || /^TEST SUITE:/ { print; next }
-          /^NOTES:/ { print; in_notes=1; notes=0; next }
-          in_notes {
-            if (lvl == "ultra") { next }
-            if (notes < lim) { print; notes++ }
-            next
-          }
-          NF && seen < lim { print; seen++ }
-        '
+# `head auto` cuts without a trace, so a truncated stream is indistinguishable from a
+# genuinely short one and the reader acts on a confident wrong answer (issue #1). Mirrors
+# `head auto`'s level limits (ultra 15 / full 30 / lite 60) and names what it dropped.
+# Inventory listings are one load-bearing row per line: nothing is redundant, so no row
+# may be dropped (invariant 6). Column padding is the only slack — squeezing runs of
+# whitespace saves tokens without losing an item.
+define squeeze-columns:
+    python: |
+        import re, sys
 
-define helm-table(limit):
-    shell: |
-        awk -v lim=$1 '
-          NR==1 { gsub(/[[:space:]][[:space:]]+/, " "); print; next }
-          NF {
-            gsub(/[[:space:]][[:space:]]+/, " ")
-            if (++rows <= lim) print
-          }
-        '
+        for line in sys.stdin.read().rstrip("\n").splitlines():
+            print(re.sub(r"[ \t]{2,}", " ", line))
+
+define head-auto-marked:
+    python: |
+        import os, sys
+
+        level = os.environ.get("level", "full")
+        limit = {"ultra": 15, "lite": 60}.get(level, 30)
+        lines = sys.stdin.read().rstrip("\n").splitlines()
+
+        kept = lines[:limit]
+        dropped = len(lines) - len(kept)
+        if dropped > 0:
+            kept.append(f"[lowfat] +{dropped} lines dropped (level={level}) -- output truncated, re-run raw for the full list")
+        sys.stdout.write("\n".join(kept) + "\n" if kept else "")
+
+define helm-summary(limit):
+    python: |
+        import os, re, sys
+
+        level = os.environ.get("level", "full")
+        lines = sys.stdin.read().splitlines()
+
+        out, notes, seen, in_notes = [], 0, 0, False
+        for line in lines:
+            if re.match(r"^(NAME:|LAST DEPLOYED:|NAMESPACE:|STATUS:|REVISION:|TEST SUITE:)", line):
+                out.append(line)
+                continue
+            if line.startswith("NOTES:"):
+                out.append(line)
+                in_notes, notes = True, 0
+                continue
+            if in_notes:
+                if level != "ultra" and notes < $1:
+                    out.append(line)
+                    notes += 1
+                continue
+            if line.strip() and seen < $1:
+                out.append(line)
+                seen += 1
+
+        sys.stdout.write("\n".join(out) + "\n" if out else "")
 
 install|upgrade|status:
     if exit failed:
@@ -60,10 +92,7 @@ list:
     elif --output yaml:
         raw
     else:
-        match level:
-            ultra: helm-table 12
-            full:  helm-table 30
-            lite:  helm-table 60
+        squeeze-columns
 
 *:
     if exit failed:
@@ -77,4 +106,4 @@ list:
     elif --output yaml:
         raw
     else:
-        head auto
+        head-auto-marked

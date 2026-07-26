@@ -2,6 +2,22 @@
 # gradlew-compact - drop task/download progress while keeping Gradle failures.
 # env: $sub $level $exit $args
 
+# Bare `tail` cuts without a trace, leaving a truncated stream indistinguishable from a
+# genuinely short one (issue #1). Same cap, but it names what it dropped — leading, since
+# the drop happened above what survived.
+define tail-marked(limit):
+    python: |
+        import os, sys
+
+        level = os.environ.get("level", "full")
+        lines = sys.stdin.read().rstrip("\n").splitlines()
+
+        kept = lines[-$1:]
+        dropped = len(lines) - len(kept)
+        if dropped > 0:
+            kept.insert(0, f"[lowfat] +{dropped} earlier lines dropped (level={level}) -- output truncated, re-run raw for the full list")
+        sys.stdout.write("\n".join(kept) + "\n" if kept else "")
+
 define drop-gradle-noise:
     drop /^> Task :[[:alnum:]_.:-]+( UP-TO-DATE| NO-SOURCE| FROM-CACHE| SKIPPED)?$/
     drop /^Download(ing)? /
@@ -9,43 +25,49 @@ define drop-gradle-noise:
     drop /^Starting a Gradle Daemon/
 
 define compact-gradle-failure(limit):
-    shell: |
-        awk -v lim=$1 '
-          /^FAILURE:/ { in_fail=1 }
-          /^\* What went wrong:/ { in_fail=1 }
-          /^\* Try:/ { in_fail=1 }
-          /^\* Exception is:/ { in_fail=1 }
-          /^BUILD FAILED/ { print; n++; next }
-          /^[0-9]+ actionable tasks:/ { print; n++; next }
-          /FAILED$/ { print; n++; next }
-          /(^|[[:space:]])(FAILED|Error|error|Exception|AssertionError)/ { print; n++; next }
-          in_fail && NF { print; n++ }
-          n>=lim { exit }
-        '
+    python: |
+        import re, sys
+
+        lines = sys.stdin.read().splitlines()
+
+        out, in_failure = [], False
+        for line in lines:
+            if re.match(r"^(FAILURE:|\* What went wrong:|\* Try:|\* Exception is:)", line):
+                in_failure = True
+            if re.match(r"^BUILD FAILED", line) or re.match(r"^[0-9]+ actionable tasks:", line) \
+                    or re.search(r"FAILED$", line) \
+                    or re.search(r"(^|\s)(FAILED|Error|error|Exception|AssertionError)", line):
+                out.append(line)
+            elif in_failure and line.strip():
+                out.append(line)
+            if len(out) >= $1:
+                break
+
+        sys.stdout.write("\n".join(out) + "\n" if out else "")
 
 *:
     if exit failed:
         match level:
             ultra:
                 compact-gradle-failure 50
-                or-shell: tail -50
+                or-shell: s=$(cat); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt 50 ]; then printf '[lowfat] +%d earlier lines dropped -- re-run raw for the full list\n' "$((n-50))"; fi; printf '%s\n' "$s" | tail -50
             lite:
                 compact-gradle-failure 180
-                or-shell: tail -180
+                or-shell: s=$(cat); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt 180 ]; then printf '[lowfat] +%d earlier lines dropped -- re-run raw for the full list\n' "$((n-180))"; fi; printf '%s\n' "$s" | tail -180
             else:
                 compact-gradle-failure 90
-                or-shell: tail -90
+                or-shell: s=$(cat); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt 90 ]; then printf '[lowfat] +%d earlier lines dropped -- re-run raw for the full list\n' "$((n-90))"; fi; printf '%s\n' "$s" | tail -90
     else:
         match level:
             ultra:
                 drop-gradle-noise
                 keep /^(BUILD (SUCCESSFUL|FAILED)|FAILURE:|\* What went wrong:|[0-9]+ actionable tasks:|.*FAILED$|.*Test failed|.*AssertionError)/
-                tail 35
+                tail-marked 35
                 or "gradle: ok"
             lite:
                 drop-gradle-noise
-                tail 200
+                tail-marked 200
             else:
                 drop-gradle-noise
-                tail 80
+                tail-marked 80
 

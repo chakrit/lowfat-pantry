@@ -3,31 +3,33 @@
 # env: $sub $level $exit $args
 
 define compact-mypy(limit):
-    shell: |
-        awk -v lim=$1 -v lvl=$level -v ex=$exit '
-          { raw[NR]=$0 }
-          /^[^:]+:[0-9]+: error: / {
-            errors++
-            if (shown < lim) { out[++outn]=$0; shown++ }
-            next
-          }
-          lvl != "ultra" && /^[^:]+:[0-9]+: note: / {
-            if (shown < lim) { out[++outn]=$0; shown++ }
-            next
-          }
-          /^Found [0-9]+ errors? in / { summary=$0; next }
-          /^Success: no issues found/ { clean=1; next }
-          END {
-            if (errors) {
-              for (i=1; i<=outn; i++) print out[i]
-              if (summary) print summary
-            } else if (ex == "0" || clean) {
-              print "mypy: clean"
-            } else {
-              for (i=1; i<=NR; i++) print raw[i]
-            }
-          }
-        '
+    python: |
+        import os, re, sys
+
+        level, code = os.environ.get("level", "full"), os.environ.get("exit", "0")
+        lines = sys.stdin.read().splitlines()
+
+        shown, errors, summary, clean = [], 0, None, False
+        for line in lines:
+            if re.match(r"^[^:]+:[0-9]+: error: ", line):
+                errors += 1
+                if len(shown) < $1:
+                    shown.append(line)
+            elif level != "ultra" and re.match(r"^[^:]+:[0-9]+: note: ", line):
+                if len(shown) < $1:
+                    shown.append(line)
+            elif re.match(r"^Found [0-9]+ errors? in ", line):
+                summary = line
+            elif re.match(r"^Success: no issues found", line):
+                clean = True
+
+        if errors:
+            out = shown + ([summary] if summary else [])
+        elif code == "0" or clean:
+            out = ["mypy: clean"]
+        else:
+            out = lines
+        sys.stdout.write("\n".join(out) + "\n" if out else "")
 
 *:
     match level:

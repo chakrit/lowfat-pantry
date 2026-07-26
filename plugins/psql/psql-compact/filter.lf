@@ -3,24 +3,32 @@
 # env: $sub $level $exit $args
 
 define compact-psql(limit):
-    shell: |
-        awk -v lim=$1 '
-          /^[+][-+]+[+]$/ { next }
-          /^\([0-9]+ rows?\)$/ { summary=$0; next }
-          /^\|/ {
-            gsub(/^\|[[:space:]]*/, "")
-            gsub(/[[:space:]]*\|[[:space:]]*/, " ")
-            gsub(/[[:space:]]+$/, "")
-            if (rows < lim) { print; rows++ }
-            next
-          }
-          /^[[:space:]]*[-][-+[:space:]]+$/ { next }
-          NF {
-            gsub(/[[:space:]][[:space:]]+/, " ")
-            if (rows < lim) { print; rows++ }
-          }
-          END { if (summary) print summary }
-        '
+    python: |
+        import re, sys
+
+        lines = sys.stdin.read().splitlines()
+
+        out, summary = [], None
+        for line in lines:
+            if re.match(r"^[+][-+]+[+]$", line):
+                continue
+            if re.match(r"^\([0-9]+ rows?\)$", line):
+                summary = line
+                continue
+            if line.startswith("|"):
+                if len(out) < $1:
+                    cell = re.sub(r"^[|][ \t]*", "", line)
+                    cell = re.sub(r"[ \t]*[|][ \t]*", " ", cell)
+                    out.append(re.sub(r"[ \t]+$", "", cell))
+                continue
+            if re.match(r"^[ \t]*[-][-+ \t]+$", line):
+                continue
+            if line.strip() and len(out) < $1:
+                out.append(re.sub(r"[ \t][ \t]+", " ", line))
+
+        if summary:
+            out.append(summary)
+        sys.stdout.write("\n".join(out) + "\n" if out else "")
 
 *:
     if exit failed:

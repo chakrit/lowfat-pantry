@@ -19,27 +19,44 @@ define head-auto-marked:
 
         level = os.environ.get("level", "full")
         limit = {"ultra": 15, "lite": 60}.get(level, 30)
-        lines = sys.stdin.read().splitlines()
+        lines = sys.stdin.read().rstrip("\n").splitlines()
 
         kept = lines[:limit]
         dropped = len(lines) - len(kept)
         if dropped > 0:
             kept.append(f"[lowfat] +{dropped} lines dropped (level={level}) -- output truncated, re-run raw for the full list")
-        print("\n".join(kept))
+        sys.stdout.write("\n".join(kept) + "\n" if kept else "")
 
 define compact-plan(limit):
-    shell: |
-        awk -v lim=$1 -v lvl=$level '
-          /^  # .* (will be|must be|has been|will be read during apply)/ { print; count++; next }
-          /^Plan: [0-9]+ to add, [0-9]+ to change, [0-9]+ to destroy\./ { print; next }
-          /^No changes\./ || /^(Terraform|OpenTofu) will perform the following actions:/ { print; next }
-          lvl=="ultra" { next }
-          /^[[:space:]]*[~+-][[:space:]][[:alnum:]_"-]+[[:space:]]+=/ {
-            if (count < lim) { print; count++ }
-            next
-          }
-          /^Changes to Outputs:/ { print; next }
-        '
+    python: |
+        import os, re, sys
+
+        level = os.environ.get("level", "full")
+        lines = sys.stdin.read().splitlines()
+
+        out, count = [], 0
+        for line in lines:
+            if re.match(r"^  # .* (will be|must be|has been|will be read during apply)", line):
+                out.append(line)
+                count += 1
+                continue
+            if re.match(r"^Plan: [0-9]+ to add, [0-9]+ to change, [0-9]+ to destroy\.", line):
+                out.append(line)
+                continue
+            if line.startswith("No changes.") or re.match(r"^(Terraform|OpenTofu) will perform the following actions:", line):
+                out.append(line)
+                continue
+            if level == "ultra":
+                continue
+            if re.match(r"^[ \t]*[~+-][ \t][A-Za-z0-9_\"-]+[ \t]+=", line):
+                if count < $1:
+                    out.append(line)
+                    count += 1
+                continue
+            if line.startswith("Changes to Outputs:"):
+                out.append(line)
+
+        sys.stdout.write("\n".join(out) + "\n" if out else "")
 
 plan:
     if exit failed:

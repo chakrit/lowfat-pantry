@@ -64,6 +64,8 @@
             - '    --vmss                                                                     : Name or ID of an'
             - '    --wire-server-access-control-profile-reference-id --wire-server-profile-id : Specify the access'
             - '    --wire-server-mode                                                         : Specify the mode'
+            - '[lowfat] +80 lines dropped (level=lite) -- output truncated, re-run raw for the full list'
+            - ""
             - Examples
             - '    Create a default Ubuntu2204 VM with automatic SSH authentication.'
             - '        az vm create -n MyVm -g MyResourceGroup --image Ubuntu2204'
@@ -124,6 +126,7 @@
             - ""
             - '    Create a simple Ubuntu Linux VM with a public IP address, DNS entry, two data disks (10GB and'
             - '    20GB), and then generate RSA ssh key pairs.'
+            - '[lowfat] +63 lines dropped (level=lite) -- output truncated, re-run raw for the full list'
         - name: exitcode
           data:
             - "0"
@@ -131,8 +134,8 @@
       checks:
         - name: stdout
           data:
-            - lines 120
-            - bytes 8323
+            - lines 123
+            - bytes 8504
         - name: exitcode
           data:
             - "0"
@@ -172,6 +175,8 @@
             - '    --enable-secure-boot                                                       : Enable secure boot.'
             - '    --enable-vtpm                                                              : Enable vTPM.'
             - '    --encryption-identity                                                      : Resource Id of the'
+            - '[lowfat] +110 lines dropped (level=full) -- output truncated, re-run raw for the full list'
+            - ""
             - Examples
             - '    Create a default Ubuntu2204 VM with automatic SSH authentication.'
             - '        az vm create -n MyVm -g MyResourceGroup --image Ubuntu2204'
@@ -202,6 +207,7 @@
             - ""
             - ""
             - '    Create a VM from the latest version of a gallery image'
+            - '[lowfat] +93 lines dropped (level=full) -- output truncated, re-run raw for the full list'
         - name: exitcode
           data:
             - "0"
@@ -209,8 +215,8 @@
       checks:
         - name: stdout
           data:
-            - lines 60
-            - bytes 3967
+            - lines 63
+            - bytes 4149
         - name: exitcode
           data:
             - "0"
@@ -235,6 +241,8 @@
             - '    --computer-name                                                            : The host OS name of'
             - '    --count                                                          [Preview] : Number of virtual'
             - '    --custom-data                                                              : Custom init script'
+            - '[lowfat] +125 lines dropped (level=ultra) -- output truncated, re-run raw for the full list'
+            - ""
             - Examples
             - '    Create a default Ubuntu2204 VM with automatic SSH authentication.'
             - '        az vm create -n MyVm -g MyResourceGroup --image Ubuntu2204'
@@ -250,6 +258,7 @@
             - ""
             - '    Create a VM from a custom managed image.'
             - '        az vm create -g MyResourceGroup -n MyVm --image MyImage'
+            - '[lowfat] +108 lines dropped (level=ultra) -- output truncated, re-run raw for the full list'
         - name: exitcode
           data:
             - "0"
@@ -257,8 +266,8 @@
       checks:
         - name: stdout
           data:
-            - lines 30
-            - bytes 1860
+            - lines 33
+            - bytes 2045
         - name: exitcode
           data:
             - "0"

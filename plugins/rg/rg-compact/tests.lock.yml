@@ -221,6 +221,7 @@
             - docs/notes/2026-06-07-lowfat-rtk-migration.md:lowfat plugin bench <plugin>
             - docs/notes/2026-06-07-lowfat-rtk-migration.md:lowfat filter --explain <filter.lf> --sub=<subcommand> --level=<level>
             - 'docs/notes/2026-06-07-lowfat-rtk-migration.md:The following require plugins, lowfat core changes, or separate integration work:'
+            - '[lowfat] +79 lines dropped (level=full) -- output truncated, re-run raw for the full list'
         - name: exitcode
           data:
             - "0"
@@ -228,8 +229,8 @@
       checks:
         - name: stdout
           data:
-            - lines 60
-            - bytes 6281
+            - lines 61
+            - bytes 6371
         - name: exitcode
           data:
             - "0"
@@ -259,6 +260,7 @@
             - docs/notes/lowfat-internals.md:`XDG_CONFIG_HOME` is set), it's `~/.config/lowfat/plugins/...`. When both
             - docs/notes/lowfat-internals.md:`~/.config/lowfat/` and `~/.lowfat/` exist, XDG wins and a one-shot stderr
             - docs/notes/lowfat-internals.md:The doc comments in `discovery.rs:8` and `embedded.rs:7` hardcode `~/.lowfat/`;
+            - '[lowfat] +119 lines dropped (level=ultra) -- output truncated, re-run raw for the full list'
         - name: exitcode
           data:
             - "0"
@@ -266,8 +268,8 @@
       checks:
         - name: stdout
           data:
-            - lines 20
-            - bytes 2005
+            - lines 21
+            - bytes 2097
         - name: exitcode
           data:
             - "0"
@@ -405,6 +407,7 @@
             - 'docs/spec/pantry-distribution.md:61:  stays personal. Edits to a pantry plugin go to the school clone (same property as skills).'
             - docs/spec/pantry-distribution.md:63:- **−** Needs a sync step to create/refresh symlinks. ACE doesn't know about plugins yet, so
             - 'docs/spec/pantry-distribution.md:64:  either a small `pantry install` script owns it now, or ACE grows a plugin-symlink feature'
+            - '[lowfat] +16 lines dropped (level=ultra) -- output truncated, re-run raw for the full list'
         - name: exitcode
           data:
             - "0"
@@ -412,8 +415,8 @@
       checks:
         - name: stdout
           data:
-            - lines 20
-            - bytes 2453
+            - lines 21
+            - bytes 2544
         - name: exitcode
           data:
             - "0"
