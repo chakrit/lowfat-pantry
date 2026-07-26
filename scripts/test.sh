@@ -68,6 +68,8 @@ done
 #   lint.py      — the standing rulings (no python:, no awk, no bare cut, one
 #                  marker form, no library macro without its include), checked
 #                  rather than remembered.
+#   levels.py    — ultra <= full <= lite. Each level's golden is locked alone, so
+#                  an inversion sits in three UNCHANGED locks.
 case " $* " in
     *" -c "*) ;;
     *)
@@ -75,6 +77,7 @@ case " $* " in
         scripts/drift.py || rc=1
         scripts/overprune.py || rc=1
         scripts/passthrough.py || rc=1
+        scripts/levels.py || rc=1
         ;;
 esac
 

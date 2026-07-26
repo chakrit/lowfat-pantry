@@ -22,6 +22,9 @@ up|preview|destroy|refresh, ultra:
         drop-spinner-noise
         # all per-resource lines (plan + progress + completed): " +  ", " -- ", " ~  "...
         drop /^ [-+~]{1,2} /
+        # "running" lines repeat the Diagnostics block verbatim — ultra was keeping
+        # both and coming out *longer* than full, which inverts the levels
+        drop / running /
         drop /^$/
         tail-marked 15
         or-shell: s=$(cat); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt 15 ]; then printf '[lowfat] +%d earlier lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((n-15))" "${level:-full}"; fi; printf '%s\n' "$s" | tail -15

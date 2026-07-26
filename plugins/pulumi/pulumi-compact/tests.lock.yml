@@ -391,9 +391,6 @@
         - name: stdout
           data:
             - 'Previewing update (dev):'
-            - "    pulumi:pulumi:Stack payments-infra-dev running \e[31mError\e[0m: error resolving type of resource hostName: unable to find resource type \"random:RandomBogus\" in resource provider \"random\""
-            - '    pulumi:pulumi:Stack payments-infra-dev running   on Pulumi.yaml line 66:'
-            - "    pulumi:pulumi:Stack payments-infra-dev running   66:     type: \e[1;4mrandom:RandomBogus\e[0m"
             - '    pulumi:pulumi:Stack payments-infra-dev  3 messages'
             - 'Diagnostics:'
             - '  pulumi:pulumi:Stack (payments-infra-dev):'
@@ -409,8 +406,8 @@
       checks:
         - name: stdout
           data:
-            - lines 12
-            - bytes 749
+            - lines 9
+            - bytes 386
         - name: exitcode
           data:
             - "0"
