@@ -129,6 +129,7 @@ real `exit` so failure samples are tested as failures):
     scripts/test.sh                                        # whole suite, exit 0 = no drift
     scripts/drift.py                                       # wrapper/original agreement
     scripts/overprune.py                                   # nothing swallows a stream whole
+    scripts/passthrough.py                                 # guarded flags stay byte-exact
     capture/capture.sh <stack>                             # real failure samples, in a container
 
 `scripts/test.sh` runs four specs at a time (`JOBS=1` to serialize), then two gates that
@@ -145,6 +146,12 @@ goldens structurally can't replace. Neither is re-lockable — a failure in eith
   unrecognizable input through every filter × subcommand × level × exit and asserts
   something came back. Every rule needs a fallback — an `or "<tool>: ok"` verdict, an
   `or-shell:` marked tail, or an in-body `emitted` check.
+
+- **`passthrough.py`** — reads each filter's own structured-output guards and replays them
+  *exactly as written* (`--format=json` and `--format json` are different arguments), then
+  requires a JSON payload back unchanged at every level and both exits. It also knows which
+  rule holds each guard, which is how it caught `--json` guarded on gh's resource rules but
+  not its catch-all.
 
 Real failure output for tools that aren't installed comes from `capture/` — one container
 image per stack, samples reviewed by hand before they're committed. See `capture/README.md`.
