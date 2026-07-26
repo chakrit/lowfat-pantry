@@ -25,8 +25,11 @@ no separate sync skill — both collapse into this repo.
 ## Rationale
 
 - **Single override-only home.** lowfat resolves one plugin/config home, no additive
-  `LOWFAT_PLUGIN_PATH` (verified against `v0.6.8`). So plugins must be *placed into* the
-  existing home — a symlink sync, not a search-path addition.
+  `LOWFAT_PLUGIN_PATH` (verified against `v0.6.8`; still true at `v0.8.0` — the identifier
+  appears nowhere in the tree). So plugins must be *placed into* the existing home — a
+  symlink sync, not a search-path addition. This is what makes `include` a distribution
+  question for the pantry: relative-only include paths plus a per-plugin symlink sync
+  mean a shared library has to land inside each plugin directory.
 - **Imports carry the whole subtree, not just SKILL.md.** Verified: `kien-thai` ships
   `references/`, `shell` ships `assets/` + `metadata.json`, `frontend-design` ships
   `LICENSE.txt`. So a `plugins/` tree rides along; for ACE users it materializes at

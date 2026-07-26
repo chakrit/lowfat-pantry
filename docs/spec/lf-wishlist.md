@@ -12,13 +12,27 @@ one is, link it under that item; otherwise the `Upstream issue` field stays empt
 Context (checked **2026-06-16**): `zdk/lowfat` had 0 open / 1 closed issue (#9, an unrelated
 git-compact `Broken pipe`) and 1 open PR (#8, MCP server) — none of these items exist there.
 
+**Re-checked 2026-07-26 against the v0.8.0 sources.** #1 is **delivered** — closed
+upstream and shipped. #2, #3 and #4 are still absent: no runner table or unwrap
+anywhere in the tree, the subprocess env block still exports exactly
+`level`/`sub`/`exit`/`args` (`lf.rs:1765-1768`), and `lowfat filter` still takes a path
+only. #5 survives but was **mis-scoped** — see the item for the corrected trigger.
+
 ---
 
-## 1. `include` / `import` for `.lf` files (filter composition)
+## 1. `include` / `import` for `.lf` files (filter composition) — ✅ DELIVERED in v0.8.0
 
-**Problem.** Macros are file-local (`collect_macro_names` runs per file; no include op), so
-a `.lf` filter can't reuse another's logic. A wrapper filter that wants the wrapped tool's
-compaction must **copy** that tool's macro body verbatim.
+**Status.** Shipped upstream, essentially as proposed: `include <relative-path>` merges
+the included file's `define`s at parse time, rules excluded. Transitive, cycle-checked,
+diamond-safe, local-define-wins. Full semantics in `docs/vendor/lowfat-filter-dsl.md §
+include`. **The pantry has not adopted it yet** — a shared library file has to survive the
+per-plugin sync into `<LOWFAT_HOME>/plugins/<cat>/<name>/`, and absolute include paths are
+rejected by design, so adoption is a distribution question, not a syntax one. Tracked as a
+queued all-tools pass.
+
+**Problem** (as originally filed). Macros are file-local (`collect_macro_names` runs per
+file; no include op), so a `.lf` filter can't reuse another's logic. A wrapper filter that
+wants the wrapped tool's compaction must **copy** that tool's macro body verbatim.
 
 **Workaround in pantry.** `uv-compact` and `npx-compact` each copy their wrapped tools'
 bodies (pytest/ruff into uv; eslint/prettier/tsc into npx) under a "drift contract" comment.
@@ -28,7 +42,7 @@ The copies rot whenever the standalone originals change. See backlog → "Wrappe
 file's `define`d macros into the current namespace at parse time. Lets shared tool logic
 live once in a library `.lf` that both the standalone filter and any wrapper `include`s.
 
-**Upstream issue.** <https://github.com/zdk/lowfat/issues/14>
+**Upstream issue.** <https://github.com/zdk/lowfat/issues/14> — closed; landed in v0.8.0.
 
 ## 2. Wrapper-unwrap (runner-prefix re-resolution) — the cleanest fix
 
@@ -85,17 +99,28 @@ weight alternative to #1/#2 if those are too invasive.
 
 ## 5. Non-ASCII literals corrupted inside `define` macro bodies (`$N` arg-expansion bug)
 
-**Problem.** A literal multibyte glyph (`●`, `❯`, `×`, `→`, `⎯`) inside a `define` macro
-body — e.g. a `keep`/`drop` regex or a `python:` body — is mangled by lowfat 0.6.8's `$N`
-arg-expansion pass, so a match on that glyph silently never fires (no crash). Confirmed
-2026-06-19: identical bytes match fine in a bare `*:` rule but not when the same pattern
-lives in a `define`d macro; stdin decoding itself is unaffected. Class: the macro
-arg-substitution rewrites the body byte-wise and corrupts multibyte sequences.
+**Problem.** A literal multibyte glyph (`●`, `❯`, `×`, `→`, `⎯`) inside the
+`shell:`/`python:`/`or-shell:` body of a macro **that takes parameters** is mangled by the
+`$N` arg-expansion pass, so a match on that glyph silently never fires (no crash). Cause:
+`expand_args` walks the body byte-wise and re-emits each byte as a `char`
+(`out.push(c as char)`, `lf.rs:1748`), which shreds every multibyte UTF-8 sequence.
+Still present in v0.8.0, unchanged.
+
+**Scope correction (2026-07-26).** This item — and the DSL reference — previously claimed
+the bug also hit `keep`/`drop` regexes in macros. **It does not.** `expand_args` is
+applied at exactly three call sites, all string-valued ops (`lf.rs:1570, 1591, 1595`);
+regexes are compiled at parse time and never pass through it. It also early-returns the
+body untouched when the macro has no parameters (`lf.rs:1726-1728`). Verified empirically
+at 0.8.0: `keep /●/` inside `define g(n)` matches correctly; the same glyph in that
+macro's `python:` body does not. So the trigger needs all three of: parameters, a
+shell/python body, and a non-ASCII literal.
 
 **Workaround in pantry.** `jest`/`vitest` matchers are ASCII-only — the `ultra` keep-list is
 bounded by ASCII text (`FAIL`, `Expected/Received`, `AssertionError`) instead of the runners'
 glyph lines. `full`/`lite` keep the failure block wholesale, so glyph lines survive via
-passthrough; no signal loss, but glyph-keyed *matching* is off-limits in macros.
+passthrough; no signal loss. Given the correction above this workaround is **stricter than
+required** (those are `keep` regexes, which were never at risk); it is harmless and stays
+until someone has a reason to touch those filters.
 
 **Proposed shape.** Make `$N` arg-expansion operate on a decoded string (or only on
 `$`-prefixed tokens), not raw bytes, so multibyte literals in macro bodies round-trip

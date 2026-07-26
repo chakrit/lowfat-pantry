@@ -48,9 +48,13 @@ degraded one. Two rules, from
                     kept.append(f"[lowfat] +{dropped} lines dropped (level={level}) -- output truncated, re-run raw for the full list")
                 sys.stdout.write("\n".join(kept) + "\n" if kept else "")
 
-   Copy it into each filter verbatim — `.lf` has no include mechanism, and plugins are
-   synced individually, so self-containment is a distribution requirement. `or-shell:`
-   recovery fallbacks cap the raw dump too and mark it the same way.
+   Copy it into each filter verbatim. lowfat **v0.8.0 added `include`**, but adopting it
+   here is not just a syntax swap: include paths must be relative and plugins are synced
+   individually into `<LOWFAT_HOME>/plugins/<category>/<name>/`, so a shared library file
+   has to be placed inside every plugin directory (or the sync taught to place it) or the
+   filter breaks after install. Until that pass lands, self-containment remains a
+   distribution requirement and the macro is copied. `or-shell:` recovery fallbacks cap
+   the raw dump too and mark it the same way.
 
 Named-subcommand rules may still use bare `head`/`tail`: their author knew the output
 shape. The catch-all is by definition the branch where nobody did.
