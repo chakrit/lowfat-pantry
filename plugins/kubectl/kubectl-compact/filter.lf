@@ -85,20 +85,17 @@ logs, ultra:
     if exit failed:
         raw
     else:
-        tail 15
-
+        tail-marked 15
 logs, full:
     if exit failed:
         raw
     else:
-        tail 30
-
+        tail-marked 30
 logs:
     if exit failed:
         raw
     else:
-        tail 60
-
+        tail-marked 60
 apply|rollout:
     if exit failed:
         raw
@@ -108,7 +105,7 @@ apply|rollout:
         raw
     else:
         keep /^([[:alnum:]._\/-]+ (created|configured|unchanged|deleted)|deployment ".+" successfully|Waiting for|rollout status|error:)/
-        head auto
+        head-auto-marked
         or-shell: s=$(grep -E '[^[:space:]]'); n=$(printf '%s\n' "$s" | wc -l); printf '%s\n' "$s" | head -30; if [ "$n" -gt 30 ]; then printf '[lowfat] +%d lines dropped -- re-run raw for the full list\n' "$((n-30))"; fi
 
 *:

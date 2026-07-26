@@ -23,7 +23,7 @@ up|preview|destroy|refresh, ultra:
         # all per-resource lines (plan + progress + completed): " +  ", " -- ", " ~  "...
         drop /^ [-+~]{1,2} /
         drop /^$/
-        tail 15
+        tail-marked 15
         or-shell: s=$(cat); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt 15 ]; then printf '[lowfat] +%d earlier lines dropped -- re-run raw for the full list\n' "$((n-15))"; fi; printf '%s\n' "$s" | tail -15
 
 up|preview|destroy|refresh:
@@ -35,8 +35,7 @@ up|preview|destroy|refresh:
         # duplicate the Diagnostics block
         drop / (creating|deleting|updating|replacing|refreshing|reading) /
         drop / running /
-        tail auto
-
+        tail-auto-marked
 *:
     if exit failed:
         raw

@@ -28,33 +28,29 @@ up|build:
             ultra:
                 drop-compose-spam
                 keep /(error|Error|ERROR|exited with code|Successfully|Built|Building|Recreating|Attaching to)/
-                tail 30
+                tail-marked 30
                 or "docker-compose: ok"
             lite:
                 drop-compose-spam
-                tail 200
+                tail-marked 200
             else:
                 drop-compose-spam
-                tail 80
-
+                tail-marked 80
 logs, ultra:
     if exit failed:
         raw
     else:
-        tail 20
-
+        tail-marked 20
 logs, full:
     if exit failed:
         raw
     else:
-        tail 60
-
+        tail-marked 60
 logs:
     if exit failed:
         raw
     else:
-        tail 200
-
+        tail-marked 200
 ps:
     if exit failed:
         raw

@@ -33,15 +33,14 @@ build|check|clippy:
             ultra:
                 drop-progress
                 keep /^(error|warning|[[:space:]]*-->|[[:space:]]*Finished|[[:space:]]*help:|[[:space:]]*note:|[[:space:]]*=|Some errors|For more information|[0-9]+ (error|warning))/
-                head 25
+                head-marked 25
                 or "cargo: ok"
             lite:
                 drop-progress
-                head 200
+                head-marked 200
             else:
                 drop-progress
-                head 60
-
+                head-marked 60
 # ── test / bench — keep failures + result, drop passing noise ─────────────
 test|bench:
     if --message-format json:
@@ -50,15 +49,14 @@ test|bench:
         match level:
             ultra:
                 keep /(FAILED|panicked|^test result:|^---- |^failures:|^error|left:|right:|assertion)/
-                head 30
+                head-marked 30
                 or "cargo test: ok"
             lite:
                 drop /\.\.\. ok$/
-                head 200
+                head-marked 200
             else:
                 drop /\.\.\. ok$/
-                head 60
-
+                head-marked 60
 # ── run — strip the compile preamble only; never filter program output ────
 run:
     match level:

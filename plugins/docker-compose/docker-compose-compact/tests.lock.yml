@@ -172,6 +172,7 @@
       checks:
         - name: stdout
           data:
+            - '[lowfat] +21 earlier lines dropped (level=full) -- output truncated, re-run raw for the full list'
             - api_1    | 2026-06-08T12:00:20Z GET /metrics 200 7ms
             - api_1    | 2026-06-08T12:00:21Z GET /products 200 16ms
             - api_1    | 2026-06-08T12:00:22Z GET /products/sku-6 200 11ms
@@ -239,8 +240,8 @@
       checks:
         - name: stdout
           data:
-            - lines 60
-            - bytes 3408
+            - lines 61
+            - bytes 3506
         - name: exitcode
           data:
             - "0"
@@ -250,6 +251,7 @@
       checks:
         - name: stdout
           data:
+            - '[lowfat] +61 earlier lines dropped (level=ultra) -- output truncated, re-run raw for the full list'
             - api_1    | 2026-06-08T12:01:00Z GET /cart 200 8ms
             - api_1    | 2026-06-08T12:01:01Z POST /checkout 200 57ms
             - worker_1 | 2026-06-08T12:01:02Z processed job send-receipt in 8ms
@@ -277,8 +279,8 @@
       checks:
         - name: stdout
           data:
-            - lines 20
-            - bytes 1143
+            - lines 21
+            - bytes 1242
         - name: exitcode
           data:
             - "0"

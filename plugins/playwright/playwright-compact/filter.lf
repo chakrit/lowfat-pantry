@@ -20,27 +20,26 @@ test:
             ultra:
                 drop /^[[:space:]]*[✓·.][[:space:]]/
                 drop /^[[:space:]]*[0-9]+ passed /
-                tail 100
+                tail-marked 100
             lite:
                 drop /^[[:space:]]*[✓·.][[:space:]]/
-                tail 240
+                tail-marked 240
             else:
                 drop /^[[:space:]]*[✓·.][[:space:]]/
-                tail 160
+                tail-marked 160
     else:
         match level:
             ultra:
                 drop /^[[:space:]]*[✓·.][[:space:]]/
                 keep /(Running [0-9]+ tests|[0-9]+ passed|[0-9]+ failed|[0-9]+ flaky|[0-9]+ skipped)/
-                tail 20
+                tail-marked 20
                 or "playwright: passed"
             lite:
                 drop /^[[:space:]]*[✓·.][[:space:]]/
-                tail 120
+                tail-marked 120
             else:
                 drop /^[[:space:]]*[✓·.][[:space:]]/
-                tail 60
-
+                tail-marked 60
 *:
     if exit failed:
         raw

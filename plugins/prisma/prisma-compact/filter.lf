@@ -24,15 +24,14 @@ migrate|generate|db:
                 # keep: migration progress/apply confirmations, client-generation
                 # success markers, and Error: lines
                 keep /(✔ Generated|Applying migration|Migration .* applied|Your database is now in sync|The following migration|Generated Prisma Client|Error:)/
-                head 35
+                head-marked 35
                 or "prisma: ok"
             lite:
                 strip-prisma-noise
-                head 120
+                head-marked 120
             else:
                 strip-prisma-noise
-                head 60
-
+                head-marked 60
 *:
     if exit failed:
         raw

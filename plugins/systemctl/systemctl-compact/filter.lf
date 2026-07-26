@@ -61,8 +61,7 @@ is-active|is-enabled:
     if exit failed:
         raw
     else:
-        head 1
-
+        head-marked 1
 *:
     if exit failed:
         raw

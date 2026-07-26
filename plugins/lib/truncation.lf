@@ -66,3 +66,20 @@ define cap(limit):
         head -n $1 < "$buf"
         [ "$total" -gt $1 ] && printf '... (%d lines total)\n' "$total"
         exit 0
+
+define tail-auto-marked:
+    shell: |
+        case "${level:-full}" in
+            ultra) limit=15 ;;
+            lite)  limit=60 ;;
+            *)     limit=30 ;;
+        esac
+
+        body=$(cat)
+        [ -n "$body" ] || exit 0
+
+        total=$(printf '%s\n' "$body" | grep -c '')
+        [ "$total" -gt "$limit" ] && printf '[lowfat] +%d earlier lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((total - limit))" "${level:-full}"
+
+        printf '%s\n' "$body" | tail -n "$limit"
+        exit 0

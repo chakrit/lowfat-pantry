@@ -73,14 +73,13 @@ apply:
             ultra:
                 drop /Still (creating|modifying|destroying|reading)\.\.\. \[[0-9]+s elapsed\]/
                 keep /(Creating|Modifying|Destroying|Reading|Creation complete|Modifications complete|Destruction complete|Read complete|Apply complete! Resources:)/
-                tail 30
+                tail-marked 30
             lite:
                 drop /Still (creating|modifying|destroying|reading)\.\.\. \[[0-9]+s elapsed\]/
-                tail 120
+                tail-marked 120
             else:
                 drop /Still (creating|modifying|destroying|reading)\.\.\. \[[0-9]+s elapsed\]/
-                tail 60
-
+                tail-marked 60
 init:
     if exit failed:
         raw

@@ -33,8 +33,7 @@ api:
     if exit failed:
         raw
     else:
-        head 100
-
+        head-marked 100
 # Default (auth, config, alias, …) — short; cap lightly, raw on error.
 *:
     if exit failed:

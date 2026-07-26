@@ -4,6 +4,7 @@
       checks:
         - name: stdout
           data:
+            - '[lowfat] +26 earlier lines dropped (level=lite) -- output truncated, re-run raw for the full list'
             - ' +  random:index:RandomUuid svcToken25 create '
             - ' +  random:index:RandomUuid svcToken26 create '
             - ' +  random:index:RandomUuid svcToken27 create '
@@ -71,8 +72,8 @@
       checks:
         - name: stdout
           data:
-            - lines 60
-            - bytes 2660
+            - lines 61
+            - bytes 2758
         - name: exitcode
           data:
             - "0"
@@ -82,6 +83,7 @@
       checks:
         - name: stdout
           data:
+            - '[lowfat] +56 earlier lines dropped (level=full) -- output truncated, re-run raw for the full list'
             - ' +  random:index:RandomUuid svcToken14 created (0.02s) '
             - ' +  random:index:RandomUuid svcToken15 created (0.02s) '
             - ' +  random:index:RandomUuid svcToken16 created (0.02s) '
@@ -119,8 +121,8 @@
       checks:
         - name: stdout
           data:
-            - lines 30
-            - bytes 1330
+            - lines 31
+            - bytes 1428
         - name: exitcode
           data:
             - "0"
@@ -130,6 +132,7 @@
       checks:
         - name: stdout
           data:
+            - '[lowfat] +2 earlier lines dropped (level=ultra) -- output truncated, re-run raw for the full list'
             - 'Resources:'
             - '    + 28 to create'
             - '    - 1 to delete'
@@ -152,8 +155,8 @@
       checks:
         - name: stdout
           data:
-            - lines 15
-            - bytes 298
+            - lines 16
+            - bytes 396
         - name: exitcode
           data:
             - "0"
@@ -417,6 +420,7 @@
       checks:
         - name: stdout
           data:
+            - '[lowfat] +19 earlier lines dropped (level=lite) -- output truncated, re-run raw for the full list'
             - ' -  random:index:RandomUuid svcToken8 delete '
             - ' -  random:index:RandomUuid svcToken18 delete '
             - ' -  random:index:RandomUuid svcToken23 delete '
@@ -484,8 +488,8 @@
       checks:
         - name: stdout
           data:
-            - lines 60
-            - bytes 2826
+            - lines 61
+            - bytes 2924
         - name: exitcode
           data:
             - "0"
@@ -495,6 +499,7 @@
       checks:
         - name: stdout
           data:
+            - '[lowfat] +49 earlier lines dropped (level=full) -- output truncated, re-run raw for the full list'
             - ' -  random:index:RandomUuid svcToken15 deleted (0.02s) '
             - ' -  random:index:RandomUuid svcToken17 deleted (0.02s) '
             - ' -  random:index:RandomUuid svcToken18 deleted (0.02s) '
@@ -532,8 +537,8 @@
       checks:
         - name: stdout
           data:
-            - lines 30
-            - bytes 1517
+            - lines 31
+            - bytes 1615
         - name: exitcode
           data:
             - "0"

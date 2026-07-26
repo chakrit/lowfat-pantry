@@ -18,15 +18,14 @@ test|bench:
     match level:
         ultra:
             keep /(FAILED|error:|AssertionError|^failures:|^test result:|panic|^running [0-9]+ test)/
-            head 30
+            head-marked 30
             or "deno test: ok"
         lite:
             drop /\.\.\. ok/
-            head 200
+            head-marked 200
         else:
             drop /\.\.\. ok/
-            head 60
-
+            head-marked 60
 # ── check / lint — diagnostics; cap, raw-tail fallback ────────────────────
 check|lint:
     if --json:
@@ -34,14 +33,14 @@ check|lint:
     elif exit failed:
         match level:
             ultra:
-                head 40
+                head-marked 40
                 or-shell: s=$(cat); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt 40 ]; then printf '[lowfat] +%d earlier lines dropped -- re-run raw for the full list\n' "$((n-40))"; fi; printf '%s\n' "$s" | tail -40
             lite:
-                head 200
+                head-marked 200
             else:
-                head 80
+                head-marked 80
     else:
-        head 5
+        head-marked 5
         or "deno: no issues"
 
 # ── run / task / eval — program output; never keyword-filter ──────────────

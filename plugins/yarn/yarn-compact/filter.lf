@@ -26,15 +26,14 @@ install|add|remove|upgrade|why|dedupe:
             ultra:
                 drop-steps
                 keep /^(warning|error|success|Done in|➤|✓|✘)/
-                head 20
+                head-marked 20
                 or "yarn: ok"
             lite:
                 drop-steps
-                head 200
+                head-marked 200
             else:
                 drop-steps
-                head 60
-
+                head-marked 60
 # ── run / test / build / exec — script output; never keyword-filter ───────
 run|test|build|exec|dlx|node:
     if exit failed:

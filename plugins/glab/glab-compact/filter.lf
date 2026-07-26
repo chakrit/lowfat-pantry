@@ -32,8 +32,7 @@ api:
     if exit failed:
         raw
     else:
-        head 100
-
+        head-marked 100
 *:
     if exit failed:
         raw

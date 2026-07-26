@@ -21,25 +21,23 @@ install|add|remove|update|pm|link|unlink:
         match level:
             ultra:
                 keep /(packages installed|Saved lockfile|error|warn|panic|^bun (install|add|remove))/
-                tail 20
+                tail-marked 20
                 or "bun: ok"
             lite:
-                head 200
+                head-marked 200
             else:
-                head 60
-
+                head-marked 60
 # ── test — keep failures + tallies, drop passing specs ────────────────────
 test:
     match level:
         ultra:
             keep /(✗|✘|✕|\(fail\)|error:|panic|[0-9]+ (pass|fail|error|skip)|Ran [0-9]+ test|\.test\.|^bun test)/
-            tail 30
+            tail-marked 30
             or-shell: s=$(cat); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt 30 ]; then printf '[lowfat] +%d earlier lines dropped -- re-run raw for the full list\n' "$((n-30))"; fi; printf '%s\n' "$s" | tail -30
         lite:
-            head 200
+            head-marked 200
         else:
-            head 80
-
+            head-marked 80
 # ── run / build / x — program output; never keyword-filter ────────────────
 run|build|x|exec:
     if exit failed:

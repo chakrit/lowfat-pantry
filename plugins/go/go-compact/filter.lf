@@ -28,31 +28,30 @@ test:
         match level:
             ultra:
                 keep /^(--- FAIL|FAIL|panic:|[[:space:]]+panic|[[:space:]]+.+\.go:[0-9]+:|[[:space:]]+Error Trace:|[[:space:]]+Error:|ok[[:space:]]|[?][[:space:]]|# )/
-                head 40
+                head-marked 40
                 or-shell: s=$(grep -E '[^[:space:]]'); n=$(printf '%s\n' "$s" | wc -l); if [ "$n" -gt 40 ]; then printf '[lowfat] +%d earlier lines dropped -- re-run raw for the full list\n' "$((n-40))"; fi; printf '%s\n' "$s" | tail -40
             full:
                 drop /^=== RUN /
                 drop /^--- PASS: /
                 drop /^PASS$/
-                head 120
+                head-marked 120
             lite:
                 drop /^=== RUN /
                 drop /^--- PASS: /
-                head 220
+                head-marked 220
     else:
         match level:
             ultra:
                 keep /^(ok[[:space:]]|PASS$|FAIL$|# )/
-                head 25
+                head-marked 25
                 or "go test: ok"
             full:
                 drop /^=== RUN /
                 drop /^--- PASS: /
-                head 60
+                head-marked 60
             lite:
                 drop /^=== RUN /
-                head 120
-
+                head-marked 120
 vet:
     if exit failed:
         raw
@@ -60,7 +59,7 @@ vet:
         raw
     else:
         keep /^(.+\.go:[0-9]+:[0-9]+:|# )/
-        head auto
+        head-auto-marked
         or "go vet: ok"
 
 mod:

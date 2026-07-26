@@ -21,14 +21,13 @@ build:
             ultra:
                 drop-next-banner
                 keep /(Compiled successfully|Failed to compile|Warning:|Error:|[0-9]+ warnings?)/
-                head 45
+                head-marked 45
             lite:
                 drop-next-banner
-                head 140
+                head-marked 140
             else:
                 drop-next-banner
-                head 90
-
+                head-marked 90
 *:
     if exit failed:
         raw
