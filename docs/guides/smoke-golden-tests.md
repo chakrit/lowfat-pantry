@@ -23,13 +23,20 @@ lock, output is buffered per spec and replayed in order, and smoke's exit codes 
 aggregated worst-first, so a parallel run reads and behaves like a serial one. `JOBS=1`
 serializes while debugging.
 
-**Goldens don't see cross-plugin drift.** `uv-compact` and `npx-compact` re-implement
-their wrapped tools' compaction as Python branches (a `python:` body can't call an `.lf`
-macro, so `include` doesn't reach this), which means editing `pytest-compact` moves only
-pytest's lock while uv's copy of it rots UNCHANGED. `scripts/drift.py` closes that hole:
-the wrapped tool's own samples go through both filters at every level and the outputs must
-match byte-for-byte. It is **not re-lockable** — a mismatch is a wrapper bug — so
-`test.sh -c` skips it.
+**Goldens don't see cross-plugin behaviour.** `uv-compact` and `npx-compact` delegate to
+their wrapped tools' filters by re-invoking `lowfat filter` on them, so nothing in their
+own locks notices when that dispatch breaks — a wrong args mapping or a probe that stops
+finding the sibling plugin just falls back to a generic cap, silently. `scripts/drift.py`
+closes that hole: the wrapped tool's own samples go through both wrapper and original at
+every level and the outputs must match byte-for-byte.
+
+**Goldens can't see over-prune-to-empty either**, for a structural reason: a sample the
+filter recognizes never exercises what happens when it recognizes *nothing*.
+`scripts/overprune.py` drives deliberately unrecognizable input through every filter ×
+subcommand × level × exit and asserts something came back.
+
+Neither is **re-lockable** — a failure in either is a filter bug — so `test.sh -c` skips
+both.
 
 Both wrap `scripts/smoke.sh`, which provisions a pinned `chakrit/smoke` into a
 gitignored `.bin/` via `go install` (needs Go on PATH) — never a bare `smoke` off
@@ -39,11 +46,12 @@ invoke from the repo root (the scripts enforce this). Exit codes: `0` UNCHANGED,
 `1` CHANGED (drift — investigate or re-lock), `3` NEW (no lock yet), `64` usage
 error, `65` malformed spec / duplicate test name.
 
-**`test.sh` runs one spec per invocation.** Each plugin gets its own verdict line
-and the suite aggregates the worst exit. Earlier smoke exited after the first
-spec of a multi-spec compare, which *forced* this loop; v0.4 fixed it — a single
-multi-spec call now checks every spec and aggregates exit — but the loop stays
-for obvious per-plugin attribution and uniform behaviour under `-c`.
+**`test.sh` runs one spec per invocation, four at a time.** Each plugin gets its
+own verdict line and the suite aggregates the worst exit. Earlier smoke exited
+after the first spec of a multi-spec compare, which *forced* the per-spec loop;
+v0.4 fixed it — a single multi-spec call now checks every spec and aggregates
+exit — but the loop stays for obvious per-plugin attribution, uniform behaviour
+under `-c`, and because per-spec invocations parallelize trivially.
 
 ## What a spec looks like
 
