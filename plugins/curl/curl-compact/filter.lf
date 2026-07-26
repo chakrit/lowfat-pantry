@@ -10,26 +10,24 @@
 # final stdout) to recover the complete response.
 
 define compact-curl(limit):
-    python: |
-        import re, sys
+    shell: |
+        buf=$(mktemp)
+        trap 'rm -f "$buf"' EXIT
 
-        lines = sys.stdin.read().splitlines()
+        # progress meter out, CRs out, blank lines out — what remains is the
+        # exchange plus the body, all of it one budget
+        sed -E '
+        s/\r//g
+        /^[[:blank:]]*%[[:blank:]]*Total/d
+        /^[[:blank:]]*[0-9]+([[:blank:]]+[0-9]+){4}/d
+        /^[[:space:]]*$/d' > "$buf"
 
-        out, total = [], 0
-        for line in lines:
-            line = line.replace("\r", "")
-            if re.match(r"^[ \t]*%[ \t]*Total", line):
-                continue
-            if re.match(r"^[ \t]*[0-9]+[ \t]+[0-9]+[ \t]+[0-9]+[ \t]+[0-9]+[ \t]+[0-9]+", line):
-                continue
-            if re.match(r"^(\*|>|<|HTTP/|[A-Za-z0-9-]+:)", line) or line.strip():
-                total += 1
-                if len(out) < $1:
-                    out.append(line)
+        total=$(grep -c '' < "$buf")
+        [ "$total" -gt 0 ] || exit 0
 
-        if total > $1:
-            out.append(f"... ({total} lines total)")
-        sys.stdout.write("\n".join(out) + "\n" if out else "")
+        head -n $1 < "$buf"
+        [ "$total" -gt $1 ] && printf '... (%d lines total)\n' "$total"
+        exit 0
 
 *:
     if exit failed:

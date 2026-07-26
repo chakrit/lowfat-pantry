@@ -11,25 +11,29 @@ define drop-gradle-noise:
     drop /^Starting a Gradle Daemon/
 
 define compact-gradle-failure(limit):
-    python: |
-        import re, sys
-
-        lines = sys.stdin.read().splitlines()
-
-        out, in_failure = [], False
-        for line in lines:
-            if re.match(r"^(FAILURE:|\* What went wrong:|\* Try:|\* Exception is:)", line):
-                in_failure = True
-            if re.match(r"^BUILD FAILED", line) or re.match(r"^[0-9]+ actionable tasks:", line) \
-                    or re.search(r"FAILED$", line) \
-                    or re.search(r"(^|\s)(FAILED|Error|error|Exception|AssertionError)", line):
-                out.append(line)
-            elif in_failure and line.strip():
-                out.append(line)
-            if len(out) >= $1:
-                break
-
-        sys.stdout.write("\n".join(out) + "\n" if out else "")
+    shell: |
+        # Error-shaped lines are kept wherever they appear; once the FAILURE
+        # block opens, its whole body is signal too. The cap is a plain head
+        # because the reference stops appending at the limit.
+        sed -E '
+        /^(FAILURE:|\* What went wrong:|\* Try:|\* Exception is:)/{s/^/O/;b
+        }
+        /^BUILD FAILED|^[0-9]+ actionable tasks:|FAILED$|(^|[[:space:]])(FAILED|Error|error|Exception|AssertionError)/{s/^/E/;b
+        }
+        /^[[:space:]]*$/{s/^/B/;b
+        }
+        s/^/X/' | {
+            in_failure=0
+            while IFS= read -r tagged || [ -n "$tagged" ]; do
+                line=${tagged#?}
+                case $tagged in
+                    O*) in_failure=1; printf '%s\n' "$line" ;;
+                    E*) printf '%s\n' "$line" ;;
+                    X*) [ "$in_failure" = 1 ] && printf '%s\n' "$line" ;;
+                esac
+            done
+        } | head -n $1
+        exit 0
 
 *:
     if exit failed:

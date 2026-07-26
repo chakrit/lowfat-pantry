@@ -3,25 +3,21 @@
 # env: $sub $level $exit $args
 
 define compact-aws-table(limit):
-    python: |
-        import re, sys
-
-        lines = sys.stdin.read().splitlines()
-
-        out = []
-        for line in lines:
-            if re.match(r"^-+$|^[|][+-]+[|]$|^[+][-+]+[+]$", line):
-                continue
-            if line.startswith("|"):
-                if len(out) < $1:
-                    cell = re.sub(r"^[|][ \t]*", "", line)
-                    cell = re.sub(r"[ \t]*[|][ \t]*", " ", cell)
-                    out.append(re.sub(r"[ \t]+$", "", cell))
-                continue
-            if line.strip() and len(out) < $1:
-                out.append(re.sub(r"[ \t][ \t]+", " ", line))
-
-        sys.stdout.write("\n".join(out) + "\n" if out else "")
+    shell: |
+        # Rules and separators go; pipe rows lose their column bars, prose loses
+        # run-on blanks. Both classes share one budget, so the cap is a single
+        # head over the reshaped stream.
+        sed -E '
+        /^-+$|^\|[+-]+\|$|^\+[-+]+\+$/d
+        /^\|/{
+        s/^\|[[:blank:]]*//
+        s/[[:blank:]]*\|[[:blank:]]*/ /g
+        s/[[:blank:]]+$//
+        b
+        }
+        /^[[:blank:]]*$/d
+        s/[[:blank:]][[:blank:]]+/ /g' | head -n $1
+        exit 0
 
 *:
     if exit failed:

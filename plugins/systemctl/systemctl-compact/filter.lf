@@ -9,28 +9,36 @@ include ../../lib/truncation.lf
 # Loaded, Active, Main PID). Resource lines (Tasks/Memory/CPU/CGroup) appear
 # from limit > 10 up.
 define compact-status(limit):
-    python: |
-        import re, sys
-
-        lines = sys.stdin.read().splitlines()
-
-        out, logs = [], 0
-        for index, line in enumerate(lines):
-            if index == 0:
-                out.append(line)
-                continue
-            if re.match(r"^[ \t]+(Loaded|Active|Main PID):", line):
-                out.append(line)
-                continue
-            if $1 > 10 and re.match(r"^[ \t]+(Tasks|Memory|CPU|CGroup):", line):
-                out.append(line)
-                continue
-            if re.match(r"^[ \t]*[A-Z][a-z][a-z] [ 0-9][0-9] ", line):
-                if logs < $1:
-                    out.append(line)
-                    logs += 1
-
-        sys.stdout.write("\n".join(out) + "\n" if out else "")
+    shell: |
+        # Line 1 is the unit header, then the identity fields; resource fields
+        # only earn their place in the bigger budgets. Journal lines (Mon DD …)
+        # are the part that actually needs capping.
+        sed -E '
+        1{s/^/H/;b
+        }
+        /^[[:blank:]]+(Loaded|Active|Main PID):/{s/^/I/;b
+        }
+        /^[[:blank:]]+(Tasks|Memory|CPU|CGroup):/{s/^/R/;b
+        }
+        /^[[:blank:]]*[A-Z][a-z][a-z] [ 0-9][0-9] /{s/^/J/;b
+        }
+        s/^/D/' | {
+            logs=0
+            while IFS= read -r tagged || [ -n "$tagged" ]; do
+                line=${tagged#?}
+                case $tagged in
+                    H*|I*) printf '%s\n' "$line" ;;
+                    R*) [ $1 -gt 10 ] && printf '%s\n' "$line" ;;
+                    J*)
+                        if [ "$logs" -lt $1 ]; then
+                            printf '%s\n' "$line"
+                            logs=$((logs + 1))
+                        fi
+                        ;;
+                esac
+            done
+        }
+        exit 0
 
 status:
     if exit failed:
