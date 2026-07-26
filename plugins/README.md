@@ -104,6 +104,13 @@ real `exit` so failure samples are tested as failures):
 
     scripts/smoke.sh -c plugins/<cmd>/<plugin>/tests.cue   # lock the golden, REVIEW the diff
     scripts/test.sh                                        # whole suite, exit 0 = no drift
+    scripts/drift.py                                       # wrapper/original agreement
+
+`scripts/test.sh` ends with `drift.py`, which goldens can't replace: a wrapper filter
+(`uv-compact`, `npx-compact`) re-implements its wrapped tools' compaction, so editing
+`pytest-compact` moves only pytest's lock while uv's copy rots. It runs the wrapped tool's
+own samples through both filters at every level and requires identical output. A mismatch
+is a bug to fix in the wrapper, never something to re-lock.
 
 The lock diff is the correctness gate. A regression like over-prune-to-empty surfaces as
 drift on the `measure.py` `lines`/`bytes` metric locked alongside each golden.

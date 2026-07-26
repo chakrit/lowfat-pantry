@@ -14,7 +14,16 @@ scripts/test.sh          # whole suite; exit 0 = no drift
 scripts/test.sh -c       # re-lock everything (review the diff, then commit)
 scripts/smoke.sh plugins/go/go-compact/tests.cue        # one plugin
 scripts/smoke.sh -c plugins/go/go-compact/tests.cue     # re-lock one plugin
+scripts/drift.py         # wrapper/original agreement (test.sh runs it last)
 ```
+
+**Goldens don't see cross-plugin drift.** `uv-compact` and `npx-compact` re-implement
+their wrapped tools' compaction as Python branches (a `python:` body can't call an `.lf`
+macro, so `include` doesn't reach this), which means editing `pytest-compact` moves only
+pytest's lock while uv's copy of it rots UNCHANGED. `scripts/drift.py` closes that hole:
+the wrapped tool's own samples go through both filters at every level and the outputs must
+match byte-for-byte. It is **not re-lockable** — a mismatch is a wrapper bug — so
+`test.sh -c` skips it.
 
 Both wrap `scripts/smoke.sh`, which provisions a pinned `chakrit/smoke` into a
 gitignored `.bin/` via `go install` (needs Go on PATH) — never a bare `smoke` off

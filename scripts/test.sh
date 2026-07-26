@@ -26,4 +26,15 @@ for spec in $specs; do
         rc=$st
     fi
 done
+
+# Goldens can't see cross-plugin drift: edit pytest-compact and only pytest's
+# lock moves, while uv-compact's copy of it silently rots. drift.py compares the
+# two directly. Not re-lockable — a mismatch is a real bug, so `-c` skips it.
+case " $* " in
+    *" -c "*) ;;
+    *)
+        scripts/drift.py || rc=1
+        ;;
+esac
+
 exit $rc

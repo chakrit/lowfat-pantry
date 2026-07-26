@@ -17,7 +17,8 @@ built.
 - `plugins/README.md` — pantry layout + the truncation conventions every filter must hold
 - `docs/spec/pantry-plugin-backlog.md` — what's built + what's left
 
-Test filters with `scripts/test.sh` (smoke golden suite) or `scripts/smoke.sh -c
+Test filters with `scripts/test.sh` (smoke golden suite + `scripts/drift.py`, the
+wrapper/original agreement check) or `scripts/smoke.sh -c
 plugins/<cmd>/<plugin>/tests.cue` for one plugin; see `docs/guides/smoke-golden-tests.md`.
 Session resume trail: `.ace/save.md` (+ `.ace/save.ledger.md`), gitignored.
 

@@ -7,8 +7,10 @@
 #
 # DRIFT CONTRACT: the eslint/prettier/tsc branches are ported from
 # plugins/{eslint,prettier,tsc}/*/filter.lf. The engine has no cross-filter
-# dispatch and macros are file-local, so this is a deliberate copy. Edit those
-# originals -> mirror here. The real fix is wrapper-unwrap in lowfat-core — see
+# dispatch, and `include` carries `.lf` macros — which this `python:` body can't
+# call — so this is a deliberate copy. Edit those originals -> mirror here;
+# `scripts/drift.py` fails the suite if you don't. The real fix is
+# wrapper-unwrap in lowfat-core — see
 # the "Wrapper commands" section in docs/spec/pantry-plugin-backlog.md and the
 # wishlist in docs/spec/lf-wishlist.md. The sibling uv-compact follows the same pattern.
 #
@@ -65,10 +67,10 @@ define npx-dispatch:
 
         # a silently head-capped body looks complete; announce the cap so the
         # agent knows output was truncated (the curl/gem/rake convention).
-        def capped(n):
-            emit(lines[:n])
-            if len(lines) > n:
-                print("... (%d lines total)" % len(lines))
+        def capped(out, n):
+            emit(out[:n])
+            if len(out) > n:
+                print("... (%d lines total)" % len(out))
 
         def tailed(n):
             emit(lines[-n:] if n < len(lines) else lines)
@@ -82,11 +84,11 @@ define npx-dispatch:
                 emit(lines)
                 return
             limit = {"ultra": 25, "full": 60, "lite": 200}.get(level, 60)
-            out = [ln for ln in lines if ln.strip()][:limit]
+            out = [ln for ln in lines if ln.strip()]
             if not out:
                 print("eslint: clean")
             else:
-                emit(out)
+                capped(out, limit)
 
         # --- prettier: ported from plugins/prettier/*/filter.lf ---
         def do_prettier():
@@ -97,7 +99,7 @@ define npx-dispatch:
                 if blank(lines):
                     print("prettier: all files formatted")
                 else:
-                    capped(40)
+                    capped(lines, 40)
                 return
             if has("--write", "-w"):
                 tailed({"ultra": 6, "full": 40, "lite": 200}.get(level, 40))
@@ -112,21 +114,21 @@ define npx-dispatch:
                         r"(error TS[0-9]+|^Found [0-9]+ error|^Errors  Files|^\s*[0-9]+\s+\S)", ln)]
                     if not keep:
                         keep = [ln for ln in lines if re.search(r"error TS[0-9]+", ln)]
-                    emit(keep[:40])
+                    capped(keep, 40)
                 else:
-                    capped(200 if level == "lite" else 80)
+                    capped(lines, 200 if level == "lite" else 80)
                 return
             if blank(lines):
                 print("tsc: no errors")
             else:
-                capped(10)
+                capped(lines, 10)
 
         # --- unknown tool: conservative cap (npx generic) ---
         def do_generic():
             if exit_code != "0":
                 emit(lines)
                 return
-            capped({"ultra": 40, "full": 80, "lite": 160}.get(level, 80))
+            capped(lines, {"ultra": 40, "full": 80, "lite": 160}.get(level, 80))
 
         if tool == "eslint":
             do_eslint()

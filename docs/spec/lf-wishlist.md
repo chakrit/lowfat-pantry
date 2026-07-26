@@ -31,9 +31,12 @@ distribution question — absolute paths are rejected and plugins sync per-plugi
 `<LOWFAT_HOME>/plugins/<cat>/<name>/` — resolved because the install tree mirrors the
 pantry layout, with the sync linking `plugins/lib` alongside.
 
-The wrapper duplication below is **still open**: `include` fits it (rules are excluded, so
-a wrapper can pull `../../pytest/pytest-compact/filter.lf` for its macros alone), but no
-pass has done it.
+The wrapper duplication below is **not** fixed by it, contrary to the original filing.
+`include` moves `.lf` *macros*; a wrapper's copies are Python functions inside one
+`python:` dispatch body, chosen at runtime from `$args`, and a `python:` body cannot call
+an `.lf` macro. Only wrapper-unwrap (#2) removes that duplication. Until then the copies
+are held honest mechanically by `scripts/drift.py`, which runs the wrapped tool's own
+samples through both filters at every level and requires identical output.
 
 **Problem** (as originally filed). Macros are file-local (`collect_macro_names` runs per
 file; no include op), so a `.lf` filter can't reuse another's logic. A wrapper filter that
@@ -41,7 +44,9 @@ wants the wrapped tool's compaction must **copy** that tool's macro body verbati
 
 **Workaround in pantry.** `uv-compact` and `npx-compact` each copy their wrapped tools'
 bodies (pytest/ruff into uv; eslint/prettier/tsc into npx) under a "drift contract" comment.
-The copies rot whenever the standalone originals change. See backlog → "Wrapper commands".
+`scripts/drift.py` (in `scripts/test.sh`) enforces that contract — it caught npx's eslint
+branch capping silently where eslint-compact marks the cut. See backlog → "Wrapper
+commands".
 
 **Proposed shape.** An `include path/to/lib.lf` (or `use`) directive that pulls another
 file's `define`d macros into the current namespace at parse time. Lets shared tool logic

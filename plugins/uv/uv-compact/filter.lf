@@ -7,8 +7,10 @@
 #
 # DRIFT CONTRACT: the pytest and ruff branches are copied from
 # plugins/pytest/pytest-compact and plugins/ruff/ruff-compact. The engine has no
-# cross-filter dispatch and macros are file-local, so this is a deliberate copy.
-# Edit those originals -> mirror the change here. The real fix is wrapper-unwrap
+# cross-filter dispatch, and `include` carries `.lf` macros — which this
+# `python:` body can't call — so this is a deliberate copy. Edit those originals
+# -> mirror the change here; `scripts/drift.py` fails the suite if you don't.
+# The real fix is wrapper-unwrap
 # in lowfat-core (covers npx/poetry run/pnpm exec/bunx/pdm run too) — see the
 # "Wrapper commands" section in docs/spec/pantry-plugin-backlog.md.
 # env: $sub $level $exit $args
