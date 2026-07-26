@@ -240,6 +240,87 @@
         - name: exitcode
           data:
             - "0"
+- name: tests.cue \ rspec-compact \ samples/rspec-boot-crash.txt lite
+  commands:
+    - command: lowfat filter plugins/rspec/rspec-compact/filter.lf --sub= --args='' --exit=1 --level=lite < plugins/rspec/rspec-compact/samples/rspec-boot-crash.txt
+      checks:
+        - name: stdout
+          data:
+            - An error occurred while loading ./spec/a_spec.rb. - Did you mean?
+            - '                    rspec ./spec/spec_helper.rb'
+            - ""
+            - 'Failure/Error: require "nope_not_a_gem"'
+            - ""
+            - 'LoadError:'
+            - '  cannot load such file -- nope_not_a_gem'
+            - '# ./spec/spec_helper.rb:1:in ''<top (required)>'''
+            - '# ./spec/a_spec.rb:1:in ''<top (required)>'''
+            - No examples found.
+            - ""
+            - ""
+            - 0 examples, 0 failures, 1 error occurred outside of examples
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/rspec/rspec-compact/filter.lf --sub= --args='' --exit=1 --level=lite < plugins/rspec/rspec-compact/samples/rspec-boot-crash.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 14
+            - bytes 383
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ rspec-compact \ samples/rspec-boot-crash.txt full
+  commands:
+    - command: lowfat filter plugins/rspec/rspec-compact/filter.lf --sub= --args='' --exit=1 --level=full < plugins/rspec/rspec-compact/samples/rspec-boot-crash.txt
+      checks:
+        - name: stdout
+          data:
+            - An error occurred while loading ./spec/a_spec.rb. - Did you mean?
+            - '                    rspec ./spec/spec_helper.rb'
+            - 'Failure/Error: require "nope_not_a_gem"'
+            - 'LoadError:'
+            - '  cannot load such file -- nope_not_a_gem'
+            - '# ./spec/spec_helper.rb:1:in ''<top (required)>'''
+            - '# ./spec/a_spec.rb:1:in ''<top (required)>'''
+            - No examples found.
+            - 0 examples, 0 failures, 1 error occurred outside of examples
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/rspec/rspec-compact/filter.lf --sub= --args='' --exit=1 --level=full < plugins/rspec/rspec-compact/samples/rspec-boot-crash.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 9
+            - bytes 378
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ rspec-compact \ samples/rspec-boot-crash.txt ultra
+  commands:
+    - command: lowfat filter plugins/rspec/rspec-compact/filter.lf --sub= --args='' --exit=1 --level=ultra < plugins/rspec/rspec-compact/samples/rspec-boot-crash.txt
+      checks:
+        - name: stdout
+          data:
+            - An error occurred while loading ./spec/a_spec.rb. - Did you mean?
+            - 'Failure/Error: require "nope_not_a_gem"'
+            - 'LoadError:'
+            - '  cannot load such file -- nope_not_a_gem'
+            - 0 examples, 0 failures, 1 error occurred outside of examples
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/rspec/rspec-compact/filter.lf --sub= --args='' --exit=1 --level=ultra < plugins/rspec/rspec-compact/samples/rspec-boot-crash.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 5
+            - bytes 220
+        - name: exitcode
+          data:
+            - "0"
 - name: tests.cue \ rspec-compact \ samples/rspec-json.txt lite
   commands:
     - command: lowfat filter plugins/rspec/rspec-compact/filter.lf --sub= --args='--format json' --exit=0 --level=lite < plugins/rspec/rspec-compact/samples/rspec-json.txt

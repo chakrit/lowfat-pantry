@@ -1,0 +1,7 @@
+error: cannot format broken.py: Cannot parse: 1:6
+    def f(:
+         ^
+ParseError: bad input
+
+Oh no! 💥 💔 💥
+1 file would fail to reformat.

@@ -1,0 +1,16 @@
+
+An error occurred while loading ./spec/a_spec.rb. - Did you mean?
+                    rspec ./spec/spec_helper.rb
+
+Failure/Error: require "nope_not_a_gem"
+
+LoadError:
+  cannot load such file -- nope_not_a_gem
+# ./spec/spec_helper.rb:1:in '<top (required)>'
+# ./spec/a_spec.rb:1:in '<top (required)>'
+No examples found.
+
+
+Finished in 0.00002 seconds (files took 0.04326 seconds to load)
+0 examples, 0 failures, 1 error occurred outside of examples
+

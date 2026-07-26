@@ -11,6 +11,7 @@ _suite: testkit.#Suite & {
 	cases: [
 		{sample: "samples/ansible-failure.txt", sub: "", args: "-i prod site.yml", exit: 2, levels: ["lite", "full", "ultra"]},
 		{sample: "samples/ansible-success.txt", sub: "", args: "-i prod site.yml", exit: 0, levels: ["lite", "full", "ultra"]},
+		{sample: "samples/ansible-playbook-syntax-error.txt", sub: "", args: "play.yml", exit: 4, levels: ["lite", "full", "ultra"]},
 	]
 }
 

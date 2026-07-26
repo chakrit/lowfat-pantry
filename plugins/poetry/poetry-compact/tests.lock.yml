@@ -249,3 +249,60 @@
         - name: exitcode
           data:
             - "0"
+- name: tests.cue \ poetry-compact \ samples/poetry-broken-pyproject.txt install lite
+  commands:
+    - command: lowfat filter plugins/poetry/poetry-compact/filter.lf --sub=install --args='install' --exit=1 --level=lite < plugins/poetry/poetry-compact/samples/poetry-broken-pyproject.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Invalid TOML file /w/pyproject.toml: Unexpected character: ''\n'' at line 1 col 12'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/poetry/poetry-compact/filter.lf --sub=install --args='install' --exit=1 --level=lite < plugins/poetry/poetry-compact/samples/poetry-broken-pyproject.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 2
+            - bytes 82
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ poetry-compact \ samples/poetry-broken-pyproject.txt install full
+  commands:
+    - command: lowfat filter plugins/poetry/poetry-compact/filter.lf --sub=install --args='install' --exit=1 --level=full < plugins/poetry/poetry-compact/samples/poetry-broken-pyproject.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Invalid TOML file /w/pyproject.toml: Unexpected character: ''\n'' at line 1 col 12'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/poetry/poetry-compact/filter.lf --sub=install --args='install' --exit=1 --level=full < plugins/poetry/poetry-compact/samples/poetry-broken-pyproject.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 2
+            - bytes 82
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ poetry-compact \ samples/poetry-broken-pyproject.txt install ultra
+  commands:
+    - command: lowfat filter plugins/poetry/poetry-compact/filter.lf --sub=install --args='install' --exit=1 --level=ultra < plugins/poetry/poetry-compact/samples/poetry-broken-pyproject.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Invalid TOML file /w/pyproject.toml: Unexpected character: ''\n'' at line 1 col 12'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/poetry/poetry-compact/filter.lf --sub=install --args='install' --exit=1 --level=ultra < plugins/poetry/poetry-compact/samples/poetry-broken-pyproject.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 2
+            - bytes 82
+        - name: exitcode
+          data:
+            - "0"

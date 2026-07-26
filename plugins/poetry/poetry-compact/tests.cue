@@ -15,6 +15,7 @@ _suite: testkit.#Suite & {
 		{sample: "samples/poetry-lock.txt", sub: "lock", args: "lock", exit: 0, levels: ["lite", "full", "ultra"]},
 		{sample: "samples/poetry-fail.txt", sub: "lock", args: "lock", exit: 1, levels: ["lite", "full", "ultra"]},
 		{sample: "samples/poetry-show-json.txt", sub: "show", args: "show -f json", exit: 0, levels: ["lite", "full", "ultra"]},
+		{sample: "samples/poetry-broken-pyproject.txt", sub: "install", args: "install", exit: 1, levels: ["lite", "full", "ultra"]},
 	]
 }
 

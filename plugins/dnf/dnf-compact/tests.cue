@@ -11,6 +11,7 @@ _suite: testkit.#Suite & {
 	cases: [
 		{sample: "samples/dnf-install.txt", sub: "install", args: "install -y jq", exit: 0, levels: ["lite", "full", "ultra"]},
 		{sample: "samples/dnf-install-error.txt", sub: "install", args: "install -y nosuchpkg123", exit: 1, levels: ["lite", "full", "ultra"]},
+		{sample: "samples/dnf-install-missing.txt", sub: "install", args: "install -y definitely-not-a-real-package-9z", exit: 1, levels: ["lite", "full", "ultra"]},
 	]
 }
 

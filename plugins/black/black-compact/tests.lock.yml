@@ -190,3 +190,73 @@
         - name: exitcode
           data:
             - "0"
+- name: tests.cue \ black-compact \ samples/black-syntax-error.txt lite
+  commands:
+    - command: lowfat filter plugins/black/black-compact/filter.lf --sub= --args='--check broken.py' --exit=123 --level=lite < plugins/black/black-compact/samples/black-syntax-error.txt
+      checks:
+        - name: stdout
+          data:
+            - 'error: cannot format broken.py: Cannot parse: 1:6'
+            - '    def f(:'
+            - '         ^'
+            - 'ParseError: bad input'
+            - ""
+            - "Oh no! \U0001F4A5 \U0001F494 \U0001F4A5"
+            - 1 file would fail to reformat.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/black/black-compact/filter.lf --sub= --args='--check broken.py' --exit=123 --level=lite < plugins/black/black-compact/samples/black-syntax-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 7
+            - bytes 149
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ black-compact \ samples/black-syntax-error.txt full
+  commands:
+    - command: lowfat filter plugins/black/black-compact/filter.lf --sub= --args='--check broken.py' --exit=123 --level=full < plugins/black/black-compact/samples/black-syntax-error.txt
+      checks:
+        - name: stdout
+          data:
+            - 'error: cannot format broken.py: Cannot parse: 1:6'
+            - '    def f(:'
+            - '         ^'
+            - 'ParseError: bad input'
+            - ""
+            - "Oh no! \U0001F4A5 \U0001F494 \U0001F4A5"
+            - 1 file would fail to reformat.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/black/black-compact/filter.lf --sub= --args='--check broken.py' --exit=123 --level=full < plugins/black/black-compact/samples/black-syntax-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 7
+            - bytes 149
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ black-compact \ samples/black-syntax-error.txt ultra
+  commands:
+    - command: lowfat filter plugins/black/black-compact/filter.lf --sub= --args='--check broken.py' --exit=123 --level=ultra < plugins/black/black-compact/samples/black-syntax-error.txt
+      checks:
+        - name: stdout
+          data:
+            - 'error: cannot format broken.py: Cannot parse: 1:6'
+            - 1 file would fail to reformat.
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/black/black-compact/filter.lf --sub= --args='--check broken.py' --exit=123 --level=ultra < plugins/black/black-compact/samples/black-syntax-error.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 2
+            - bytes 81
+        - name: exitcode
+          data:
+            - "0"

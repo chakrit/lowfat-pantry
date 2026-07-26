@@ -12,6 +12,7 @@ _suite: testkit.#Suite & {
 		{sample: "samples/rspec-pass.txt",  sub: "", args: "spec/", exit: 0, levels: ["lite", "full", "ultra"]},
 		{sample: "samples/rspec-fail.txt",  sub: "", args: "spec/", exit: 1, levels: ["lite", "full", "ultra"]},
 		{sample: "samples/rspec-error.txt", sub: "", args: "spec/broken_spec.rb", exit: 1, levels: ["lite", "full", "ultra"]},
+		{sample: "samples/rspec-boot-crash.txt", sub: "", args: "", exit: 1, levels: ["lite", "full", "ultra"]},
 		{sample: "samples/rspec-json.txt",  sub: "", args: "--format json", exit: 0, levels: ["lite", "full", "ultra"]},
 	]
 }

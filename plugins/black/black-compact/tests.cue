@@ -12,6 +12,7 @@ _suite: testkit.#Suite & {
 		{sample: "samples/black-reformat.txt", sub: "", args: ".", exit: 0, levels: ["lite", "full", "ultra"]},
 		{sample: "samples/black-check.txt", sub: "", args: "--check .", exit: 1, levels: ["lite", "full", "ultra"]},
 		{sample: "samples/black-clean.txt", sub: "", args: ".", exit: 0, levels: ["lite", "full", "ultra"]},
+		{sample: "samples/black-syntax-error.txt", sub: "", args: "--check broken.py", exit: 123, levels: ["lite", "full", "ultra"]},
 	]
 }
 

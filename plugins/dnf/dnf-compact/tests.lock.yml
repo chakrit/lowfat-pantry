@@ -92,6 +92,7 @@
           data:
             - 'Failed to resolve the transaction:'
             - 'No match for argument: nosuchpkg123'
+            - 'You can try to add to command line:'
             - '  --skip-unavailable to skip unavailable packages'
         - name: exitcode
           data:
@@ -100,8 +101,8 @@
       checks:
         - name: stdout
           data:
-            - lines 3
-            - bytes 121
+            - lines 4
+            - bytes 157
         - name: exitcode
           data:
             - "0"
@@ -113,6 +114,7 @@
           data:
             - 'Failed to resolve the transaction:'
             - 'No match for argument: nosuchpkg123'
+            - 'You can try to add to command line:'
             - '  --skip-unavailable to skip unavailable packages'
         - name: exitcode
           data:
@@ -121,8 +123,8 @@
       checks:
         - name: stdout
           data:
-            - lines 3
-            - bytes 121
+            - lines 4
+            - bytes 157
         - name: exitcode
           data:
             - "0"
@@ -134,6 +136,7 @@
           data:
             - 'Failed to resolve the transaction:'
             - 'No match for argument: nosuchpkg123'
+            - 'You can try to add to command line:'
             - '  --skip-unavailable to skip unavailable packages'
         - name: exitcode
           data:
@@ -142,8 +145,74 @@
       checks:
         - name: stdout
           data:
-            - lines 3
-            - bytes 121
+            - lines 4
+            - bytes 157
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ dnf-compact \ samples/dnf-install-missing.txt lite
+  commands:
+    - command: lowfat filter plugins/dnf/dnf-compact/filter.lf --sub=install --args='install -y definitely-not-a-real-package-9z' --exit=1 --level=lite < plugins/dnf/dnf-compact/samples/dnf-install-missing.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Failed to resolve the transaction:'
+            - 'No match for argument: definitely-not-a-real-package-9z'
+            - 'You can try to add to command line:'
+            - '  --skip-unavailable to skip unavailable packages'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/dnf/dnf-compact/filter.lf --sub=install --args='install -y definitely-not-a-real-package-9z' --exit=1 --level=lite < plugins/dnf/dnf-compact/samples/dnf-install-missing.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 4
+            - bytes 177
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ dnf-compact \ samples/dnf-install-missing.txt full
+  commands:
+    - command: lowfat filter plugins/dnf/dnf-compact/filter.lf --sub=install --args='install -y definitely-not-a-real-package-9z' --exit=1 --level=full < plugins/dnf/dnf-compact/samples/dnf-install-missing.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Failed to resolve the transaction:'
+            - 'No match for argument: definitely-not-a-real-package-9z'
+            - 'You can try to add to command line:'
+            - '  --skip-unavailable to skip unavailable packages'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/dnf/dnf-compact/filter.lf --sub=install --args='install -y definitely-not-a-real-package-9z' --exit=1 --level=full < plugins/dnf/dnf-compact/samples/dnf-install-missing.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 4
+            - bytes 177
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ dnf-compact \ samples/dnf-install-missing.txt ultra
+  commands:
+    - command: lowfat filter plugins/dnf/dnf-compact/filter.lf --sub=install --args='install -y definitely-not-a-real-package-9z' --exit=1 --level=ultra < plugins/dnf/dnf-compact/samples/dnf-install-missing.txt
+      checks:
+        - name: stdout
+          data:
+            - 'Failed to resolve the transaction:'
+            - 'No match for argument: definitely-not-a-real-package-9z'
+            - 'You can try to add to command line:'
+            - '  --skip-unavailable to skip unavailable packages'
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/dnf/dnf-compact/filter.lf --sub=install --args='install -y definitely-not-a-real-package-9z' --exit=1 --level=ultra < plugins/dnf/dnf-compact/samples/dnf-install-missing.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 4
+            - bytes 177
         - name: exitcode
           data:
             - "0"

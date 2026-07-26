@@ -1,0 +1,9 @@
+Updating and loading repositories:
+ Fedora 44 - aarch64 - Updates          100% |   1.7 MiB/s |  11.5 MiB |  00m07s
+ Fedora 44 openh264 (From Cisco) - aarc 100% | 901.0   B/s |   5.3 KiB |  00m06s
+ Fedora 44 - aarch64                    100% |   3.4 MiB/s |  35.2 MiB |  00m10s
+Repositories loaded.
+Failed to resolve the transaction:
+No match for argument: definitely-not-a-real-package-9z
+You can try to add to command line:
+  --skip-unavailable to skip unavailable packages
