@@ -863,3 +863,165 @@
         - name: exitcode
           data:
             - "0"
+- name: tests.cue \ terraform-compact \ samples/tofu-state-list.txt lite
+  commands:
+    - command: lowfat filter plugins/terraform/terraform-compact/filter.lf --sub=state --args='state list' --exit=0 --level=lite < plugins/terraform/terraform-compact/samples/tofu-state-list.txt
+      checks:
+        - name: stdout
+          data:
+            - data.cloudflare_zone.chakrit_co
+            - data.cloudflare_zone.prodigy9_co
+            - data.cloudflare_zone.prodigy9_dev
+            - data.cloudflare_zone.stage9_dev
+            - data.cloudflare_zone.lowfat_sh
+            - cloudflare_dns_record.apex["chakrit.co"]
+            - cloudflare_dns_record.apex["prodigy9.co"]
+            - cloudflare_dns_record.edge["stage9.dev"]
+            - cloudflare_dns_record.mx["prodigy9.co"]
+            - cloudflare_dns_record.txt_spf["prodigy9.co"]
+            - linode_lke_cluster.stage9
+            - linode_lke_node_pool.stage9_default
+            - linode_reserved_ip.edge
+            - linode_firewall.buildkite-mgmt
+            - linode_firewall.edge
+            - linode_object_storage_bucket.assets["ap-south-1"]
+            - linode_object_storage_bucket.backups["ap-south-1"]
+            - linode_object_storage_bucket.builds["ap-south-1"]
+            - linode_object_storage_bucket.logs["ap-south-1"]
+            - linode_object_storage_bucket.media["ap-south-1"]
+            - linode_object_storage_bucket.registry["ap-south-1"]
+            - linode_object_storage_bucket.releases["ap-south-1"]
+            - linode_object_storage_bucket.reports["ap-south-1"]
+            - linode_object_storage_bucket.snapshots["ap-south-1"]
+            - linode_object_storage_bucket.state["ap-south-1"]
+            - linode_object_storage_bucket.static["ap-south-1"]
+            - linode_object_storage_bucket.uploads["ap-south-1"]
+            - linode_object_storage_bucket.vault["ap-south-1"]
+            - linode_object_storage_key.ci
+            - neon_project.bluepages
+            - neon_project.forwardinsight
+            - neon_project.lowfat
+            - neon_project.pp_school
+            - neon_project.prodigy9
+            - neon_project.stage9
+            - neon_project.sso
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/terraform/terraform-compact/filter.lf --sub=state --args='state list' --exit=0 --level=lite < plugins/terraform/terraform-compact/samples/tofu-state-list.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 36
+            - bytes 1346
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ terraform-compact \ samples/tofu-state-list.txt full
+  commands:
+    - command: lowfat filter plugins/terraform/terraform-compact/filter.lf --sub=state --args='state list' --exit=0 --level=full < plugins/terraform/terraform-compact/samples/tofu-state-list.txt
+      checks:
+        - name: stdout
+          data:
+            - data.cloudflare_zone.chakrit_co
+            - data.cloudflare_zone.prodigy9_co
+            - data.cloudflare_zone.prodigy9_dev
+            - data.cloudflare_zone.stage9_dev
+            - data.cloudflare_zone.lowfat_sh
+            - cloudflare_dns_record.apex["chakrit.co"]
+            - cloudflare_dns_record.apex["prodigy9.co"]
+            - cloudflare_dns_record.edge["stage9.dev"]
+            - cloudflare_dns_record.mx["prodigy9.co"]
+            - cloudflare_dns_record.txt_spf["prodigy9.co"]
+            - linode_lke_cluster.stage9
+            - linode_lke_node_pool.stage9_default
+            - linode_reserved_ip.edge
+            - linode_firewall.buildkite-mgmt
+            - linode_firewall.edge
+            - linode_object_storage_bucket.assets["ap-south-1"]
+            - linode_object_storage_bucket.backups["ap-south-1"]
+            - linode_object_storage_bucket.builds["ap-south-1"]
+            - linode_object_storage_bucket.logs["ap-south-1"]
+            - linode_object_storage_bucket.media["ap-south-1"]
+            - linode_object_storage_bucket.registry["ap-south-1"]
+            - linode_object_storage_bucket.releases["ap-south-1"]
+            - linode_object_storage_bucket.reports["ap-south-1"]
+            - linode_object_storage_bucket.snapshots["ap-south-1"]
+            - linode_object_storage_bucket.state["ap-south-1"]
+            - linode_object_storage_bucket.static["ap-south-1"]
+            - linode_object_storage_bucket.uploads["ap-south-1"]
+            - linode_object_storage_bucket.vault["ap-south-1"]
+            - linode_object_storage_key.ci
+            - neon_project.bluepages
+            - neon_project.forwardinsight
+            - neon_project.lowfat
+            - neon_project.pp_school
+            - neon_project.prodigy9
+            - neon_project.stage9
+            - neon_project.sso
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/terraform/terraform-compact/filter.lf --sub=state --args='state list' --exit=0 --level=full < plugins/terraform/terraform-compact/samples/tofu-state-list.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 36
+            - bytes 1346
+        - name: exitcode
+          data:
+            - "0"
+- name: tests.cue \ terraform-compact \ samples/tofu-state-list.txt ultra
+  commands:
+    - command: lowfat filter plugins/terraform/terraform-compact/filter.lf --sub=state --args='state list' --exit=0 --level=ultra < plugins/terraform/terraform-compact/samples/tofu-state-list.txt
+      checks:
+        - name: stdout
+          data:
+            - data.cloudflare_zone.chakrit_co
+            - data.cloudflare_zone.prodigy9_co
+            - data.cloudflare_zone.prodigy9_dev
+            - data.cloudflare_zone.stage9_dev
+            - data.cloudflare_zone.lowfat_sh
+            - cloudflare_dns_record.apex["chakrit.co"]
+            - cloudflare_dns_record.apex["prodigy9.co"]
+            - cloudflare_dns_record.edge["stage9.dev"]
+            - cloudflare_dns_record.mx["prodigy9.co"]
+            - cloudflare_dns_record.txt_spf["prodigy9.co"]
+            - linode_lke_cluster.stage9
+            - linode_lke_node_pool.stage9_default
+            - linode_reserved_ip.edge
+            - linode_firewall.buildkite-mgmt
+            - linode_firewall.edge
+            - linode_object_storage_bucket.assets["ap-south-1"]
+            - linode_object_storage_bucket.backups["ap-south-1"]
+            - linode_object_storage_bucket.builds["ap-south-1"]
+            - linode_object_storage_bucket.logs["ap-south-1"]
+            - linode_object_storage_bucket.media["ap-south-1"]
+            - linode_object_storage_bucket.registry["ap-south-1"]
+            - linode_object_storage_bucket.releases["ap-south-1"]
+            - linode_object_storage_bucket.reports["ap-south-1"]
+            - linode_object_storage_bucket.snapshots["ap-south-1"]
+            - linode_object_storage_bucket.state["ap-south-1"]
+            - linode_object_storage_bucket.static["ap-south-1"]
+            - linode_object_storage_bucket.uploads["ap-south-1"]
+            - linode_object_storage_bucket.vault["ap-south-1"]
+            - linode_object_storage_key.ci
+            - neon_project.bluepages
+            - neon_project.forwardinsight
+            - neon_project.lowfat
+            - neon_project.pp_school
+            - neon_project.prodigy9
+            - neon_project.stage9
+            - neon_project.sso
+        - name: exitcode
+          data:
+            - "0"
+    - command: lowfat filter plugins/terraform/terraform-compact/filter.lf --sub=state --args='state list' --exit=0 --level=ultra < plugins/terraform/terraform-compact/samples/tofu-state-list.txt | scripts/measure.py
+      checks:
+        - name: stdout
+          data:
+            - lines 36
+            - bytes 1346
+        - name: exitcode
+          data:
+            - "0"

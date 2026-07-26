@@ -18,6 +18,10 @@ _suite: testkit.#Suite & {
 		// invariant 1: -json is byte-exact ndjson/JSON; the guard must pass it raw.
 		{sample: "samples/terraform-plan-json.txt", sub: "plan", args: "-json -out=tfplan", exit: 0, levels: ["lite", "full", "ultra"]},
 		{sample: "samples/terraform-output-json.txt", sub: "output", args: "output -json", exit: 0, levels: ["lite", "full", "ultra"]},
+		// invariant 2 (issue #1): inventory listings are one load-bearing identifier per line,
+		// nothing redundant to compact. 36 resources in, 36 out at every level — a short
+		// `state list` must never be indistinguishable from a truncated one.
+		{sample: "samples/tofu-state-list.txt", sub: "state", args: "state list", exit: 0, levels: ["lite", "full", "ultra"]},
 	]
 }
 
