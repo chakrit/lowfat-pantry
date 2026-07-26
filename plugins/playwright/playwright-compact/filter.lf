@@ -43,5 +43,7 @@ test:
 *:
     if exit failed:
         raw
+    elif --reporter json:
+        raw
     else:
         head-auto-marked

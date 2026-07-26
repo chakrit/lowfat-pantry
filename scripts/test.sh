@@ -63,11 +63,14 @@ done
 #                  their own locks notices when that dispatch breaks.
 #   overprune.py — a sample a filter recognizes never reaches its fallback, so
 #                  the arms that catch reworded output sit unexecuted forever.
+#   passthrough.py — a structured-output guard is only as good as the flag
+#                  spellings and levels someone wrote a sample for.
 case " $* " in
     *" -c "*) ;;
     *)
         scripts/drift.py || rc=1
         scripts/overprune.py || rc=1
+        scripts/passthrough.py || rc=1
         ;;
 esac
 

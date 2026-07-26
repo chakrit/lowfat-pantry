@@ -38,5 +38,7 @@ api:
 *:
     if exit failed:
         raw
+    elif --json:
+        raw
     else:
         head-marked 40
