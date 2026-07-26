@@ -14,6 +14,7 @@ exit, and asserts something came back.
 
 Not a golden: there is nothing to re-lock, and a failure here is a filter bug.
 """
+import re
 import subprocess
 import sys
 from concurrent.futures import ThreadPoolExecutor
@@ -36,17 +37,24 @@ def run(filter_path, sub, exit_code, level):
     )
 
 
+SUBCOMMAND = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]*$")
+
+
 def subcommands(plugin_dir):
-    """The rule heads worth probing: every named rule, plus the catch-all."""
+    """The rule heads worth probing: every named rule, plus the catch-all.
+
+    A head is `sub`, `a|b|c`, or `sub, <level>` — the level suffix is dropped here
+    because every probe already runs all three levels.
+    """
     heads = {""}
     for line in (plugin_dir / "filter.lf").read_text().splitlines():
         if not line or line[0].isspace() or line.startswith("#"):
             continue
         if line.rstrip().endswith(":") and not line.startswith("define"):
-            head = line.rstrip()[:-1]
+            head = line.rstrip()[:-1].split(",")[0]
             if head == "*":
                 continue
-            heads.update(part for part in head.split("|") if part.isalnum())
+            heads.update(part for part in head.split("|") if SUBCOMMAND.match(part))
     return sorted(heads)
 
 
