@@ -45,6 +45,8 @@ define compact-diff(limit):
                             printf '%s\n' "$line"
                             context=$((context + 1))
                             emitted=1
+                        else
+                            dropped=$((dropped + 1))
                         fi
                         ;;
                 esac

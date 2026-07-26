@@ -24,6 +24,7 @@
             - -endpoint = "https://payments.internal/v1"
             - +endpoint = "https://payments.internal/v2"
             - +circuit_breaker = true
+            - '[lowfat] +12 lines dropped (level=lite) -- output truncated, re-run raw for the full list'
         - name: exitcode
           data:
             - "0"
@@ -31,8 +32,8 @@
       checks:
         - name: stdout
           data:
-            - lines 20
-            - bytes 455
+            - lines 21
+            - bytes 545
         - name: exitcode
           data:
             - "0"
@@ -62,6 +63,7 @@
             - -endpoint = "https://payments.internal/v1"
             - +endpoint = "https://payments.internal/v2"
             - +circuit_breaker = true
+            - '[lowfat] +12 lines dropped (level=full) -- output truncated, re-run raw for the full list'
         - name: exitcode
           data:
             - "0"
@@ -69,8 +71,8 @@
       checks:
         - name: stdout
           data:
-            - lines 20
-            - bytes 455
+            - lines 21
+            - bytes 545
         - name: exitcode
           data:
             - "0"
@@ -129,6 +131,7 @@
             - +            return response
             - '-    raise last_error'
             - +    raise RuntimeError(f"payment failed after {policy.attempts} attempts") from last_error
+            - '[lowfat] +21 lines dropped (level=lite) -- output truncated, re-run raw for the full list'
         - name: exitcode
           data:
             - "0"
@@ -136,8 +139,8 @@
       checks:
         - name: stdout
           data:
-            - lines 17
-            - bytes 723
+            - lines 18
+            - bytes 813
         - name: exitcode
           data:
             - "0"
@@ -164,6 +167,7 @@
             - +            return response
             - '-    raise last_error'
             - +    raise RuntimeError(f"payment failed after {policy.attempts} attempts") from last_error
+            - '[lowfat] +21 lines dropped (level=full) -- output truncated, re-run raw for the full list'
         - name: exitcode
           data:
             - "0"
@@ -171,8 +175,8 @@
       checks:
         - name: stdout
           data:
-            - lines 17
-            - bytes 723
+            - lines 18
+            - bytes 813
         - name: exitcode
           data:
             - "0"
