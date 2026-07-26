@@ -61,9 +61,11 @@ ship a known silent-loss bug while waiting on someone else's release.
 
 ## Consequences
 
-- `.lf` has no include mechanism, so `head-auto-marked` is duplicated per filter. This is
-  not debt to consolidate later: plugins are synced individually into a lowfat home, so
-  self-containment is a distribution requirement.
+- `.lf` had no include mechanism, so `head-auto-marked` was duplicated per filter.
+  **Superseded 2026-07-26 (same day, v0.8.0):** `include` landed upstream and the marked
+  macros now live once in `plugins/lib/truncation.lf`. Self-containment is still a
+  distribution requirement — it is met by the sync linking `plugins/lib` into the lowfat
+  home next to the plugins, so the `../../lib/` path resolves in both trees.
 - The macro is `python:`, not `awk` — `awk` is banned repo-wide. Measured suite cost of the
   swap was ~0.4s across 703 tests.
 - Every new plugin classifies each subcommand as inventory / structured / compactable before

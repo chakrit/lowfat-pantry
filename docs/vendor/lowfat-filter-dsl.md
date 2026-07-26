@@ -283,12 +283,13 @@ Semantics, from `collect_includes` / `Loader::load_file_inner`
   (`bare_parse_rejects_include`, `lf.rs:3021`) — irrelevant to `lowfat filter
   <path>`, which goes through `load`.
 
-🚨 **Pantry caveat.** Plugins are synced *individually* into
-`<LOWFAT_HOME>/plugins/<category>/<name>/`, so a shared library living outside a
-plugin directory resolves in this repo and breaks after install. Any pantry use
-of `include` must ship the library *inside* each plugin dir, or teach the
-`/lowfat-pantry` sync to place it — see `plugins/README.md § Truncation
-conventions`.
+**Pantry use.** Shared macros live in `plugins/lib/*.lf` and filters pull them in
+with `include ../../lib/truncation.lf`. Plugins are synced *individually* into
+`<LOWFAT_HOME>/plugins/<category>/<name>/`, which mirrors the pantry layout, so
+the same relative path resolves in both trees — provided the sync also links
+`plugins/lib` into the lowfat home (SKILL.md § 4c). Verified at v0.8.0 through an
+installed-plugin symlink: `..` walks back out through the symlink, so a library
+reached via `../../lib/` resolves either way.
 
 ## `match <dim>:` — single-dimension cascade sugar
 

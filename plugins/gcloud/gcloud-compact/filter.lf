@@ -7,20 +7,7 @@
 # yaml) is machine-readable and MUST pass through byte-exact. On a non-zero exit
 # the error / stack must show — raw.
 
-# Bare `head` cuts without a trace, leaving a truncated stream indistinguishable from a
-# genuinely short one (issue #1). Same cap, but it names what it dropped.
-define head-marked(limit):
-    python: |
-        import os, sys
-
-        level = os.environ.get("level", "full")
-        lines = sys.stdin.read().rstrip("\n").splitlines()
-
-        kept = lines[:$1]
-        dropped = len(lines) - len(kept)
-        if dropped > 0:
-            kept.append(f"[lowfat] +{dropped} lines dropped (level={level}) -- output truncated, re-run raw for the full list")
-        sys.stdout.write("\n".join(kept) + "\n" if kept else "")
+include ../../lib/truncation.lf
 
 *:
     if exit failed:

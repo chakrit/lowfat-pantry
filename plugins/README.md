@@ -7,6 +7,10 @@ here into the resolved lowfat home (`<LOWFAT_HOME>/plugins/<category>/<name>/`, 
 
 ## Layout
 
+    plugins/lib/       shared macro libraries, pulled in with `include ../../lib/<file>.lf`
+      truncation.lf    head-marked / head-auto-marked / tail-marked / cap
+      columns.lf       squeeze-columns
+
     plugins/<category>/<name>/
       lowfat.toml    plugin manifest ([plugin] name/commands/subcommands/…)
       filter.lf      the filter rules (the DSL; spec: https://github.com/chakrit/lowfat-pantry/blob/main/docs/vendor/lowfat-filter-dsl.md)
@@ -32,29 +36,23 @@ degraded one. Two rules, from
    summary of a 200-item list.
 2. **Truncation is always visible.** Any rule that drops lines says so, at every level,
    with the count. The `.lf` ops `head`/`tail` cut *without* a marker, so they must not
-   terminate a `*:` catch-all — use a marked macro instead:
+   terminate a `*:` catch-all — pull in a marked macro instead:
 
-        define head-auto-marked:
-            python: |
-                import os, sys
+        include ../../lib/truncation.lf
 
-                level = os.environ.get("level", "full")
-                limit = {"ultra": 15, "lite": 60}.get(level, 30)
-                lines = sys.stdin.read().rstrip("\n").splitlines()
+        *:
+            head-auto-marked
 
-                kept = lines[:limit]
-                dropped = len(lines) - len(kept)
-                if dropped > 0:
-                    kept.append(f"[lowfat] +{dropped} lines dropped (level={level}) -- output truncated, re-run raw for the full list")
-                sys.stdout.write("\n".join(kept) + "\n" if kept else "")
+   `head-auto-marked` mirrors `head auto`'s level limits (ultra 15 / full 30 / lite 60);
+   `head-marked <n>` / `tail-marked <n>` take an explicit cap. `or-shell:` recovery
+   fallbacks cap the raw dump too and mark it the same way.
 
-   Copy it into each filter verbatim. lowfat **v0.8.0 added `include`**, but adopting it
-   here is not just a syntax swap: include paths must be relative and plugins are synced
-   individually into `<LOWFAT_HOME>/plugins/<category>/<name>/`, so a shared library file
-   has to be placed inside every plugin directory (or the sync taught to place it) or the
-   filter breaks after install. Until that pass lands, self-containment remains a
-   distribution requirement and the macro is copied. `or-shell:` recovery fallbacks cap
-   the raw dump too and mark it the same way.
+   Never re-copy a library macro into a filter. The include path is relative to the
+   including filter and holds in both trees — pantry source and
+   `<LOWFAT_HOME>/plugins/<category>/<name>/` — because `/lowfat-pantry` symlinks
+   `plugins/lib` into the lowfat home alongside the plugins (SKILL.md § 4c). A local
+   `define` of the same name still shadows the library one when a plugin genuinely needs
+   its own variant.
 
 Named-subcommand rules may still use bare `head`/`tail`: their author knew the output
 shape. The catch-all is by definition the branch where nobody did.

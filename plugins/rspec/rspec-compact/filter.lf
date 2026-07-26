@@ -4,24 +4,11 @@
 # progress dots and timing chatter.
 # env: $sub $level $exit $args
 
+include ../../lib/truncation.lf
+
 # Any explicit --format/-f (json, html, junit, a custom formatter class) is
 # caller-chosen machine output — pass byte-exact (invariant 1). The default
 # progress format (no flag) is the common case and still compacts below.
-# Bare `head` cuts without a trace, leaving a truncated stream indistinguishable from a
-# genuinely short one (issue #1). Same cap, but it names what it dropped.
-define head-marked(limit):
-    python: |
-        import os, sys
-
-        level = os.environ.get("level", "full")
-        lines = sys.stdin.read().rstrip("\n").splitlines()
-
-        kept = lines[:$1]
-        dropped = len(lines) - len(kept)
-        if dropped > 0:
-            kept.append(f"[lowfat] +{dropped} lines dropped (level={level}) -- output truncated, re-run raw for the full list")
-        sys.stdout.write("\n".join(kept) + "\n" if kept else "")
-
 *:
     if --format:
         raw

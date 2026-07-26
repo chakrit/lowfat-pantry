@@ -89,6 +89,14 @@ For each selected plugin, between the pantry source and `<home>/plugins/<cat>/<n
   changed + already-trusted plugin here with `AskUserQuestion` before re-linking.
 
 ### c. Apply (filesystem mechanics — exact)
+**First, always:** symlink `<home>/plugins/lib -> <pantry>/lib` (skip if already correct;
+never clobber a real dir — report and ask). Filters `include ../../lib/truncation.lf`,
+resolved two levels up from the plugin dir. A *symlinked* plugin resolves it either way —
+`..` walks back out through the symlink into the pantry — but a plugin that was ever copied
+instead has no pantry to walk back to, and a missing include is a hard parse error that
+kills the whole filter (`lowfat: parsing …`, rc 1). The link makes the home tree
+self-sufficient. It carries no `lowfat.toml`, so lowfat never treats it as a plugin.
+
 For each approved plugin, idempotently:
 - Ensure `<home>/plugins/<cat>/` exists.
 - Target = `<home>/plugins/<cat>/<name>`. If already a symlink to the pantry source, skip.

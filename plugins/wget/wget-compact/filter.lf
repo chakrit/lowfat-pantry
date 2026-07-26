@@ -2,21 +2,7 @@
 # wget-compact - strip progress bars/dots and keep transfer result.
 # env: $sub $level $exit $args
 
-# Bare `tail` cuts without a trace, leaving a truncated stream indistinguishable from a
-# genuinely short one (issue #1). Same cap, but it names what it dropped — leading, since
-# the drop happened above what survived.
-define tail-marked(limit):
-    python: |
-        import os, sys
-
-        level = os.environ.get("level", "full")
-        lines = sys.stdin.read().rstrip("\n").splitlines()
-
-        kept = lines[-$1:]
-        dropped = len(lines) - len(kept)
-        if dropped > 0:
-            kept.insert(0, f"[lowfat] +{dropped} earlier lines dropped (level={level}) -- output truncated, re-run raw for the full list")
-        sys.stdout.write("\n".join(kept) + "\n" if kept else "")
+include ../../lib/truncation.lf
 
 define drop-wget-progress:
     drop /^[[:space:]]*[0-9]+K[[:space:]]+[\.\+]+[[:space:]]+[0-9]+%/

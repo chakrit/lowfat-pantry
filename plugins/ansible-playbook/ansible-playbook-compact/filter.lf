@@ -8,36 +8,7 @@
 # `host : ok=N changed=M failed=K` tallies — always the anchor. A failed run
 # (exit != 0) tails to the recap; `or-shell: tail` guards over-prune.
 
-# Bare `head` cuts without a trace, leaving a truncated stream indistinguishable from a
-# genuinely short one (issue #1). Same cap, but it names what it dropped.
-define head-marked(limit):
-    python: |
-        import os, sys
-
-        level = os.environ.get("level", "full")
-        lines = sys.stdin.read().rstrip("\n").splitlines()
-
-        kept = lines[:$1]
-        dropped = len(lines) - len(kept)
-        if dropped > 0:
-            kept.append(f"[lowfat] +{dropped} lines dropped (level={level}) -- output truncated, re-run raw for the full list")
-        sys.stdout.write("\n".join(kept) + "\n" if kept else "")
-
-# Bare `tail` cuts without a trace, leaving a truncated stream indistinguishable from a
-# genuinely short one (issue #1). Same cap, but it names what it dropped — leading, since
-# the drop happened above what survived.
-define tail-marked(limit):
-    python: |
-        import os, sys
-
-        level = os.environ.get("level", "full")
-        lines = sys.stdin.read().rstrip("\n").splitlines()
-
-        kept = lines[-$1:]
-        dropped = len(lines) - len(kept)
-        if dropped > 0:
-            kept.insert(0, f"[lowfat] +{dropped} earlier lines dropped (level={level}) -- output truncated, re-run raw for the full list")
-        sys.stdout.write("\n".join(kept) + "\n" if kept else "")
+include ../../lib/truncation.lf
 
 define drop-ok-noise:
     drop /^(ok: |skipping: |included: )/

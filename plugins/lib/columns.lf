@@ -1,0 +1,11 @@
+# Column-squeezing shared by the pantry — collapses run-on whitespace in tabular
+# output without dropping rows (inventory listings stay complete). Include, don't copy:
+#
+#     include ../../lib/columns.lf
+
+define squeeze-columns:
+    python: |
+        import re, sys
+
+        for line in sys.stdin.read().rstrip("\n").splitlines():
+            print(re.sub(r"[ \t]{2,}", " ", line))
