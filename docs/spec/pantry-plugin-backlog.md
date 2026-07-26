@@ -45,18 +45,21 @@ wrapped tools' bodies — disjoint sets, so they share nothing (npx wraps Node t
 wraps Python tools):
 
 - **`npx-compact`** (2026-06-16) — full dispatch: strips the npm install/fetch preamble,
-  detects the wrapped tool from `$args` (handling `-y`/`-p typescript`), and applies
-  eslint/prettier/tsc compaction **ported** from the standalone filters. Bare
-  `npx prettier <file>` and `-f json` pass raw; unknown tools get a conservative cap.
+  detects the wrapped tool from `$args` (handling `-y`/`-p typescript`), and hands the
+  stream to eslint/prettier/tsc's own filter. Bare `npx prettier <file>` and `-f json` pass
+  raw; unknown tools get a marked cap.
 - **`uv-compact`** (2026-06-16) — full dispatch: parses `$args`, detects the wrapped tool
   (`uv run <t>`, `uv tool run <t>`, `uvx <t>`, `python -m <t>`, skipping value-flags like
-  `--with X`), and applies that tool's compaction (pytest, ruff) inline, **copied** from
-  the standalone filters. Also compacts uv's own `sync`/`lock`/`pip`/`add` output; caps
-  arbitrary `uv run <prog>`. The copies carry a drift contract — see the filter header.
+  `--with X`), and hands the stream to that tool's filter. Also compacts uv's own
+  `sync`/`lock`/`pip`/`add` output; caps arbitrary `uv run <prog>`.
 
-The dispatch approach **duplicates** each wrapped tool's body (no cross-filter dispatch in
-`.lf`; macros are file-local), so it drifts from the originals on every edit. The **proper
-fix is wrapper-unwrap in lowfat-core**: recognize a known runner prefix, strip it, and
+**Delegation, not duplication** (2026-07-27). Both wrappers used to carry a copy of each
+wrapped tool's body under a drift contract. They now re-invoke `lowfat filter` on the real
+plugin — probing `$LOWFAT_HOME`, `~/.lowfat`, `~/.config/lowfat`, `$PWD` — so the original
+stays the single source of truth, with a marked cap when the wrapped plugin isn't
+installed. `scripts/drift.py` holds the dispatch honest. What remains duplicated is the
+*dispatch itself*, one parser per runner; the **proper fix is wrapper-unwrap in
+lowfat-core**: recognize a known runner prefix, strip it, and
 re-resolve the filter against the inner command word with re-derived `$sub`/`$args`. That
 covers the whole class (`uv run`/`uvx`/`npx`/`bunx`/`poetry run`/`pnpm exec`/`pdm run`/
 `hatch run`) once, with zero pantry duplication, and would let `npx`/`uv` drop their
