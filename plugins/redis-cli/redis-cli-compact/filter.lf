@@ -4,7 +4,7 @@
 # 0 and are single lines, so they survive the caps; connection failures exit
 # non-zero and pass through raw.
 
-# First N lines (level-scaled) plus an "... (N lines total)" trailer.
+# First N lines (level-scaled) plus the house dropped-count trailer.
 define cap-with-count:
     shell: |
         case "${level:-full}" in
@@ -21,7 +21,7 @@ define cap-with-count:
         [ "$total" -gt 0 ] || exit 0
 
         head -n "$limit" < "$buf"
-        [ "$total" -gt "$limit" ] && printf '... (%d lines total)\n' "$total"
+        [ "$total" -gt "$limit" ] && printf '[lowfat] +%d lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((total - limit))" "${level:-full}"
         exit 0
 
 info|INFO:

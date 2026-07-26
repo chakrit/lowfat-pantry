@@ -332,7 +332,7 @@
             - rspec-support (3.13.7)
             - rss (0.3.1)
             - rubocop (1.88.0)
-            - '... (107 lines total)'
+            - '[lowfat] +27 lines dropped (level=full) -- output truncated, re-run raw for the full list'
         - name: exitcode
           data:
             - "0"
@@ -341,7 +341,7 @@
         - name: stdout
           data:
             - lines 81
-            - bytes 1840
+            - bytes 1908
         - name: exitcode
           data:
             - "0"
@@ -371,7 +371,7 @@
             - 'erb (default: 4.0.3)'
             - 'error_highlight (default: 0.6.0)'
             - 'etc (default: 1.4.3)'
-            - '... (107 lines total)'
+            - '[lowfat] +87 lines dropped (level=ultra) -- output truncated, re-run raw for the full list'
         - name: exitcode
           data:
             - "0"
@@ -380,7 +380,7 @@
         - name: stdout
           data:
             - lines 21
-            - bytes 476
+            - bytes 545
         - name: exitcode
           data:
             - "0"

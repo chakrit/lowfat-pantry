@@ -118,7 +118,7 @@
             - '< cache-control: no-store'
             - '< x-request-id: req_8b74a0'
             - '{'
-            - '... (30 lines total)'
+            - '[lowfat] +12 lines dropped (level=ultra) -- output truncated, re-run raw for the full list'
         - name: exitcode
           data:
             - "0"
@@ -127,7 +127,7 @@
         - name: stdout
           data:
             - lines 19
-            - bytes 585
+            - bytes 655
         - name: exitcode
           data:
             - "0"
@@ -237,7 +237,7 @@
             - <p>Line 2 of a verbose diagnostic body.</p>
             - <p>Line 3 of a verbose diagnostic body.</p>
             - <p>Line 4 of a verbose diagnostic body.</p>
-            - '... (23 lines total)'
+            - '[lowfat] +5 lines dropped (level=ultra) -- output truncated, re-run raw for the full list'
         - name: exitcode
           data:
             - "0"
@@ -246,7 +246,7 @@
         - name: stdout
           data:
             - lines 19
-            - bytes 611
+            - bytes 680
         - name: exitcode
           data:
             - "0"

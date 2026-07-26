@@ -578,7 +578,7 @@
             - INFO request 37
             - INFO request 38
             - INFO request 39
-            - '... (41 lines total)'
+            - '[lowfat] +1 lines dropped (level=full) -- output truncated, re-run raw for the full list'
         - name: exitcode
           data:
             - "0"
@@ -587,7 +587,7 @@
         - name: stdout
           data:
             - lines 41
-            - bytes 649
+            - bytes 717
         - name: exitcode
           data:
             - "0"
@@ -617,7 +617,7 @@
             - INFO request 17
             - INFO request 18
             - INFO request 19
-            - '... (41 lines total)'
+            - '[lowfat] +21 lines dropped (level=ultra) -- output truncated, re-run raw for the full list'
         - name: exitcode
           data:
             - "0"
@@ -626,7 +626,7 @@
         - name: stdout
           data:
             - lines 21
-            - bytes 329
+            - bytes 399
         - name: exitcode
           data:
             - "0"

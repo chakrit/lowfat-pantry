@@ -24,7 +24,7 @@ include ../../lib/truncation.lf
                     [ "$total" -gt 0 ] || exit 0
 
                     head -n 12 < "$buf"
-                    [ "$total" -gt 12 ] && printf '... (%d entries total)\n' "$total"
+                    [ "$total" -gt 12 ] && printf '[lowfat] +%d entries dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((total - 12))" "${level:-full}"
                     exit 0
             lite:
                 head-marked 200

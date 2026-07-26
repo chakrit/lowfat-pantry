@@ -374,7 +374,7 @@
             - bundling chunk 23
             - bundling chunk 24
             - bundling chunk 25
-            - '... (41 lines total)'
+            - '[lowfat] +16 lines dropped (level=ultra) -- output truncated, re-run raw for the full list'
         - name: exitcode
           data:
             - "0"
@@ -383,7 +383,7 @@
         - name: stdout
           data:
             - lines 26
-            - bytes 462
+            - bytes 532
         - name: exitcode
           data:
             - "0"

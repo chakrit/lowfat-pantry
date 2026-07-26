@@ -9,6 +9,10 @@ Each item: the problem, what the pantry does *instead* (the workaround we carry)
 proposed shape. **This file is the log; issues are filed upstream only on request.** When
 one is, link it under that item; otherwise the `Upstream issue` field stays empty.
 
+**This is the single home for upstream asks** (2026-07-27) — nothing upstream is tracked in
+the session ledger any more. A `zdk/smoke` section sits at the end so one read covers every
+"should we file this?" question.
+
 Context (checked **2026-06-16**): `zdk/lowfat` had 0 open / 1 closed issue (#9, an unrelated
 git-compact `Broken pipe`) and 1 open PR (#8, MCP server) — none of these items exist there.
 
@@ -141,5 +145,57 @@ until someone has a reason to touch those filters.
 `$`-prefixed tokens), not raw bytes, so multibyte literals in macro bodies round-trip
 unchanged. Until then, the DSL spec should warn: don't key matches on non-ASCII glyphs
 inside a `define`.
+
+**Upstream issue.** _none filed yet_
+
+## 6. `.lf` `head`/`tail` cut silently (no marker)
+
+**Problem.** The `.lf` ops `head`/`tail` drop lines with nothing to say they did
+(`take_head`/`take_tail`, `lf.rs:1683-1691`), so a truncated stream is byte-identical to a
+genuinely short one and a reader acts on a *confident wrong answer*. The identically named
+**pipeline** processor is fine — `proc_truncate` appends `... (N lines truncated)`. The two
+paths just never converged. This is the root cause of pantry issue #1 (`tofu state list`
+returned 15 of 36 resources with no marker). **Re-verified unchanged at v0.8.0.**
+
+**Workaround in pantry.** The whole visible-truncation regime: `plugins/lib/truncation.lf`
+provides marked replacements (`head-marked`, `head-auto-marked`, `tail-marked`,
+`tail-auto-marked`, `cap`) and **no pantry filter uses a bare `head`/`tail` op any more**
+(2026-07-27 sweep). Ruling and radius: `docs/decisions/2026-07-26-visible-truncation.md`.
+
+**Proposed shape.** Have the `.lf` ops mark like `proc_truncate` already does — same
+`...`-prefixed trailer, with the dropped count — or gate it behind an opt-out for the rare
+caller that wants a silent cut. Fixing it upstream covers every plugin *and* the six
+bundled filters at once, and would let the pantry retire most of its library.
+
+**Upstream issue.** _none filed yet_
+
+## 7. `lowfat hook` auto-approves every filtered command
+
+**Problem.** The hook returns `permissionDecision: "allow"` alongside the rewritten command
+(`hook.rs:31-42`), so every command lowfat has a filter for — `git`, `gh`, `curl`, `docker`,
+`kubectl`, … — sails past the agent's permission prompt. Installing a *token compactor*
+silently widens the agent's blast radius, which is not a trade a user knowingly made.
+
+**Workaround in pantry.** `SKILL.md` step 5 warns before wiring the hook and defaults the
+scope to project-local. That is documentation, not a fix — the permission surface is still
+widened for anyone who accepts.
+
+**Proposed shape.** Emit `updatedInput` *without* `permissionDecision`, letting the host
+agent apply its normal permission rules to the rewritten command. If auto-approval is
+wanted, it belongs behind an explicit opt-in flag, off by default.
+
+**Upstream issue.** _none filed yet_
+
+---
+
+## Other upstream — `zdk/smoke`
+
+Not lowfat, kept here so there is one place to look before filing anything.
+
+**Multi-spec compare skips specs 2..N.** Default compare mode `os.Exit()`s after the first
+spec (`process.go:282`), so `smoke a.cue b.cue` silently reports only `a`. Verified and
+reported to the smoke agent; the fix waits on a call about exit semantics (what the
+aggregate exit code should be when specs disagree). **Workaround:** `scripts/test.sh` loops
+one spec per invocation, which we keep anyway for per-plugin attribution.
 
 **Upstream issue.** _none filed yet_

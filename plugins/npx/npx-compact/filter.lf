@@ -82,7 +82,7 @@ define npx-dispatch:
 
             total=$(grep -c '' < "$buf")
             head -n "$limit" < "$buf"
-            [ "$total" -gt "$limit" ] && printf '... (%d lines total)\n' "$total"
+            [ "$total" -gt "$limit" ] && printf '[lowfat] +%d lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((total - limit))" "${level:-full}"
             exit 0
         }
 

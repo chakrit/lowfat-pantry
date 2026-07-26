@@ -51,9 +51,9 @@ define tail-marked(limit):
         printf '%s\n' "$body" | tail -n $1
         exit 0
 
-# `cap` counts what the reader lost, not what the stream held: unlike the marked
-# macros above it keeps trailing blank lines in the tally, so it buffers to a file
-# rather than to a variable (command substitution eats them).
+# `cap` differs from the macros above only in bookkeeping: it keeps trailing blank
+# lines in the tally, so it buffers to a file rather than to a variable (command
+# substitution eats them). The marker is the same house form.
 define cap(limit):
     shell: |
         buf=$(mktemp)
@@ -64,7 +64,7 @@ define cap(limit):
         [ "$total" -gt 0 ] || exit 0
 
         head -n $1 < "$buf"
-        [ "$total" -gt $1 ] && printf '... (%d lines total)\n' "$total"
+        [ "$total" -gt $1 ] && printf '[lowfat] +%d lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((total - $1))" "${level:-full}"
         exit 0
 
 define tail-auto-marked:

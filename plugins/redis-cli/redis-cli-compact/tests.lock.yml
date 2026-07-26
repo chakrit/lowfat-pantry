@@ -257,7 +257,7 @@
             - user:72:profile
             - user:136:profile
             - user:73:profile
-            - '... (291 lines total)'
+            - '[lowfat] +231 lines dropped (level=lite) -- output truncated, re-run raw for the full list'
         - name: exitcode
           data:
             - "0"
@@ -266,7 +266,7 @@
         - name: stdout
           data:
             - lines 61
-            - bytes 966
+            - bytes 1035
         - name: exitcode
           data:
             - "0"
@@ -306,7 +306,7 @@
             - user:30:profile
             - session:33
             - user:224:profile
-            - '... (291 lines total)'
+            - '[lowfat] +261 lines dropped (level=full) -- output truncated, re-run raw for the full list'
         - name: exitcode
           data:
             - "0"
@@ -315,7 +315,7 @@
         - name: stdout
           data:
             - lines 31
-            - bytes 485
+            - bytes 554
         - name: exitcode
           data:
             - "0"
@@ -340,7 +340,7 @@
             - user:16:profile
             - user:234:profile
             - user:61:profile
-            - '... (291 lines total)'
+            - '[lowfat] +276 lines dropped (level=ultra) -- output truncated, re-run raw for the full list'
         - name: exitcode
           data:
             - "0"
@@ -349,7 +349,7 @@
         - name: stdout
           data:
             - lines 16
-            - bytes 261
+            - bytes 331
         - name: exitcode
           data:
             - "0"
@@ -419,7 +419,7 @@
             - user:64:profile
             - user:236:profile
             - user:41:profile
-            - '... (250 lines total)'
+            - '[lowfat] +190 lines dropped (level=lite) -- output truncated, re-run raw for the full list'
         - name: exitcode
           data:
             - "0"
@@ -428,7 +428,7 @@
         - name: stdout
           data:
             - lines 61
-            - bytes 1011
+            - bytes 1080
         - name: exitcode
           data:
             - "0"
@@ -468,7 +468,7 @@
             - user:95:profile
             - user:6:profile
             - user:131:profile
-            - '... (250 lines total)'
+            - '[lowfat] +220 lines dropped (level=full) -- output truncated, re-run raw for the full list'
         - name: exitcode
           data:
             - "0"
@@ -477,7 +477,7 @@
         - name: stdout
           data:
             - lines 31
-            - bytes 520
+            - bytes 589
         - name: exitcode
           data:
             - "0"
@@ -502,7 +502,7 @@
             - user:83:profile
             - user:79:profile
             - user:99:profile
-            - '... (250 lines total)'
+            - '[lowfat] +235 lines dropped (level=ultra) -- output truncated, re-run raw for the full list'
         - name: exitcode
           data:
             - "0"
@@ -511,7 +511,7 @@
         - name: stdout
           data:
             - lines 16
-            - bytes 274
+            - bytes 344
         - name: exitcode
           data:
             - "0"
@@ -551,7 +551,7 @@
             - "3600"
             - 127.0.0.1:41224
             - ""
-            - '... (95 lines total)'
+            - '[lowfat] +65 lines dropped (level=full) -- output truncated, re-run raw for the full list'
         - name: exitcode
           data:
             - "0"
@@ -560,7 +560,7 @@
         - name: stdout
           data:
             - lines 31
-            - bytes 221
+            - bytes 290
         - name: exitcode
           data:
             - "0"
@@ -585,7 +585,7 @@
             - "1781049929"
             - "1"
             - lpush
-            - '... (95 lines total)'
+            - '[lowfat] +80 lines dropped (level=ultra) -- output truncated, re-run raw for the full list'
         - name: exitcode
           data:
             - "0"
@@ -594,7 +594,7 @@
         - name: stdout
           data:
             - lines 16
-            - bytes 115
+            - bytes 185
         - name: exitcode
           data:
             - "0"
@@ -634,7 +634,7 @@
             - overhead.db.hashtable.rehashing
             - "0"
             - overhead.total
-            - '... (67 lines total)'
+            - '[lowfat] +37 lines dropped (level=full) -- output truncated, re-run raw for the full list'
         - name: exitcode
           data:
             - "0"
@@ -643,7 +643,7 @@
         - name: stdout
           data:
             - lines 31
-            - bytes 358
+            - bytes 427
         - name: exitcode
           data:
             - "0"
@@ -668,7 +668,7 @@
             - cluster.links
             - "0"
             - aof.buffer
-            - '... (67 lines total)'
+            - '[lowfat] +52 lines dropped (level=ultra) -- output truncated, re-run raw for the full list'
         - name: exitcode
           data:
             - "0"
@@ -677,7 +677,7 @@
         - name: stdout
           data:
             - lines 16
-            - bytes 176
+            - bytes 246
         - name: exitcode
           data:
             - "0"

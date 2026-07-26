@@ -280,7 +280,7 @@
             - '  * rspec-support (3.13.7)'
             - '  * rubocop (1.88.0)'
             - '  * rubocop-ast (1.49.1)'
-            - '... (24 lines total)'
+            - '[lowfat] +4 lines dropped (level=ultra) -- output truncated, re-run raw for the full list'
         - name: exitcode
           data:
             - "0"
@@ -289,7 +289,7 @@
         - name: stdout
           data:
             - lines 21
-            - bytes 485
+            - bytes 554
         - name: exitcode
           data:
             - "0"

@@ -44,10 +44,17 @@ degraded one. Two rules, from
         *:
             head-auto-marked
 
-   `head-auto-marked` mirrors `head auto`'s level limits (ultra 15 / full 30 / lite 60);
-   `head-marked <n>` / `tail-marked <n>` take an explicit cap. `cap <n>` is the older
-   variant, marking with `... (N lines total)` instead. `or-shell:` recovery fallbacks cap
-   the raw dump too and mark it the same way.
+   `head-auto-marked` / `tail-auto-marked` mirror `head auto`'s level limits (ultra 15 /
+   full 30 / lite 60); `head-marked <n>` / `tail-marked <n>` / `cap <n>` take an explicit
+   cap. `or-shell:` recovery fallbacks cap the raw dump too and mark it the same way.
+
+   **One marker form, everywhere** (2026-07-27):
+
+        [lowfat] +<n> <unit> dropped (level=<lvl>) -- output truncated, re-run raw for the full list
+
+   `<unit>` is `lines` unless the filter counts something more specific (tar `entries`,
+   rubocop `offenses`). The count is what the reader *lost*, not what the stream held — a
+   total tells you nothing you can act on when you can also see what survived.
 
    Never re-copy a library macro into a filter. The include path is relative to the
    including filter and holds in both trees — pantry source and

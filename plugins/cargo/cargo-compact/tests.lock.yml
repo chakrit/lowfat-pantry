@@ -568,7 +568,7 @@
             - processing item 26 of 50
             - processing item 27 of 50
             - processing item 28 of 50
-            - '... (53 lines total)'
+            - '[lowfat] +23 lines dropped (level=ultra) -- output truncated, re-run raw for the full list'
         - name: exitcode
           data:
             - "0"
@@ -577,7 +577,7 @@
         - name: stdout
           data:
             - lines 31
-            - bytes 794
+            - bytes 864
         - name: exitcode
           data:
             - "0"

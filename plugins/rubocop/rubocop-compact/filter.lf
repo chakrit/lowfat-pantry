@@ -15,7 +15,7 @@ define compact-rubocop(limit):
         if [ "$findings" -gt 0 ]; then
             grep -E '^[^:]+:[0-9]+:[0-9]+: [A-Z]: ' "$buf" | head -n $1
             grep -E '^[0-9]+ files? inspected' "$buf" | tail -n 1
-            [ "$findings" -gt $1 ] && printf '... (%d offenses total)\n' "$findings"
+            [ "$findings" -gt $1 ] && printf '[lowfat] +%d offenses dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((findings - $1))" "${level:-full}"
         elif [ "${exit:-0}" = "0" ]; then
             printf 'rubocop: clean\n'
         else

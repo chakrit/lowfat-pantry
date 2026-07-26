@@ -112,7 +112,7 @@
             - -rw-r--r--  0 dev staff   1370 Jun  8 12:10 src/checkout/file10.ts
             - -rw-r--r--  0 dev staff   1407 Jun  8 12:11 src/checkout/file11.ts
             - -rw-r--r--  0 dev staff   1444 Jun  8 12:12 src/checkout/file12.ts
-            - '... (30 entries total)'
+            - '[lowfat] +18 entries dropped (level=ultra) -- output truncated, re-run raw for the full list'
         - name: exitcode
           data:
             - "0"
@@ -121,7 +121,7 @@
         - name: stdout
           data:
             - lines 13
-            - bytes 827
+            - bytes 897
         - name: exitcode
           data:
             - "0"

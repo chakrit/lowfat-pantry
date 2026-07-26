@@ -276,7 +276,7 @@
             - '  22:5  error  Unexpected console statement  no-console'
             - '  23:5  error  Unexpected console statement  no-console'
             - '  24:5  error  Unexpected console statement  no-console'
-            - '... (32 lines total)'
+            - '[lowfat] +7 lines dropped (level=ultra) -- output truncated, re-run raw for the full list'
         - name: exitcode
           data:
             - "0"
@@ -285,7 +285,7 @@
         - name: stdout
           data:
             - lines 26
-            - bytes 1368
+            - bytes 1437
         - name: exitcode
           data:
             - "0"

@@ -558,7 +558,7 @@
             - transformed module 24
             - transformed module 25
             - transformed module 26
-            - '... (55 lines total)'
+            - '[lowfat] +25 lines dropped (level=ultra) -- output truncated, re-run raw for the full list'
         - name: exitcode
           data:
             - "0"
@@ -567,7 +567,7 @@
         - name: stdout
           data:
             - lines 31
-            - bytes 618
+            - bytes 688
         - name: exitcode
           data:
             - "0"
