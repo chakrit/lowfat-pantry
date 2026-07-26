@@ -11,6 +11,8 @@ remove. Static, so it costs nothing to run.
   bare head/tail      cuts without a marker; a truncated stream reads as a short one
   marker form         one sentence, pantry-wide, so an agent learns it once
   missing include     a macro from plugins/lib/ used without pulling the library in
+  manifest drift      name/category/commands must agree with the directory, or the
+                      plugin installs under a name lowfat then can't route to
 """
 import re
 import sys
@@ -35,6 +37,32 @@ def library_macros():
             if found:
                 macros[found.group(1)] = f"../../lib/{lib.name}"
     return macros
+
+
+MANIFEST_FIELD = r'^{}\s*=\s*"([^"]*)"'
+
+
+def check_manifest(toml):
+    """name/category/commands vs. the path they live at."""
+    text = toml.read_text()
+    category, name = toml.parts[-3], toml.parts[-2]
+
+    def field(key):
+        found = re.search(MANIFEST_FIELD.format(key), text, re.M)
+        return found.group(1) if found else None
+
+    commands = re.search(r"^commands\s*=\s*\[([^\]]*)\]", text, re.M)
+    commands = [c.strip().strip('"') for c in commands.group(1).split(",")
+                if c.strip()] if commands else []
+
+    problems = []
+    if field("name") != name:
+        problems.append((0, f"manifest name {field('name')!r} != directory {name!r}"))
+    if field("category") != category:
+        problems.append((0, f"manifest category {field('category')!r} != {category!r}"))
+    if category not in commands:
+        problems.append((0, f"manifest commands {commands} does not claim {category!r}"))
+    return problems
 
 
 def check(spec, macros):
@@ -75,7 +103,14 @@ def main():
 
     failures = 0
     for spec in sorted(ROOT.glob("plugins/*/*/filter.lf")):
-        for line_no, why in check(spec, macros):
+        findings = check(spec, macros)
+        manifest = spec.parent / "lowfat.toml"
+        if manifest.exists():
+            findings += check_manifest(manifest)
+        else:
+            findings.append((0, "no lowfat.toml beside filter.lf"))
+
+        for line_no, why in findings:
             where = f"{spec.relative_to(ROOT)}:{line_no}" if line_no else spec.relative_to(ROOT)
             print(f"LINT {where} — {why}", file=sys.stderr)
             failures += 1

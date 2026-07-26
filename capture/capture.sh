@@ -77,10 +77,19 @@ capture_stack() {
     build_stack "$stack" || { echo "  BUILD FAILED — skipping $stack" >&2; return 1; }
 
     image=$(image_for "$stack")
+    failed=$(mktemp)
+    trap 'rm -f "$failed"' EXIT
+
+    # `while` in a pipeline runs in a subshell, so a flag file carries the verdict
+    # back out — a stack whose recipes all no-op should not report success.
     echo "$rows" | while read -r tool plugin sample; do
         [ -n "$tool" ] || continue
         out="plugins/$plugin/samples/$sample.txt"
-        script=$(recipe_script "$tool") || { echo "  no recipe for $tool" >&2; continue; }
+        script=$(recipe_script "$tool") || {
+            echo "  no recipe for $tool" >&2
+            echo x >> "$failed"
+            continue
+        }
 
         docker run --rm "$image" sh -c "$script" > "$out" 2>&1
         status=$?
@@ -88,9 +97,12 @@ capture_stack() {
 
         if [ "$status" -eq 0 ]; then
             echo "  !! $tool exited 0 — that is not a failure; review $out" >&2
+            echo x >> "$failed"
         fi
         echo "  $tool -> $out (exit $status, $lines lines)"
     done
+
+    [ ! -s "$failed" ]
 }
 
 case "${1:-}" in
