@@ -1,4 +1,4 @@
-# apk (native) + deno — both cheap on a plain alpine base.
-FROM alpine:3
+# apk (native to the base) + deno, from the alpine community repo.
+FROM lowfat-capture-base
 
 RUN apk add --no-cache deno

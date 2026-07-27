@@ -11,6 +11,6 @@ LoadError:
 No examples found.
 
 
-Finished in 0.00002 seconds (files took 0.04326 seconds to load)
+Finished in 0.00009 seconds (files took 0.10135 seconds to load)
 0 examples, 0 failures, 1 error occurred outside of examples
 

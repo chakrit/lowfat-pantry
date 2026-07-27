@@ -1,81 +1,97 @@
 #!/bin/sh
 # capture.sh — record real failure output from tools this machine doesn't have.
 #
-# One image per stack (see README.md), one recipe per tool. Each recipe provokes a
-# genuine failure inside the container and writes the combined stream verbatim to the
-# plugin's samples/ — no wrapper text, no annotations, byte-faithful.
+# A sample is evidence, so every part of how it was produced is readable: a stack
+# Dockerfile holding only a toolchain, a fixture directory holding the failing
+# project as ordinary files, and one command line. Nothing is a shell program.
 #
 #   capture/capture.sh                 # every stack
 #   capture/capture.sh python ruby     # only these
 #   capture/capture.sh --list          # what each stack covers
 #
-# Nothing here runs during the test suite. Review every captured file before committing:
-# a capture that didn't fail the way it was meant to locks a golden that proves nothing.
+# Nothing here runs during the test suite. Review every captured file before
+# committing: a capture that didn't fail the way it was meant to locks a golden
+# that proves nothing.
 unset CDPATH
 cd "$(dirname "$0")/.." || exit 2
 
+BASE_IMAGE=lowfat-capture-base
 STACKS='alpine debian fedora python ruby jvm php dotnet'
 
 usage() {
     echo "usage: capture/capture.sh [--list] [stack...]   (stacks: $STACKS)" >&2
 }
 
-# stack → the tools it captures, as "<tool> <plugin-dir> <sample-name>" rows
+# Recipes, one per sample: "<sample> <plugin-dir> <fixture-or-none> <command…>".
+# The command runs as-is against the fixture, so what provokes the failure is the
+# fixture's content — a broken manifest, a missing import — not an argument that
+# only looks error-shaped.
 recipes_for() {
     case "$1" in
-        alpine) echo 'apk apk/apk-compact apk-add-error
-deno deno/deno-compact deno-run-error' ;;
-        debian) printf '%s\n' 'apt apt/apt-compact apt-install-error' ;;
-        fedora) printf '%s\n' 'dnf dnf/dnf-compact dnf-install-missing' ;;
-        python) echo 'poetry poetry/poetry-compact poetry-broken-pyproject
-black black/black-compact black-syntax-error
-ansible-playbook ansible-playbook/ansible-playbook-compact ansible-playbook-syntax-error' ;;
-        ruby)   printf '%s\n' 'rspec rspec/rspec-compact rspec-boot-crash' ;;
-        jvm)    printf '%s\n' 'mvn mvn/mvn-compact mvn-broken-pom' ;;
-        php)    printf '%s\n' 'composer composer/composer-compact composer-broken-json' ;;
-        dotnet) echo 'dotnet-build dotnet/dotnet-compact dotnet-build-error
-dotnet-test dotnet/dotnet-compact dotnet-test-fail' ;;
+        alpine) echo 'apk-add-error apk/apk-compact none apk add --no-cache nosuchpkg123
+deno-run-error deno/deno-compact none deno run --allow-read does-not-exist.ts' ;;
+        debian) echo 'apt-install-error apt/apt-compact none apt-get install -y nosuchpkg123' ;;
+        fedora) echo 'dnf-install-missing dnf/dnf-compact none dnf install -y definitely-not-a-real-package-9z' ;;
+        python) echo 'poetry-broken-pyproject poetry/poetry-compact poetry-broken-pyproject poetry install
+black-syntax-error black/black-compact black-syntax-error black --check broken.py
+ansible-playbook-syntax-error ansible-playbook/ansible-playbook-compact ansible-playbook-syntax-error ansible-playbook play.yml' ;;
+        ruby)   echo 'rspec-boot-crash rspec/rspec-compact rspec-boot-crash rspec' ;;
+        jvm)    echo 'mvn-broken-pom mvn/mvn-compact mvn-broken-pom mvn -B compile' ;;
+        php)    echo 'composer-broken-json composer/composer-compact composer-broken-json composer install --no-interaction' ;;
+        dotnet) echo 'dotnet-build-error dotnet/dotnet-compact dotnet-build-error dotnet build
+dotnet-test-fail dotnet/dotnet-compact dotnet-test-fail dotnet test' ;;
         *)      return 1 ;;
     esac
 }
 
-# The failure each tool is asked to produce, as a shell script run inside the container.
-# Every one is a real error path — a missing package, an unparseable manifest, a file
-# that isn't there — never a printf of something error-shaped.
-recipe_script() {
+# The alpine base is the only one; debian and fedora are exempt because the tool
+# under test *is* that distro's package manager (capture/README.md).
+needs_base() {
     case "$1" in
-        apk)    printf '%s\n' 'apk add --no-cache nosuchpkg123' ;;
-        deno)   printf '%s\n' 'cd /tmp && deno run --allow-read does-not-exist.ts' ;;
-        apt)    printf '%s\n' 'apt-get install -y nosuchpkg123' ;;
-        dnf)    printf '%s\n' 'dnf install -y definitely-not-a-real-package-9z' ;;
-        poetry) printf '%s\n' 'mkdir -p /w && cd /w && printf "[tool.poetry\nname = broken\n" > pyproject.toml && poetry install' ;;
-        black)  printf '%s\n' 'mkdir -p /w && cd /w && printf "def f(:\n    return 1\n" > broken.py && black --check broken.py' ;;
-        ansible-playbook) printf '%s\n' 'mkdir -p /w && cd /w && printf -- "- hosts: all\n  tasks:\n    - name: broken\n      command: echo hi\n     bad_indent: yes\n" > play.yml && ansible-playbook play.yml' ;;
-        rspec)  printf '%s\n' 'mkdir -p /w/spec && cd /w && printf "require \"nope_not_a_gem\"\n" > spec/spec_helper.rb && printf "require \"spec_helper\"\n" > spec/a_spec.rb && rspec' ;;
-        mvn)    printf '%s\n' 'mkdir -p /w && cd /w && printf "<project><modelVersion>4.0.0</modelVersion>\n" > pom.xml && mvn -B compile' ;;
-        composer) printf '%s\n' 'mkdir -p /w && cd /w && printf "{ \"require\": { \"nope/nope\": \"^1.0\" \n" > composer.json && composer install --no-interaction' ;;
-        # A C# *compile* error with a warning alongside it — the diagnostic shape the
-        # filter keeps. An unparseable .csproj also fails the build, but as MSB4025 from
-        # the project loader, which exercises none of the same keep-rules.
-        dotnet-build) printf '%s\n' 'cd /tmp && dotnet new console -o app >/dev/null && cd app && printf "class P {\n    static void M(string s) { System.Console.WriteLine(s.Length); }\n    static void Main() { string? x = null; M(x); System.Console.WriteLine(orderTotal); }\n}\n" > Program.cs && dotnet build' ;;
-        # Failing test among passing ones — a run that fails every test tells the filter
-        # nothing about whether it keeps the failure and drops the passes.
-        dotnet-test)  printf '%s\n' 'cd /tmp && dotnet new xunit -o t >/dev/null && cd t && printf "using Xunit;\npublic class CheckoutTests {\n    [Fact] public void Totals_add_up() { Assert.Equal(2, 1 + 1); }\n    [Fact] public void Totals_subtract() { Assert.Equal(0, 1 - 1); }\n    [Fact] public void Checkout_totals_round_tax() { Assert.Equal(10.82, 10.80); }\n}\n" > UnitTest1.cs && dotnet test' ;;
-        *)      return 1 ;;
+        debian|fedora) return 1 ;;
+        *)             return 0 ;;
     esac
 }
 
 image_for() { echo "lowfat-capture-$1"; }
 
+# Always build. Skipping when the tag already exists is the obvious optimization and
+# it silently serves a stale toolchain after a Dockerfile edit — a sample captured
+# from an image that no longer matches its Dockerfile is exactly the unprovenanced
+# evidence this rig exists to stop producing. Docker's own layer cache already makes
+# an unchanged rebuild nearly free.
+build_image() {
+    image=$1
+    dockerfile=$2
+
+    echo "  building $image from $dockerfile"
+    docker build -q -t "$image" -f "$dockerfile" capture >/dev/null
+}
+
 build_stack() {
-    image=$(image_for "$1")
-    if docker image inspect "$image" >/dev/null 2>&1; then
-        echo "  image $image already built"
-        return 0
+    if needs_base "$1"; then
+        build_image "$BASE_IMAGE" capture/base.dockerfile || return 1
     fi
 
-    echo "  building $image from capture/$1.dockerfile"
-    docker build -q -t "$image" -f "capture/$1.dockerfile" capture >/dev/null || return 1
+    build_image "$(image_for "$1")" "capture/$1.dockerfile"
+}
+
+# The fixture is copied to a scratch directory before mounting: poetry, maven and
+# dotnet all write build state into the working directory, and a capture must not
+# leave anything behind in the repo.
+run_recipe() {
+    fixture=$1
+    out=$2
+    shift 2
+
+    work=$(mktemp -d) || return 2
+    [ "$fixture" = none ] || cp -R "capture/fixtures/$fixture/." "$work/" || return 2
+
+    docker run --rm -v "$work:/w" -w /w "$image" "$@" > "$out" 2>&1
+    status=$?
+
+    rm -rf "$work"
+    return $status
 }
 
 capture_stack() {
@@ -91,24 +107,20 @@ capture_stack() {
 
     # `while` in a pipeline runs in a subshell, so a flag file carries the verdict
     # back out — a stack whose recipes all no-op should not report success.
-    echo "$rows" | while read -r tool plugin sample; do
-        [ -n "$tool" ] || continue
+    echo "$rows" | while read -r sample plugin fixture command; do
+        [ -n "$sample" ] || continue
         out="plugins/$plugin/samples/$sample.txt"
-        script=$(recipe_script "$tool") || {
-            echo "  no recipe for $tool" >&2
-            echo x >> "$failed"
-            continue
-        }
 
-        docker run --rm "$image" sh -c "$script" > "$out" 2>&1
+        # shellcheck disable=SC2086  # the recipe's command is a deliberate word list
+        run_recipe "$fixture" "$out" $command
         status=$?
         lines=$(grep -c '' < "$out")
 
         if [ "$status" -eq 0 ]; then
-            echo "  !! $tool exited 0 — that is not a failure; review $out" >&2
+            echo "  !! $sample exited 0 — that is not a failure; review $out" >&2
             echo x >> "$failed"
         fi
-        echo "  $tool -> $out (exit $status, $lines lines)"
+        echo "  $sample -> $out (exit $status, $lines lines)"
     done
 
     [ ! -s "$failed" ]

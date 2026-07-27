@@ -1,0 +1,5 @@
+- hosts: all
+  tasks:
+    - name: broken
+      command: echo hi
+     bad_indent: yes

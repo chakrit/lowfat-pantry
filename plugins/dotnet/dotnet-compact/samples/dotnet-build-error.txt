@@ -1,13 +1,14 @@
+MSBuild version 17.8.49+7806cbf7b for .NET
   Determining projects to restore...
-  All projects are up-to-date for restore.
-/tmp/app/Program.cs(3,75): error CS0103: The name 'orderTotal' does not exist in the current context [/tmp/app/app.csproj]
-/tmp/app/Program.cs(3,46): warning CS8604: Possible null reference argument for parameter 's' in 'void P.M(string s)'. [/tmp/app/app.csproj]
+  Restored /w/app.csproj (in 840 ms).
+/w/Program.cs(5,75): error CS0103: The name 'orderTotal' does not exist in the current context [/w/app.csproj]
+/w/Program.cs(5,46): warning CS8604: Possible null reference argument for parameter 's' in 'void P.M(string s)'. [/w/app.csproj]
 
 Build FAILED.
 
-/tmp/app/Program.cs(3,46): warning CS8604: Possible null reference argument for parameter 's' in 'void P.M(string s)'. [/tmp/app/app.csproj]
-/tmp/app/Program.cs(3,75): error CS0103: The name 'orderTotal' does not exist in the current context [/tmp/app/app.csproj]
+/w/Program.cs(5,46): warning CS8604: Possible null reference argument for parameter 's' in 'void P.M(string s)'. [/w/app.csproj]
+/w/Program.cs(5,75): error CS0103: The name 'orderTotal' does not exist in the current context [/w/app.csproj]
     1 Warning(s)
     1 Error(s)
 
-Time Elapsed 00:00:01.86
+Time Elapsed 00:00:03.83

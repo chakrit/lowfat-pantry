@@ -72,7 +72,7 @@
             - '                                                 '
             - '  "./composer.json" does not contain valid JSON  '
             - '  Parse error on line 1:                         '
-            - '  ...nope/nope": "^1.0"                          '
+            - '  ..."nope/nope": "^1.0"                         '
             - '  ---------------------^                         '
             - '  Expected one of: ''}'', '',''                      '
             - '                                                 '

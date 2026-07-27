@@ -1,1 +1,1 @@
-[0m[1m[31merror[0m: Module not found "file:///tmp/does-not-exist.ts".
+[0m[1m[31merror[0m: Module not found "file:///w/does-not-exist.ts".

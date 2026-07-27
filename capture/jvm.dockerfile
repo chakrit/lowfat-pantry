@@ -1,4 +1,4 @@
-# mvn — maven from the alpine repos rather than the (much larger) maven image.
-FROM eclipse-temurin:21-jdk-alpine
+# mvn — the JDK and maven both from the alpine repos.
+FROM lowfat-capture-base
 
-RUN apk add --no-cache maven
+RUN apk add --no-cache openjdk21-jdk maven
