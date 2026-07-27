@@ -14,7 +14,7 @@
 unset CDPATH
 cd "$(dirname "$0")/.." || exit 2
 
-STACKS='alpine debian fedora python ruby jvm php'
+STACKS='alpine debian fedora python ruby jvm php dotnet'
 
 usage() {
     echo "usage: capture/capture.sh [--list] [stack...]   (stacks: $STACKS)" >&2
@@ -33,6 +33,8 @@ ansible-playbook ansible-playbook/ansible-playbook-compact ansible-playbook-synt
         ruby)   printf '%s\n' 'rspec rspec/rspec-compact rspec-boot-crash' ;;
         jvm)    printf '%s\n' 'mvn mvn/mvn-compact mvn-broken-pom' ;;
         php)    printf '%s\n' 'composer composer/composer-compact composer-broken-json' ;;
+        dotnet) echo 'dotnet-build dotnet/dotnet-compact dotnet-build-error
+dotnet-test dotnet/dotnet-compact dotnet-test-fail' ;;
         *)      return 1 ;;
     esac
 }
@@ -52,6 +54,13 @@ recipe_script() {
         rspec)  printf '%s\n' 'mkdir -p /w/spec && cd /w && printf "require \"nope_not_a_gem\"\n" > spec/spec_helper.rb && printf "require \"spec_helper\"\n" > spec/a_spec.rb && rspec' ;;
         mvn)    printf '%s\n' 'mkdir -p /w && cd /w && printf "<project><modelVersion>4.0.0</modelVersion>\n" > pom.xml && mvn -B compile' ;;
         composer) printf '%s\n' 'mkdir -p /w && cd /w && printf "{ \"require\": { \"nope/nope\": \"^1.0\" \n" > composer.json && composer install --no-interaction' ;;
+        # A C# *compile* error with a warning alongside it — the diagnostic shape the
+        # filter keeps. An unparseable .csproj also fails the build, but as MSB4025 from
+        # the project loader, which exercises none of the same keep-rules.
+        dotnet-build) printf '%s\n' 'cd /tmp && dotnet new console -o app >/dev/null && cd app && printf "class P {\n    static void M(string s) { System.Console.WriteLine(s.Length); }\n    static void Main() { string? x = null; M(x); System.Console.WriteLine(orderTotal); }\n}\n" > Program.cs && dotnet build' ;;
+        # Failing test among passing ones — a run that fails every test tells the filter
+        # nothing about whether it keeps the failure and drops the passes.
+        dotnet-test)  printf '%s\n' 'cd /tmp && dotnet new xunit -o t >/dev/null && cd t && printf "using Xunit;\npublic class CheckoutTests {\n    [Fact] public void Totals_add_up() { Assert.Equal(2, 1 + 1); }\n    [Fact] public void Totals_subtract() { Assert.Equal(0, 1 - 1); }\n    [Fact] public void Checkout_totals_round_tax() { Assert.Equal(10.82, 10.80); }\n}\n" > UnitTest1.cs && dotnet test' ;;
         *)      return 1 ;;
     esac
 }

@@ -1,16 +1,20 @@
   Determining projects to restore...
   All projects are up-to-date for restore.
-  Core -> /repo/src/Core/bin/Debug/net8.0/Core.dll
-  Core.Tests -> /repo/tests/Core.Tests/bin/Debug/net8.0/Core.Tests.dll
-Test run for /repo/tests/Core.Tests/bin/Debug/net8.0/Core.Tests.dll (.NETCoreApp,Version=v8.0)
-VSTest version 17.10.0 (arm64)
+  t -> /tmp/t/bin/Debug/net8.0/t.dll
+Test run for /tmp/t/bin/Debug/net8.0/t.dll (.NETCoreApp,Version=v8.0)
+VSTest version 17.11.1 (arm64)
 
 Starting test execution, please wait...
 A total of 1 test files matched the specified pattern.
-  Failed Checkout_totals_round_tax [31 ms]
+[xUnit.net 00:00:00.09]     CheckoutTests.Checkout_totals_round_tax [FAIL]
+  Failed CheckoutTests.Checkout_totals_round_tax [4 ms]
   Error Message:
-   Expected value to be 10.82, but found 10.80.
+   Assert.Equal() Failure: Values differ
+Expected: 10.82
+Actual:   10.800000000000001
   Stack Trace:
-     at Core.Tests.CheckoutTests.Checkout_totals_round_tax() in /repo/tests/Core.Tests/CheckoutTests.cs:line 58
+     at CheckoutTests.Checkout_totals_round_tax() in /tmp/t/UnitTest1.cs:line 5
+   at System.RuntimeMethodHandle.InvokeMethod(Object target, Void** arguments, Signature sig, Boolean isConstructor)
+   at System.Reflection.MethodBaseInvoker.InvokeWithNoArgs(Object obj, BindingFlags invokeAttr)
 
-Failed!  - Failed:     1, Passed:    48, Skipped:     0, Total:    49, Duration: 1 s - Core.Tests.dll (net8.0)
+Failed!  - Failed:     1, Passed:     2, Skipped:     0, Total:     3, Duration: 4 ms - t.dll (net8.0)

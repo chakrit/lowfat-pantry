@@ -38,8 +38,16 @@ Unable to locate…`) is an artifact, not the shape the tool normally emits.
 | `ruby`   | `ruby:3-alpine`         | rspec                               |
 | `jvm`    | `eclipse-temurin:21-jdk-alpine` | mvn                         |
 | `php`    | `php:8-cli-alpine`      | composer                            |
+| `dotnet` | `mcr.microsoft.com/dotnet/sdk:8.0` | dotnet build, dotnet test |
 
-Deliberately absent: **dotnet** (SDK image is ~1.2 GB for one sample) and **pulumi** (CLI
-pulls a ~200 MB toolchain and wants a logged-in backend to fail interestingly). Both stay
-unexercised until someone wants them badly enough to pay for the pull; the ledger says so
-rather than implying coverage that isn't there.
+Deliberately absent: **pulumi** — the CLI pulls a ~200 MB toolchain and wants a logged-in
+backend to fail interestingly. It stays unexercised until someone wants the sample badly
+enough to pay for the pull; this line says so rather than implying coverage that isn't
+there.
+
+The dotnet image is the expensive one (~1.2 GB), which is why it carries two recipes
+rather than one: the pull is per *stack*, so a second sample off the same image is nearly
+free. Both recipes name the failure *class* the sample is for — a compile diagnostic with
+a warning beside it, and one failing test among passing ones. An unparseable `.csproj`
+also fails `dotnet build`, but as an MSB4025 from the project loader, which exercises none
+of the keep-rules the sample exists to test.
