@@ -13,7 +13,17 @@ define compact-dotnet(limit):
     # name + Error Message:/Stack Trace: blocks, incl. their 3+-space-indented
     # bodies), and run summaries (one-line "Failed!  -" and multi-line formats)
     keep /(error CS[0-9]+|warning CS[0-9]+|Build succeeded\.|Build FAILED\.|Successfully created package|Passed!|Failed!|Total tests:|(Passed|Failed|Skipped):[[:space:]]+[0-9]+|Test Run (Failed|Successful)|^[[:space:]]+(Failed [A-Za-z_]|Error Message:|Stack Trace:|at )|^[[:space:]]{3}[^[:space:]])/
-    shell: head -$1
+    # `head-marked $1` cannot be written: `$N` reaches only shell:/or-shell: bodies,
+    # never an op argument, so the limit has to travel inside the body.
+    shell: |
+        body=$(cat)
+        [ -n "$body" ] || exit 0
+
+        total=$(printf '%s\n' "$body" | grep -c '')
+        printf '%s\n' "$body" | head -n $1
+
+        [ "$total" -gt $1 ] && printf '[lowfat] +%d lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((total - $1))" "${level:-full}"
+        exit 0
     or-shell: s=$(grep -E '[^[:space:]]'); n=$(printf '%s\n' "$s" | wc -l); printf '%s\n' "$s" | head -$1; if [ "$n" -gt $1 ]; then printf '[lowfat] +%d lines dropped (level=%s) -- output truncated, re-run raw for the full list\n' "$((n-$1))" "${level:-full}"; fi
 
 # Extraction runs on failure too — a failed build is restore chatter + error

@@ -337,6 +337,7 @@
       checks:
         - name: stdout
           data:
+            - '[lowfat] +23 earlier lines dropped (level=ultra) -- output truncated, re-run raw for the full list'
             - "test\tSetup\t2026-06-08T16:00:24Z step output line 24"
             - "test\tSetup\t2026-06-08T16:00:25Z step output line 25"
             - "test\tSetup\t2026-06-08T16:00:26Z step output line 26"
@@ -384,8 +385,8 @@
       checks:
         - name: stdout
           data:
-            - lines 40
-            - bytes 2160
+            - lines 41
+            - bytes 2259
         - name: exitcode
           data:
             - "0"

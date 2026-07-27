@@ -106,9 +106,9 @@ init:
         raw
     else:
         match level:
-            ultra: tail 20
-            lite:  tail 80
-            else:  tail 40
+            ultra: tail-marked 20
+            lite:  tail-marked 80
+            else:  tail-marked 40
 
 # Inventory subcommands emit one load-bearing identifier per line with nothing redundant
 # to compact — the whole value is completeness, so they are exempt from compaction.

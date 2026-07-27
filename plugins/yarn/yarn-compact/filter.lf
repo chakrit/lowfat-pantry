@@ -18,9 +18,9 @@ define drop-steps:
 install|add|remove|upgrade|why|dedupe:
     if exit failed:
         match level:
-            ultra: tail 30
-            lite:  head 200
-            else:  tail 60
+            ultra: tail-marked 30
+            lite:  head-marked 200
+            else:  tail-marked 60
     else:
         match level:
             ultra:
@@ -38,9 +38,9 @@ install|add|remove|upgrade|why|dedupe:
 run|test|build|exec|dlx|node:
     if exit failed:
         match level:
-            ultra: tail 40
-            lite:  tail 200
-            else:  tail 80
+            ultra: tail-marked 40
+            lite:  tail-marked 200
+            else:  tail-marked 80
     else:
         match level:
             ultra:

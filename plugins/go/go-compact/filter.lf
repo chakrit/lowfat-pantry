@@ -17,9 +17,9 @@ build:
         raw
     else:
         match level:
-            ultra: head 20
-            full:  head 40
-            lite:  head 80
+            ultra: head-marked 20
+            full:  head-marked 40
+            lite:  head-marked 80
 
 test:
     if -json:
@@ -69,9 +69,9 @@ mod:
         raw
     else:
         match level:
-            ultra: head 15
-            full:  head 30
-            lite:  head 60
+            ultra: head-marked 15
+            full:  head-marked 30
+            lite:  head-marked 60
 
 *:
     if exit failed:

@@ -225,6 +225,7 @@
       checks:
         - name: stdout
           data:
+            - '[lowfat] +15 earlier lines dropped (level=ultra) -- output truncated, re-run raw for the full list'
             - $ go test ./internal/checkout step 15
             - $ go test ./internal/checkout step 16
             - $ go test ./internal/checkout step 17
@@ -272,8 +273,8 @@
       checks:
         - name: stdout
           data:
-            - lines 40
-            - bytes 1529
+            - lines 41
+            - bytes 1628
         - name: exitcode
           data:
             - "0"

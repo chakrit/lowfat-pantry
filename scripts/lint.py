@@ -8,7 +8,8 @@ remove. Static, so it costs nothing to run.
 
   banned interpreter  a filter needing python3 doesn't degrade without it, it dies
   banned awk          repo-wide ban
-  bare head/tail      cuts without a marker; a truncated stream reads as a short one
+  bare head/tail      cuts without a marker; a truncated stream reads as a short one,
+                      whether the op stands alone or trails a match-arm label
   marker form         one sentence, pantry-wide, so an agent learns it once
   missing include     a macro from plugins/lib/ used without pulling the library in
   manifest drift      name/category/commands must agree with the directory, or the
@@ -24,9 +25,14 @@ LIB = ROOT / "plugins" / "lib"
 MARKER = re.compile(
     r"\[lowfat\] \+%d [a-z ]+ dropped \(level=%s\) -- output truncated, "
     r"re-run raw for the full list")
-BARE_CUT = re.compile(r"^\s*(head|tail) (auto|[0-9]+)\s*$")
+# An op may sit alone on its line or inline after the label of the arm that selects it
+# (`ultra: tail 40`, `shell: head -$1`). Both forms cut; a rule that only sees the first
+# leaves the second free to reintroduce the class, which is how 42 of them survived a sweep.
+ARM = r"(?:[a-z*|-]+:[ \t]+)?"
+COUNT = r"(?:auto|-?(?:[0-9]+|\$[0-9]+))"
+BARE_CUT = re.compile(rf"^\s*{ARM}(head|tail) ({COUNT})\s*$")
 DEFINE = re.compile(r"^define ([\w-]+)")
-CALL = re.compile(r"^\s+([a-z][\w-]*)(?: [0-9]+)?\s*$")
+CALL = re.compile(rf"^\s+{ARM}([a-z][\w-]*)(?: {COUNT})?\s*$")
 
 
 def library_macros():

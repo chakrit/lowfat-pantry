@@ -19,14 +19,14 @@ pr|issue|run|release|workflow|repo|gist|search|cache|label|project|ruleset|statu
         raw
     elif --log:
         match level:
-            ultra: tail 40
-            lite:  tail 200
-            else:  tail 80
+            ultra: tail-marked 40
+            lite:  tail-marked 200
+            else:  tail-marked 80
     else:
         match level:
-            ultra: head 20
-            lite:  head 200
-            else:  head 50
+            ultra: head-marked 20
+            lite:  head-marked 200
+            else:  head-marked 50
 
 # api — raw HTTP/JSON payloads; never prune structured output.
 api:

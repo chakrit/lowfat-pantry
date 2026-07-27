@@ -47,9 +47,9 @@ check|lint:
 run|task|eval|repl|serve:
     if exit failed:
         match level:
-            ultra: tail 40
-            lite:  tail 200
-            else:  tail 80
+            ultra: tail-marked 40
+            lite:  tail-marked 200
+            else:  tail-marked 80
     else:
         match level:
             ultra: cap 25

@@ -14,9 +14,9 @@ include ../../lib/truncation.lf
 install|add|remove|update|pm|link|unlink:
     if exit failed:
         match level:
-            ultra: tail 30
-            lite:  tail 200
-            else:  tail 60
+            ultra: tail-marked 30
+            lite:  tail-marked 200
+            else:  tail-marked 60
     else:
         match level:
             ultra:
@@ -42,9 +42,9 @@ test:
 run|build|x|exec:
     if exit failed:
         match level:
-            ultra: tail 40
-            lite:  tail 200
-            else:  tail 80
+            ultra: tail-marked 40
+            lite:  tail-marked 200
+            else:  tail-marked 80
     else:
         match level:
             ultra: cap 25
