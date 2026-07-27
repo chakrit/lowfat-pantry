@@ -56,9 +56,15 @@ rules — a violation is a bug, not a style nit.
    *information* (no match / files differ / unformatted); `redis-cli`/`sqlite3` errors exit
    *zero*. Branch on output shape, not on `$exit` alone — a naive `if exit failed: raw`
    mishandles both ends.
-5. **Over-prune is drift too.** Pruning to empty or near-empty is as much a regression as
-   bloat. The golden harness (`scripts/measure.py` + smoke locks) catches it
-   bidirectionally — a size change in either direction surfaces as a locked-value diff.
+5. **Over-prune is drift too, and empty is never an answer.** Pruning to empty or
+   near-empty is as much a regression as bloat. On a sample the harness catches it
+   bidirectionally (`scripts/measure.py` + smoke locks). But the dangerous case is the one
+   no sample covers: a tool rewords its output, the keep-list matches *nothing*, and a page
+   becomes silence — which the reader takes as "the command printed nothing". Every rule
+   therefore owes a fallback: an `or "<tool>: ok"` verdict, an `or-shell:` marked tail, or
+   an in-body check that emits one when nothing matched. `scripts/overprune.py` drives
+   deliberately unrecognizable input through every filter × subcommand × level × exit and
+   fails if any answers nothing (2026-07-27; it found 19 rules that did).
 6. **Inventory listings are exempt from compaction.** One load-bearing identifier per line,
    nothing redundant: `terraform state list`, `kubectl get`, `helm list`, `gh issue list`,
    `npm ls`. The whole value is completeness, so there is nothing safe to cut — these are
@@ -66,8 +72,17 @@ rules — a violation is a bug, not a style nit.
 7. **Truncation is always visible.** A filter that drops lines says so, at every level, with
    the count. Silent truncation is the one failure mode that produces a *confident wrong
    answer*: a cut list and a genuinely short list are byte-indistinguishable, so the reader
-   cannot tell they need to re-run. Bare `head`/`tail` cut without a trace and must not
-   terminate a catch-all — use a marked variant (`head-auto-marked`).
+   cannot tell they need to re-run. This holds for **every** rule, not only catch-alls
+   (ruling 2026-07-27): an extraction path that keyword-filters and *then* caps is exactly
+   where the reader can't tell whether what survived is complete. Bare `head`/`tail` cut
+   without a trace and are gone from the pantry — use the marked macros in
+   `plugins/lib/truncation.lf`. One sentence, everywhere:
+   `[lowfat] +N <unit> dropped (level=X) -- output truncated, re-run raw for the full list`.
+
+8. **Levels are a budget, in order.** `ultra <= full <= lite` in output size, always. A
+   level-specific rule that forgets a sibling's `drop` inverts it, and because each level's
+   golden is locked separately, the inversion hides in three UNCHANGED locks —
+   `scripts/levels.py` compares them (2026-07-27; pulumi's ultra was longer than its full).
 
 ## Guarding structured output (the recipe)
 
