@@ -67,12 +67,12 @@
       checks:
         - name: stdout
           data:
-            - "\e[31m✘ \e[41;31m[\e[41;97mERROR\e[41;31m]\e[0m \e[1mBuild failed with 1 error:\e[0m"
-            - "  \e[31m✘ \e[41;31m[\e[41;97mERROR\e[41;31m]\e[0m \e[1mExpected identifier but found end of file\e[0m"
+            - '✘ [ERROR] Build failed with 1 error:'
+            - '  ✘ [ERROR] Expected identifier but found end of file'
             - '  '
             - '      src/router.ts:7:0:'
-            - "  \e[37m      7 │ \e[32m\e[37m"
-            - "          ╵ \e[32m^\e[0m"
+            - '        7 │ '
+            - '          ╵ ^'
             - '  '
             - '  '
         - name: exitcode
@@ -83,7 +83,7 @@
         - name: stdout
           data:
             - lines 8
-            - bytes 266
+            - bytes 160
         - name: exitcode
           data:
             - "0"
@@ -93,12 +93,12 @@
       checks:
         - name: stdout
           data:
-            - "\e[31m✘ \e[41;31m[\e[41;97mERROR\e[41;31m]\e[0m \e[1mBuild failed with 1 error:\e[0m"
-            - "  \e[31m✘ \e[41;31m[\e[41;97mERROR\e[41;31m]\e[0m \e[1mExpected identifier but found end of file\e[0m"
+            - '✘ [ERROR] Build failed with 1 error:'
+            - '  ✘ [ERROR] Expected identifier but found end of file'
             - '  '
             - '      src/router.ts:7:0:'
-            - "  \e[37m      7 │ \e[32m\e[37m"
-            - "          ╵ \e[32m^\e[0m"
+            - '        7 │ '
+            - '          ╵ ^'
             - '  '
             - '  '
         - name: exitcode
@@ -109,7 +109,7 @@
         - name: stdout
           data:
             - lines 8
-            - bytes 266
+            - bytes 160
         - name: exitcode
           data:
             - "0"
@@ -119,12 +119,12 @@
       checks:
         - name: stdout
           data:
-            - "\e[31m✘ \e[41;31m[\e[41;97mERROR\e[41;31m]\e[0m \e[1mBuild failed with 1 error:\e[0m"
-            - "  \e[31m✘ \e[41;31m[\e[41;97mERROR\e[41;31m]\e[0m \e[1mExpected identifier but found end of file\e[0m"
+            - '✘ [ERROR] Build failed with 1 error:'
+            - '  ✘ [ERROR] Expected identifier but found end of file'
             - '  '
             - '      src/router.ts:7:0:'
-            - "  \e[37m      7 │ \e[32m\e[37m"
-            - "          ╵ \e[32m^\e[0m"
+            - '        7 │ '
+            - '          ╵ ^'
             - '  '
             - '  '
         - name: exitcode
@@ -135,7 +135,7 @@
         - name: stdout
           data:
             - lines 8
-            - bytes 266
+            - bytes 160
         - name: exitcode
           data:
             - "0"
@@ -145,7 +145,7 @@
       checks:
         - name: stdout
           data:
-            - "\e[31m✘ \e[41;31m[\e[41;97mERROR\e[41;31m]\e[0m \e[1mIn a non-interactive environment, it's necessary to set a CLOUDFLARE_API_TOKEN environment variable for wrangler to work. Please go to https://developers.cloudflare.com/fundamentals/api/get-started/create-token/ for instructions on how to create an api token, and assign its value to CLOUDFLARE_API_TOKEN.\e[0m"
+            - ✘ [ERROR] In a non-interactive environment, it's necessary to set a CLOUDFLARE_API_TOKEN environment variable for wrangler to work. Please go to https://developers.cloudflare.com/fundamentals/api/get-started/create-token/ for instructions on how to create an api token, and assign its value to CLOUDFLARE_API_TOKEN.
         - name: exitcode
           data:
             - "0"
@@ -154,7 +154,7 @@
         - name: stdout
           data:
             - lines 1
-            - bytes 359
+            - bytes 318
         - name: exitcode
           data:
             - "0"
@@ -164,7 +164,7 @@
       checks:
         - name: stdout
           data:
-            - "\e[31m✘ \e[41;31m[\e[41;97mERROR\e[41;31m]\e[0m \e[1mIn a non-interactive environment, it's necessary to set a CLOUDFLARE_API_TOKEN environment variable for wrangler to work. Please go to https://developers.cloudflare.com/fundamentals/api/get-started/create-token/ for instructions on how to create an api token, and assign its value to CLOUDFLARE_API_TOKEN.\e[0m"
+            - ✘ [ERROR] In a non-interactive environment, it's necessary to set a CLOUDFLARE_API_TOKEN environment variable for wrangler to work. Please go to https://developers.cloudflare.com/fundamentals/api/get-started/create-token/ for instructions on how to create an api token, and assign its value to CLOUDFLARE_API_TOKEN.
         - name: exitcode
           data:
             - "0"
@@ -173,7 +173,7 @@
         - name: stdout
           data:
             - lines 1
-            - bytes 359
+            - bytes 318
         - name: exitcode
           data:
             - "0"
@@ -183,7 +183,7 @@
       checks:
         - name: stdout
           data:
-            - "\e[31m✘ \e[41;31m[\e[41;97mERROR\e[41;31m]\e[0m \e[1mIn a non-interactive environment, it's necessary to set a CLOUDFLARE_API_TOKEN environment variable for wrangler to work. Please go to https://developers.cloudflare.com/fundamentals/api/get-started/create-token/ for instructions on how to create an api token, and assign its value to CLOUDFLARE_API_TOKEN.\e[0m"
+            - ✘ [ERROR] In a non-interactive environment, it's necessary to set a CLOUDFLARE_API_TOKEN environment variable for wrangler to work. Please go to https://developers.cloudflare.com/fundamentals/api/get-started/create-token/ for instructions on how to create an api token, and assign its value to CLOUDFLARE_API_TOKEN.
         - name: exitcode
           data:
             - "0"
@@ -192,7 +192,7 @@
         - name: stdout
           data:
             - lines 1
-            - bytes 359
+            - bytes 318
         - name: exitcode
           data:
             - "0"

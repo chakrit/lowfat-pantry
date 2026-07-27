@@ -1,0 +1,26 @@
+# Colour-stripping shared by the pantry — tools colour their output even into a pipe,
+# and the escapes cost tokens while carrying nothing a reader of the text needs.
+# Include, don't copy:
+#
+#     include ../../lib/ansi.lf
+#
+# Apply this only on branches that already keyword-filter. Never on a `raw` arm or a
+# structured-output guard: those exist to emit the body byte-exact (invariant 1), and a
+# blanket rewrite of the bytes is exactly what they promise not to do.
+#
+# Escapes also break keep-rules, which is the sharper reason to strip early rather than
+# late: a coloured `\033[31merror:` does not match /^error:/, so a filter silently drops
+# the one line it was written to keep. Strip first, match after.
+#
+# POSIX sh only, ERE only (`grep -E`, `sed -nE`) — see truncation.lf for why BRE ships
+# a filter that blanks its output on macOS.
+
+define strip-ansi:
+    shell: |
+        body=$(cat)
+        [ -n "$body" ] || exit 0
+
+        # CSI sequences (colour, cursor moves) plus the standalone OSC-terminator and
+        # single-char escapes tools emit around them. The ERE is deliberately narrow:
+        # a greedy .* would eat real text between two escapes on the same line.
+        printf '%s\n' "$body" | sed -E 's/'"$(printf '\033')"'\[[0-9;?]*[A-Za-z]//g'

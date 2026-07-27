@@ -5,8 +5,12 @@
 # are the signal and survive untouched.
 
 include ../../lib/truncation.lf
+include ../../lib/ansi.lf
 
 *:
+    # wrangler colours the boilerplate it prints, so the drops below anchor at `^`
+    # against a line that really starts with an escape. Strip first or they miss.
+    strip-ansi
     drop /^ ⛅️ wrangler /
     drop /^─+$/
     drop /Cloudflare collects anonymous telemetry/

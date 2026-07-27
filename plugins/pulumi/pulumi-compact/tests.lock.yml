@@ -337,9 +337,9 @@
             - '    pulumi:pulumi:Stack payments-infra-dev  3 messages'
             - 'Diagnostics:'
             - '  pulumi:pulumi:Stack (payments-infra-dev):'
-            - "    \e[31mError\e[0m: error resolving type of resource hostName: unable to find resource type \"random:RandomBogus\" in resource provider \"random\""
+            - '    Error: error resolving type of resource hostName: unable to find resource type "random:RandomBogus" in resource provider "random"'
             - '      on Pulumi.yaml line 66:'
-            - "      66:     type: \e[1;4mrandom:RandomBogus\e[0m"
+            - '      66:     type: random:RandomBogus'
             - ""
             - 'Resources:'
             - '    1 unchanged'
@@ -351,7 +351,7 @@
         - name: stdout
           data:
             - lines 11
-            - bytes 388
+            - bytes 369
         - name: exitcode
           data:
             - "0"
@@ -366,9 +366,9 @@
             - '    pulumi:pulumi:Stack payments-infra-dev  3 messages'
             - 'Diagnostics:'
             - '  pulumi:pulumi:Stack (payments-infra-dev):'
-            - "    \e[31mError\e[0m: error resolving type of resource hostName: unable to find resource type \"random:RandomBogus\" in resource provider \"random\""
+            - '    Error: error resolving type of resource hostName: unable to find resource type "random:RandomBogus" in resource provider "random"'
             - '      on Pulumi.yaml line 66:'
-            - "      66:     type: \e[1;4mrandom:RandomBogus\e[0m"
+            - '      66:     type: random:RandomBogus'
             - ""
             - 'Resources:'
             - '    1 unchanged'
@@ -380,7 +380,7 @@
         - name: stdout
           data:
             - lines 11
-            - bytes 388
+            - bytes 369
         - name: exitcode
           data:
             - "0"
@@ -394,9 +394,9 @@
             - '    pulumi:pulumi:Stack payments-infra-dev  3 messages'
             - 'Diagnostics:'
             - '  pulumi:pulumi:Stack (payments-infra-dev):'
-            - "    \e[31mError\e[0m: error resolving type of resource hostName: unable to find resource type \"random:RandomBogus\" in resource provider \"random\""
+            - '    Error: error resolving type of resource hostName: unable to find resource type "random:RandomBogus" in resource provider "random"'
             - '      on Pulumi.yaml line 66:'
-            - "      66:     type: \e[1;4mrandom:RandomBogus\e[0m"
+            - '      66:     type: random:RandomBogus'
             - 'Resources:'
             - '    1 unchanged'
         - name: exitcode
@@ -407,7 +407,7 @@
         - name: stdout
           data:
             - lines 9
-            - bytes 386
+            - bytes 367
         - name: exitcode
           data:
             - "0"

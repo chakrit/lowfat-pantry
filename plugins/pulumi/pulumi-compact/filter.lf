@@ -10,8 +10,12 @@
 # repeats per compacting rule because `.lf` has no top-level pre-filter.
 
 include ../../lib/truncation.lf
+include ../../lib/ansi.lf
 
 define drop-spinner-noise:
+    # pulumi colours the per-resource lines the drops below anchor against, so the
+    # strip belongs here — ahead of every rule that matches on line shape.
+    strip-ansi
     drop /^@ /
     drop /^(Downloading|Installing) plugin /
 
