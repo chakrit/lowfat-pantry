@@ -71,7 +71,7 @@ Radius: 69 bare `head`/`tail` ops across 17 filters, plus every budget-limited l
 diff, aws, env, uv). Eleven goldens re-locked, all additive — no output line was removed
 anywhere, only markers added.
 
-## Amendment — 2026-07-28: the gate saw only half the ops
+## Amendment — 2026-07-27: the gate saw only half the ops
 
 Both sweeps were steered by `scripts/lint.py`'s `BARE_CUT` rule, whose pattern required the
 op to stand **alone on its line**. An op written inline after the label of the arm that

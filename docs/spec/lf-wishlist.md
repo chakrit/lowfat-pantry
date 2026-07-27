@@ -160,7 +160,7 @@ returned 15 of 36 resources with no marker). **Re-verified unchanged at v0.8.0.*
 **Workaround in pantry.** The whole visible-truncation regime: `plugins/lib/truncation.lf`
 provides marked replacements (`head-marked`, `head-auto-marked`, `tail-marked`,
 `tail-auto-marked`, `cap`) and **no pantry filter uses a bare `head`/`tail` op any more**
-(2026-07-27 sweep, completed 2026-07-28 — the first pass left 42 ops written inline after a
+(2026-07-27 sweep, completed 2026-07-27 — the first pass left 42 ops written inline after a
 match-arm label, which the lint gate could not see). Ruling and radius:
 `docs/decisions/2026-07-26-visible-truncation.md`.
 
