@@ -160,7 +160,9 @@ returned 15 of 36 resources with no marker). **Re-verified unchanged at v0.8.0.*
 **Workaround in pantry.** The whole visible-truncation regime: `plugins/lib/truncation.lf`
 provides marked replacements (`head-marked`, `head-auto-marked`, `tail-marked`,
 `tail-auto-marked`, `cap`) and **no pantry filter uses a bare `head`/`tail` op any more**
-(2026-07-27 sweep). Ruling and radius: `docs/decisions/2026-07-26-visible-truncation.md`.
+(2026-07-27 sweep, completed 2026-07-28 — the first pass left 42 ops written inline after a
+match-arm label, which the lint gate could not see). Ruling and radius:
+`docs/decisions/2026-07-26-visible-truncation.md`.
 
 **Proposed shape.** Have the `.lf` ops mark like `proc_truncate` already does — same
 `...`-prefixed trailer, with the dropped count — or gate it behind an opt-out for the rare
@@ -223,5 +225,24 @@ macro call wherever `or-shell:` takes a command. Same "fires only when blank, ru
 the raw rule input" semantics — only the callee changes. That collapses 33 inline copies to
 33 one-word calls and makes the fallback path share the library everything else already
 shares.
+
+**Upstream issue.** _none filed yet_
+
+## 9. `$N` cannot be an op argument, so a parameterized macro can't call a library macro
+
+**Problem.** Macro args reach only `shell:`/`python:`/`or-shell:` bodies; `head $1` is a
+hard parse error and `head-marked $1` passes the literal string `$1` through, which the
+callee then fails to resolve. A `define compact-x(limit)` that wants to end in a marked
+truncation therefore cannot call `head-marked` at all — the one place the shared library
+would pay off most.
+
+**Workaround in pantry.** `dotnet`, `npm` and `pnpm` each carry a verbatim copy of
+`head-marked`'s body inside their extraction macro, with `$1` in place of the limit. Three
+copies of a library macro that exists, for want of one substitution. Sibling of #8: both
+are slots the library can't reach.
+
+**Proposed shape.** Substitute `$N` in op arguments too — parse the op's argument after
+arg-expansion rather than before — so `head-marked $1` inside a parameterized macro means
+what it reads as.
 
 **Upstream issue.** _none filed yet_

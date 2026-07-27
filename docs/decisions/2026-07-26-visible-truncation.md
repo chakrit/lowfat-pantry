@@ -71,6 +71,26 @@ Radius: 69 bare `head`/`tail` ops across 17 filters, plus every budget-limited l
 diff, aws, env, uv). Eleven goldens re-locked, all additive — no output line was removed
 anywhere, only markers added.
 
+## Amendment — 2026-07-28: the gate saw only half the ops
+
+Both sweeps were steered by `scripts/lint.py`'s `BARE_CUT` rule, whose pattern required the
+op to stand **alone on its line**. An op written inline after the label of the arm that
+selects it — `ultra: tail 40`, `shell: head -$1` — never matched, so the gate reported
+CONVENTIONS HOLD over 42 surviving bare cuts across 10 filters: terraform `init`, go
+`build`/`mod`, gh `--log` + default, glab `--trace` + default, bun install-failed +
+run-failed, deno run-failed, yarn install-failed + run-failed, npm `run|test`, and the
+`shell: head -$1` inside the dotnet/npm/pnpm extraction macros.
+
+That is the general failure of a checked ruling: the rule holds exactly as far as its
+pattern reaches, and everything outside reads as compliance rather than as absence. The
+regex now admits the label prefix (`ARM`) and `$N` counts, and the same widening applies to
+the missing-include rule, which had the identical blind spot. Radius: 42 ops, 10 filters,
+3 goldens re-locked — additive, one marker line each.
+
+The three `shell: head -$1` sites could not become `head-marked $1`: macro args reach only
+`shell:`/`python:`/`or-shell:` bodies, never an op argument. Each inlines the macro body
+instead; `docs/spec/lf-wishlist.md` #9 is the upstream ask that would retire the copies.
+
 ## Consequences
 
 - `.lf` had no include mechanism, so `head-auto-marked` was duplicated per filter.
