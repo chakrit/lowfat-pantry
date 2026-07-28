@@ -91,9 +91,11 @@ noise.
 
 ## Not covered
 
-**pulumi** — the CLI pulls a ~200 MB toolchain and wants a logged-in backend to fail
-interestingly. It stays unexercised until someone wants the sample badly enough to pay for
-the pull; this line says so rather than implying coverage that isn't there.
+**pulumi** — no stack here builds it. The CLI pulls a ~200 MB toolchain and wants a
+logged-in backend to fail interestingly, so its samples remain the ad-hoc `docker run`
+captures from 2026-06-10, not something this rig can reproduce. It stays that way until
+someone wants a fresh sample badly enough to pay for the pull; this line says so rather
+than implying coverage that isn't there.
 
 The dotnet stack is the expensive one, which is why it carries two recipes rather than
 one: the toolchain install is per *stack*, so a second sample off the same image is nearly

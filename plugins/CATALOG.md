@@ -72,7 +72,8 @@ plugins (git, docker, grep, find, ls, tree) are not listed here.
   summary, drop per-suite `PASS ` noise; ultra trims to `FAIL` headers + assertion lines.
   jest `--json`/`--outputFile` and vitest `--reporter=json|junit`/`--outputFile` pass
   byte-exact (invariant 1). Gotcha: ultra matchers are ASCII-only — a non-ASCII literal in
-  a `.lf` macro body is mangled by lowfat 0.6.8's `$N` arg-expansion (fix proposed upstream);
+  a parameterized `.lf` macro's shell body is mangled by lowfat's `$N` arg-expansion, still
+  at v0.8.0 (`docs/spec/lf-wishlist.md` #5; the `keep` regexes here were never at risk);
   full/lite keep the block wholesale so glyph lines survive via passthrough.
 
 ## Python

@@ -150,11 +150,12 @@ need trusting), hook wired or not. Mention `/lowfat-pantry` re-runs the sync.
 ## Authoring a pantry plugin — fast path
 
 When the user wants a *new* filter, you don't need to read the full DSL spec or lowfat
-source — both were already distilled. Follow this. (Deep cases — `split`, macros, awk
-state machines — are in `docs/vendor/lowfat-filter-dsl.md`; reach for it only when the
-skeleton below isn't enough.) The *why* behind these rules — the keep-vs-cut philosophy
-inherited from RTK and lowfat — is `docs/spec/output-philosophy.md`; read it when a call
-isn't obvious from the tree below.
+source — both were already distilled. Follow this. (Deep cases — `split`, macros, multi-line
+`shell:` blocks — are in `docs/vendor/lowfat-filter-dsl.md`; reach for it only when the
+skeleton below isn't enough, and read its cookbook against the bans in step 4: the
+examples there are upstream's, and upstream uses `awk`.) The *why* behind these rules —
+the keep-vs-cut philosophy inherited from RTK and lowfat — is
+`docs/spec/output-philosophy.md`; read it when a call isn't obvious from the tree below.
 
 ### Plugin layout (exact)
 A pantry plugin is a directory `plugins/<command>/<command>-compact/` holding:
@@ -177,11 +178,13 @@ Mirror `plugins/rg/rg-compact/` (simplest) or `plugins/gh/` (flag guards). Copy 
   catch-all `*:` LAST. No subcommands (ls/grep/rg)? One `*:` rule.
 - Env in `shell:` ops: `$sub` `$level` (ultra/full/lite) `$exit` `$args`.
   Current text arrives on **stdin**.
-- The everyday ops: `keep /re/` · `drop /re/` · `head N` · `tail N` · `head auto`
-  (=15/30/60 by level; cuts silently, so never end a catch-all with it — see step 4) ·
+- The everyday ops: `keep /re/` · `drop /re/` · `head-auto-marked` (the library's marked
+  stand-in for `head auto`'s 15/30/60 by level) · `head-marked N` · `tail-marked N` ·
   `or "text"` (fallback when stream went blank) ·
   `or-shell: <cmd>` (run cmd on the RAW input when blank) · `raw` (pass unchanged) ·
   `shell: <cmd>`. Regex is the Rust `regex` crate: **no backreferences/lookaround**.
+  lowfat's own `head N` / `tail N` / `head auto` still exist, but no pantry filter uses one:
+  they cut with no trace (step 4), and `scripts/lint.py` rejects them.
 - Branch with `match level:` (arms `ultra:`/`full:`/`lite:`/`else:`) or
   `if exit failed: … else: …` (guards: `exit ok|failed`, `level <lvl>`, `--flag`).
 
@@ -196,7 +199,8 @@ Mirror `plugins/rg/rg-compact/` (simplest) or `plugins/gh/` (flag guards). Copy 
      with `or "no matches"` for the empty-but-ok case.
    - Noisy builds (tsc/mvn/gradle/dotnet): a failed build is *exactly* when you want
      `[ERROR]` lines pulled from hundreds of progress lines — run your extraction on
-     failure too, with `or-shell: tail 50` as the over-prune safety net.
+     failure too, with an `or-shell:` marked tail as the over-prune safety net (it caps the
+     raw dump and prints the same dropped-count marker).
    - Caveat: exit code is a *signal*, not a failure proxy. `rg`/`diff`/`black` exit
      non-zero as information (no match / files differ / unformatted); `redis-cli`/`sqlite3`
      errors exit zero. Branch on output shape (error-line patterns), not `$exit` alone.
@@ -204,9 +208,9 @@ Mirror `plugins/rg/rg-compact/` (simplest) or `plugins/gh/` (flag guards). Copy 
    (`terraform state list`, `kubectl get`, `helm list`, `gh issue list`, `npm ls`). Then the
    whole value is completeness and nothing is safe to cut — give it its own rule returning
    `raw`, above the catch-all. There is no honest 30-line summary of a 200-item list.
-4. **Otherwise, scale by level** — but never with a bare `head`/`tail` at the end of a
-   catch-all. `head` cuts without a trace, so a truncated stream and a genuinely short one
-   are byte-identical and the reader acts on a confident wrong answer. Use the
+4. **Otherwise, scale by level** — but never with a bare `head`/`tail`, in any rule, not
+   just the catch-all. `head` cuts without a trace, so a truncated stream and a genuinely
+   short one are byte-identical and the reader acts on a confident wrong answer. Use the
    `head-auto-marked` macro from `plugins/lib/truncation.lf` (below); it mirrors `head
    auto`'s limits and appends the dropped count. Never re-copy a library macro into a
    filter. Drop progress/spinner noise with `drop /re/` first.
@@ -249,7 +253,9 @@ over-prune or growth regression surfaces as drift. Full harness:
 
 Samples must be **byte-faithful** to real command output; never add inline `# synthetic`
 annotations (they leak into filtered output and skew line counts). Filters must be
-deterministic (smoke compares bytes).
+deterministic (smoke compares bytes). Failure output for a tool that isn't installed comes
+from `capture/` — a stack Dockerfile plus a fixture directory, one command per sample — not
+from a hand-written guess at what the tool prints (`capture/README.md`).
 
 ### Prompting another model to build one
 Hand it: this section + the target plugin dir + 2-3 real captured samples (`<command> … |

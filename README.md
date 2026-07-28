@@ -28,6 +28,7 @@ the community plugins that teach it how to compact each tool.
     plugins/<category>/<name>/   a pantry plugin: lowfat.toml · filter.lf · samples/ · tests.cue · tests.lock.yml
     templates/lowfat             seed project config (copied to .lowfat)
     scripts/test.sh              run the smoke golden-test suite over every plugin
+    capture/                     container recipes that produce real failure samples
     docs/                        design + reference (see below)
 
 ## Plugins
@@ -89,6 +90,7 @@ deterministic; samples are byte-faithful to real command output. Full harness:
 
 ## Status
 
-Early — plugins are `v0.1.0` and samples are largely synthetic. Every plugin has a
-`chakrit/smoke` golden-file test (`tests.cue` + committed `tests.lock.yml`); `scripts/test.sh`
-runs the 703-test suite. Real-sample backfill is ongoing (see the backlog).
+Early — plugins are `v0.1.0`. Every plugin has a `chakrit/smoke` golden-file test
+(`tests.cue` + committed `tests.lock.yml`); `scripts/test.sh` runs the 733-test suite plus
+five gates goldens can't provide. Many samples are still synthetic; `capture/` replaces
+them stack by stack with real failure output produced in a container (`capture/README.md`).

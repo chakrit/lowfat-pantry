@@ -134,8 +134,9 @@ real `exit` so failure samples are tested as failures):
     scripts/passthrough.py                                 # guarded flags stay byte-exact
     capture/capture.sh <stack>                             # real failure samples, in a container
 
-`scripts/test.sh` runs four specs at a time (`JOBS=1` to serialize), then two gates that
-goldens structurally can't replace. Neither is re-lockable — a failure in either is a bug:
+`scripts/test.sh` runs four specs at a time (`JOBS=1` to serialize), then five gates that
+goldens structurally can't replace. None is re-lockable — a failure in any of them is a bug,
+so `test.sh -c` skips them:
 
 - **`drift.py`** — the wrappers (`uv-compact`, `npx-compact`) delegate to their wrapped
   tools' filters by re-invoking `lowfat filter`, so a broken dispatch (wrong args mapping,

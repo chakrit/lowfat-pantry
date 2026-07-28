@@ -64,7 +64,7 @@ live once in a library `.lf` that both the standalone filter and any wrapper `in
 **Problem.** Filter selection keys on the **first token** (`commands = [...]` matched against
 the command word). So `uv run pytest`, `uvx ruff`, `npx eslint`, `poetry run mypy` select on
 the *runner* (`uv`/`npx`/…), and the wrapped tool's own filter never fires. `lowfat rewrite
-uv run pytest` returns the command verbatim — no unwrap exists in 0.6.8.
+uv run pytest` returns the command verbatim — no unwrap exists in v0.8.0.
 
 **Workaround in pantry.** Per-runner dispatcher plugins (`uv-compact`, `npx-compact`) that
 re-implement tool detection from `$args` and duplicate each wrapped tool's compaction (see
@@ -188,20 +188,6 @@ wanted, it belongs behind an explicit opt-in flag, off by default.
 
 **Upstream issue.** _none filed yet_
 
----
-
-## Other upstream — `zdk/smoke`
-
-Not lowfat, kept here so there is one place to look before filing anything.
-
-**Multi-spec compare skips specs 2..N.** Default compare mode `os.Exit()`s after the first
-spec (`process.go:282`), so `smoke a.cue b.cue` silently reports only `a`. Verified and
-reported to the smoke agent; the fix waits on a call about exit semantics (what the
-aggregate exit code should be when specs disagree). **Workaround:** `scripts/test.sh` loops
-one spec per invocation, which we keep anyway for per-plugin attribution.
-
-**Upstream issue.** _none filed yet_
-
 ## 8. A fallback that can call a macro (`or-macro` / macro-valued `or-shell`)
 
 **Problem.** `or "text"` takes a literal and `or-shell:` takes a one-line shell command —
@@ -246,3 +232,17 @@ arg-expansion rather than before — so `head-marked $1` inside a parameterized 
 what it reads as.
 
 **Upstream issue.** _none filed yet_
+
+---
+
+## Other upstream — `zdk/smoke`
+
+Not lowfat, kept here so there is one place to look before filing anything.
+
+**Multi-spec compare skipped specs 2..N — ✅ fixed in v0.4.** Compare mode used to
+`os.Exit()` after the first spec, so `smoke a.cue b.cue` silently reported only `a`. v0.4
+checks every spec and aggregates the exit; the repo pins ≥ v0.5.0, so nothing here runs
+against the broken path. `scripts/test.sh` still loops one spec per invocation, now for
+per-plugin attribution rather than as a workaround.
+
+Nothing else is open against smoke.

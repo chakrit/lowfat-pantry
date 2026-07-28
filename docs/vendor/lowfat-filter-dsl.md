@@ -131,9 +131,10 @@ unchanged. v0.8.0 does **not** fix this.
 Marking is otherwise lowfat's own house style: the bundled `git-compact`
 reference filter prints `... [git-compact: truncated; %d more files, %d more
 lines omitted - use LOWFAT_LEVEL=lite for the full diff]`, and `tree-compact`
-keeps totals "even when the body is truncated". The pantry therefore never ends
-a catch-all with a bare `head`/`tail` — see `plugins/README.md § Truncation
-conventions` and `docs/decisions/2026-07-26-visible-truncation.md`.
+keeps totals "even when the body is truncated". The pantry therefore uses no bare
+`head`/`tail` anywhere — not just in catch-alls — and reaches for the marked
+macros in `plugins/lib/truncation.lf` instead. See `plugins/README.md §
+Truncation conventions` and `docs/decisions/2026-07-26-visible-truncation.md`.
 
 ### Fallbacks (fire only when the stream is empty)
 
@@ -444,7 +445,14 @@ The Rust `regex` crate (`lf.rs:11`). Consequences for authors:
 ## Cookbook — idiomatic patterns
 
 Distilled from the six bundled filters
-(`lowfat-plugin/embedded/<cat>/<name>/filter.lf`).
+(`lowfat-plugin/embedded/<cat>/<name>/filter.lf`), quoted as upstream wrote them.
+
+🚨 **Two of these shapes are banned in pantry filters** and `scripts/lint.py`
+rejects them: bare `head`/`tail` (use the marked macros in
+`plugins/lib/truncation.lf`) and `awk` in a `shell:`/`or-shell:` body (POSIX
+`grep -E`/`sed -nE` only). They stay printed here because this file documents
+what the DSL and upstream's own filters do, not what our house rules allow —
+`plugins/README.md § Truncation conventions` is the authority on the latter.
 
 **1. Level-scaled truncation with an empty-output verdict** (git status):
 ```
@@ -623,24 +631,25 @@ pantry plugins — distinct from the parser/engine gotchas above:
    `if exit failed: raw` is right for grep/find (short errors) but WRONG for noisy
    builds (mvn/gradle/tsc): a failed build is exactly when you want `[ERROR]`
    extracted from hundreds of transfer/progress lines. Run the extraction on
-   failure too, with `or-shell: tail`/`head` as the over-prune fallback.
+   failure too, with a marked `or-shell:` tail as the over-prune fallback.
 4. **`or-shell:` runs against the RAW input, not the pruned stream.** It's
    over-prune *recovery* (fires when your pipeline emptied the stream), not a
-   post-transform. Use it to fall back to a raw head/tail when a keyword `keep`
-   matched nothing (e.g. a crash with none of your expected markers).
+   post-transform. Use it to fall back to a marked cap of the raw stream when a
+   keyword `keep` matched nothing (e.g. a crash with none of your expected
+   markers) — the fallback cuts too, so it owes the same dropped-count marker.
 5. **Never keyword-filter passthrough output.** For `<tool> run`/`exec`/bare
    `prettier <file>`/`cargo run`, the body is the program's own stdout or
    formatted code — keyword-filtering it hides results or corrupts code. Select
-   those subcommands separately and only head/tail-cap them.
+   those subcommands separately and only cap them, with the marker.
 6. **Guard structured output through byte-exact.** JSON/env/formatted output must
    not be lossily capped. Branch on the flag (`if --json: raw`, `elif -F json:
    raw`, `elif -o json:`) — `--output json` matches `--output`, and flag+value
    `-o yaml` matches only that value, so you can prune YAML while passing JSON.
 7. **Exit-code granularity is binary in guards.** You only get `exit ok|failed`,
    not specific codes. If 1 and 2 mean different things (eslint: 1=problems,
-   2=crash), prefer a robust non-keyword approach (drop-blanks + head) so a crash
-   is never silently dropped to "clean".
+   2=crash), prefer a robust non-keyword approach (drop-blanks + a marked cap) so
+   a crash is never silently dropped to "clean".
 8. **Samples must be byte-faithful.** No inline `# synthetic:` annotations — they
-   leak into filtered output and distort line counts. Sample provenance (real vs
-   synthesized) is tracked at the backlog level (`pantry-plugin-backlog.md`), not
-   in the sample or the test spec.
+   leak into filtered output and distort line counts. A sample's provenance lives
+   in the rig that produced it — a stack Dockerfile plus a fixture directory under
+   `capture/` — not in the sample or the test spec.

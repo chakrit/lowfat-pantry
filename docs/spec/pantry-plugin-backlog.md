@@ -8,9 +8,11 @@ merges nothing) and needs trust.
 
 ## Testing posture
 
-All 64 plugins have a smoke golden-file spec (`tests.cue` + committed `tests.lock.yml`);
-`scripts/test.sh` runs the suite. smoke is the sole judge; `scripts/measure.py` emits size
-metrics it locks. Harness detail: `../guides/smoke-golden-tests.md`.
+All 64 plugins have a smoke golden-file spec (`tests.cue` + committed `tests.lock.yml`), 733
+locked tests in all; `scripts/test.sh` runs the suite, then five gates goldens structurally
+cannot provide (`lint`, `drift`, `overprune`, `passthrough`, `levels`). smoke is the sole
+judge of drift; `scripts/measure.py` emits size metrics it locks. Harness detail:
+`../guides/smoke-golden-tests.md`.
 
 The legacy test path was retired (2026-06-17): the 52 `tests.yml` and `scripts/validate.py`
 are gone, replaced by the smoke golden suite.
@@ -79,9 +81,13 @@ matching invented output rather than real).
 - **More plugins** — only with real captured samples. `vercel`/`netlify`/`flyctl`/`gt`
   deferred: their signal output (deploys, stack ops) is auth-gated, so no real capture
   without accounts. `gt` is also niche for a trunk-based solo workflow.
-- **Real-sample backfill** — replace synthetic samples where a tool + fixture exist (real so
-  far: rg, redis-cli, pulumi, wrangler, az, kubectl-noserver, go-test-pass). Docker
-  containers are the proven cheap capture path.
+- **Real-sample backfill** — replace synthetic samples where a tool + fixture exist.
+  Containers are the capture path. Ad-hoc `docker run` captures came first (rg, redis-cli,
+  pulumi, wrangler, az, kubectl-noserver, go-test-pass, then the Ruby / JS-test-runner /
+  PHP / poetry / OS-package-manager sets dated above); since 2026-07-27 the `capture/` rig
+  owns the path — a Dockerfile per stack, a fixture directory per sample, one command per
+  capture, re-runnable by anyone. `capture/README.md` is the live list of what it produces
+  and what it deliberately leaves uncovered.
 
 ## Chrome / CDP / browser automation — scope ruling (2026-07-03)
 

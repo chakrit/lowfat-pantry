@@ -57,8 +57,8 @@ for spec in $specs; do
     fi
 done
 
-# Two gates goldens structurally cannot provide, both skipped under `-c` because
-# neither is re-lockable — a failure in either is a real bug:
+# Five gates goldens structurally cannot provide, all skipped under `-c` because
+# none is re-lockable — a failure in any of them is a real bug:
 #   drift.py     — the wrappers delegate to other plugins' filters; nothing in
 #                  their own locks notices when that dispatch breaks.
 #   overprune.py — a sample a filter recognizes never reaches its fallback, so
