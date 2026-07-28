@@ -22,8 +22,11 @@ provide (`lint`, `drift`, `overprune`, `passthrough`, `levels`; none re-lockable
 skipped under `-c`) — or `scripts/smoke.sh plugins/<cmd>/<plugin>/tests.cue` for one
 plugin. Bare is the check; **`-c` re-locks** — read the CHANGED diff before passing it.
 See `docs/guides/smoke-golden-tests.md`. Filters are **POSIX sh only** — no
-`python:`, no `awk`, ERE not BRE; `plugins/README.md` says why. Real failure output for a
-tool that isn't installed comes from `capture/`.
+`python:`, no `awk`, ERE not BRE; `plugins/README.md` says why. Real failure output comes
+from `capture/` — for every tool, including ones installed on this machine, so a sample's
+provenance is a Dockerfile and a fixture rather than someone's laptop. Reach for it before
+settling a keep-vs-cut question from a sample: a hand-written one cannot answer where a
+tool puts its verdict, and will imply a wrong answer.
 Session resume trail: `.ace/save.md` (+ `.ace/save.ledger.md`), gitignored.
 
 ## Durable artifacts
