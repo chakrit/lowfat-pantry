@@ -16,7 +16,7 @@ unset CDPATH
 cd "$(dirname "$0")/.." || exit 2
 
 BASE_IMAGE=lowfat-capture-base
-STACKS='alpine debian fedora python ruby jvm php dotnet'
+STACKS='alpine debian fedora node python ruby jvm php dotnet'
 
 usage() {
     echo "usage: capture/capture.sh [--list] [stack...]   (stacks: $STACKS)" >&2
@@ -32,6 +32,9 @@ recipes_for() {
 deno-run-error deno/deno-compact none deno run --allow-read does-not-exist.ts' ;;
         debian) echo 'apt-install-error apt/apt-compact none apt-get install -y nosuchpkg123' ;;
         fedora) echo 'dnf-install-missing dnf/dnf-compact none dnf install -y definitely-not-a-real-package-9z' ;;
+        node)   echo 'yarn-install-error yarn/yarn-compact yarn-install-error yarn install
+npm-error npm/npm-compact npm-error npm install
+pnpm-error pnpm/pnpm-compact pnpm-error pnpm install' ;;
         python) echo 'poetry-broken-pyproject poetry/poetry-compact poetry-broken-pyproject poetry install
 black-syntax-error black/black-compact black-syntax-error black --check broken.py
 ansible-playbook-syntax-error ansible-playbook/ansible-playbook-compact ansible-playbook-syntax-error ansible-playbook play.yml' ;;

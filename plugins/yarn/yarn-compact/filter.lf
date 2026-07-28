@@ -14,13 +14,28 @@ define drop-steps:
     drop /^\[[0-9]+\/[0-9]+\] /
     drop /^(\$ |info |verbose )/
 
+# yarn reports its own crashes with a trace through its bundled, minified cli.js
+# and node's internals. The frames name no file the reader has, so ten of the
+# fifteen lines of a failed install say nothing.
+define drop-frames:
+    drop /^[[:space:]]+at [A-Za-z_$<]/
+
 # ── install / dependency mutation ─────────────────────────────────────────
+# A failed `yarn install` puts its verdict at the TOP: `error <reason>` on line 4 of 15,
+# then a ten-frame stack trace, then the `info Visit …` footer. Tailing here cuts the one
+# line that says what went wrong and keeps the frames nobody reads.
 install|add|remove|upgrade|why|dedupe:
     if exit failed:
         match level:
-            ultra: tail-marked 30
-            lite:  head-marked 200
-            else:  tail-marked 60
+            ultra:
+                drop-frames
+                head-marked 30
+            lite:
+                drop-frames
+                head-marked 200
+            else:
+                drop-frames
+                head-marked 60
     else:
         match level:
             ultra:

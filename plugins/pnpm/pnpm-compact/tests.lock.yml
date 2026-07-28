@@ -181,14 +181,13 @@
       checks:
         - name: stdout
           data:
-            - ERR_PNPM_PEER_DEP_ISSUES Unmet peer dependencies
+            - '[ERR_PNPM_FETCH_404] GET https://registry.npmjs.org/@lowfat-pantry%2Fdefinitely-not-a-real-package: Not Found - 404'
             - ""
-            - .
-            - +- legacy-widget 2.3.1
-            - '  +- peer react@"^18.0.0": found 19.0.0'
+            - This error happened while installing a direct dependency of /w
             - ""
-            - 'hint: If you don''t want pnpm to fail on peer dependency issues, set strict-peer-dependencies=false'
-            - ERR_PNPM_ABORTED_REMOVE_MODULES_DIR_NO_TTY Aborted removal of modules directory due to no TTY
+            - '@lowfat-pantry/definitely-not-a-real-package is not in the npm registry, or you have no permission to fetch it.'
+            - ""
+            - No authorization header was set for the request.
         - name: exitcode
           data:
             - "0"
@@ -196,8 +195,8 @@
       checks:
         - name: stdout
           data:
-            - lines 8
-            - bytes 309
+            - lines 7
+            - bytes 343
         - name: exitcode
           data:
             - "0"
@@ -207,14 +206,13 @@
       checks:
         - name: stdout
           data:
-            - ERR_PNPM_PEER_DEP_ISSUES Unmet peer dependencies
+            - '[ERR_PNPM_FETCH_404] GET https://registry.npmjs.org/@lowfat-pantry%2Fdefinitely-not-a-real-package: Not Found - 404'
             - ""
-            - .
-            - +- legacy-widget 2.3.1
-            - '  +- peer react@"^18.0.0": found 19.0.0'
+            - This error happened while installing a direct dependency of /w
             - ""
-            - 'hint: If you don''t want pnpm to fail on peer dependency issues, set strict-peer-dependencies=false'
-            - ERR_PNPM_ABORTED_REMOVE_MODULES_DIR_NO_TTY Aborted removal of modules directory due to no TTY
+            - '@lowfat-pantry/definitely-not-a-real-package is not in the npm registry, or you have no permission to fetch it.'
+            - ""
+            - No authorization header was set for the request.
         - name: exitcode
           data:
             - "0"
@@ -222,8 +220,8 @@
       checks:
         - name: stdout
           data:
-            - lines 8
-            - bytes 309
+            - lines 7
+            - bytes 343
         - name: exitcode
           data:
             - "0"
@@ -233,14 +231,13 @@
       checks:
         - name: stdout
           data:
-            - ERR_PNPM_PEER_DEP_ISSUES Unmet peer dependencies
+            - '[ERR_PNPM_FETCH_404] GET https://registry.npmjs.org/@lowfat-pantry%2Fdefinitely-not-a-real-package: Not Found - 404'
             - ""
-            - .
-            - +- legacy-widget 2.3.1
-            - '  +- peer react@"^18.0.0": found 19.0.0'
+            - This error happened while installing a direct dependency of /w
             - ""
-            - 'hint: If you don''t want pnpm to fail on peer dependency issues, set strict-peer-dependencies=false'
-            - ERR_PNPM_ABORTED_REMOVE_MODULES_DIR_NO_TTY Aborted removal of modules directory due to no TTY
+            - '@lowfat-pantry/definitely-not-a-real-package is not in the npm registry, or you have no permission to fetch it.'
+            - ""
+            - No authorization header was set for the request.
         - name: exitcode
           data:
             - "0"
@@ -248,8 +245,8 @@
       checks:
         - name: stdout
           data:
-            - lines 8
-            - bytes 309
+            - lines 7
+            - bytes 343
         - name: exitcode
           data:
             - "0"

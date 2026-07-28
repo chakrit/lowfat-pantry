@@ -7,12 +7,13 @@ npm error node_modules/react
 npm error   react@"19.0.0" from the root project
 npm error
 npm error Could not resolve dependency:
-npm error peer react@"^18.0.0" from legacy-widget@2.3.1
-npm error node_modules/legacy-widget
-npm error   legacy-widget@"2.3.1" from the root project
+npm error peer react@"^16.0.0-0" from enzyme-adapter-react-16@1.15.8
+npm error node_modules/enzyme-adapter-react-16
+npm error   enzyme-adapter-react-16@"1.15.8" from the root project
 npm error
-npm error Fix the upstream dependency conflict, or retry
-npm error this command with --force or --legacy-peer-deps
-npm error to accept an incorrect dependency resolution.
+npm error Fix the upstream dependency conflict, or retry this command with --force or --legacy-peer-deps to accept an incorrect (and potentially broken) dependency resolution.
 npm error
-npm error A complete log of this run can be found in: /Users/dev/.npm/_logs/2026-06-08T03_04_11_905Z-debug-0.log
+npm error
+npm error For a full report see:
+npm error /root/.npm/_logs/2026-07-28T03_46_45_260Z-eresolve-report.txt
+npm error A complete log of this run can be found in: /root/.npm/_logs/2026-07-28T03_46_45_260Z-debug-0.log

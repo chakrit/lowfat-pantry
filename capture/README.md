@@ -53,6 +53,7 @@ Unable to locate…`) is an artifact, not the shape the tool normally emits.
 | stack    | base                  | covers                              |
 |----------|-----------------------|-------------------------------------|
 | `alpine` | `lowfat-capture-base` | apk, deno                           |
+| `node`   | `lowfat-capture-base` | yarn, npm, pnpm                     |
 | `python` | `lowfat-capture-base` | poetry, black, ansible-playbook     |
 | `ruby`   | `lowfat-capture-base` | rspec                               |
 | `jvm`    | `lowfat-capture-base` | mvn                                 |
@@ -67,6 +68,18 @@ so `apt` on alpine would not be apt. They sit on minimal distro bases, not vendo
 images, so the no-vendor-images rule still holds.
 
 ## Samples that carry noise
+
+`npm-error` and `dotnet-test-fail` both carry a field that changes on every capture and
+that the filter **keeps**: npm's `_logs/<ISO-timestamp>-debug-0.log` paths and dotnet's
+`Duration: N ms` in the `Failed!` summary. Unlike the noise below, these reach the golden,
+so re-capturing either always drifts its lock even when nothing meaningful changed. Neither
+is fixable in the filter — both fields sit inside lines that carry the verdict.
+
+`pnpm-error` is a **fetch-404**, not the peer-dependency failure the hand-written sample
+described. pnpm 11 downgraded unmet peers to a warning and exits 0, so that class can no
+longer be provoked at all; `strict-peer-dependencies=true` does not restore it. The sample
+name is generic on purpose — what it stands for is "pnpm install fails and says
+`ERR_PNPM_*`".
 
 `dnf-install-missing` is not byte-stable run to run: dnf's three repo-meter lines vary in
 transfer rate, elapsed time, payload size (Fedora's updates repo grows), and ordering

@@ -73,8 +73,9 @@
         - name: stdout
           data:
             - yarn install v1.22.22
+            - info No lockfile found.
             - '[1/4] Resolving packages...'
-            - 'error An unexpected error occurred: "https://registry.yarnpkg.com/@app%2fcore: Not found".'
+            - 'error Error: https://registry.yarnpkg.com/@lowfat-pantry%2fdefinitely-not-a-real-package: Not found'
             - info Visit https://yarnpkg.com/en/docs/cli/install for documentation about this command.
         - name: exitcode
           data:
@@ -83,8 +84,8 @@
       checks:
         - name: stdout
           data:
-            - lines 4
-            - bytes 230
+            - lines 5
+            - bytes 263
         - name: exitcode
           data:
             - "0"
@@ -95,8 +96,9 @@
         - name: stdout
           data:
             - yarn install v1.22.22
+            - info No lockfile found.
             - '[1/4] Resolving packages...'
-            - 'error An unexpected error occurred: "https://registry.yarnpkg.com/@app%2fcore: Not found".'
+            - 'error Error: https://registry.yarnpkg.com/@lowfat-pantry%2fdefinitely-not-a-real-package: Not found'
             - info Visit https://yarnpkg.com/en/docs/cli/install for documentation about this command.
         - name: exitcode
           data:
@@ -105,8 +107,8 @@
       checks:
         - name: stdout
           data:
-            - lines 4
-            - bytes 230
+            - lines 5
+            - bytes 263
         - name: exitcode
           data:
             - "0"
@@ -117,8 +119,9 @@
         - name: stdout
           data:
             - yarn install v1.22.22
+            - info No lockfile found.
             - '[1/4] Resolving packages...'
-            - 'error An unexpected error occurred: "https://registry.yarnpkg.com/@app%2fcore: Not found".'
+            - 'error Error: https://registry.yarnpkg.com/@lowfat-pantry%2fdefinitely-not-a-real-package: Not found'
             - info Visit https://yarnpkg.com/en/docs/cli/install for documentation about this command.
         - name: exitcode
           data:
@@ -127,8 +130,8 @@
       checks:
         - name: stdout
           data:
-            - lines 4
-            - bytes 230
+            - lines 5
+            - bytes 263
         - name: exitcode
           data:
             - "0"

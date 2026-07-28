@@ -1,0 +1,9 @@
+{
+  "name": "web",
+  "version": "1.4.0",
+  "private": true,
+  "dependencies": {
+    "react": "19.0.0",
+    "enzyme-adapter-react-16": "1.15.8"
+  }
+}
