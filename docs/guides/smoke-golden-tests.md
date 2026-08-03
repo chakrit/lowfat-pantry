@@ -90,7 +90,7 @@ config: _suite.config
 tests:  _suite.tests
 ```
 
-`testkit.#Suite` owns the shape once for all 64 specs: it expands cases × levels
+`testkit.#Suite` owns the shape once for all 65 specs: it expands cases × levels
 into the two-commands-per-case matrix, sets `config` (`/bin/sh`, `10s`) and
 `checks: [stdout, exitcode]`, and names each test `"\(sample) \(level)"` under a
 group named `name`. The per-spec diff is just `dir`, `name`, `cases` (and rarely

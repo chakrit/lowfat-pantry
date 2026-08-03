@@ -1,0 +1,20 @@
+#!/usr/bin/env lowfat-filter
+# ls-compact — a directory listing is an inventory: one load-bearing name per row,
+# nothing redundant, and the whole value is completeness (invariant 1). Rows are
+# therefore never dropped, only column-squeezed.
+# env: $sub $level $exit $args
+#
+# This shadows lowfat's bundled ls-compact, which caps every level at a bare
+# `head 40` and additionally runs `drop /^$/`. Together those erase the blank line
+# and `<dir>:` header that separate sections of a multi-directory `ls`, so
+# `ls a b` returns a listing that reads as a complete listing of `a` with `b`
+# silently absent — the confident-wrong-answer failure the truncation ruling
+# exists to prevent (docs/decisions/2026-07-26-visible-truncation.md).
+
+include ../../lib/columns.lf
+
+*:
+    if exit failed:
+        raw
+    else:
+        squeeze-columns

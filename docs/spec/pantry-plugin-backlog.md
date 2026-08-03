@@ -2,13 +2,14 @@
 
 What's built, and the posture governing what gets built next. Per-plugin detail (behavior +
 gotchas) lives in `../../plugins/CATALOG.md`; this file is the high-level inventory and the
-demand-driven build rule. Bundled lowfat plugins (`git` `docker` `grep` `find` `ls` `tree`)
+demand-driven build rule. Bundled lowfat plugins (`git` `docker` `grep` `find` `tree`)
 are not pantry plugins — a pantry override *replaces* a bundled filter wholesale (lowfat
-merges nothing) and needs trust.
+merges nothing) and needs trust. `ls` is the one override that has been earned: ruling
+`../decisions/2026-08-03-ls-override.md`.
 
 ## Testing posture
 
-All 64 plugins have a smoke golden-file spec (`tests.cue` + committed `tests.lock.yml`), 733
+All 65 plugins have a smoke golden-file spec (`tests.cue` + committed `tests.lock.yml`), 742
 locked tests in all; `scripts/test.sh` runs the suite, then five gates goldens structurally
 cannot provide (`lint`, `drift`, `overprune`, `passthrough`, `levels`). smoke is the sole
 judge of drift; `scripts/measure.py` emits size metrics it locks. Harness detail:
@@ -17,7 +18,7 @@ judge of drift; `scripts/measure.py` emits size metrics it locks. Harness detail
 The legacy test path was retired (2026-06-17): the 52 `tests.yml` and `scripts/validate.py`
 are gone, replaced by the smoke golden suite.
 
-## Built (64 community plugins)
+## Built (65 community plugins)
 
 VCS/CI: `rg` `gh` `glab` · Rust: `cargo` · TS/JS: `tsc` `eslint` `prettier` `npm` `pnpm`
 `yarn` `bun` `jest` `vitest` · Python: `pytest` `ruff` `mypy` `black` `pip` `poetry` · PHP:
@@ -25,7 +26,7 @@ VCS/CI: `rg` `gh` `glab` · Rust: `cargo` · TS/JS: `tsc` `eslint` `prettier` `n
 .NET: `dotnet` · JVM: `mvn` `gradlew` · OS packages: `apt`(+`apt-get`) `apk` `dnf`(+`yum`) ·
 Infra/ops: `kubectl` `helm` `terraform`(+`tofu`) `ansible-playbook` `systemctl` `journalctl`
 `docker-compose` `ssh` `rsync` · Cloud/data: `aws` `gcloud` `psql` `sqlite3` `env` ·
-Runtimes/build: `make` `npx` `deno` `uv` · Net/data: `curl` `wget` `jq` `json` `tar` ·
+Runtimes/build: `make` `npx` `deno` `uv` · Net/files: `curl` `wget` `jq` `json` `tar` `ls` ·
 Toolchain: `diff` `prisma` `next` `playwright` · Deploy/data (docker-captured real samples,
 2026-06-10): `redis-cli` `pulumi` `wrangler` `az`. Ruby set: docker-captured real samples,
 2026-06-18. JS test runners + PHP + Python(poetry) + OS package managers: docker-captured

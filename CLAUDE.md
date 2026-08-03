@@ -2,7 +2,7 @@
 
 This repo is **`chakrit/lowfat-pantry`** — a standalone Claude Code `/lowfat-pantry` skill plus a
 pantry of lowfat plugins/filters for compacting command-output tokens.
-`SKILL.md` (the `/lowfat-pantry` entrypoint) and **64 community plugins** under `plugins/` are
+`SKILL.md` (the `/lowfat-pantry` entrypoint) and **65 community plugins** under `plugins/` are
 built.
 
 ## Source of truth

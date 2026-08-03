@@ -1,0 +1,8 @@
+[plugin]
+name = "ls-compact"
+version = "0.1.0"
+description = "Squeeze ls columns without dropping directory entries"
+category = "ls"
+commands = ["ls"]
+# Documentation only - ls has no subcommands.
+subcommands = []

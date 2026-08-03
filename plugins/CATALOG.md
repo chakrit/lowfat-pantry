@@ -1,4 +1,4 @@
-# Pantry catalog — all 64 plugins
+# Pantry catalog — all 65 plugins
 
 What each plugin actually does beyond a dumb head-cap, and the gotchas to know before
 trusting it. Grouped by area; every plugin scales across `ultra`/`full`/`lite` and ships
@@ -8,7 +8,8 @@ Pantry-wide guarantees: structured output passes byte-exact (invariant 1); **inv
 listings never lose a row** (invariant 6); and **any truncation is marked with its dropped
 count** (invariant 7) — no plugin cuts silently. See
 [README.md § Truncation conventions](README.md#truncation-conventions-hard-rules). Conventions and layout: [README.md](README.md). Bundled lowfat
-plugins (git, docker, grep, find, ls, tree) are not listed here.
+plugins (git, docker, grep, find, tree) are not listed here; `ls` is, because the pantry
+overrides it.
 
 ## VCS / forges
 
@@ -257,6 +258,11 @@ plugins (git, docker, grep, find, ls, tree) are not listed here.
   NOT valid input for further piping — look for the marker.
 - **diff** — keeps hunk headers and changed lines. Gotcha: exit 1 means "files differ"
   (signal, not failure); exit 2 (real error) passes raw.
+- **ls** — an inventory listing: rows are never dropped at any level, only column-squeezed
+  (invariant 6); non-zero exit passes raw. Overrides lowfat's bundled `ls-compact`, which
+  capped every level at a silent `head 40` and dropped blank lines — erasing the `<dir>:`
+  section headers of a multi-directory `ls`, so `ls a b` read as a complete listing of `a`
+  alone. Gotcha: a listing of a huge directory is therefore passed through whole.
 - **tar** — `-v` listings: ultra shows first entries + a total-count footer; errors
   (non-zero exit) raw.
 - **make** — tail-caps only. Gotcha: recipe output is arbitrary child-command output,

@@ -33,8 +33,8 @@ the community plugins that teach it how to compact each tool.
 
 ## Plugins
 
-**64 community filters** beyond lowfat's six bundled ones (git, docker, grep, find, ls,
-tree) — the full audited list with per-plugin notes and gotchas lives in
+**65 community filters** alongside lowfat's six bundled ones (git, docker, grep, find, ls,
+tree) — one of them, `ls`, overrides its bundled namesake — the full audited list with per-plugin notes and gotchas lives in
 **[`plugins/CATALOG.md`](plugins/CATALOG.md)**. A taste:
 
 - `cargo` `tsc` `pytest` `go` `mvn` `dotnet` — build/test: keep diagnostics + verdicts,

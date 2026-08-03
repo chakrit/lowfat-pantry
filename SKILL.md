@@ -84,6 +84,10 @@ For each selected plugin, between the pantry source and `<home>/plugins/<cat>/<n
 - **added** — in pantry, not in home → propose create.
 - **removed** — in home, not in pantry → leave alone (it's the user's own), unless it's a
   stale symlink back into this pantry.
+- **shadows a bundled filter** — a disk plugin wins over lowfat's own of the same name, so
+  installing one silently changes how an already-working command is compacted. `ls` is the
+  only pantry plugin that does this (ruling `docs/decisions/2026-08-03-ls-override.md`);
+  name the replacement when offering it, don't fold it into an "all" selection unremarked.
 - **changed** — both exist, content differs. **Trust-drift guard:** lowfat trusts by plugin
   *name*, so it will not re-prompt when a trusted plugin's content changes. Surface every
   changed + already-trusted plugin here with `AskUserQuestion` before re-linking.
