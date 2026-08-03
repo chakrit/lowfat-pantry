@@ -1,4 +1,4 @@
-# capture/ — real failure output for tools this machine doesn't have
+# capture/ — real command output, produced by a rig you can read
 
 Samples must be byte-faithful to real command output (`plugins/README.md`), which is a
 problem for the `or-shell` fallback arms: a fallback only fires when a filter's keep-list
@@ -22,6 +22,11 @@ Three readable pieces, no shell programs:
   someone else's layer decisions, and a sample's provenance should be readable in one file.
 - **`fixtures/<sample>/`** — the failing project as ordinary committed files. A broken
   `pom.xml` you can open beats the same XML escaped inside a shell string.
+
+Most samples are failure output — that is the shape a hand-written sample gets wrong, and
+the reason the rig exists. A few shapes live only on the success path (`ls` printing a
+`<dir>:` header per directory), so each recipe names the exit it exists to record, `fail`
+or `ok`, and a recipe that lands on the other side is reported as a broken capture.
 
 `capture.sh` then copies the fixture to a scratch directory, mounts it at `/w`, and runs
 **one command**: `docker run --rm -v <scratch>:/w -w /w <image> <tool> <args>`. The scratch
@@ -52,7 +57,7 @@ Unable to locate…`) is an artifact, not the shape the tool normally emits.
 
 | stack    | base                  | covers                              |
 |----------|-----------------------|-------------------------------------|
-| `alpine` | `lowfat-capture-base` | apk, deno                           |
+| `alpine` | `lowfat-capture-base` | apk, deno, ls                       |
 | `node`   | `lowfat-capture-base` | yarn, npm, pnpm                     |
 | `python` | `lowfat-capture-base` | poetry, black, ansible-playbook     |
 | `ruby`   | `lowfat-capture-base` | rspec                               |
@@ -74,6 +79,12 @@ that the filter **keeps**: npm's `_logs/<ISO-timestamp>-debug-0.log` paths and d
 `Duration: N ms` in the `Failed!` summary. Unlike the noise below, these reach the golden,
 so re-capturing either always drifts its lock even when nothing meaningful changed. Neither
 is fixable in the filter — both fields sit inside lines that carry the verdict.
+
+`ls-multi-dir` and `ls-long-listing` both drift on every capture, and both drifts reach the
+golden because `ls-compact` drops nothing. The `-l` sample carries the mtime of the scratch
+copy, which is the moment of capture; the `/usr/bin` listing is whatever the current
+`alpine:3` ships. Re-capture them when the section-header shape is what you are checking,
+and read the lock diff for a changed *shape*, not a changed timestamp or a package churn.
 
 `pnpm-error` is a **fetch-404**, not the peer-dependency failure the hand-written sample
 described. pnpm 11 downgraded unmet peers to a warning and exits 0, so that class can no

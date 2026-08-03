@@ -22,27 +22,35 @@ usage() {
     echo "usage: capture/capture.sh [--list] [stack...]   (stacks: $STACKS)" >&2
 }
 
-# Recipes, one per sample: "<sample> <plugin-dir> <fixture-or-none> <command…>".
+# Recipes, one per sample: "<sample> <plugin-dir> <fixture-or-none> <verdict> <command…>".
 # The command runs as-is against the fixture, so what provokes the failure is the
 # fixture's content — a broken manifest, a missing import — not an argument that
 # only looks error-shaped.
+#
+# `<verdict>` is the exit the recipe exists to record, `fail` or `ok`. Most samples
+# are failure output, which is why the rig exists; a few shapes only appear on the
+# success path — `ls` printing a per-directory section header — and for those a
+# non-zero exit is the broken capture.
 recipes_for() {
     case "$1" in
-        alpine) echo 'apk-add-error apk/apk-compact none apk add --no-cache nosuchpkg123
-deno-run-error deno/deno-compact none deno run --allow-read does-not-exist.ts' ;;
-        debian) echo 'apt-install-error apt/apt-compact none apt-get install -y nosuchpkg123' ;;
-        fedora) echo 'dnf-install-missing dnf/dnf-compact none dnf install -y definitely-not-a-real-package-9z' ;;
-        node)   echo 'yarn-install-error yarn/yarn-compact yarn-install-error yarn install
-npm-error npm/npm-compact npm-error npm install
-pnpm-error pnpm/pnpm-compact pnpm-error pnpm install' ;;
-        python) echo 'poetry-broken-pyproject poetry/poetry-compact poetry-broken-pyproject poetry install
-black-syntax-error black/black-compact black-syntax-error black --check broken.py
-ansible-playbook-syntax-error ansible-playbook/ansible-playbook-compact ansible-playbook-syntax-error ansible-playbook play.yml' ;;
-        ruby)   echo 'rspec-boot-crash rspec/rspec-compact rspec-boot-crash rspec' ;;
-        jvm)    echo 'mvn-broken-pom mvn/mvn-compact mvn-broken-pom mvn -B compile' ;;
-        php)    echo 'composer-broken-json composer/composer-compact composer-broken-json composer install --no-interaction' ;;
-        dotnet) echo 'dotnet-build-error dotnet/dotnet-compact dotnet-build-error dotnet build
-dotnet-test-fail dotnet/dotnet-compact dotnet-test-fail dotnet test' ;;
+        alpine) echo 'apk-add-error apk/apk-compact none fail apk add --no-cache nosuchpkg123
+deno-run-error deno/deno-compact none fail deno run --allow-read does-not-exist.ts
+ls-multi-dir ls/ls-compact ls-multi-dir ok ls -l alpha beta
+ls-long-listing ls/ls-compact none ok ls /usr/bin
+ls-missing-path ls/ls-compact none fail ls /no/such/path' ;;
+        debian) echo 'apt-install-error apt/apt-compact none fail apt-get install -y nosuchpkg123' ;;
+        fedora) echo 'dnf-install-missing dnf/dnf-compact none fail dnf install -y definitely-not-a-real-package-9z' ;;
+        node)   echo 'yarn-install-error yarn/yarn-compact yarn-install-error fail yarn install
+npm-error npm/npm-compact npm-error fail npm install
+pnpm-error pnpm/pnpm-compact pnpm-error fail pnpm install' ;;
+        python) echo 'poetry-broken-pyproject poetry/poetry-compact poetry-broken-pyproject fail poetry install
+black-syntax-error black/black-compact black-syntax-error fail black --check broken.py
+ansible-playbook-syntax-error ansible-playbook/ansible-playbook-compact ansible-playbook-syntax-error fail ansible-playbook play.yml' ;;
+        ruby)   echo 'rspec-boot-crash rspec/rspec-compact rspec-boot-crash fail rspec' ;;
+        jvm)    echo 'mvn-broken-pom mvn/mvn-compact mvn-broken-pom fail mvn -B compile' ;;
+        php)    echo 'composer-broken-json composer/composer-compact composer-broken-json fail composer install --no-interaction' ;;
+        dotnet) echo 'dotnet-build-error dotnet/dotnet-compact dotnet-build-error fail dotnet build
+dotnet-test-fail dotnet/dotnet-compact dotnet-test-fail fail dotnet test' ;;
         *)      return 1 ;;
     esac
 }
@@ -110,7 +118,7 @@ capture_stack() {
 
     # `while` in a pipeline runs in a subshell, so a flag file carries the verdict
     # back out — a stack whose recipes all no-op should not report success.
-    echo "$rows" | while read -r sample plugin fixture command; do
+    echo "$rows" | while read -r sample plugin fixture verdict command; do
         [ -n "$sample" ] || continue
         out="plugins/$plugin/samples/$sample.txt"
 
@@ -119,8 +127,12 @@ capture_stack() {
         status=$?
         lines=$(grep -c '' < "$out")
 
-        if [ "$status" -eq 0 ]; then
+        if [ "$verdict" = fail ] && [ "$status" -eq 0 ]; then
             echo "  !! $sample exited 0 — that is not a failure; review $out" >&2
+            echo x >> "$failed"
+        fi
+        if [ "$verdict" = ok ] && [ "$status" -ne 0 ]; then
+            echo "  !! $sample exited $status — the recipe expects success; review $out" >&2
             echo x >> "$failed"
         fi
         echo "  $sample -> $out (exit $status, $lines lines)"
