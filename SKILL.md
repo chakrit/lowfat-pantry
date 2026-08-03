@@ -168,6 +168,13 @@ chosen scope is the one edited. Sequence LAST, after coverage exists.
 Terse status: lowfat active (version), `.lowfat` level, N pantry plugins synced (and which
 need trusting), hook wired or not. Mention `/lowfat-pantry` re-runs the sync.
 
+When the hook was wired, close with the one thing that changes how commands get written
+from now on: **a redirect captures lowfat's output, not the tool's.** `pnpm test >
+/tmp/t.txt 2>&1` leaves a compacted file, so anything meant to hold full output takes a
+first word no filter claims — `command pnpm test > /tmp/t.txt 2>&1`. It belongs in the
+report because it is invisible otherwise: the capture succeeds, the file looks whole, and
+only the `[lowfat]` marker inside it says the lines are gone.
+
 ## Authoring a pantry plugin — fast path
 
 When the user wants a *new* filter, you don't need to read the full DSL spec or lowfat
