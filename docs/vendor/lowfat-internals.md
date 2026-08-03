@@ -300,6 +300,17 @@ returns `Some("lowfat <cmd>")` iff a builtin, a discovered plugin, a
 `pipeline.<cmd>` config, **or** a `pipeline.*` wildcard applies — and `None`
 (pass through) otherwise. It refuses to double-wrap (`lowfat`/`lf` prefixes).
 
+It also does no shell parsing at all — the return is `format!("lowfat {command}")`
+over the whole string, and the decision keys on `command.split_whitespace().next()`.
+So every trailing shell construct ends up bound to *lowfat's* stdout rather than the
+tool's: `pnpm test > /tmp/t.txt 2>&1` rewrites to `lowfat pnpm test > /tmp/t.txt 2>&1`
+and the file receives the compacted stream, truncation marker included. A trailing
+`| grep …` is filtered before grep sees it, the same way. Capture-then-read is the
+workflow this breaks — the file exists precisely to hold what a compact read drops,
+and nothing downstream can recover it. Keying on the first word cuts the other way
+too: `command pnpm test`, `env FOO=1 pnpm test`, and `FOO=1 pnpm test` are all left
+unwrapped, which is where the escape hatch comes from.
+
 `lowfat opencode install|uninstall` manages an OpenCode plugin at
 `~/.config/opencode/plugins/lowfat.ts` (`main.rs:218-223`).
 

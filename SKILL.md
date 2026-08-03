@@ -143,6 +143,20 @@ chosen scope is the one edited. Sequence LAST, after coverage exists.
 > fix tracked: the hook should emit `updatedInput` *without* `permissionDecision` so the
 > normal prompt runs on the rewritten command — `zdk/lowfat` hook.rs:31-42.)
 
+> **⚠️ The rewrite is a string prefix, so it captures redirects and pipes (tell the user
+> before wiring):** `rewrite_command` returns `format!("lowfat {command}")` with no shell
+> parsing (`zdk/lowfat` rewrite.rs). A redirect therefore binds to *lowfat's* stdout, not
+> the tool's — `pnpm test > /tmp/t.txt 2>&1` becomes `lowfat pnpm test > /tmp/t.txt 2>&1`
+> and writes the **compacted** stream to the file, marker and all. Capture-then-read, the
+> one workflow that exists to keep full output around for repeated reading, is exactly what
+> it defeats; a trailing `| grep` is silently filtered the same way. Nothing downstream can
+> recover the lost lines, and rerunning the command without the hook is the only way back.
+> Until upstream declines to rewrite a command whose stdout is already redirected or piped,
+> the escape hatch is to make the first word something no filter claims — `command pnpm test
+> > /tmp/t.txt 2>&1` is left alone, because the rewrite keys on `command`. (`LOWFAT_DISABLE`
+> does not help here: it is a comma-separated list of *command names*, read by lowfat at run
+> time, and an inline `VAR=x` assignment only dodges the rewrite by the same accident.)
+
 > **Note:** if the agent's settings file is a stow/dotfiles symlink, the Edit tool may refuse
 > to write through it — edit the real target path instead.
 
